@@ -49,7 +49,7 @@ jobs:
            details: Test Failed!
            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
            
-      - name: Test Cancelled
+      - name: Test Cancelled #
         uses: rjstone/discord-webhook-notify@v1
         if: cancelled()
         with:
