@@ -32,14 +32,6 @@ class EntityTest {
   }
 
   @Test
-  void brokenTestDemo() {
-    Entity entity = new Entity();
-    Vector2 pos = new Vector2(5f, -5f);
-    entity.setPosition(pos);
-    assertEquals(Vector2.Zero, entity.getPosition());
-  }
-
-  @Test
   void shouldSetAndGetScale() {
     Entity entity = new Entity();
     Vector2 scale = new Vector2(2f, 3f);
