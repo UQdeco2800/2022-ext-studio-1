@@ -1,14 +1,17 @@
+// sets configurations for gradle
 buildscript {
+    // gradle needs to search for necessary dependencies
     repositories {
         mavenLocal()
-        mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        google()
+        mavenCentral() // standard maven repo
+        maven { url "https://plugins.gradle.org/m2/" } //specific url for gradle
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" } //specific url for sonarqube tools
+        google() // google tools
     }
     dependencies {}
 }
 
+//gives gradle access to the features of the tools
 plugins {
     id "org.sonarqube" version "3.4.0.2513"
     id "jacoco"
@@ -21,6 +24,7 @@ javadoc {
     classpath = configurations.compileClasspath
 }
 
+//keys used to connect our GB projects to their sonarcloud scans
 sonarqube {
     properties {
         property "sonar.projectKey", "UQdeco2800_2022-ext-studio-1"
@@ -29,13 +33,17 @@ sonarqube {
     }
 }
 
+// settings for all projects in the system
+// 2 projects - core and desktop related to libGDX structure
 allprojects {
+    //setting up gradle to work with Eclipse, IntelliJ and JaCoCo
     apply plugin: "eclipse"
     apply plugin: "idea"
     apply plugin: 'jacoco'
 
     version = '1.0'
     ext {
+        //setting constants for the rest of the script
         appName = "deco2800-game"
         gdxVersion = '1.11.0'
         roboVMVersion = '2.3.16'
@@ -58,7 +66,9 @@ allprojects {
     }
 }
 
+//settings for desktop project
 project(":desktop") {
+    // tells gradle to treat project as java project that can product library files
     apply plugin: "java-library"
 
     // Enforce use of JDK 17. Will download if it isn't in default OS location.
@@ -68,6 +78,9 @@ project(":desktop") {
         }
     }
 
+    // libaries on which desktop project depends on
+    // gradle will download these
+    // version required set in ext
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
@@ -119,12 +132,15 @@ project(":core") {
     }
 
     test {
+        // sets up gradle to work with Junit
         useJUnitPlatform {}
 
+        // indicates what test results to record
         testLogging {
             events 'passed', 'skipped', 'failed'
         }
 
+        // produces JaCoCo report after tests have been executed
         finalizedBy(jacocoTestReport)
     }
 }
