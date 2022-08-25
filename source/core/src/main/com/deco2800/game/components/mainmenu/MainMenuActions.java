@@ -20,7 +20,7 @@ public class MainMenuActions extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("start", this::onStart);
-    entity.getEvents().addListener("load", this::onLoad);
+    entity.getEvents().addListener("NpcMenu", this::onNpcMenu);
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
   }
@@ -37,8 +37,9 @@ public class MainMenuActions extends Component {
    * Intended for loading a saved game state.
    * Load functionality is not actually implemented.
    */
-  private void onLoad() {
+  private void onNpcMenu() {
     logger.info("Load game");
+    game.setScreen(GdxGame.ScreenType.NPC_EVICTION_MENU);
   }
 
   /**
