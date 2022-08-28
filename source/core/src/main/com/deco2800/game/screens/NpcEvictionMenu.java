@@ -22,8 +22,9 @@ public class NpcEvictionMenu extends ScreenAdapter {
 
     private final GdxGame game;
     private final Renderer renderer;
+    private static final String[] npcEvictionMenuTextures = {"images/eviction_menu/evictionMenu_background.png"};
 
-    public NpcEvictionMenu(GdxGame game){
+    public NpcEvictionMenu(GdxGame game) {
         this.game = game;
 
         logger.debug("Initialising npc menu screen services");
@@ -33,15 +34,29 @@ public class NpcEvictionMenu extends ScreenAdapter {
         ServiceLocator.registerRenderService(new RenderService());
         renderer = RenderFactory.createRenderer();
 
-
+        loadAssets();
         createUI();
     }
+
     private void createUI() {
         logger.debug("Creating ui");
         Stage stage = ServiceLocator.getRenderService().getStage();
         Entity ui = new Entity();
         ui.addComponent(new NpcEvictionMenuDisplay(game)).addComponent(new InputDecorator(stage, 10));
         ServiceLocator.getEntityService().register(ui);
+    }
+
+    private void loadAssets() {
+        logger.debug("Loading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadTextures(npcEvictionMenuTextures);
+        ServiceLocator.getResourceService().loadAll();
+    }
+
+    private void unloadAssets() {
+        logger.debug("Unloading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.unloadAssets(npcEvictionMenuTextures);
     }
 
     @Override

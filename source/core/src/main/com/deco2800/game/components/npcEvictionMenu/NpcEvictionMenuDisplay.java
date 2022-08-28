@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -48,18 +48,12 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     Label infoLabel;
     private void addActors() {
 
-//        Image background_npc_menu =
-//                new Image(
-//                        ServiceLocator.getResourceService()
-//                                .getAsset("images/eviction_menu/evictionMenu_background.png", Texture.class));
-        Texture mytexture_npc = new Texture(Gdx.files.internal("images/eviction_menu/evictionMenu_background.png"));
-        Drawable drawable_npc_bg = new TextureRegionDrawable(new TextureRegion(mytexture_npc));
-        Image background_npc_menu = new Image(drawable_npc_bg);
+        Image background_npc_menu =
+                new Image(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/eviction_menu/evictionMenu_background.png", Texture.class));
 
 
-
-
-        Label title = new Label("Npc Eviction Menu", skin, "title");
         Table menuNpcs = makeNpcCards();
         TextButton exitBtn = new TextButton("Exit", skin);
         exitBtn.addListener(
@@ -95,17 +89,26 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     };
     private Table makeNpcCards() {
 
-        TextButton confirmBtn1 = new TextButton("Confirm", skin);
-        TextButton confirmBtn2 = new TextButton("Confirm", skin);
-        TextButton confirmBtn3 = new TextButton("Confirm", skin);
-        TextButton confirmBtn4 = new TextButton("Confirm", skin);
+//        TextButton confirmBtn1 = new TextButton("Confirm", skin);
+        /** build new style select button */
+        Button.ButtonStyle styleSelect = new Button.ButtonStyle();
+        styleSelect.up = new TextureRegionDrawable(new TextureRegion(
+                new Texture(Gdx.files.internal("images/eviction_menu/selectButton_single.png"))));
+        //here is for button effect when you pressed on button
+        styleSelect.over = new TextureRegionDrawable(new TextureRegion(
+                new Texture(Gdx.files.internal("images/eviction_menu/selectButton_single.png"))));
+        Button confirmBtn1 = new Button(styleSelect);
+        Button confirmBtn2 = new Button(styleSelect);
+        Button confirmBtn3 = new Button(styleSelect);
+        Button confirmBtn4 = new Button(styleSelect);
+
         Texture mytexture = new Texture(Gdx.files.internal("images/eviction_menu/evictionCard_single.png"));
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(mytexture));
 
         ImageButton npcButton = new ImageButton(drawable);
-        ImageButton npcButton_two = new ImageButton(drawable);
-        ImageButton npcButton_three = new ImageButton(drawable);
-        ImageButton npcButton_four = new ImageButton(drawable);
+        ImageButton npcButtonTwo = new ImageButton(drawable);
+        ImageButton npcButtonThree = new ImageButton(drawable);
+        ImageButton npcButtonFour = new ImageButton(drawable);
 
         confirmBtn1.addListener(confirmListener);
         confirmBtn2.addListener(confirmListener);
@@ -123,19 +126,19 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         Table table = new Table();
 
         table.add(npcButton).height(600).width(500);
-        table.add(npcButton_two).height(600).width(500);
-        table.add(npcButton_three).height(600).width(500);
-        table.add(npcButton_four).height(600).width(500);
+        table.add(npcButtonTwo).height(600).width(500);
+        table.add(npcButtonThree).height(600).width(500);
+        table.add(npcButtonFour).height(600).width(500);
         table.row();
-        table.add(confirmBtn1);
-        table.add(confirmBtn2);
-        table.add(confirmBtn3);
-        table.add(confirmBtn4);
+        table.add(confirmBtn1).height(70).width(140).padLeft(60);
+        table.add(confirmBtn2).height(70).width(140).padLeft(60);
+        table.add(confirmBtn3).height(70).width(140).padLeft(60);
+        table.add(confirmBtn4).height(70).width(140).padLeft(60);
 
 
 
 
-     //   table.debug();
+    //   table.debug();
 
 
         return table;
