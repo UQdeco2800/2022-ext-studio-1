@@ -1,14 +1,21 @@
 package com.deco2800.game.components.npcEvictionMenu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.settingsmenu.SettingsMenuDisplay;
 import com.deco2800.game.services.ServiceLocator;
@@ -34,8 +41,13 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         super.create();
         addActors();
     }
-
+    Window window;
+    Skin mskin;
+    TextButton tbOk, tbCancel;
+    Label confirmLabel;
+    Label infoLabel;
     private void addActors() {
+
 //        Image background_npc_menu =
 //                new Image(
 //                        ServiceLocator.getResourceService()
@@ -43,6 +55,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         Texture mytexture_npc = new Texture(Gdx.files.internal("images/eviction_menu/evictionMenu_background.png"));
         Drawable drawable_npc_bg = new TextureRegionDrawable(new TextureRegion(mytexture_npc));
         Image background_npc_menu = new Image(drawable_npc_bg);
+
 
 
 
@@ -68,10 +81,18 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         rootTable.add(exitBtn);
         //rootTable.debug();
         stage.addActor(bgTable);
+
         stage.addActor(rootTable);
 
     }
+    ClickListener confirmListener= new ClickListener() {
 
+        @Override
+        public void clicked(InputEvent event, float x, float y) {
+            Gdx.app.log("TAG", "dialog ok button is clicked");
+            window.setVisible(true);
+        }
+    };
     private Table makeNpcCards() {
 
         TextButton confirmBtn1 = new TextButton("Confirm", skin);
@@ -86,15 +107,10 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         ImageButton npcButton_three = new ImageButton(drawable);
         ImageButton npcButton_four = new ImageButton(drawable);
 
-        confirmBtn1.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("confirm button clicked");
-                       // confirmButtonCheck(); this function is used for check traitor
-                    }
-                });
-
+        confirmBtn1.addListener(confirmListener);
+        confirmBtn2.addListener(confirmListener);
+        confirmBtn3.addListener(confirmListener);
+        confirmBtn4.addListener(confirmListener);
         npcButton.addListener(
                 new ChangeListener() {
                     @Override
