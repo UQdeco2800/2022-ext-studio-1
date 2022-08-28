@@ -5,15 +5,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.settingsmenu.SettingsMenuDisplay;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +20,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(SettingsMenuDisplay.class);
     private final GdxGame game;
     private Table rootTable;
+    private Table bgTable;
 
 
     public NpcEvictionMenuDisplay(GdxGame game) {
@@ -37,9 +36,18 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     }
 
     private void addActors() {
+//        Image background_npc_menu =
+//                new Image(
+//                        ServiceLocator.getResourceService()
+//                                .getAsset("images/eviction_menu/evictionMenu_background.png", Texture.class));
+        Texture mytexture_npc = new Texture(Gdx.files.internal("images/eviction_menu/evictionMenu_background.png"));
+        Drawable drawable_npc_bg = new TextureRegionDrawable(new TextureRegion(mytexture_npc));
+        Image background_npc_menu = new Image(drawable_npc_bg);
+
+
+
         Label title = new Label("Npc Eviction Menu", skin, "title");
         Table menuNpcs = makeNpcCards();
-        Table menuNpcs_two = makeNpcCards();
         TextButton exitBtn = new TextButton("Exit", skin);
         exitBtn.addListener(
                 new ChangeListener() {
@@ -49,20 +57,17 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                         exitMenu();
                     }
                 });
+        bgTable =new Table();
+        bgTable.setFillParent(true);
+        bgTable.add(background_npc_menu);
+
         rootTable = new Table();
         rootTable.setFillParent(true);
-
-        rootTable.add(title).height(80);
-
+        rootTable.add(menuNpcs).center();
         rootTable.row();
-        rootTable.add(menuNpcs);
-        rootTable.row();
-        rootTable.add(menuNpcs_two);
-        rootTable.row();
-
-        rootTable.add(exitBtn).expandY();
-        rootTable.debug();
-
+        rootTable.add(exitBtn);
+        //rootTable.debug();
+        stage.addActor(bgTable);
         stage.addActor(rootTable);
 
     }
@@ -73,7 +78,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         TextButton confirmBtn2 = new TextButton("Confirm", skin);
         TextButton confirmBtn3 = new TextButton("Confirm", skin);
         TextButton confirmBtn4 = new TextButton("Confirm", skin);
-        Texture mytexture = new Texture(Gdx.files.internal("images/evictionCard_single.png"));
+        Texture mytexture = new Texture(Gdx.files.internal("images/eviction_menu/evictionCard_single.png"));
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(mytexture));
 
         ImageButton npcButton = new ImageButton(drawable);
@@ -114,7 +119,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
 
 
 
-        table.debug();
+     //   table.debug();
 
 
         return table;
