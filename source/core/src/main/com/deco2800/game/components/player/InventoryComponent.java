@@ -15,7 +15,7 @@ public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private int gold;
 
-  public HashMap<Integer, String> inventoryHashMap = new HashMap<Integer, String>();
+  public HashMap<Integer, Integer> inventoryHashMap = new HashMap<Integer, Integer>();
 
   public InventoryComponent(int gold) {
     setGold(gold);
