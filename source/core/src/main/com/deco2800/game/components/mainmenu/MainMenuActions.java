@@ -20,7 +20,7 @@ public class MainMenuActions extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("start", this::onStart);
-    entity.getEvents().addListener("load", this::onLoad);
+
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
   }
@@ -31,15 +31,9 @@ public class MainMenuActions extends Component {
   private void onStart() {
     logger.info("Start game");
     game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+
   }
 
-  /**
-   * Intended for loading a saved game state.
-   * Load functionality is not actually implemented.
-   */
-  private void onLoad() {
-    logger.info("Load game");
-  }
 
   /**
    * Exits the game.

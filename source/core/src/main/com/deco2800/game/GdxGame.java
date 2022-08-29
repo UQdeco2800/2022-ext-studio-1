@@ -3,9 +3,11 @@ package com.deco2800.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplay;
 import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.screens.MainGameScreen;
 import com.deco2800.game.screens.MainMenuScreen;
+import com.deco2800.game.screens.NpcEvictionMenu;
 import com.deco2800.game.screens.SettingsScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +72,8 @@ public class GdxGame extends Game {
         return new MainMenuScreen(this);
       case MAIN_GAME:
         return new MainGameScreen(this);
+      case NPC_EVICTION_MENU:
+        return new NpcEvictionMenu(this);
       case SETTINGS:
         return new SettingsScreen(this);
       default:
@@ -78,7 +82,7 @@ public class GdxGame extends Game {
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS
+    MAIN_MENU, MAIN_GAME, NPC_EVICTION_MENU, SETTINGS
   }
 
   /**
