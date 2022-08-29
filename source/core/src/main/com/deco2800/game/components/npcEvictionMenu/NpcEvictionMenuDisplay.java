@@ -31,6 +31,8 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     private static final  int NPC_CARD_WIDTH = 400;
     private static final int CONFIRM_BUTTON_LEFT_PADDING = 40;
     private static final int NPC_CARD_TOP_PADDING = 0;
+    private static final int BACKGROUND_HEIGHT_GAP =40 ;
+    private static final int BACKGROUND_WIDTH_GAP = 40;
     private final GdxGame game;
     private Table rootTable;
     private Table bgTable;
@@ -72,7 +74,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                 });
         bgTable =new Table();
         bgTable.setFillParent(true);
-        bgTable.add(background_npc_menu);
+        bgTable.add(background_npc_menu).height(Gdx.graphics.getHeight()-BACKGROUND_HEIGHT_GAP).width(Gdx.graphics.getWidth()-BACKGROUND_WIDTH_GAP);
 
         rootTable = new Table();
         rootTable.setFillParent(true);
