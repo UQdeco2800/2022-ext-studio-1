@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -21,97 +18,107 @@ import org.slf4j.LoggerFactory;
  * A ui component for displaying the Main menu.
  */
 public class MainMenuDisplay extends UIComponent {
-  private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
-  private static final float Z_INDEX = 2f;
-  private Table table;
+    private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
+    private static final float Z_INDEX = 2f;
+    private static final int NPC_MENU_BUTTON_WIDTH = 150;
+    private static final int NPC_MENU_BUTTON_HEIGHT = 80;
 
-  @Override
-  public void create() {
-    super.create();
-    addActors();
-  }
+    private Table table;
 
-  private void addActors() {
-    table = new Table();
-    table.setFillParent(true);
+    @Override
+    public void create() {
+        super.create();
+        addActors();
+    }
 
-    Image title =
-        new Image(
-            ServiceLocator.getResourceService()
-                .getAsset("images/box_boy_title.png", Texture.class));
+    private void addActors() {
+        table = new Table();
+        table.setFillParent(true);
 
-    TextButton startBtn = new TextButton("Start", skin);
-    TextButton npcBtn = new TextButton("Npc Eviction Menu", skin);
-    TextButton settingsBtn = new TextButton("Settings", skin);
-    TextButton exitBtn = new TextButton("Exit", skin);
+        Image title =
+                new Image(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/box_boy_title.png", Texture.class));
+        /** build new style eviction menu button */
+        Button.ButtonStyle styleEvictionMenu = new Button.ButtonStyle();
+        styleEvictionMenu.over = new TextureRegionDrawable(new TextureRegion(
+                new Texture(Gdx.files.internal("images/eviction_menu/menuIcon_black.png"))));
+        //here is for button effect when you pressed on button
+        styleEvictionMenu.up = new TextureRegionDrawable(new TextureRegion(
+                new Texture(Gdx.files.internal("images/eviction_menu/menuIcon_white.png"))));
+        Button npcMenuBtn = new Button(styleEvictionMenu);
 
-    // Triggers an event when the button is pressed
-    startBtn.addListener(
-            new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    logger.debug("start button clicking");
-                    entity.getEvents().trigger("start");
+        TextButton startBtn = new TextButton("Start", skin);
+        TextButton settingsBtn = new TextButton("Settings", skin);
+        TextButton exitBtn = new TextButton("Exit", skin);
+
+        // Triggers an event when the button is pressed
+        startBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        logger.debug("start button clicking");
+                        entity.getEvents().trigger("start");
+                    }
                 }
-            }
-    );
+        );
 
-    npcBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Load button clicked");
-            entity.getEvents().trigger("NpcMenu");
-          }
-        });
+        npcMenuBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Load button clicked");
+                        entity.getEvents().trigger("NpcMenu");
+                    }
+                });
 
-    settingsBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Settings button clicked");
-            entity.getEvents().trigger("settings");
-          }
-        });
+        settingsBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Settings button clicked");
+                        entity.getEvents().trigger("settings");
+                    }
+                });
 
-    exitBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
+        exitBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
 
-            logger.debug("Exit button clicked");
-            entity.getEvents().trigger("exit");
-          }
-        });
+                        logger.debug("Exit button clicked");
+                        entity.getEvents().trigger("exit");
+                    }
+                });
 
-    table.add(title);
-    table.row();
+        table.add(title);
+        table.row();
 
 
-    table.add(startBtn).padTop(30f);
-    table.row();
-    table.add(npcBtn).padTop(15f);
-    table.row();
-    table.add(settingsBtn).padTop(15f);
-    table.row();
-    table.add(exitBtn).padTop(15f);
+        table.add(startBtn).padTop(30f);
+        table.row();
+        table.add(npcMenuBtn).padTop(15f).width(NPC_MENU_BUTTON_WIDTH).height(NPC_MENU_BUTTON_HEIGHT);
+        table.row();
+        table.add(settingsBtn).padTop(15f);
+        table.row();
+        table.add(exitBtn).padTop(15f);
 
-    stage.addActor(table);
-  }
+        stage.addActor(table);
+    }
 
-  @Override
-  public void draw(SpriteBatch batch) {
-    // draw is handled by the stage
-  }
+    @Override
+    public void draw(SpriteBatch batch) {
+        // draw is handled by the stage
+    }
 
-  @Override
-  public float getZIndex() {
-    return Z_INDEX;
-  }
+    @Override
+    public float getZIndex() {
+        return Z_INDEX;
+    }
 
-  @Override
-  public void dispose() {
-    table.clear();
-    super.dispose();
-  }
+    @Override
+    public void dispose() {
+        table.clear();
+        super.dispose();
+    }
 }
