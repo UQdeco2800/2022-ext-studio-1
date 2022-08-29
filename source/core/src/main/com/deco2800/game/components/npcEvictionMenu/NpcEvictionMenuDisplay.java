@@ -27,7 +27,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(NpcEvictionMenuDisplay.class);
     private static final int CONFIRM_BUTTON_WIDTH = 120;
     private static final int CONFIRM_BUTTON_HEIGHT = 50;
-    private static final int NPC_CARD_HEIGHT = 450;
+    private static final int NPC_CARD_HEIGHT = 350;
     private static final  int NPC_CARD_WIDTH = 400;
     private static final int CONFIRM_BUTTON_LEFT_PADDING = 40;
     private static final int NPC_CARD_TOP_PADDING = 30;
@@ -104,7 +104,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                 new Texture(Gdx.files.internal("images/eviction_menu/selectButton_single.png"))));
         //here is for button effect when you pressed on button
         styleSelect.over = new TextureRegionDrawable(new TextureRegion(
-                new Texture(Gdx.files.internal("images/eviction_menu/selectButton_single.png"))));
+                new Texture(Gdx.files.internal("images/eviction_menu/selectButton_selected.png"))));
         Button confirmBtn1 = new Button(styleSelect);
         Button confirmBtn2 = new Button(styleSelect);
         Button confirmBtn3 = new Button(styleSelect);
