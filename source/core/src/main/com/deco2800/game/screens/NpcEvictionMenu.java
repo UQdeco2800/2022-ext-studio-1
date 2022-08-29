@@ -22,8 +22,12 @@ public class NpcEvictionMenu extends ScreenAdapter {
 
     private final GdxGame game;
     private final Renderer renderer;
-    private static final String[] npcEvictionMenuTextures = {"images/eviction_menu/evictionMenu_background.png"};
 
+    private static final String[] npcEvictionMenuTextures = {
+            "images/eviction_menu/evictionMenu_background.png",
+            "images/eviction_menu/confirmBox.png",
+            "images/eviction_menu/confirmBtn_ok.png", "images/eviction_menu/confirmBtn_ok1.png",
+            "images/eviction_menu/confirmBtn_cancel.png","images/eviction_menu/confirmBtn_cancel1.png" };
     public NpcEvictionMenu(GdxGame game) {
         this.game = game;
 
@@ -76,7 +80,6 @@ public class NpcEvictionMenu extends ScreenAdapter {
         renderer.dispose();
         ServiceLocator.getRenderService().dispose();
         ServiceLocator.getEntityService().dispose();
-
         ServiceLocator.clear();
     }
 }
