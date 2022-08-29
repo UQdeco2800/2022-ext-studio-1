@@ -28,6 +28,7 @@ public class MainMenuActions extends Component {
 
     entity.getEvents().addListener("start", this::onStart);
 
+    entity.getEvents().addListener("achievements", this::onAchievements);
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
   }
@@ -41,6 +42,13 @@ public class MainMenuActions extends Component {
 
   }
 
+  /**
+   * Swaps to the Achievements screen.
+   */
+  private void onAchievements() {
+    logger.info("Launching achievements screen");
+    game.setScreen(GdxGame.ScreenType.ACHIEVEMENTS);
+  }
 
   /**
    * Exits the game.
