@@ -25,12 +25,13 @@ import org.slf4j.LoggerFactory;
 
 public class NpcEvictionMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(NpcEvictionMenuDisplay.class);
-    private static final int CONFIRM_BUTTON_WIDTH = 120;
+    private static final int CONFIRM_BUTTON_WIDTH = 100;
     private static final int CONFIRM_BUTTON_HEIGHT = 50;
     private static final int NPC_CARD_HEIGHT = 350;
-    private static final  int NPC_CARD_WIDTH = 400;
-    private static final int CONFIRM_BUTTON_LEFT_PADDING = 40;
-    private static final int NPC_CARD_TOP_PADDING = 30;
+    private static final  int NPC_CARD_WIDTH = 330;
+    private static final int CONFIRM_BUTTON_LEFT_PADDING = 50;
+    private static final int NPC_CARD_TOP_PADDING = 70;
+    private static final int NPC_CARD_TOP_PADDING2 = 30;
     private static final int BACKGROUND_HEIGHT_GAP =40 ;
     private static final int BACKGROUND_WIDTH_GAP = 40;
     private final GdxGame game;
@@ -151,10 +152,10 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         table.add(confirmBtn3).height(CONFIRM_BUTTON_HEIGHT).width(CONFIRM_BUTTON_WIDTH).padLeft(CONFIRM_BUTTON_LEFT_PADDING);
         table.add(confirmBtn4).height(CONFIRM_BUTTON_HEIGHT).width(CONFIRM_BUTTON_WIDTH).padLeft(CONFIRM_BUTTON_LEFT_PADDING);
         table.row();
-        table.add(npcButton5).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH).padTop(NPC_CARD_TOP_PADDING);
-        table.add(npcButton6).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH).padTop(NPC_CARD_TOP_PADDING);
-        table.add(npcButton7).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH).padTop(NPC_CARD_TOP_PADDING);
-        table.add(npcButton8).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH).padTop(NPC_CARD_TOP_PADDING);
+        table.add(npcButton5).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH).padTop(NPC_CARD_TOP_PADDING2);
+        table.add(npcButton6).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH).padTop(NPC_CARD_TOP_PADDING2);
+        table.add(npcButton7).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH).padTop(NPC_CARD_TOP_PADDING2);
+        table.add(npcButton8).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH).padTop(NPC_CARD_TOP_PADDING2);
         table.row();
         table.add(confirmBtn5).height(CONFIRM_BUTTON_HEIGHT).width(CONFIRM_BUTTON_WIDTH).padLeft(CONFIRM_BUTTON_LEFT_PADDING);
         table.add(confirmBtn6).height(CONFIRM_BUTTON_HEIGHT).width(CONFIRM_BUTTON_WIDTH).padLeft(CONFIRM_BUTTON_LEFT_PADDING);
