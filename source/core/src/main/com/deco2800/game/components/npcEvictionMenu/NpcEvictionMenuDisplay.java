@@ -34,6 +34,11 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     private static final int NPC_CARD_TOP_PADDING2 = 30;
     private static final int BACKGROUND_HEIGHT_GAP =40 ;
     private static final int BACKGROUND_WIDTH_GAP = 40;
+    private static final int EXIT_BUTTON_SIZE_WIDTH = 100;
+    private static final int EXIT_BUTTON_SIZE_HEIGHT = 100;
+    private static final int EXIT_BUTTON_Y_POSITION = 1100;
+    private static final int EXIT_BUTTON_X_POSITION = 2100;
+
     private final GdxGame game;
     private Table rootTable;
     private Table bgTable;
@@ -57,14 +62,23 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     Label infoLabel;
     private void addActors() {
 
-        Image background_npc_menu =
+        Image backgroundNpcMenu =
                 new Image(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/eviction_menu/evictionMenu_background.png", Texture.class));
 
 
         Table menuNpcs = makeNpcCards();
-        TextButton exitBtn = new TextButton("Exit", skin);
+        /** build new style exit button */
+        Button.ButtonStyle styleExit = new Button.ButtonStyle();
+        styleExit.up = new TextureRegionDrawable(new TextureRegion(
+                new Texture(Gdx.files.internal("images/eviction_menu/exitButton.png"))));
+        //here is for button effect when you pressed on button
+        styleExit.over = new TextureRegionDrawable(new TextureRegion(
+                new Texture(Gdx.files.internal("images/eviction_menu/exitButton_selected.png"))));
+        Button exitBtn = new Button(styleExit);
+        exitBtn.setPosition(EXIT_BUTTON_X_POSITION,EXIT_BUTTON_Y_POSITION);
+        exitBtn.setSize(EXIT_BUTTON_SIZE_WIDTH,EXIT_BUTTON_SIZE_HEIGHT);
         exitBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -75,27 +89,19 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                 });
         bgTable =new Table();
         bgTable.setFillParent(true);
-        bgTable.add(background_npc_menu).height(Gdx.graphics.getHeight()-BACKGROUND_HEIGHT_GAP).width(Gdx.graphics.getWidth()-BACKGROUND_WIDTH_GAP);
+        bgTable.add(backgroundNpcMenu).height(Gdx.graphics.getHeight()-BACKGROUND_HEIGHT_GAP).width(Gdx.graphics.getWidth()-BACKGROUND_WIDTH_GAP);
 
         rootTable = new Table();
         rootTable.setFillParent(true);
         rootTable.add(menuNpcs).center();
-        rootTable.row();
-        rootTable.add(exitBtn);
-        //rootTable.debug();
-        stage.addActor(bgTable);
+        rootTable.debug();
 
+        stage.addActor(bgTable);
+        stage.addActor(exitBtn);
         stage.addActor(rootTable);
 
     }
-    ClickListener confirmListener= new ClickListener() {
 
-        @Override
-        public void clicked(InputEvent event, float x, float y) {
-            Gdx.app.log("TAG", "dialog ok button is clicked");
-            window.setVisible(true);
-        }
-    };
     private Table makeNpcCards() {
 
 //        TextButton confirmBtn1 = new TextButton("Confirm", skin);
@@ -178,6 +184,15 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     protected void draw(SpriteBatch batch) {
 
     }
+
+    ClickListener confirmListener= new ClickListener() {
+
+        @Override
+        public void clicked(InputEvent event, float x, float y) {
+            Gdx.app.log("TAG", "dialog ok button is clicked");
+            window.setVisible(true);
+        }
+    };
 }
 
 
