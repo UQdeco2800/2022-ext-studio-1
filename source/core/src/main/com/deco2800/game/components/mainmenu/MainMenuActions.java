@@ -2,7 +2,7 @@ package com.deco2800.game.components.mainmenu;
 
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.music.musicStuff;
+//import com.deco2800.game.music.musicStuff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,9 +22,9 @@ public class MainMenuActions extends Component {
 
   @Override
   public void create() {
-    String filepath = "Theatre-BGM.wav";
-    musicStuff musicObject = new musicStuff();
-    musicObject.playMusic(filepath);
+    //String filepath = "Theatre-BGM.wav";
+    //musicStuff musicObject = new musicStuff();
+    //musicObject.playMusic(filepath);
 
     entity.getEvents().addListener("start", this::onStart);
 
