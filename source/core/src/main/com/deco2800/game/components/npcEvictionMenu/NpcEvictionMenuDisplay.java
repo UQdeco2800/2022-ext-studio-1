@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class NpcEvictionMenuDisplay extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(SettingsMenuDisplay.class);
+    private static final Logger logger = LoggerFactory.getLogger(NpcEvictionMenuDisplay.class);
     private final GdxGame game;
     private Table rootTable;
     private Table bgTable;

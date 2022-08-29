@@ -46,7 +46,15 @@ public class MainMenuDisplay extends UIComponent {
     TextButton exitBtn = new TextButton("Exit", skin);
 
     // Triggers an event when the button is pressed
-
+    startBtn.addListener(
+            new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    logger.debug("start button clicking");
+                    entity.getEvents().trigger("start");
+                }
+            }
+    );
 
     npcBtn.addListener(
         new ChangeListener() {
