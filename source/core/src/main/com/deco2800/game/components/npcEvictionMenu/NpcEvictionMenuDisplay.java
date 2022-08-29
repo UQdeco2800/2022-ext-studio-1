@@ -77,8 +77,8 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         styleExit.over = new TextureRegionDrawable(new TextureRegion(
                 new Texture(Gdx.files.internal("images/eviction_menu/exitButton_selected.png"))));
         Button exitBtn = new Button(styleExit);
-        exitBtn.setPosition(EXIT_BUTTON_X_POSITION,EXIT_BUTTON_Y_POSITION);
-        exitBtn.setSize(EXIT_BUTTON_SIZE_WIDTH,EXIT_BUTTON_SIZE_HEIGHT);
+        exitBtn.setPosition((float) (stage.getWidth() * 0.928), (float) (stage.getHeight() * (1-0.1704)));
+        exitBtn.setSize((float) (stage.getWidth()*0.035), (float) (stage.getHeight()*0.0593));
         exitBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -132,7 +132,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         ImageButton npcButton6 = new ImageButton(drawable);
         ImageButton npcButton7 = new ImageButton(drawable);
         ImageButton npcButton8 = new ImageButton(drawable);
-        Button confirmButtons[] = {confirmBtn1, confirmBtn2, confirmBtn3,
+        Button[] confirmButtons = {confirmBtn1, confirmBtn2, confirmBtn3,
                 confirmBtn4, confirmBtn5, confirmBtn6, confirmBtn7, confirmBtn8};
         for (int i=0;i<confirmButtons.length;i++){
             String index = String.valueOf(i);
@@ -209,27 +209,29 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                 ServiceLocator.getResourceService().getAsset("images/eviction_menu/confirmBox.png", Texture.class));
         Window.WindowStyle win_style = new Window.WindowStyle(new BitmapFont(), Color.BLACK, wind);
         Window dialog = new Window("", win_style);  // background of dialog
-
-
+        // set dialog
         float dialog_size_x = (float) (stage.getWidth() * 0.2537);
         float dialog_size_y = (float) (stage.getHeight() * 0.3037);
         dialog.setSize(dialog_size_x, dialog_size_y);
-        float dialog_pos_x = (float) (stage.getWidth() * 0.3756);  // need adjust
+        float dialog_pos_x = (float) (stage.getWidth() * 0.3756);
         float dialog_pos_y = (float) (stage.getHeight() * (1-0.65));
         dialog.setPosition(dialog_pos_x, dialog_pos_y);
+        // set effect of buttons
+        Button.ButtonStyle yesStyle = new Button.ButtonStyle();
+        yesStyle.up = new TextureRegionDrawable(ServiceLocator.getResourceService()
+                .getAsset("images/eviction_menu/confirmBtn_ok.png",Texture.class));
+        yesStyle.over = new TextureRegionDrawable(ServiceLocator.getResourceService()
+                .getAsset("images/eviction_menu/confirmBtn_ok1.png",Texture.class));
+        Button yesButton = new Button(yesStyle);
 
+        Button.ButtonStyle cancelStyle = new Button.ButtonStyle();
+        cancelStyle.up = new TextureRegionDrawable(ServiceLocator.getResourceService()
+                .getAsset("images/eviction_menu/confirmBtn_cancel.png",Texture.class));
+        cancelStyle.over = new TextureRegionDrawable(ServiceLocator.getResourceService()
+                .getAsset("images/eviction_menu/confirmBtn_cancel1.png",Texture.class));
+        Button cancelButton = new Button(cancelStyle);
 
-        TextureRegionDrawable yes_up = new TextureRegionDrawable(ServiceLocator.getResourceService().getAsset(
-                "images/eviction_menu/confirmBtn_ok.png", Texture.class));
-        TextureRegionDrawable yes_down = new TextureRegionDrawable(ServiceLocator.getResourceService().getAsset(
-                "images/eviction_menu/confirmBtn_ok1.png", Texture.class));
-        TextureRegionDrawable cancel_up = new TextureRegionDrawable(ServiceLocator.getResourceService().getAsset(
-                "images/eviction_menu/confirmBtn_cancel.png", Texture.class));
-        TextureRegionDrawable cancel_down = new TextureRegionDrawable(ServiceLocator.getResourceService().getAsset(
-                "images/eviction_menu/confirmBtn_cancel1.png", Texture.class));
-
-        ImageButton yes_button = new ImageButton(yes_up, yes_down);
-        yes_button.addListener(
+        yesButton.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -239,8 +241,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                     }
                 });
 
-        ImageButton cancel_button = new ImageButton(cancel_up, cancel_down);
-        cancel_button.addListener(
+        cancelButton.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -248,11 +249,12 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                         dialog.remove();
                     }
                 });
-        cancel_button.setSize((float) (dialog_size_x * 0.361), (float) (dialog_size_y * 0.2317));
-        cancel_button.setPosition((float) (dialog.getWidth()*0.1067), 0);
-        yes_button.setSize((float) (dialog_size_x * 0.377), (float) (dialog_size_y * 0.2317));
-        yes_button.setPosition((float) (dialog.getWidth()*0.5239), 0);
-        dialog.addActor(cancel_button); dialog.addActor(yes_button);
+        // adding buttons into dialog
+        cancelButton.setSize((float) (dialog_size_x * 0.361), (float) (dialog_size_y * 0.2317));
+        cancelButton.setPosition((float) (dialog.getWidth()*0.1067), 0);
+        yesButton.setSize((float) (dialog_size_x * 0.377), (float) (dialog_size_y * 0.2317));
+        yesButton.setPosition((float) (dialog.getWidth()*0.5239), 0);
+        dialog.addActor(cancelButton); dialog.addActor(yesButton);
         stage.addActor(dialog);
     }
 }
