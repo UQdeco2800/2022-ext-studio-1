@@ -20,8 +20,7 @@ import org.slf4j.LoggerFactory;
 public class MainMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
     private static final float Z_INDEX = 2f;
-    private static final int NPC_MENU_BUTTON_WIDTH = 150;
-    private static final int NPC_MENU_BUTTON_HEIGHT = 80;
+
 
     private Table table;
 
@@ -39,14 +38,7 @@ public class MainMenuDisplay extends UIComponent {
                 new Image(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/box_boy_title.png", Texture.class));
-        /** build new style eviction menu button */
-        Button.ButtonStyle styleEvictionMenu = new Button.ButtonStyle();
-        styleEvictionMenu.over = new TextureRegionDrawable(new TextureRegion(
-                new Texture(Gdx.files.internal("images/eviction_menu/menuIcon_black.png"))));
-        //here is for button effect when you pressed on button
-        styleEvictionMenu.up = new TextureRegionDrawable(new TextureRegion(
-                new Texture(Gdx.files.internal("images/eviction_menu/menuIcon_white.png"))));
-        Button npcMenuBtn = new Button(styleEvictionMenu);
+
 
         TextButton startBtn = new TextButton("Start", skin);
         TextButton settingsBtn = new TextButton("Settings", skin);
@@ -63,14 +55,7 @@ public class MainMenuDisplay extends UIComponent {
                 }
         );
 
-        npcMenuBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Load button clicked");
-                        entity.getEvents().trigger("NpcMenu");
-                    }
-                });
+
 
         settingsBtn.addListener(
                 new ChangeListener() {
@@ -97,8 +82,7 @@ public class MainMenuDisplay extends UIComponent {
 
         table.add(startBtn).padTop(30f);
         table.row();
-        table.add(npcMenuBtn).padTop(15f).width(NPC_MENU_BUTTON_WIDTH).height(NPC_MENU_BUTTON_HEIGHT);
-        table.row();
+
         table.add(settingsBtn).padTop(15f);
         table.row();
         table.add(exitBtn).padTop(15f);

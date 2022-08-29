@@ -170,7 +170,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     }
 
     private void exitMenu() {
-        game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
 
     @Override
