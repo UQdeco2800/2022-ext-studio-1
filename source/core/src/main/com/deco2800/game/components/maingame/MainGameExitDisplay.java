@@ -21,8 +21,8 @@ public class MainGameExitDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
   private static final float Z_INDEX = 2f;
   private Table table;
-  private static final int NPC_MENU_BUTTON_WIDTH = 150;
-  private static final int NPC_MENU_BUTTON_HEIGHT = 80;
+  private static final int NPC_MENU_BUTTON_WIDTH = 200;
+  private static final int NPC_MENU_BUTTON_HEIGHT = 150;
   @Override
   public void create() {
     super.create();
