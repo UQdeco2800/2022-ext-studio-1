@@ -25,6 +25,12 @@ import org.slf4j.LoggerFactory;
 
 public class NpcEvictionMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(NpcEvictionMenuDisplay.class);
+    private static final int CONFIRM_BUTTON_WIDTH = 80;
+    private static final int CONFIRM_BUTTON_HEIGHT = 50;
+    private static final int NPC_CARD_HEIGHT = 450;
+    private static final  int NPC_CARD_WIDTH = 400;
+    private static final int CONFIRM_BUTTON_LEFT_PADDING = 40;
+    private static final int NPC_CARD_TOP_PADDING = 0;
     private final GdxGame game;
     private Table rootTable;
     private Table bgTable;
@@ -101,20 +107,28 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         Button confirmBtn2 = new Button(styleSelect);
         Button confirmBtn3 = new Button(styleSelect);
         Button confirmBtn4 = new Button(styleSelect);
+        Button confirmBtn5 = new Button(styleSelect);
+        Button confirmBtn6 = new Button(styleSelect);
+        Button confirmBtn7 = new Button(styleSelect);
+        Button confirmBtn8 = new Button(styleSelect);
 
         Texture mytexture = new Texture(Gdx.files.internal("images/eviction_menu/evictionCard_single.png"));
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(mytexture));
 
-        ImageButton npcButton = new ImageButton(drawable);
-        ImageButton npcButtonTwo = new ImageButton(drawable);
-        ImageButton npcButtonThree = new ImageButton(drawable);
-        ImageButton npcButtonFour = new ImageButton(drawable);
+        ImageButton npcButton1 = new ImageButton(drawable);
+        ImageButton npcButton2 = new ImageButton(drawable);
+        ImageButton npcButton3 = new ImageButton(drawable);
+        ImageButton npcButton4 = new ImageButton(drawable);
+        ImageButton npcButton5 = new ImageButton(drawable);
+        ImageButton npcButton6 = new ImageButton(drawable);
+        ImageButton npcButton7 = new ImageButton(drawable);
+        ImageButton npcButton8 = new ImageButton(drawable);
 
         confirmBtn1.addListener(confirmListener);
         confirmBtn2.addListener(confirmListener);
         confirmBtn3.addListener(confirmListener);
         confirmBtn4.addListener(confirmListener);
-        npcButton.addListener(
+        npcButton1.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -125,20 +139,29 @@ public class NpcEvictionMenuDisplay extends UIComponent {
 
         Table table = new Table();
 
-        table.add(npcButton).height(600).width(500);
-        table.add(npcButtonTwo).height(600).width(500);
-        table.add(npcButtonThree).height(600).width(500);
-        table.add(npcButtonFour).height(600).width(500);
+        table.add(npcButton1).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH).padTop(NPC_CARD_TOP_PADDING);
+        table.add(npcButton2).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH);
+        table.add(npcButton3).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH);
+        table.add(npcButton4).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH);
         table.row();
-        table.add(confirmBtn1).height(70).width(140).padLeft(60);
-        table.add(confirmBtn2).height(70).width(140).padLeft(60);
-        table.add(confirmBtn3).height(70).width(140).padLeft(60);
-        table.add(confirmBtn4).height(70).width(140).padLeft(60);
+        table.add(confirmBtn1).height(CONFIRM_BUTTON_HEIGHT).width(CONFIRM_BUTTON_WIDTH).padLeft(CONFIRM_BUTTON_LEFT_PADDING);
+        table.add(confirmBtn2).height(CONFIRM_BUTTON_HEIGHT).width(CONFIRM_BUTTON_WIDTH).padLeft(CONFIRM_BUTTON_LEFT_PADDING);
+        table.add(confirmBtn3).height(CONFIRM_BUTTON_HEIGHT).width(CONFIRM_BUTTON_WIDTH).padLeft(CONFIRM_BUTTON_LEFT_PADDING);
+        table.add(confirmBtn4).height(CONFIRM_BUTTON_HEIGHT).width(CONFIRM_BUTTON_WIDTH).padLeft(CONFIRM_BUTTON_LEFT_PADDING);
+        table.row();
+        table.add(npcButton5).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH);
+        table.add(npcButton6).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH);
+        table.add(npcButton7).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH);
+        table.add(npcButton8).height(NPC_CARD_HEIGHT).width(NPC_CARD_WIDTH);
+        table.row();
+        table.add(confirmBtn5).height(CONFIRM_BUTTON_HEIGHT).width(CONFIRM_BUTTON_WIDTH).padLeft(CONFIRM_BUTTON_LEFT_PADDING);
+        table.add(confirmBtn6).height(CONFIRM_BUTTON_HEIGHT).width(CONFIRM_BUTTON_WIDTH).padLeft(CONFIRM_BUTTON_LEFT_PADDING);
+        table.add(confirmBtn7).height(CONFIRM_BUTTON_HEIGHT).width(CONFIRM_BUTTON_WIDTH).padLeft(CONFIRM_BUTTON_LEFT_PADDING);
+        table.add(confirmBtn8).height(CONFIRM_BUTTON_HEIGHT).width(CONFIRM_BUTTON_WIDTH).padLeft(CONFIRM_BUTTON_LEFT_PADDING);
 
 
 
-
-    //   table.debug();
+       //table.debug();
 
 
         return table;
