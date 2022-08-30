@@ -1,5 +1,0 @@
-# Requirements
-What this code will achieve is that when the player walks to the designated unit near the npc, a dialog box will pop up in front of the player, and the pre-designed npc dialogue will appear on it. Among them, the npc dialogue will have several branches, and the player will be given different clues by choosing different options.
-
-# Abstract
-<img width="564" alt="截屏2022-08-31 01 56 38" src="https://user-images.githubusercontent.com/109893641/187509282-00fa6897-2bc0-4b40-aded-baa5befc7dee.png">
