@@ -71,12 +71,15 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         Table menuNpcs = makeNpcCards();
         /** build new style exit button */
         Button.ButtonStyle styleExit = new Button.ButtonStyle();
-        styleExit.up = new TextureRegionDrawable(new TextureRegion(
-                new Texture(Gdx.files.internal("images/eviction_menu/exitButton.png"))));
+        styleExit.up = new TextureRegionDrawable(
+                ServiceLocator.getResourceService()
+                        .getAsset("images/eviction_menu/exitButton.png",Texture.class));
         //here is for button effect when you pressed on button
-        styleExit.over = new TextureRegionDrawable(new TextureRegion(
-                new Texture(Gdx.files.internal("images/eviction_menu/exitButton_selected.png"))));
+        styleExit.over = new TextureRegionDrawable(
+                ServiceLocator.getResourceService()
+                        .getAsset("images/eviction_menu/exitButton_selected.png",Texture.class));
         Button exitBtn = new Button(styleExit);
+
         exitBtn.setPosition((float) (stage.getWidth() * 0.928), (float) (stage.getHeight() * (1-0.1704)));
         exitBtn.setSize((float) (stage.getWidth()*0.035), (float) (stage.getHeight()*0.0593));
         exitBtn.addListener(
@@ -94,7 +97,8 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         rootTable = new Table();
         rootTable.setFillParent(true);
         rootTable.add(menuNpcs).center();
-        rootTable.debug();
+        // for debugging ,it will show you red table line
+       // rootTable.debug();
 
         stage.addActor(bgTable);
         stage.addActor(exitBtn);
@@ -104,14 +108,16 @@ public class NpcEvictionMenuDisplay extends UIComponent {
 
     private Table makeNpcCards() {
 
-//        TextButton confirmBtn1 = new TextButton("Confirm", skin);
+
         /** build new style select button */
         Button.ButtonStyle styleSelect = new Button.ButtonStyle();
-        styleSelect.up = new TextureRegionDrawable(new TextureRegion(
-                new Texture(Gdx.files.internal("images/eviction_menu/selectButton_single.png"))));
+        styleSelect.up = new TextureRegionDrawable(
+                ServiceLocator.getResourceService()
+                        .getAsset("images/eviction_menu/selectButton_single.png",Texture.class));
         //here is for button effect when you pressed on button
-        styleSelect.over = new TextureRegionDrawable(new TextureRegion(
-                new Texture(Gdx.files.internal("images/eviction_menu/selectButton_selected.png"))));
+        styleSelect.over = new TextureRegionDrawable(
+                ServiceLocator.getResourceService()
+                        .getAsset("images/eviction_menu/selectButton_selected.png",Texture.class));
         Button confirmBtn1 = new Button(styleSelect);
         Button confirmBtn2 = new Button(styleSelect);
         Button confirmBtn3 = new Button(styleSelect);
@@ -121,8 +127,10 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         Button confirmBtn7 = new Button(styleSelect);
         Button confirmBtn8 = new Button(styleSelect);
 
-        Texture mytexture = new Texture(Gdx.files.internal("images/eviction_menu/evictionCard_single.png"));
-        Drawable drawable = new TextureRegionDrawable(new TextureRegion(mytexture));
+
+        Drawable drawable = new TextureRegionDrawable(
+                ServiceLocator.getResourceService()
+                .getAsset("images/eviction_menu/evictionCard_single.png",Texture.class));
 
         ImageButton npcButton1 = new ImageButton(drawable);
         ImageButton npcButton2 = new ImageButton(drawable);
@@ -151,7 +159,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Start button clicked");
+                        logger.debug("npc  button clicked");
                         //entity.getEvents().trigger("start");
                     }
                 });
@@ -195,14 +203,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
 
     }
 
-//    ClickListener confirmListener= new ClickListener() {
-//
-//        @Override
-//        public void clicked(InputEvent event, float x, float y) {
-//            Gdx.app.log("TAG", "dialog ok button is clicked");
-//            window.setVisible(true);
-//        }
-//    };
+
 
     private void dialog(String button_name) {
         TextureRegionDrawable wind = new TextureRegionDrawable(
