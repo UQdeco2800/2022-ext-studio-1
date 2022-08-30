@@ -5,16 +5,22 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AchievementsDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(AchievementsDisplay.class);
@@ -30,6 +36,12 @@ public class AchievementsDisplay extends UIComponent {
     private Texture nextPageUpTexture;
     private Texture nextPageDownTexture;
     private Button nextPageBtn;
+    private static final String[] achievementPaths = {
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/treasurer_unobtained.png",
+            "images/achievement/nereus!_unobtained.png",
+            "images/achievement/time_keeper_unobtained.png"};
+    private List<Image> achievements = new ArrayList<Image>();
 
     public AchievementsDisplay(GdxGame game) {
         super();
@@ -79,14 +91,14 @@ public class AchievementsDisplay extends UIComponent {
         nextPageBtn = new Button(nextStyle);
 
         // Set sizes of buttons
-        backBtn.setSize(120, 60);
-        lastPageBtn.setSize(45, 55);
-        nextPageBtn.setSize(45, 55);
+        backBtn.setSize(relativeWidth(120), relativeHeight(60));
+        lastPageBtn.setSize(relativeWidth(45), relativeHeight(55));
+        nextPageBtn.setSize(relativeWidth(45), relativeHeight(55));
 
         // Set positions of buttons
-        backBtn.setPosition(50, 50);
-        lastPageBtn.setPosition(stage.getWidth() - 120, stage.getHeight() - 420);
-        nextPageBtn.setPosition(stage.getWidth() - 120, stage.getHeight() - 490);
+        backBtn.setPosition(relativeWidth(50), relativeHeight(50));
+        lastPageBtn.setPosition(stage.getWidth() - relativeWidth(120), stage.getHeight() - relativeHeight(420));
+        nextPageBtn.setPosition(stage.getWidth() - relativeWidth(120), stage.getHeight() - relativeHeight(490));
 
         // Set listeners of buttons
         backBtn.addListener(
@@ -114,15 +126,60 @@ public class AchievementsDisplay extends UIComponent {
                     }
                 });
 
+        // Set achievement category labels
+        Label progressLabel = new Label("Game Progress", skin);
+        Label collectionLabel = new Label("Collection", skin);
+        Label othersLabel = new Label("Others", skin);
+
+        // Set positions of labels
+        progressLabel.setPosition(relativeWidth(138), relativeHeight(592));
+        collectionLabel.setPosition(relativeWidth(160), relativeHeight(482));
+        othersLabel.setPosition(relativeWidth(180), relativeHeight(372));
+
         stage.addActor(table);
         stage.addActor(backBtn);
         stage.addActor(lastPageBtn);
         stage.addActor(nextPageBtn);
+        stage.addActor(progressLabel);
+        stage.addActor(collectionLabel);
+        stage.addActor(othersLabel);
+
+        // Show achievements
+        for (String path : achievementPaths) {
+            achievements.add(new Image(ServiceLocator.getResourceService()
+                    .getAsset(path, Texture.class)));
+        }
+        showAchievements(stage, achievements);
     }
 
-//    private Table makeAchievements() {
-//
-//    }
+    private void showAchievements(Stage stage, List<Image> achievements) {
+        float offsetX = relativeWidth(333);
+        float offsetY = relativeHeight(151);
+        for (int i = 0; i < achievements.size(); i++) {
+            if (i >= 8) {
+                break; // Hide the remaining on the next pages
+            }
+            achievements.get(i).setSize(relativeWidth(292), relativeHeight(111));
+            if (i % 2 == 0) {
+                achievements.get(i).setPosition(relativeWidth(477),
+                        relativeHeight(533) - offsetY * i / 2);
+            } else {
+                achievements.get(i).setPosition(relativeWidth(477) + offsetX,
+                        relativeHeight(533) - offsetY * (i - 1) / 2);
+            }
+            stage.addActor(achievements.get(i));
+        }
+    }
+
+    /** Relative width for dealing with windows of different sizes */
+    private float relativeWidth(int width) {
+        return stage.getWidth() * width / 1280;
+    }
+
+    /** Relative height for dealing with windows of different sizes */
+    private float relativeHeight(int height) {
+        return stage.getHeight() * height / 800;
+    }
 
     private void exitMenu() {
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);

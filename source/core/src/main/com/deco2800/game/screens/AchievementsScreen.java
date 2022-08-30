@@ -28,7 +28,9 @@ public class AchievementsScreen extends ScreenAdapter {
             "images/achievement/achievement_background.png",
             "images/achievement/back_button.png", "images/achievement/back_button_pressed.png",
             "images/achievement/last_page_button.png", "images/achievement/last_page_button_pressed.png",
-            "images/achievement/next_page_button.png", "images/achievement/next_page_button_pressed.png"};
+            "images/achievement/next_page_button.png", "images/achievement/next_page_button_pressed.png",
+            "images/achievement/gods_pocket_unobtained.png", "images/achievement/treasurer_unobtained.png",
+            "images/achievement/nereus!_unobtained.png", "images/achievement/time_keeper_unobtained.png"};
 
     public AchievementsScreen(GdxGame game) {
         this.game = game;

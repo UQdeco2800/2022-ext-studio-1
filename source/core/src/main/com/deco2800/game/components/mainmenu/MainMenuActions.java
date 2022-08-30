@@ -2,11 +2,8 @@ package com.deco2800.game.components.mainmenu;
 
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
-//import com.deco2800.game.music.musicStuff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-
 
 /**
  * This class listens to events relevant to the Main Menu Screen and does something when one of the
@@ -22,15 +19,13 @@ public class MainMenuActions extends Component {
 
   @Override
   public void create() {
-    //String filepath = "Theatre-BGM.wav";
-    //musicStuff musicObject = new musicStuff();
-    //musicObject.playMusic(filepath);
-
     entity.getEvents().addListener("start", this::onStart);
 
+    entity.getEvents().addListener("load", this::onLoad);
+    entity.getEvents().addListener("storyline", this::onStoryline);
     entity.getEvents().addListener("achievements", this::onAchievements);
-    entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
+    entity.getEvents().addListener("exit", this::onExit);
   }
 
   /**
@@ -39,7 +34,6 @@ public class MainMenuActions extends Component {
   private void onStart() {
     logger.info("Start game");
     game.setScreen(GdxGame.ScreenType.MAIN_GAME);
-
   }
 
   /**
@@ -48,6 +42,20 @@ public class MainMenuActions extends Component {
   private void onAchievements() {
     logger.info("Launching achievements screen");
     game.setScreen(GdxGame.ScreenType.ACHIEVEMENTS);
+  }
+
+  private void onStoryline() {
+    logger.info("Start game");
+    game.setScreen(GdxGame.ScreenType.STORYLINE);
+  }
+
+
+  /**
+   * Intended for loading a saved game state.
+   * Load functionality is not actually implemented.
+   */
+  private void onLoad() {
+    logger.info("Load game");
   }
 
   /**

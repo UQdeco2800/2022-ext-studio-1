@@ -1,10 +1,9 @@
 package com.deco2800.game;
 
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.deco2800.game.components.achievements.AchievementsDisplay;
-import com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplay;
 import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.screens.*;
 import org.slf4j.Logger;
@@ -76,13 +75,15 @@ public class GdxGame extends Game {
         return new AchievementsScreen(this);
       case SETTINGS:
         return new SettingsScreen(this);
+      case STORYLINE:
+        return new StorylineScreen(this);
       default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, NPC_EVICTION_MENU, ACHIEVEMENTS, SETTINGS
+    MAIN_MENU, MAIN_GAME, NPC_EVICTION_MENU, ACHIEVEMENTS, STORYLINE, SETTINGS
   }
 
   /**
