@@ -71,16 +71,9 @@ public class NpcEvictionMenuDisplay extends UIComponent {
 
         Table menuNpcs = makeNpcCards();
         /** build new style exit button */
-        Button.ButtonStyle styleExit = new Button.ButtonStyle();
-        styleExit.up = new TextureRegionDrawable(
-                ServiceLocator.getResourceService()
-                        .getAsset("images/eviction_menu/exitButton.png",Texture.class));
-        //here is for button effect when you pressed on button
-        styleExit.over = new TextureRegionDrawable(
-                ServiceLocator.getResourceService()
-                        .getAsset("images/eviction_menu/exitButton_selected.png",Texture.class));
-        Button exitBtn = new Button(styleExit);
 
+        Button exitBtn = createButton("images/eviction_menu/exitButton.png",
+                "images/eviction_menu/exitButton_selected.png");
         exitBtn.setPosition((float) (stage.getWidth() * 0.928), (float) (stage.getHeight() * (1-0.1704)));
         exitBtn.setSize((float) (stage.getWidth()*0.035), (float) (stage.getHeight()*0.0593));
         exitBtn.addListener(
