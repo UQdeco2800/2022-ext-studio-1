@@ -1,6 +1,7 @@
 package com.deco2800.game.components.maingame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,11 +37,13 @@ public class MainGameExitDisplay extends UIComponent {
     table.setFillParent(true);
     /** build new style eviction menu button */
     Button.ButtonStyle styleEvictionMenu = new Button.ButtonStyle();
-    styleEvictionMenu.over = new TextureRegionDrawable(new TextureRegion(
-            new Texture(Gdx.files.internal("images/eviction_menu/menuIcon_black.png"))));
+    styleEvictionMenu.over = new TextureRegionDrawable(
+            ServiceLocator.getResourceService()
+            .getAsset("images/eviction_menu/menuIcon_black.png",Texture.class));
     //here is for button effect when you pressed on button
-    styleEvictionMenu.up = new TextureRegionDrawable(new TextureRegion(
-            new Texture(Gdx.files.internal("images/eviction_menu/menuIcon_white.png"))));
+    styleEvictionMenu.up = new TextureRegionDrawable(
+            ServiceLocator.getResourceService()
+            .getAsset("images/eviction_menu/menuIcon_white.png",Texture.class));
     Button npcMenuBtn = new Button(styleEvictionMenu);
     TextButton mainMenuBtn = new TextButton("Exit", skin);
 
