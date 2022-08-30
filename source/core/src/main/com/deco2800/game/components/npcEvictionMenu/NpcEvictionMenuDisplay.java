@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.settingsmenu.SettingsMenuDisplay;
+import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -34,10 +35,10 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     private static final int NPC_CARD_TOP_PADDING2 = 30;
     private static final int BACKGROUND_HEIGHT_GAP =40 ;
     private static final int BACKGROUND_WIDTH_GAP = 40;
-    private static final int EXIT_BUTTON_SIZE_WIDTH = 100;
-    private static final int EXIT_BUTTON_SIZE_HEIGHT = 100;
-    private static final int EXIT_BUTTON_Y_POSITION = 1100;
-    private static final int EXIT_BUTTON_X_POSITION = 2100;
+//    private static final int EXIT_BUTTON_SIZE_WIDTH = 100;
+//    private static final int EXIT_BUTTON_SIZE_HEIGHT = 100;
+//    private static final int EXIT_BUTTON_Y_POSITION = 1100;
+//    private static final int EXIT_BUTTON_X_POSITION = 2100;
 
     private final GdxGame game;
     private Table rootTable;
@@ -149,7 +150,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                         @Override
                         public void changed(ChangeEvent changeEvent, Actor actor) {
                             logger.debug("confirm button"+ index +" clicked");
-                            dialog("confirm button" + index + " clicked");
+                            createConfirmDialog("confirm button" + index + " clicked");
                         }
                     });
         }
@@ -204,59 +205,76 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     }
 
 
-
-    private void dialog(String button_name) {
-        TextureRegionDrawable wind = new TextureRegionDrawable(
-                ServiceLocator.getResourceService().getAsset("images/eviction_menu/confirmBox.png", Texture.class));
-        Window.WindowStyle win_style = new Window.WindowStyle(new BitmapFont(), Color.BLACK, wind);
-        Window dialog = new Window("", win_style);  // background of dialog
-        // set dialog
+    /**
+     * Display a confirm dialog on the stage, the style is based on Team7 prototype
+     * All scales are calculated according to the prototype from team 7 only
+     * Button cancel: remove the dialog
+     * Button Ok    : confirm the action from selected button
+     * @author Team7 Yingxin Liu
+     * @param button_name The name of the button that calls this function
+     */
+    private void createConfirmDialog(String button_name) {
+        logger.debug("create confirm dialog from name: " + button_name);
+        // set the style of dialog include: [font|color of title, background, size, position]
+        TextureRegionDrawable styleImage = new TextureRegionDrawable(ServiceLocator.getResourceService()
+                .getAsset("images/eviction_menu/confirmBox.png", Texture.class));
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
+        Window dialog = new Window("", windowStyle);
+        dialog.setModal(true);    // The dialog is always at the front
         float dialog_size_x = (float) (stage.getWidth() * 0.2537);
         float dialog_size_y = (float) (stage.getHeight() * 0.3037);
         dialog.setSize(dialog_size_x, dialog_size_y);
         float dialog_pos_x = (float) (stage.getWidth() * 0.3756);
         float dialog_pos_y = (float) (stage.getHeight() * (1-0.65));
         dialog.setPosition(dialog_pos_x, dialog_pos_y);
-        // set effect of buttons
-        Button.ButtonStyle yesStyle = new Button.ButtonStyle();
-        yesStyle.up = new TextureRegionDrawable(ServiceLocator.getResourceService()
-                .getAsset("images/eviction_menu/confirmBtn_ok.png",Texture.class));
-        yesStyle.over = new TextureRegionDrawable(ServiceLocator.getResourceService()
-                .getAsset("images/eviction_menu/confirmBtn_ok1.png",Texture.class));
-        Button yesButton = new Button(yesStyle);
 
-        Button.ButtonStyle cancelStyle = new Button.ButtonStyle();
-        cancelStyle.up = new TextureRegionDrawable(ServiceLocator.getResourceService()
-                .getAsset("images/eviction_menu/confirmBtn_cancel.png",Texture.class));
-        cancelStyle.over = new TextureRegionDrawable(ServiceLocator.getResourceService()
-                .getAsset("images/eviction_menu/confirmBtn_cancel1.png",Texture.class));
-        Button cancelButton = new Button(cancelStyle);
-
-        yesButton.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("ok_button from " + button_name + " clicked");
-                        // Actions
-                        dialog.remove();
-                    }
-                });
-
-        cancelButton.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("cancel_button from " + button_name + " clicked");
-                        dialog.remove();
-                    }
-                });
-        // adding buttons into dialog
+        // Set Cancel and Ok buttons for dialog
+        Button cancelButton = createButton("images/eviction_menu/confirmBtn_cancel.png",
+                "images/eviction_menu/confirmBtn_cancel1.png");
         cancelButton.setSize((float) (dialog_size_x * 0.361), (float) (dialog_size_y * 0.2317));
-        cancelButton.setPosition((float) (dialog.getWidth()*0.1067), 0);
-        yesButton.setSize((float) (dialog_size_x * 0.377), (float) (dialog_size_y * 0.2317));
-        yesButton.setPosition((float) (dialog.getWidth()*0.5239), 0);
-        dialog.addActor(cancelButton); dialog.addActor(yesButton);
+        cancelButton.setPosition((float) (dialog.getWidth() * 0.1067), 0);
+        cancelButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("cancel_button from " + button_name + " clicked");
+                dialog.remove();
+            }
+        });
+
+        Button okButton = createButton("images/eviction_menu/confirmBtn_ok.png",
+                "images/eviction_menu/confirmBtn_ok1.png");
+        okButton.setSize((float) (dialog_size_x * 0.377), (float) (dialog_size_y * 0.2317));
+        okButton.setPosition((float) (dialog.getWidth() * 0.5239), 0);
+        okButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("yes_button from " + button_name + " clicked");
+                // No action yet
+                dialog.remove();
+            }
+        });
+
+        dialog.addActor(cancelButton);
+        dialog.addActor(okButton);
         stage.addActor(dialog);
+    }
+
+    /**
+     * create a button where include an image and can change state when the mouse hovering
+     * @author Team7: Yingxin Liu  Shaohui Wang
+     * @param Up   path of image: The style of the button in its normal state
+     * @param Down path of image: The style of the button when mouse hovering
+     * @return a Button with up and down style
+     */
+    private Button createButton(String Up, String Down) {
+        logger.debug("createButton with path:" + Up + Down);
+        ResourceService resService = ServiceLocator.getResourceService();
+        TextureRegionDrawable up = new TextureRegionDrawable(resService.getAsset(Up, Texture.class));
+        TextureRegionDrawable down = new TextureRegionDrawable(resService.getAsset(Down, Texture.class));
+        Button.ButtonStyle style = new Button.ButtonStyle();
+        style.up = up;
+        style.over = down;
+        return new Button(style);
     }
 }
 
