@@ -27,7 +27,10 @@ public class NpcEvictionMenu extends ScreenAdapter {
             "images/eviction_menu/evictionMenu_background.png",
             "images/eviction_menu/confirmBox.png",
             "images/eviction_menu/confirmBtn_ok.png", "images/eviction_menu/confirmBtn_ok1.png",
-            "images/eviction_menu/confirmBtn_cancel.png","images/eviction_menu/confirmBtn_cancel1.png" };
+            "images/eviction_menu/confirmBtn_cancel.png","images/eviction_menu/confirmBtn_cancel1.png",
+            "images/eviction_menu/selectButton_single.png","images/eviction_menu/selectButton_selected.png",
+            "images/eviction_menu/exitButton.png","images/eviction_menu/exitButton_selected.png",
+            "images/eviction_menu/evictionCard_single.png"};
     public NpcEvictionMenu(GdxGame game) {
         this.game = game;
 
