@@ -63,6 +63,7 @@ public class PlayerActions extends Component {
     moving = false;
   }
 
+
   /**
    * Makes the player attack.
    */
