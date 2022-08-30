@@ -1,4 +1,4 @@
-package com.deco2800.game.input;
+package com.deco2800.game.events.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;

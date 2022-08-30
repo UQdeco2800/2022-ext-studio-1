@@ -1,4 +1,4 @@
-package com.deco2800.game.input;
+package com.deco2800.game.events.input;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.ui.terminal.KeyboardTerminalInputComponent;
 import org.slf4j.Logger;

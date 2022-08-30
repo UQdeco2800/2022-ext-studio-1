@@ -1,4 +1,4 @@
-package com.deco2800.game.input;
+package com.deco2800.game.events.input;
 
 import com.deco2800.game.components.player.TouchPlayerInputComponent;
 import com.deco2800.game.ui.terminal.TouchTerminalInputComponent;
