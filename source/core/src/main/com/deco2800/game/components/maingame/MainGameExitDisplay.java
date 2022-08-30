@@ -1,10 +1,15 @@
 package com.deco2800.game.components.maingame;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +22,7 @@ public class MainGameExitDisplay extends UIComponent {
   private static final float Z_INDEX = 2f;
   private Table table;
 
+
   @Override
   public void create() {
     super.create();
@@ -28,7 +34,10 @@ public class MainGameExitDisplay extends UIComponent {
     table.top().right();
     table.setFillParent(true);
 
+
     TextButton mainMenuBtn = new TextButton("Exit", skin);
+
+    TextButton inventoryButton = new TextButton("Inventory", skin);
 
     // Triggers an event when the button is pressed.
     mainMenuBtn.addListener(
@@ -40,7 +49,23 @@ public class MainGameExitDisplay extends UIComponent {
         }
       });
 
+
+
+    inventoryButton.addListener(
+            new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent event, Actor actor) {
+                logger.debug("Inventory button clicked");
+                entity.getEvents().trigger("InventoryScreen");
+              }
+            });
+
+
+
     table.add(mainMenuBtn).padTop(10f).padRight(10f);
+    table.row();
+    table.add(inventoryButton).padTop(10f).padRight(10f);
+    table.row();
 
     stage.addActor(table);
   }

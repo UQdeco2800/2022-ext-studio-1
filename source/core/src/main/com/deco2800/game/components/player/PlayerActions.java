@@ -5,9 +5,13 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.ServiceLocator;
+
+import java.util.HashMap;
+
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
  * and when triggered should call methods within this class.
@@ -18,6 +22,14 @@ public class PlayerActions extends Component {
   private PhysicsComponent physicsComponent;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
+
+  private boolean inventoryOpen = false;
+
+  private GdxGame game;
+
+  private InventoryDisplayComponent playerInventory;
+
+
 
   @Override
   public void create() {
@@ -70,9 +82,33 @@ public class PlayerActions extends Component {
     Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
     attackSound.play();
   }
+
+
+  /**
+   * Opens and closes the inventory.
+   */
   void openInventory() {
-    Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    if (inventoryOpen == true) {
+      inventoryOpen = false;
+      //Gdx.gl.glClearColor(1,2,3,4);
+      //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+      playerInventory.destroyInventory();
+
+
+
+
+    } else {
+      inventoryOpen = true;
+      //Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
+      //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+      playerInventory = new InventoryDisplayComponent();
+      //System.out.println(entity.getComponent(InventoryComponent.class).getInventory());
+
+    }
   }
+
+
+
+
 }
 
