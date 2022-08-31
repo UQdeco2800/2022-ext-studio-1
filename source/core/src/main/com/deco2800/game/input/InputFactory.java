@@ -1,4 +1,4 @@
-package com.deco2800.game.events.input;
+package com.deco2800.game.input;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
