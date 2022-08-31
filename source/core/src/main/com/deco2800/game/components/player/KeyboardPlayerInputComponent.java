@@ -5,7 +5,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.events.input.InputComponent;
 import com.deco2800.game.utils.math.Vector2Utils;
-
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
  * This input handler only uses keyboard input.
@@ -29,18 +28,22 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W:
         walkDirection.add(Vector2Utils.UP);
         triggerWalkEvent();
+        entity.getEvents().trigger(("upStart"));
         return true;
       case Keys.A:
         walkDirection.add(Vector2Utils.LEFT);
         triggerWalkEvent();
+        entity.getEvents().trigger(("leftStart"));
         return true;
       case Keys.S:
         walkDirection.add(Vector2Utils.DOWN);
         triggerWalkEvent();
+        entity.getEvents().trigger(("downStart"));
         return true;
       case Keys.D:
         walkDirection.add(Vector2Utils.RIGHT);
         triggerWalkEvent();
+        entity.getEvents().trigger(("rightStart"));
         return true;
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
@@ -65,18 +68,22 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W:
         walkDirection.sub(Vector2Utils.UP);
         triggerWalkEvent();
+        entity.getEvents().trigger(("stand"));
         return true;
       case Keys.A:
         walkDirection.sub(Vector2Utils.LEFT);
         triggerWalkEvent();
+        entity.getEvents().trigger(("stand"));
         return true;
       case Keys.S:
         walkDirection.sub(Vector2Utils.DOWN);
         triggerWalkEvent();
+        entity.getEvents().trigger(("stand"));
         return true;
       case Keys.D:
         walkDirection.sub(Vector2Utils.RIGHT);
         triggerWalkEvent();
+        entity.getEvents().trigger(("stand"));
         return true;
       default:
         return false;

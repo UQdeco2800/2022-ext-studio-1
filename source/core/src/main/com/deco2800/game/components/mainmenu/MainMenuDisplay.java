@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A ui component for displaying the Main menu.
+ * An ui component for displaying the Main menu.
  */
 public class MainMenuDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
@@ -35,7 +35,9 @@ public class MainMenuDisplay extends UIComponent {
                 .getAsset("images/box_boy_title.png", Texture.class));
 
     TextButton startBtn = new TextButton("Start", skin);
+    TextButton storyline = new TextButton("storyline", skin);
     TextButton loadBtn = new TextButton("Load", skin);
+    TextButton achievementsBtn = new TextButton("Achievements", skin);
     TextButton settingsBtn = new TextButton("Settings", skin);
     TextButton exitBtn = new TextButton("Exit", skin);
 
@@ -49,6 +51,15 @@ public class MainMenuDisplay extends UIComponent {
           }
         });
 
+    storyline.addListener(
+            new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    logger.debug("storyline button clicked");
+                    entity.getEvents().trigger("storyline");
+                }
+            });
+
     loadBtn.addListener(
         new ChangeListener() {
           @Override
@@ -57,6 +68,16 @@ public class MainMenuDisplay extends UIComponent {
             entity.getEvents().trigger("load");
           }
         });
+
+    achievementsBtn.addListener(
+            new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    logger.debug("Achievements button clicking");
+                    entity.getEvents().trigger("achievements");
+                }
+            }
+    );
 
     settingsBtn.addListener(
         new ChangeListener() {
@@ -71,7 +92,6 @@ public class MainMenuDisplay extends UIComponent {
         new ChangeListener() {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
-
             logger.debug("Exit button clicked");
             entity.getEvents().trigger("exit");
           }
@@ -81,7 +101,13 @@ public class MainMenuDisplay extends UIComponent {
     table.row();
     table.add(startBtn).padTop(30f);
     table.row();
+
+    table.add(storyline).padTop(15f);
+    table.row();
+
     table.add(loadBtn).padTop(15f);
+    table.row();
+    table.add(achievementsBtn).padTop(15f);
     table.row();
     table.add(settingsBtn).padTop(15f);
     table.row();
@@ -90,19 +116,19 @@ public class MainMenuDisplay extends UIComponent {
     stage.addActor(table);
   }
 
-  @Override
-  public void draw(SpriteBatch batch) {
-    // draw is handled by the stage
-  }
+    @Override
+    public void draw(SpriteBatch batch) {
+        // draw is handled by the stage
+    }
 
-  @Override
-  public float getZIndex() {
-    return Z_INDEX;
-  }
+    @Override
+    public float getZIndex() {
+        return Z_INDEX;
+    }
 
-  @Override
-  public void dispose() {
-    table.clear();
-    super.dispose();
-  }
+    @Override
+    public void dispose() {
+        table.clear();
+        super.dispose();
+    }
 }
