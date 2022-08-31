@@ -1,6 +1,7 @@
 package com.deco2800.game.input;
 
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
+import com.deco2800.game.events.input.KeyboardInputFactory;
 import com.deco2800.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
