@@ -36,6 +36,7 @@ public class MainMenuDisplay extends UIComponent {
 
     TextButton startBtn = new TextButton("Start", skin);
     TextButton storyline = new TextButton("storyline", skin);
+    TextButton mapBtn = new TextButton("map", skin);
     TextButton loadBtn = new TextButton("Load", skin);
     TextButton achievementsBtn = new TextButton("Achievements", skin);
     TextButton settingsBtn = new TextButton("Settings", skin);
@@ -59,6 +60,15 @@ public class MainMenuDisplay extends UIComponent {
                     entity.getEvents().trigger("storyline");
                 }
             });
+
+      mapBtn.addListener(
+              new ChangeListener() {
+                  @Override
+                  public void changed(ChangeEvent changeEvent, Actor actor) {
+                      logger.debug("map button clicked");
+                      entity.getEvents().trigger("map");
+                  }
+              });
 
     loadBtn.addListener(
         new ChangeListener() {
@@ -103,6 +113,8 @@ public class MainMenuDisplay extends UIComponent {
     table.row();
 
     table.add(storyline).padTop(15f);
+    table.row();
+    table.add(mapBtn).padTop(15f);
     table.row();
 
     table.add(loadBtn).padTop(15f);

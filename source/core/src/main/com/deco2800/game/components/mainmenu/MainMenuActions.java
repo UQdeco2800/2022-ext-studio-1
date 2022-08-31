@@ -23,6 +23,7 @@ public class MainMenuActions extends Component {
 
     entity.getEvents().addListener("load", this::onLoad);
     entity.getEvents().addListener("storyline", this::onStoryline);
+    entity.getEvents().addListener("map", this::onMap);
     entity.getEvents().addListener("achievements", this::onAchievements);
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("exit", this::onExit);
@@ -47,6 +48,11 @@ public class MainMenuActions extends Component {
   private void onStoryline() {
     logger.info("Start game");
     game.setScreen(GdxGame.ScreenType.STORYLINE);
+  }
+
+  private void onMap() {
+    logger.info("Launching map screen");
+    game.setScreen(GdxGame.ScreenType.MAP);
   }
 
 

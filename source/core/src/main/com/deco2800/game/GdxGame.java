@@ -77,13 +77,15 @@ public class GdxGame extends Game {
         return new SettingsScreen(this);
       case STORYLINE:
         return new StorylineScreen(this);
+      case MAP:
+        return new MapScreen(this);
       default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, NPC_EVICTION_MENU, ACHIEVEMENTS, STORYLINE, SETTINGS
+    MAIN_MENU, MAIN_GAME, NPC_EVICTION_MENU, ACHIEVEMENTS, STORYLINE, SETTINGS, MAP
   }
 
   /**
