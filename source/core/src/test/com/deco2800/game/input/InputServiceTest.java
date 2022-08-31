@@ -1,8 +1,6 @@
 package com.deco2800.game.input;
 
 import com.badlogic.gdx.math.Vector2;
-import com.deco2800.game.events.input.InputComponent;
-import com.deco2800.game.events.input.InputService;
 import com.deco2800.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

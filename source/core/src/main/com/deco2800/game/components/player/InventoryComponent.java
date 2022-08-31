@@ -21,10 +21,6 @@ public class InventoryComponent extends Component {
     setGold(gold);
   }
 
-  public HashMap<Integer, Integer> getInventory() {
-    return inventoryHashMap;
-  }
-
   /**
    * Returns the player's gold.
    *
@@ -65,5 +61,3 @@ public class InventoryComponent extends Component {
     setGold(this.gold + gold);
   }
 }
-
-
