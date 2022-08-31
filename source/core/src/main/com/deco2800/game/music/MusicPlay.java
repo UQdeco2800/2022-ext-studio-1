@@ -9,7 +9,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class MusicTest {
+public class MusicPlay {
 
     public static final String MUSIC_FILE = "https://github.com/UQdeco2800/2022-ext-studio-1/blob/main/source/core/src/main/com/deco2800/game/music/LaboratoryBGM.wav";
 
