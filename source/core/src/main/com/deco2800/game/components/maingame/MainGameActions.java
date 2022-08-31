@@ -48,5 +48,4 @@ public class MainGameActions extends Component {
     //game.setScreen(GdxGame.ScreenType.INVENTORY_SCREEN);
     playerInventory = new InventoryDisplayComponent();
   }
-
 }
