@@ -11,17 +11,23 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class MusicTest {
 
-    public static final String MUSIC_FILE = "D:/王姝慧/UQ/DECO/2022-ext-studio-1/BGM/The_Storm_-_Infraction.mp3";
+    public static final String MUSIC_FILE = "https://github.com/UQdeco2800/2022-ext-studio-1/blob/main/source/core/src/main/com/deco2800/game/music/LaboratoryBGM.wav";
 
     public static void main(String[] args) throws LineUnavailableException,
             UnsupportedAudioFileException, IOException {
 
-        // 获取音频输入流
+         /*
+          * Gets the audio input stream
+          /
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(MUSIC_FILE));
-        // 获取音频编码对象
+         /*
+          * Gets the audio encoding object
+          */
         AudioFormat audioFormat = audioInputStream.getFormat();
 
-        // 设置数据输入
+         /*
+          * Set up data entry
+          */
         DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class,
                 audioFormat, AudioSystem.NOT_SPECIFIED);
         SourceDataLine sourceDataLine =
@@ -30,7 +36,7 @@ public class MusicTest {
         sourceDataLine.start();
 
         /*
-         * 从输入流中读取数据发送到混音器
+         * Read data from the input stream and send it to the mixer
          */
         int count;
         byte tempBuffer[] = new byte[1024];
@@ -40,7 +46,9 @@ public class MusicTest {
             }
         }
 
-        // 清空数据缓冲,并关闭输入
+         /*
+         * Empty the data buffer and turn off the input
+         */
         sourceDataLine.drain();
         sourceDataLine.close();
     }
