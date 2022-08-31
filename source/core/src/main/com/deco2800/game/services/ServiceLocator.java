@@ -1,7 +1,7 @@
 package com.deco2800.game.services;
 
 import com.deco2800.game.entities.EntityService;
-import com.deco2800.game.events.input.InputService;
+import com.deco2800.game.input.InputService;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
 import org.slf4j.Logger;

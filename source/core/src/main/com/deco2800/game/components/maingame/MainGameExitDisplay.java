@@ -47,8 +47,6 @@ public class MainGameExitDisplay extends UIComponent {
     Button npcMenuBtn = new Button(styleEvictionMenu);
     TextButton mainMenuBtn = new TextButton("Exit", skin);
 
-    TextButton inventoryButton = new TextButton("Inventory", skin);
-
     // Triggers an event when the button is pressed.
     mainMenuBtn.addListener(
       new ChangeListener() {
@@ -67,22 +65,8 @@ public class MainGameExitDisplay extends UIComponent {
               }
             });
 
-
-
-    inventoryButton.addListener(
-            new ChangeListener() {
-              @Override
-              public void changed(ChangeEvent event, Actor actor) {
-                logger.debug("Inventory button clicked");
-                entity.getEvents().trigger("InventoryScreen");
-              }
-            });
-
-
-
     table.add(mainMenuBtn).padTop(10f).padRight(10f);
     table.row();
-    table.add(inventoryButton).padTop(10f).padRight(10f);
     table.add(npcMenuBtn).padTop(15f).width(NPC_MENU_BUTTON_WIDTH).height(NPC_MENU_BUTTON_HEIGHT);
     table.row();
 

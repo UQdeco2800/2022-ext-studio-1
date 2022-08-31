@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.player.InventoryComponent;
-import com.deco2800.game.components.player.InventoryDisplayComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -53,8 +52,5 @@ public class AddToInventoryComponent extends Component {
     Entity self = ((BodyUserData) me.getBody().getUserData()).entity;
     self.setEnabled(false);
     self.getComponent(TextureRenderComponent.class).dispose();
-
   }
-
 }
-
