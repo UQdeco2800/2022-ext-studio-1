@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.services.ServiceLocator;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ public class MainGameExitDisplay extends UIComponent {
   private Table table;
   private static final int NPC_MENU_BUTTON_WIDTH = 200;
   private static final int NPC_MENU_BUTTON_HEIGHT = 150;
+
   @Override
   public void create() {
     super.create();
@@ -45,7 +47,10 @@ public class MainGameExitDisplay extends UIComponent {
             ServiceLocator.getResourceService()
             .getAsset("images/eviction_menu/menuIcon_white.png",Texture.class));
     Button npcMenuBtn = new Button(styleEvictionMenu);
+
     TextButton mainMenuBtn = new TextButton("Exit", skin);
+
+    TextButton inventoryButton = new TextButton("Inventory", skin);
 
     // Triggers an event when the button is pressed.
     mainMenuBtn.addListener(
@@ -65,9 +70,25 @@ public class MainGameExitDisplay extends UIComponent {
               }
             });
 
+
+
+    inventoryButton.addListener(
+            new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent event, Actor actor) {
+                logger.debug("Inventory button clicked");
+                entity.getEvents().trigger("InventoryScreen");
+              }
+            });
+
+
+
     table.add(mainMenuBtn).padTop(10f).padRight(10f);
     table.row();
     table.add(npcMenuBtn).padTop(15f).width(NPC_MENU_BUTTON_WIDTH).height(NPC_MENU_BUTTON_HEIGHT);
+    table.row();
+    table.row();
+    table.add(inventoryButton).padTop(10f).padRight(10f);
     table.row();
 
     stage.addActor(table);
