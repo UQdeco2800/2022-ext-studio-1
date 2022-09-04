@@ -22,23 +22,23 @@ import com.deco2800.game.rendering.TextureRenderComponent;
  * "ItemConfigs".
  */
 public class ItemFactory {
+
   /**
    * Creates an item entity.
    *
    * @param target entity to chase
    * @return entity
    */
-  public static Entity createItem(Entity target) {
+  public static Entity createItem(Entity target, String texturePath) {
     Entity item = createBaseItem(target);
 
     item
-        /** .addComponent(new CombatStatsComponent(config.health, config.baseAttack)) */
-        .addComponent(new TextureRenderComponent("images/heart.png"))
+        .addComponent(new TextureRenderComponent(texturePath))
         .addComponent(new ColliderComponent());
     return item;
   }
   /**
-   * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
+   * Creates a generic item to be used as a base entity by more specific item creation methods.
    *
    * @return entity
    */
@@ -59,7 +59,7 @@ public class ItemFactory {
     return item;
   }
 
-  private ItemFactory() {
+  public ItemFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }
 }
