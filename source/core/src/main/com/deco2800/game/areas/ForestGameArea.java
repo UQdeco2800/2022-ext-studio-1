@@ -52,7 +52,7 @@ public class ForestGameArea extends GameArea {
      "images/left_1.png",
      "images/right_0.png",
      "images/right_1.png",
-     "images/inventory/timer_item.png"
+     "images/inventory/time_item.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas","images/player.atlas"
@@ -139,7 +139,7 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
   private void spawnTimeConsumeableItem() {
-    Entity item = ConsumableItemFactory.createItem(player, "images/inventory/timer_item.png");
+    Entity item = ConsumableItemFactory.createItem(player, "images/inventory/time_item.png");
 
     spawnEntityAt(item, new GridPoint2(5, 10), true, true);
   }
