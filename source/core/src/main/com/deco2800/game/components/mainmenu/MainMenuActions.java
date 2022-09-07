@@ -21,8 +21,12 @@ public class MainMenuActions extends Component {
   public void create() {
     entity.getEvents().addListener("start", this::onStart);
 
-    entity.getEvents().addListener("exit", this::onExit);
+    entity.getEvents().addListener("load", this::onLoad);
+    entity.getEvents().addListener("storyline", this::onStoryline);
+    entity.getEvents().addListener("map", this::onMap);
+    entity.getEvents().addListener("achievements", this::onAchievements);
     entity.getEvents().addListener("settings", this::onSettings);
+    entity.getEvents().addListener("exit", this::onExit);
   }
 
   /**
@@ -31,9 +35,34 @@ public class MainMenuActions extends Component {
   private void onStart() {
     logger.info("Start game");
     game.setScreen(GdxGame.ScreenType.MAIN_GAME);
-
   }
 
+  /**
+   * Swaps to the Achievements screen.
+   */
+  private void onAchievements() {
+    logger.info("Launching achievements screen");
+    game.setScreen(GdxGame.ScreenType.ACHIEVEMENTS);
+  }
+
+  private void onStoryline() {
+    logger.info("Start game");
+    game.setScreen(GdxGame.ScreenType.STORYLINE);
+  }
+
+  private void onMap() {
+    logger.info("Launching map screen");
+    game.setScreen(GdxGame.ScreenType.MAP);
+  }
+
+
+  /**
+   * Intended for loading a saved game state.
+   * Load functionality is not actually implemented.
+   */
+  private void onLoad() {
+    logger.info("Load game");
+  }
 
   /**
    * Exits the game.

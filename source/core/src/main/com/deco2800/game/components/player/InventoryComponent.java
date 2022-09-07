@@ -3,6 +3,7 @@ package com.deco2800.game.components.player;
 import com.deco2800.game.components.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.HashMap;
 
 /**
  * A component intended to be used by the player to track their inventory.
@@ -14,8 +15,14 @@ public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private int gold;
 
+  public HashMap<Integer, Integer> inventoryHashMap = new HashMap<Integer, Integer>();
+
   public InventoryComponent(int gold) {
     setGold(gold);
+  }
+
+  public HashMap<Integer, Integer> getInventory() {
+    return inventoryHashMap;
   }
 
   /**
@@ -58,3 +65,5 @@ public class InventoryComponent extends Component {
     setGold(this.gold + gold);
   }
 }
+
+

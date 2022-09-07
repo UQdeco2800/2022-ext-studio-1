@@ -63,6 +63,20 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         Button exitBtn = createButton(IMAGE_PATH+"exitButton.png",IMAGE_PATH+"exitButton_selected.png");
         exitBtn.setSize((float) (backgroundWidth * ((1493.33 - 1436.67) / 1600)), (float) (backgroundHeight * (53.33 / 900)));
         exitBtn.setPosition((float) (backgroundWidth * 0.887), (float) (backgroundHeight * (1 - 153.33 / 900)));
+        
+                new Image(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/eviction_menu/evictionMenu_background.png", Texture.class));
+
+
+        Table menuNpcs = makeNpcCards();
+        /** build new style exit button */
+
+        Button exitBtn = createButton("images/eviction_menu/exitButton.png",
+                "images/eviction_menu/exitButton_selected.png");
+        exitBtn.setPosition((float) (stage.getWidth() * 0.928), (float) (stage.getHeight() * (1-0.1704)));
+        exitBtn.setSize((float) (stage.getWidth()*0.035), (float) (stage.getHeight()*0.0593));
+        
         exitBtn.addListener(
                 new ChangeListener() {
                     @Override
