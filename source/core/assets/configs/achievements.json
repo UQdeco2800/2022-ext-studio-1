@@ -1,0 +1,11 @@
+{
+  "achievements": [
+    {
+      "name": "demo",
+      "path": "images/treasurer.png",
+      "condition": {
+        "item": 1
+      }
+    }
+  ]
+}
