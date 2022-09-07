@@ -4,7 +4,7 @@ import com.deco2800.game.services.ServiceLocator;
 import com.badlogic.gdx.audio.Music;
 
 public class MusicStuff {
-    public void MusicStuff(String path, boolean loop) {
+    public static void playMusic(String path, boolean loop) {
         Music music = ServiceLocator.getResourceService().getAsset(path, Music.class);
         music.setLooping(loop);
         music.setVolume(0.3f);
