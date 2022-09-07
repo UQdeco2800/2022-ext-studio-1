@@ -26,6 +26,7 @@ public class countdownDisplay extends UIComponent {
         addActors();
     }
 
+    // https://youtu.be/gqxkeKaw1MY used to help code countdown part.
     @Override
     public void update() {
         super.update();
@@ -44,7 +45,7 @@ public class countdownDisplay extends UIComponent {
 //        BitmapFont myFont = new BitmapFont(Gdx.files.internal());
 //        counterLabelStyle.font = myFont;
 //        counterLabelStyle.fontColor = Color.YELLOW;
-//
+
         counterLabel = new Label(String.valueOf(timeRemaining), counterLabelStyle);
         counterLabel.setPosition((float) (stage.getWidth() * 0.9), (float) (stage.getHeight() * 0.1));
         counterLabel.setSize((float) (stage.getWidth() * 0.05), (float) (stage.getHeight() * 0.03));
