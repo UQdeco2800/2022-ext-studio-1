@@ -1,31 +1,14 @@
-import java.io.File;
-import java.applet.AudioClip;
-import javax.sound.sampled.*;
+package com.deco2800.game.music;
 
-public class musicStuff {
-    void playMusic(String musicLocation)
-    {
-        try
-        {
-            File musicPath = new File(musicLocation);
+import com.deco2800.game.services.ServiceLocator;
+import com.badlogic.gdx.audio.Music;
 
-            if(musicPath.exists())
-            {
-                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioInput);
-                clip.start();
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-            }
-            else
-            {
+public class MusicStuff {
 
-            }
-        }
-        catch(Exception ex)
-        {
-            ex.printStackTrace();
-        }
+    public void playMusic(String path, boolean loop) {
+        Music music = ServiceLocator.getResourceService().getAsset(path, Music.class);
+        music.setLooping(loop);
+        music.setVolume(0.3f);
+        music.play();
     }
-
 }
