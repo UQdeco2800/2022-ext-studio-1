@@ -1,4 +1,4 @@
-package com.deco2800.game.components.countdownClock;
+package com.deco2800.game.components.countDownClock;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
