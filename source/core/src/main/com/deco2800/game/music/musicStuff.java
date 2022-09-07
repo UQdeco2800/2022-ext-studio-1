@@ -5,6 +5,10 @@ import com.badlogic.gdx.audio.Music;
 
 public class MusicStuff {
 
+    public MusicStuff(){
+
+    }
+
     public void playMusic(String path, boolean loop) {
         Music music = ServiceLocator.getResourceService().getAsset(path, Music.class);
         music.setLooping(loop);
