@@ -79,13 +79,15 @@ public class GdxGame extends Game {
         return new StorylineScreen(this);
       case MAP:
         return new MapScreen(this);
+      case COUNTDOWN_SCREEN:
+        return new CountdownScreen(this);
       default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, NPC_EVICTION_MENU, ACHIEVEMENTS, STORYLINE, SETTINGS, MAP
+    MAIN_MENU, MAIN_GAME, NPC_EVICTION_MENU, ACHIEVEMENTS, STORYLINE, SETTINGS, MAP, COUNTDOWN_SCREEN
   }
 
   /**
