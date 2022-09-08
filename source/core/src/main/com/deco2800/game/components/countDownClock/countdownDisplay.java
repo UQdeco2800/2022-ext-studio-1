@@ -64,6 +64,11 @@ public class countdownDisplay extends UIComponent {
     }
 
     @Override
+    public void update() {
+        stage.act(ServiceLocator.getTimeSource().getDeltaTime());
+    }
+
+    @Override
     protected void draw(SpriteBatch batch) {
 
     }
