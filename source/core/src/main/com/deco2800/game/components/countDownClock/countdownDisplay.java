@@ -21,12 +21,12 @@ public class countdownDisplay extends UIComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(countdownDisplay.class);
     private final GdxGame game;
-    private int timeRemaining;
+    private float timeRemaining;
     private float timeCount;
     public countdownDisplay(GdxGame game) {
         super();
         this.game = game;
-        timeRemaining = 300;
+        timeRemaining = 30;
         timeCount = 0;
     }
     Label counterLabel;
@@ -42,11 +42,18 @@ public class countdownDisplay extends UIComponent {
     public void update() {
         super.update();
         timeCount = Gdx.graphics.getDeltaTime();
-        if (timeCount >= 1) {
-            timeRemaining--;
+//        if (timeCount >= 1) {
+//            timeRemaining--;
+//            counterLabel.setText(String.valueOf(timeRemaining));
+//            timeCount = 0;
+//        }
+        if (timeRemaining <= 0) {
+            counterLabel.setText("GAME OVER!");
+        } else {
+            timeRemaining -= timeCount;
             counterLabel.setText(String.valueOf(timeRemaining));
-            timeCount = 0;
         }
+
 
     }
 
