@@ -57,13 +57,13 @@ public class MainGameExitDisplay extends UIComponent {
     /**
      * Button to go to countdown scree
      */
-    Button.ButtonStyle styleCountdown = new Button.ButtonStyle();
-    styleCountdown.over = new TextureRegionDrawable(
-            ServiceLocator.getResourceService()
-                    .getAsset("images/countdown_clock/clock.png", Texture.class)
-    );
-
-    Button countdownBtn = new Button(styleCountdown);
+//    Button.ButtonStyle styleCountdown = new Button.ButtonStyle();
+//    styleCountdown.over = new TextureRegionDrawable(
+//            ServiceLocator.getResourceService()
+//                    .getAsset("images/countdown_clock/clock.png", Texture.class)
+//    );
+//
+//    Button countdownBtn = new Button(styleCountdown);
     /**
      * countdown button code block ends here.
      */
@@ -100,15 +100,15 @@ public class MainGameExitDisplay extends UIComponent {
     /**
      * Event listener for countdown button
      */
-    countdownBtn.addListener(
-            new ChangeListener() {
-              @Override
-              public void changed(ChangeEvent event, Actor actor) {
-                logger.debug("countdown button clicked");
-                entity.getEvents().trigger("CountdownScreen");
-              }
-            }
-    );
+//    countdownBtn.addListener(
+//            new ChangeListener() {
+//              @Override
+//              public void changed(ChangeEvent event, Actor actor) {
+//                logger.debug("countdown button clicked");
+//                entity.getEvents().trigger("CountdownScreen");
+//              }
+//            }
+//    );
 
 
 
@@ -120,8 +120,8 @@ public class MainGameExitDisplay extends UIComponent {
     table.add(inventoryButton).padTop(10f).padRight(10f);
     table.row();
     // Add countdown button to table.
-    table.add(countdownBtn).padTop(20f).padRight(10f);
-    table.row();
+//    table.add(countdownBtn).padTop(20f).padRight(10f);
+//    table.row();
     //
 
     stage.addActor(table);
