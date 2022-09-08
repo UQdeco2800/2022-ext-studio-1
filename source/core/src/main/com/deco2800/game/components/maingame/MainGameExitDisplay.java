@@ -62,8 +62,8 @@ public class MainGameExitDisplay extends UIComponent {
 //            ServiceLocator.getResourceService()
 //                    .getAsset("images/countdown_clock/clock.png", Texture.class)
 //    );
-//
-//    Button countdownBtn = new Button(styleCountdown);
+
+    Button countdownBtn = new TextButton("Countdown", skin);
     /**
      * countdown button code block ends here.
      */
@@ -100,15 +100,15 @@ public class MainGameExitDisplay extends UIComponent {
     /**
      * Event listener for countdown button
      */
-//    countdownBtn.addListener(
-//            new ChangeListener() {
-//              @Override
-//              public void changed(ChangeEvent event, Actor actor) {
-//                logger.debug("countdown button clicked");
-//                entity.getEvents().trigger("CountdownScreen");
-//              }
-//            }
-//    );
+    countdownBtn.addListener(
+            new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent event, Actor actor) {
+                logger.debug("countdown button clicked");
+                entity.getEvents().trigger("CountdownScreen");
+              }
+            }
+    );
 
 
 
