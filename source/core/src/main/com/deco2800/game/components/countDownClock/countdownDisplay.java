@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.ui.UIComponent;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -61,9 +62,32 @@ public class countdownDisplay extends UIComponent {
         title.setPosition((Gdx.graphics.getWidth()-title.getWidth())/2f,Gdx.graphics.getHeight()-title.getHeight()-15);
 //        counterLabel.setPosition((float) (stage.getWidth() * 0.9), (float) (stage.getHeight() * 0.1));
 //        counterLabel.setSize((float) (stage.getWidth() * 0.05), (float) (stage.getHeight() * 0.03));
+        Table exitScreenBtn = makeExitBtn();
 //
         stage.addActor(title);
+        stage.addActor(exitScreenBtn);
     }
+
+    private void exitScreen() {
+        game.setScreen(ScreenType.MAIN_GAME);
+    }
+    private Table makeExitBtn() {
+        TextButton exitBtn = new TextButton("EXIT", skin);
+
+        exitBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Exit button clicked");
+                        exitScreen();
+                    }
+                });
+
+        Table table = new Table();
+        table.add(exitBtn).expandX().left().pad(0f, 100f, 100f, 0f);
+        return table;
+    }
+
 
     @Override
     protected void draw(SpriteBatch batch) {
