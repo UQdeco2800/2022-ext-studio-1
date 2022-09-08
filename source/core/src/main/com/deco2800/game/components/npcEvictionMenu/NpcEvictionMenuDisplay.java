@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 
@@ -21,15 +23,22 @@ import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+
+/**
+ * An ui component for displaying the npc eviction menu.
+ *
+ * @author 2022-ext-studio-1-Team7
+ */
 public class NpcEvictionMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(NpcEvictionMenuDisplay.class);
 
-    private static final int NUMBER_OF_NPC =8 ;
-    private static float backgroundWidth;
-    private static float backgroundHeight;
+    private static final int NUMBER_OF_NPC = 8;
+    private static float bgWidth;
+    private static float bgHeight;
 
-    private static final String IMAGE_PATH = "images/eviction_menu/";
-    private  ResourceService resourceService;
+    private static final String IMAGE_PATH = "images/eviction_menu/";  //path of team7 images
+    private ResourceService resourceService;
 
     private final GdxGame game;
 
@@ -42,27 +51,29 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
-        backgroundWidth = stage.getWidth();
-        backgroundHeight = stage.getHeight();
+        bgWidth = stage.getWidth();
+        bgHeight = stage.getHeight();
         resourceService = ServiceLocator.getResourceService();
         addActors();
     }
 
-
+    /**
+     * Add actors of eviction_menu to the stage
+     *
+     * @author Team7: Shaohui Wang Yingxin Liu
+     */
     private void addActors() {
         // Adding background
         Image backgroundNpcMenu =
-                new Image(resourceService.getAsset(IMAGE_PATH+"evictionMenu_background.png", Texture.class));
-        backgroundNpcMenu.setSize((float) (backgroundWidth * 0.89), (float) (backgroundHeight * 0.9851));
-        backgroundNpcMenu.setPosition(backgroundWidth / 2, 0, Align.bottom);
+                new Image(resourceService.getAsset(IMAGE_PATH + "evictionMenu_background.png", Texture.class));
+        backgroundNpcMenu.setSize((float) (bgWidth * 0.89), (float) (bgHeight * 0.9851));
+        backgroundNpcMenu.setPosition(bgWidth / 2, 0, Align.bottom);
         stage.addActor(backgroundNpcMenu);
 
-
         // Button for exit the select page, will go back to previous page
-
-        Button exitBtn = createButton(IMAGE_PATH+"exitButton.png",IMAGE_PATH+"exitButton_selected.png");
-        exitBtn.setSize((float) (backgroundWidth * ((1493.33 - 1436.67) / 1600)), (float) (backgroundHeight * (53.33 / 900)));
-        exitBtn.setPosition((float) (backgroundWidth * 0.887), (float) (backgroundHeight * (1 - 153.33 / 900)));
+        Button exitBtn = createButton(IMAGE_PATH + "exitButton.png", IMAGE_PATH + "exitButton_selected.png");
+        exitBtn.setSize((float) (bgWidth * ((1493.33 - 1436.67) / 1600)), (float) (bgHeight * (53.33 / 900)));
+        exitBtn.setPosition((float) (bgWidth * 0.887), (float) (bgHeight * (1 - 153.33 / 900)));
         exitBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -74,58 +85,77 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                 });
         stage.addActor(exitBtn);
 
-
         // Images of cards, Will be updated in later sprints
-        String[] cardImagesUp = { // images for 8 card selected up
-                IMAGE_PATH + "evictionCard_single.png", IMAGE_PATH + "evictionCard_single.png",
-                IMAGE_PATH + "evictionCard_single.png", IMAGE_PATH + "evictionCard_single.png",
-                IMAGE_PATH + "evictionCard_single.png", IMAGE_PATH + "evictionCard_single.png",
-                IMAGE_PATH + "evictionCard_single.png", IMAGE_PATH + "evictionCard_single.png"};
-        String [] cardImagesDown ={ // images for 8 card selected down
+        String[] cardImages = { // images for 8 characters in cards: waiting for Team 1
                 IMAGE_PATH + "evictionCard_single.png", IMAGE_PATH + "evictionCard_single.png",
                 IMAGE_PATH + "evictionCard_single.png", IMAGE_PATH + "evictionCard_single.png",
                 IMAGE_PATH + "evictionCard_single.png", IMAGE_PATH + "evictionCard_single.png",
                 IMAGE_PATH + "evictionCard_single.png", IMAGE_PATH + "evictionCard_single.png"};
 
         // Creating cards and corresponding selected buttons
-        Button[] confirmButton = new Button[NUMBER_OF_NPC];
-        Button[] npcCardButton = new Button[NUMBER_OF_NPC];
+        Button[] buttons = new Button[NUMBER_OF_NPC];
+        Button[] cards = new Button[NUMBER_OF_NPC];
         for (int i = 0; i < NUMBER_OF_NPC; i++) {
-            String index = String.valueOf(i);
+            int index = i;
+            cards[i] = createButton(IMAGE_PATH + "evictionCard_single.png",
+                    IMAGE_PATH + "evictionCard_hover.png");
+            setButton(cards, i, "cardDefault");
+            cards[i].addListener(new InputListener() {
+                @Override  // mouse hovering
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                    setButton(cards, index, "cardHovering");
+                }
 
-            npcCardButton[i] = createButton(cardImagesUp[i], cardImagesDown[i]);
-            npcCardButton[i].setSize((float) (backgroundWidth * (207.26 / 1600)), (float) (backgroundHeight * (284.1 / 900)));
-            if (i < 4) {
-                npcCardButton[i].setPosition((float) (backgroundWidth * ((350.5 + (i * 230.32)) / 1600)), (float) (backgroundHeight * (1 - 436.01 / 900)));
-            } else {
-                npcCardButton[i].setPosition((float) (backgroundWidth * ((350.5 + ((i - 4) * 230.32)) / 1600)), (float) (backgroundHeight * (1 - 757.1 / 900)));
-            }
-            npcCardButton[i].addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent changeEvent, Actor actor) {
-                    logger.debug("npcCard" + index + "clicked");
-                    // No action yet
+                @Override  // default
+                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                    setButton(cards, index, "cardDefault");
+                }
+
+                @Override // clicked
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    logger.debug("card" + index + "clicked");
+                    return true;
                 }
             });
-            stage.addActor(npcCardButton[i]);
+            stage.addActor(cards[i]);
 
-            confirmButton[i] = createButton(IMAGE_PATH + "selectButton_single.png", IMAGE_PATH + "selectButton_selected.png");
-            confirmButton[i].setSize((float) (backgroundWidth * (112.48 / 1600)), (float) (backgroundHeight * (47.5 / 900)));
-            if (i < 4) {
-                confirmButton[i].setPosition((float) (backgroundWidth * ((420.34 + (i * 231.03)) / 1600)), (float) (backgroundHeight * (1 - 465.36 / 900)));
-            } else {
-                confirmButton[i].setPosition((float) (backgroundWidth * ((420.34 + ((i - 4) * 231.03)) / 1600)), (float) (backgroundHeight * (1 - 786.75 / 900)));
-            }
-            confirmButton[i].addListener(new ChangeListener() {
+            buttons[i] = createButton(IMAGE_PATH + "selectButton_single.png", IMAGE_PATH + "selectButton_selected.png");
+            setButton(buttons, i, "selectButton");
+            buttons[i].addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
-                    logger.debug("confirmButton" + index + "clicked");
-                    createConfirmDialog("confirmButton" + index);   // 传入对应的对话框
+                    logger.debug("button" + index + "clicked");
+                    createConfirmDialog("button" + index);
                 }
             });
-            stage.addActor(confirmButton[i]);
+            stage.addActor(buttons[i]);
         }
+    }
 
+
+    /**
+     * set the position and size of the given button <br/>
+     * this is an internal function, do not use it !
+     *
+     * @param buttons set of buttons
+     * @param i       index of the set buttons
+     * @param type    type of button to be set
+     * @author Team7 Yingxin Liu
+     */
+    private void setButton(Button[] buttons, int i, String type) {
+        if (Objects.equals(type, "cardDefault")) {
+            buttons[i].setSize((float) (bgWidth * (207.26 / 1600)), (float) (bgHeight * (283.91 / 900)));
+            buttons[i].setPosition((float) (bgWidth * ((454.13 + ((i % 4) * 230.32)) / 1600)),
+                    (float) (bgHeight * (1 - (295.055 + (i / 4) * 334.09) / 900)), Align.center);
+        } else if (Objects.equals(type, "cardHovering")) {
+            buttons[i].setSize((float) (bgWidth * (235.79 / 1600)), (float) (bgHeight * (323.0 / 900)));
+            buttons[i].setPosition((float) (bgWidth * ((452.135 + ((i % 4) * 230.32)) / 1600)),
+                    (float) (bgHeight * (1 - (294.06 + (i / 4) * 334.09) / 900)), Align.center);
+        } else if (Objects.equals(type, "selectButton")) {
+            buttons[i].setSize((float) (bgWidth * (112.48 / 1600)), (float) (bgHeight * (47.5 / 900)));
+            buttons[i].setPosition((float) (bgWidth * ((420.34 + ((i % 4) * 231.03)) / 1600)),
+                    (float) (bgHeight * (1 - (473.36 + (i / 4) * 335.39) / 900)));
+        }
     }
 
 
@@ -146,11 +176,11 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
         Window dialog = new Window("", windowStyle);
         dialog.setModal(true);    // The dialog is always at the front
-        float dialog_size_x = (float) (backgroundWidth * 0.2537);
-        float dialog_size_y = (float) (backgroundHeight * 0.3037);
+        float dialog_size_x = (float) (bgWidth * 0.2537);
+        float dialog_size_y = (float) (bgHeight * 0.3037);
         dialog.setSize(dialog_size_x, dialog_size_y);
-        float dialog_pos_x = (float) (backgroundWidth * 0.3756);
-        float dialog_pos_y = (float) (backgroundHeight * (1 - 0.65));
+        float dialog_pos_x = (float) (bgWidth * 0.3756);
+        float dialog_pos_y = (float) (bgHeight * (1 - 0.65));
         dialog.setPosition(dialog_pos_x, dialog_pos_y);
 
         // Set Cancel and Ok buttons for dialog
@@ -186,17 +216,17 @@ public class NpcEvictionMenuDisplay extends UIComponent {
      * create a button where include an image and can change state when the mouse hovering
      *
      * @param Up   path of image: The style of the button in its normal state
-     * @param Down path of image: The style of the button when mouse hovering
+     * @param Over path of image: The style of the button when mouse hovering
      * @return a Button with up and down style
      * @author Team7: Yingxin Liu  Shaohui Wang
      */
-    private Button createButton(String Up, String Down) {
-        logger.debug("createButton with path:" + Up + Down);
+    private Button createButton(String Up, String Over) {
+        logger.debug("createButton with path:" + Up + Over);
         TextureRegionDrawable up = new TextureRegionDrawable(resourceService.getAsset(Up, Texture.class));
-        TextureRegionDrawable down = new TextureRegionDrawable(resourceService.getAsset(Down, Texture.class));
+        TextureRegionDrawable over = new TextureRegionDrawable(resourceService.getAsset(Over, Texture.class));
         Button.ButtonStyle style = new Button.ButtonStyle();
         style.up = up;
-        style.over = down;
+        style.over = over;
         return new Button(style);
     }
 
