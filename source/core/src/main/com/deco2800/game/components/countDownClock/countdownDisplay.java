@@ -35,17 +35,17 @@ public class countdownDisplay extends UIComponent {
     }
 
     // https://youtu.be/gqxkeKaw1MY used to help code countdown part.
-    @Override
-    public void update() {
-        super.update();
-        timeCount = Gdx.graphics.getDeltaTime();
-        if (timeCount >= 1) {
-            timeRemaining--;
-            counterLabel.setText(String.valueOf(timeRemaining));
-            timeCount = 0;
-        }
-
-    }
+//    @Override
+//    public void update() {
+//        super.update();
+//        timeCount = Gdx.graphics.getDeltaTime();
+//        if (timeCount >= 1) {
+//            timeRemaining--;
+//            counterLabel.setText(String.valueOf(timeRemaining));
+//            timeCount = 0;
+//        }
+//
+//    }
 
     private void addActors() {
 
@@ -55,10 +55,11 @@ public class countdownDisplay extends UIComponent {
 //        counterLabelStyle.fontColor = Color.YELLOW;
 
 //        counterLabel = new Label(String.valueOf(timeRemaining), counterLabelStyle);
+        counterLabel = new Label("Welcome to the countdown screen", counterLabelStyle);
 //        counterLabel.setPosition((float) (stage.getWidth() * 0.9), (float) (stage.getHeight() * 0.1));
 //        counterLabel.setSize((float) (stage.getWidth() * 0.05), (float) (stage.getHeight() * 0.03));
 //
-//        stage.addActor(counterLabel);
+        stage.addActor(counterLabel);
     }
 
     @Override

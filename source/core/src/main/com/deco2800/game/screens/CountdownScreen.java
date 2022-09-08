@@ -4,7 +4,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.countDownClock.countdownDisplay;
-import com.deco2800.game.components.storyline.StorylineDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -20,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 /** The game screen containing the settings. */
 public class CountdownScreen extends ScreenAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(StorylineScreen.class);
+    private static final Logger logger = LoggerFactory.getLogger(CountdownScreen.class);
 
     private final GdxGame game;
     private final Renderer renderer;
