@@ -105,7 +105,7 @@ public class MainGameExitDisplay extends UIComponent {
               @Override
               public void changed(ChangeEvent event, Actor actor) {
                 logger.debug("countdown button clicked");
-                entity.getEvents().trigger("NpcMenu");
+                entity.getEvents().trigger("CountdownScreen");
               }
             }
     );
