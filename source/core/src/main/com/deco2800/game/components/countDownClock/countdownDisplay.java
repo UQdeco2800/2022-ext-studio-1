@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class countdownDisplay extends UIComponent {
+
+    private static final Logger logger = LoggerFactory.getLogger(countdownDisplay.class);
     private final GdxGame game;
 //    private int timeRemaining;
 //    private float timeCount;
@@ -55,7 +57,7 @@ public class countdownDisplay extends UIComponent {
 //        counterLabelStyle.fontColor = Color.YELLOW;
 
 //        counterLabel = new Label(String.valueOf(timeRemaining), counterLabelStyle);
-        Label title = new Label("Countdown", skin, "countdown");
+        Label title = new Label("Countdown", skin, "title");
         title.setPosition((Gdx.graphics.getWidth()-title.getWidth())/2f,Gdx.graphics.getHeight()-title.getHeight()-15);
 //        counterLabel.setPosition((float) (stage.getWidth() * 0.9), (float) (stage.getHeight() * 0.1));
 //        counterLabel.setSize((float) (stage.getWidth() * 0.05), (float) (stage.getHeight() * 0.03));
