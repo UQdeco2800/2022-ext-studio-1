@@ -7,6 +7,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.ui.UIComponent;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.deco2800.game.GdxGame.ScreenType;
+import com.deco2800.game.files.UserSettings;
+import com.deco2800.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class countdownDisplay extends UIComponent {
     private final GdxGame game;
@@ -56,6 +64,11 @@ public class countdownDisplay extends UIComponent {
     @Override
     protected void draw(SpriteBatch batch) {
 
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
     }
 
 
