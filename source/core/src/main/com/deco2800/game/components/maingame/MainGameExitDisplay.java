@@ -120,8 +120,8 @@ public class MainGameExitDisplay extends UIComponent {
     table.add(inventoryButton).padTop(10f).padRight(10f);
     table.row();
     // Add countdown button to table.
-//    table.add(countdownBtn).padTop(20f).padRight(10f);
-//    table.row();
+    table.add(countdownBtn).padTop(20f).padRight(10f);
+    table.row();
     //
 
     stage.addActor(table);
