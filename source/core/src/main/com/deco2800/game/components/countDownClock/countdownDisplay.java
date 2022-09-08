@@ -18,15 +18,15 @@ import org.slf4j.LoggerFactory;
 
 public class countdownDisplay extends UIComponent {
     private final GdxGame game;
-    private int timeRemaining;
-    private float timeCount;
+//    private int timeRemaining;
+//    private float timeCount;
     public countdownDisplay(GdxGame game) {
         super();
         this.game = game;
-        timeRemaining = 300;
-        timeCount = 0;
+//        timeRemaining = 300;
+//        timeCount = 0;
     }
-    Label counterLabel;
+//    Label counterLabel;
 
     @Override
     public void create() {
@@ -49,17 +49,18 @@ public class countdownDisplay extends UIComponent {
 
     private void addActors() {
 
-        Label.LabelStyle counterLabelStyle = new Label.LabelStyle();
+//        Label.LabelStyle counterLabelStyle = new Label.LabelStyle();
 //        BitmapFont myFont = new BitmapFont(Gdx.files.internal());
 //        counterLabelStyle.font = myFont;
 //        counterLabelStyle.fontColor = Color.YELLOW;
 
 //        counterLabel = new Label(String.valueOf(timeRemaining), counterLabelStyle);
-        counterLabel = new Label("Welcome to the countdown screen", counterLabelStyle);
+        Label title = new Label("Countdown", skin, "countdown");
+        title.setPosition((Gdx.graphics.getWidth()-title.getWidth())/2f,Gdx.graphics.getHeight()-title.getHeight()-15);
 //        counterLabel.setPosition((float) (stage.getWidth() * 0.9), (float) (stage.getHeight() * 0.1));
 //        counterLabel.setSize((float) (stage.getWidth() * 0.05), (float) (stage.getHeight() * 0.03));
 //
-        stage.addActor(counterLabel);
+        stage.addActor(title);
     }
 
     @Override
