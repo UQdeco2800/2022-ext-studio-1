@@ -52,7 +52,7 @@ public class MainGameActions extends Component {
 
   private void onCountdownScreen() {
     logger.info("Opening countdown screen");
-    game.setScreen(GdxGame.ScreenType.NPC_EVICTION_MENU);
+    game.setScreen(GdxGame.ScreenType.COUNTDOWN_SCREEN);
   }
 
 }
