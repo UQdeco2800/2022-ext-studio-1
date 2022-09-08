@@ -70,9 +70,10 @@ public class countdownDisplay extends UIComponent {
 //        main.setWidth();
 //        main.add(counterLabel);
         counterLabel = new Label(String.valueOf(timeRemaining), skin);
-        counterLabel.setPosition((float) (stage.getWidth() * 0.9), (float) (stage.getHeight() * 0.1));
-        counterLabel.setWidth(stage.getWidth());
+        counterLabel.setPosition((float) (stage.getWidth() * 0.07), (float) (stage.getHeight() * 0.05));
+        counterLabel.setWidth((float) (stage.getWidth() * 0.9));
         counterLabel.setHeight(stage.getHeight());
+        counterLabel.setFontScale(10);
 //        counterLabel.setSize((int) (stage.getWidth()), (float) (stage.getHeight() * 0.8));
         Table exitScreenBtn = makeExitBtn();
 //
