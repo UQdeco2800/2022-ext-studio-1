@@ -4,6 +4,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.countDownClock.countdownDisplay;
+import com.deco2800.game.components.storyline.StorylineDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -17,16 +18,16 @@ import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/** The game screen containing the settings. */
 public class CountdownScreen extends ScreenAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(CountdownScreen.class);
+    private static final Logger logger = LoggerFactory.getLogger(StorylineScreen.class);
 
     private final GdxGame game;
-
     private final Renderer renderer;
 
     public CountdownScreen(GdxGame game) {
         this.game = game;
+
         logger.debug("Initialising settings screen services");
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
@@ -60,17 +61,16 @@ public class CountdownScreen extends ScreenAdapter {
         ServiceLocator.clear();
     }
 
+    /**
+     * Creates the setting screen's ui including components for rendering ui elements to the screen
+     * and capturing and handling ui input.
+     */
     private void createUI() {
         logger.debug("Creating ui");
         Stage stage = ServiceLocator.getRenderService().getStage();
         Entity ui = new Entity();
-
         ui.addComponent(new countdownDisplay(game))
                 .addComponent(new InputDecorator(stage, 10));
+        ServiceLocator.getEntityService().register(ui);
     }
-
-
-
-
-
 }
