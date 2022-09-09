@@ -1,5 +1,7 @@
 package com.deco2800.game.components;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -46,15 +48,25 @@ public class AddToInventoryComponent extends Component {
 
     int inventoryCount = playerInventory.inventoryHashMap.size();
 
-    // the inventory item and number + the entityID so it can be interacted with later
-    playerInventory.inventoryHashMap.put(inventoryCount+1, entity.getId());
+    if (inventoryCount == 10 )
+    {
+      showInventoryFull();
+    }
+    else
+    {
+      // the inventory item and number + the entityID so it can be interacted with later
+      playerInventory.inventoryHashMap.put(inventoryCount+1, entity.getId());
 
-    // now that this has been added remove the item from the screen but have it still accessible to call on it
-    Entity self = ((BodyUserData) me.getBody().getUserData()).entity;
-    self.setEnabled(false);
-    self.getComponent(TextureRenderComponent.class).dispose();
+      // now that this has been added remove the item from the screen but have it still accessible to call on it
+      Entity self = ((BodyUserData) me.getBody().getUserData()).entity;
+      self.setEnabled(false);
+      self.getComponent(TextureRenderComponent.class).dispose();
+    }
 
   }
 
+  public void showInventoryFull()
+  {
+  }
 }
 
