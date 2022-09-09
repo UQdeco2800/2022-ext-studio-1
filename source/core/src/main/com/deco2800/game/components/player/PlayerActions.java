@@ -92,8 +92,7 @@ public class PlayerActions extends Component {
       playerInventory.destroyInventory();
     } else {
       inventoryOpen = true;
-      playerInventory = new InventoryDisplayComponent();
-      //System.out.println(entity.getComponent(InventoryComponent.class).getInventory());
+      playerInventory = new InventoryDisplayComponent(entity.getComponent(InventoryComponent.class).getInventory());
     }
   }
   }

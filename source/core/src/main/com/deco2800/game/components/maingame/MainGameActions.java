@@ -2,7 +2,9 @@ package com.deco2800.game.components.maingame;
 
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.player.InventoryComponent;
 import com.deco2800.game.components.player.InventoryDisplayComponent;
+import com.deco2800.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,8 +47,8 @@ public class MainGameActions extends Component {
 
   private void onInventoryScreen() {
     logger.info("Opening Inventory");
-    //game.setScreen(GdxGame.ScreenType.INVENTORY_SCREEN);
-    playerInventory = new InventoryDisplayComponent();
+    Entity player = entity;
+    playerInventory = new InventoryDisplayComponent(player.getComponent(InventoryComponent.class).getInventory());
   }
 
 }
