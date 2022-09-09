@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.entities.factories.AchievementFactory;
 import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
@@ -36,11 +37,7 @@ public class AchievementsDisplay extends UIComponent {
     private Texture nextPageUpTexture;
     private Texture nextPageDownTexture;
     private Button nextPageBtn;
-    private static final String[] achievementPaths = {
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/treasurer_unobtained.png",
-            "images/achievement/nereus!_unobtained.png",
-            "images/achievement/time_keeper_unobtained.png"};
+    private static final String[] achievementTextures = AchievementFactory.getTextures();
     private List<Image> achievements = new ArrayList<Image>();
 
     public AchievementsDisplay(GdxGame game) {
@@ -145,9 +142,9 @@ public class AchievementsDisplay extends UIComponent {
         stage.addActor(othersLabel);
 
         // Show achievements
-        for (String path : achievementPaths) {
+        for (String texture : achievementTextures) {
             achievements.add(new Image(ServiceLocator.getResourceService()
-                    .getAsset(path, Texture.class)));
+                    .getAsset(texture, Texture.class)));
         }
         showAchievements(stage, achievements);
     }

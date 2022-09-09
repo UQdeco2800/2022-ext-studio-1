@@ -1,10 +1,45 @@
 {
   "achievements": [
     {
-      "name": "demo",
-      "path": "images/treasurer.png",
+      "name": "Time Robber",
+      "path": "images/achievement/time_robber_locked.png",
+      "condition": {
+        "item": 5
+      }
+    },
+    {
+      "name": "Time Keeper",
+      "path": "images/achievement/time_keeper_locked.png",
+      "condition": {
+        "item": 10
+      }
+    },
+    {
+      "name": "Time Lover",
+      "path": "images/achievement/time_lover_locked.png",
+      "condition": {
+        "item": 20
+      }
+    },
+    {
+      "name": "NEREUS!",
+      "path": "images/achievement/nereus!_locked.png",
       "condition": {
         "item": 1
+      }
+    },
+    {
+      "name": "Treasurer",
+      "path": "images/achievement/treasurer_locked.png",
+      "condition": {
+        "item": 50
+      }
+    },
+    {
+      "name": "God's Pocket",
+      "path": "images/achievement/gods_pocket_locked.png",
+      "condition": {
+        "item": 100
       }
     }
   ]

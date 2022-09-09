@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.Gdx;
 import com.deco2800.game.components.achievements.AchievementsUpdater;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.achievementConfigs.AchievementConfigs;
@@ -36,5 +37,14 @@ public class AchievementFactory {
      */
     public static List<AchievementPropertyConfig> getAchievements() {
         return configs.achievements;
+    }
+
+    public static String[] getTextures() {
+        String[] textures = new String[configs.achievements.size()];
+        int i = 0;
+        for (AchievementPropertyConfig achievement : configs.achievements) {
+            textures[i++] = achievement.path;
+        }
+        return textures;
     }
 }
