@@ -2,7 +2,7 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
-import com.deco2800.game.components.AddToInventoryComponent;
+import com.deco2800.game.components.player.AddToInventoryComponent;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsLayer;
