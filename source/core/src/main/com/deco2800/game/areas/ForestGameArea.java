@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.ItemFactory;
 import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
@@ -32,15 +33,27 @@ public class ForestGameArea extends GameArea {
     "images/grass_1.png",
     "images/grass_2.png",
     "images/grass_3.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png"
+     "images/blank.png",
+     "images/box_boy.png",
+     "images/tree.png",
+     "images/hex_grass_1.png",
+     "images/hex_grass_2.png",
+     "images/hex_grass_3.png",
+     "images/iso_grass_1.png",
+     "images/iso_grass_2.png",
+     "images/iso_grass_3.png",
+     "images/player_front.png",
+     "images/up_0.png",
+     "images/up_1.png",
+     "images/down_0.png",
+     "images/down_1.png",
+     "images/left_0.png",
+     "images/left_1.png",
+     "images/right_0.png",
+     "images/right_1.png",
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
+    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas","images/player.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -67,7 +80,7 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     spawnGhosts();
     spawnGhostKing();
-
+    spawnItem();
     playMusic();
   }
 
@@ -122,6 +135,11 @@ public class ForestGameArea extends GameArea {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
+  }
+  private void spawnItem() {
+    Entity item = ItemFactory.createItem(player);
+
+    spawnEntityAt(item, new GridPoint2(5, 10), true, true);
   }
 
   private void spawnGhosts() {

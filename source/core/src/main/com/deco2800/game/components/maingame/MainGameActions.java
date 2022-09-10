@@ -2,6 +2,7 @@ package com.deco2800.game.components.maingame;
 
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.player.InventoryDisplayComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +14,8 @@ public class MainGameActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
   private GdxGame game;
 
+  private InventoryDisplayComponent playerInventory;
+
   public MainGameActions(GdxGame game) {
     this.game = game;
   }
@@ -20,7 +23,9 @@ public class MainGameActions extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("exit", this::onExit);
+    entity.getEvents().addListener("InventoryScreen", this::onInventoryScreen);
     entity.getEvents().addListener("NpcMenu", this::onNpcMenu);
+    entity.getEvents().addListener("CountdownScreen", this::onCountdownScreen);
   }
 
   /**
@@ -38,4 +43,16 @@ public class MainGameActions extends Component {
     logger.info("Exiting main game screen");
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
+
+  private void onInventoryScreen() {
+    logger.info("Opening Inventory");
+    //game.setScreen(GdxGame.ScreenType.INVENTORY_SCREEN);
+    playerInventory = new InventoryDisplayComponent();
+  }
+
+  private void onCountdownScreen() {
+    logger.info("Opening countdown screen");
+    game.setScreen(GdxGame.ScreenType.COUNTDOWN_SCREEN);
+  }
+
 }

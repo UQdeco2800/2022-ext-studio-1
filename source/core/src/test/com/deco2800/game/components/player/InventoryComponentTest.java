@@ -38,4 +38,10 @@ class InventoryComponentTest {
     inventory.addGold(-20);
     assertEquals(80, inventory.getGold());
   }
+  @Test
+  void shouldAddItemToInventoy() {
+    InventoryComponent inventory = new InventoryComponent(0);
+    inventory.inventoryHashMap.put(1,1);
+    assertEquals(1, inventory.inventoryHashMap.size());
+  }
 }

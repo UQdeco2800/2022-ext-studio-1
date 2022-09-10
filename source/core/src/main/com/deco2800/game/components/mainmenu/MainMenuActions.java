@@ -20,10 +20,13 @@ public class MainMenuActions extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("start", this::onStart);
+
     entity.getEvents().addListener("load", this::onLoad);
-    entity.getEvents().addListener("exit", this::onExit);
-    entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("storyline", this::onStoryline);
+    entity.getEvents().addListener("map", this::onMap);
+    entity.getEvents().addListener("achievements", this::onAchievements);
+    entity.getEvents().addListener("settings", this::onSettings);
+    entity.getEvents().addListener("exit", this::onExit);
   }
 
   /**
@@ -34,9 +37,22 @@ public class MainMenuActions extends Component {
     game.setScreen(GdxGame.ScreenType.MAIN_GAME);
   }
 
+  /**
+   * Swaps to the Achievements screen.
+   */
+  private void onAchievements() {
+    logger.info("Launching achievements screen");
+    game.setScreen(GdxGame.ScreenType.ACHIEVEMENTS);
+  }
+
   private void onStoryline() {
     logger.info("Start game");
     game.setScreen(GdxGame.ScreenType.STORYLINE);
+  }
+
+  private void onMap() {
+    logger.info("Launching map screen");
+    game.setScreen(GdxGame.ScreenType.MAP);
   }
 
 
