@@ -114,6 +114,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                 @Override // clicked
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     logger.debug("card" + index + "clicked");
+                    createCardInfo("card" + index);
                     return true;
                 }
             });
@@ -230,6 +231,39 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         return new Button(style);
     }
 
+
+    /**
+     * Display a Card information dialog on the stage, the style is based on Team7 prototype <br/>
+     * All scales are calculated according to the prototype from team 7 only <br/>
+     * The context of this dialog will be provided by Team 9
+     *
+     * @param card_name The name of the card which calls this function
+     * @author Code: Team7 Yingxin Liu Shaohui Wang   <br/>Context: Team 9
+     */
+    private void createCardInfo(String card_name) {
+        logger.debug("create card information dialog from name: " + card_name);
+        // set the style of dialog include font color of title; background; size; position
+        TextureRegionDrawable styleImage = new TextureRegionDrawable(
+                resourceService.getAsset(IMAGE_PATH + "infoWindow.png", Texture.class));
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
+        Window dialog = new Window("", windowStyle);
+        dialog.setModal(true);    // The dialog is always at the front
+        float dialog_size_x = (float) (bgWidth * (810.0 / 1600));
+        float dialog_size_y = (float) (bgHeight * (653.33 / 900));
+        dialog.setSize(dialog_size_x, dialog_size_y);
+        dialog.setPosition((float) (bgWidth * (407.34 / 1600)), (float) (bgHeight * (1 - 800.33 / 900)));
+        dialog.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                logger.debug(card_name + " clicked");
+                dialog.remove();
+                return true;
+            }
+        });
+
+        /** dialog.addActor(label); @Shaohui Wang: the context will be added here */
+        stage.addActor(dialog);
+    }
 
     private void exitMenu() {
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
