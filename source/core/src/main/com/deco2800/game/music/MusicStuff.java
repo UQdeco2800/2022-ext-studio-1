@@ -1,7 +1,8 @@
 package com.deco2800.game.music;
 
-import com.deco2800.game.services.ServiceLocator;
 import com.badlogic.gdx.audio.Music;
+import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.services.ResourceService;
 
 public class MusicStuff {
     public static void playMusic(String path, boolean loop) {
