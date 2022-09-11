@@ -1,4 +1,3 @@
-unnamed package
 com.deco2800.game
 com.deco2800.game.ai.movement
 com.deco2800.game.ai.tasks
@@ -25,6 +24,7 @@ com.deco2800.game.events
 com.deco2800.game.events.listeners
 com.deco2800.game.files
 com.deco2800.game.input
+com.deco2800.game.music
 com.deco2800.game.physics
 com.deco2800.game.physics.components
 com.deco2800.game.physics.raycast
