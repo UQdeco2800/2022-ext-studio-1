@@ -95,12 +95,18 @@ public class InventoryDisplayComponent extends UIComponent {
 
     }
 
-
+    /**
+     * The main logic used to control the inventory and dynamically pull the hashmap and interact with other entities you pick up
+     */
     private Table createInventory() {
 
         //empty slot
         Texture texture = new Texture(Gdx.files.internal("images/hex_grass_1.png")); //Placeholder graphic
         Drawable emptySlot = new TextureRegionDrawable(new TextureRegion(texture));
+
+        //Confirm down <a href="https://www.flaticon.com/free-icons/pixelated" title="pixelated icons">Pixelated icons created by Freepik - Flaticon</a>
+        Texture confirmTexture = new Texture(Gdx.files.internal("images/inventory/confirm.png"));
+        Drawable confirmDown = new TextureRegionDrawable(new TextureRegion(confirmTexture));
 
         // instantiating buttons
         ImageButton drawSlot1 = new ImageButton(emptySlot);
@@ -133,7 +139,7 @@ public class InventoryDisplayComponent extends UIComponent {
                         if (i.getId() == value)
                         {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
-                            drawSlot1 = new ImageButton(buttonGraphic, emptySlot);
+                            drawSlot1 = new ImageButton(buttonGraphic, confirmDown);
 
                             drawSlot1.addListener(new ClickListener() {
                                 @Override
@@ -141,21 +147,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                     //If it's a time consumable
                                     if (i.getComponent(ConsumeableItemComponent.class) != null)
                                     {
-                                        /// Funky locator magic to identify the entity that contains the time display
-                                        Array<Entity> timeEntityLocator = ServiceLocator.getEntityService().getEntities();
-                                        for (Entity timeDisplay: timeEntityLocator)
-                                        {
-                                            if (timeDisplay.getComponent(countdownDisplay.class) != null)
-                                            {
-                                                float increaseValue = i.getComponent(ConsumeableItemComponent.class).increaseTime();
-                                                (timeDisplay.getComponent(countdownDisplay.class)).increaseTime(increaseValue);
-
-                                                //Remove after consumption and close inventory
-                                                inventoryHashMap.remove(key);
-                                                destroyInventory();
-                                            }
-
-                                        }
+                                        consumeTimeItem(i, key);
                                     }
 
                                 }
@@ -167,7 +159,7 @@ public class InventoryDisplayComponent extends UIComponent {
                         if (i.getId() == value)
                         {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
-                            drawSlot2 = new ImageButton(buttonGraphic);
+                            drawSlot2 = new ImageButton(buttonGraphic, confirmDown);
 
                             drawSlot2.addListener(new ClickListener() {
                                 @Override
@@ -175,17 +167,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                     //If it's a time consumable
                                     if (i.getComponent(ConsumeableItemComponent.class) != null)
                                     {
-                                        /// Funky locator magic to identify the entity that contains the time display
-                                        Array<Entity> timeEntityLocator = ServiceLocator.getEntityService().getEntities();
-                                        for (Entity timeDisplay: timeEntityLocator)
-                                        {
-                                            if (timeDisplay.getComponent(countdownDisplay.class) != null)
-                                            {
-                                                float increaseValue = i.getComponent(ConsumeableItemComponent.class).increaseTime();
-                                                (timeDisplay.getComponent(countdownDisplay.class)).increaseTime(increaseValue);
-                                            }
-
-                                        }
+                                        consumeTimeItem(i, key);
                                     }
 
                                 }
@@ -196,7 +178,7 @@ public class InventoryDisplayComponent extends UIComponent {
                         if (i.getId() == value)
                         {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
-                            drawSlot3 = new ImageButton(buttonGraphic);
+                            drawSlot3 = new ImageButton(buttonGraphic, confirmDown);
 
                             drawSlot3.addListener(new ClickListener() {
                                 @Override
@@ -204,17 +186,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                     //If it's a time consumable
                                     if (i.getComponent(ConsumeableItemComponent.class) != null)
                                     {
-                                        /// Funky locator magic to identify the entity that contains the time display
-                                        Array<Entity> timeEntityLocator = ServiceLocator.getEntityService().getEntities();
-                                        for (Entity timeDisplay: timeEntityLocator)
-                                        {
-                                            if (timeDisplay.getComponent(countdownDisplay.class) != null)
-                                            {
-                                                float increaseValue = i.getComponent(ConsumeableItemComponent.class).increaseTime();
-                                                (timeDisplay.getComponent(countdownDisplay.class)).increaseTime(increaseValue);
-                                            }
-
-                                        }
+                                        consumeTimeItem(i, key);
                                     }
 
                                 }
@@ -225,7 +197,7 @@ public class InventoryDisplayComponent extends UIComponent {
                         if (i.getId() == value)
                         {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
-                            drawSlot4 = new ImageButton(buttonGraphic);
+                            drawSlot4 = new ImageButton(buttonGraphic, confirmDown);
 
                             drawSlot4.addListener(new ClickListener() {
                                 @Override
@@ -233,17 +205,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                     //If it's a time consumable
                                     if (i.getComponent(ConsumeableItemComponent.class) != null)
                                     {
-                                        /// Funky locator magic to identify the entity that contains the time display
-                                        Array<Entity> timeEntityLocator = ServiceLocator.getEntityService().getEntities();
-                                        for (Entity timeDisplay: timeEntityLocator)
-                                        {
-                                            if (timeDisplay.getComponent(countdownDisplay.class) != null)
-                                            {
-                                                float increaseValue = i.getComponent(ConsumeableItemComponent.class).increaseTime();
-                                                (timeDisplay.getComponent(countdownDisplay.class)).increaseTime(increaseValue);
-                                            }
-
-                                        }
+                                        consumeTimeItem(i, key);
                                     }
 
                                 }
@@ -254,7 +216,7 @@ public class InventoryDisplayComponent extends UIComponent {
                         if (i.getId() == value)
                         {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
-                            drawSlot5 = new ImageButton(buttonGraphic);
+                            drawSlot5 = new ImageButton(buttonGraphic, confirmDown);
 
                             drawSlot5.addListener(new ClickListener() {
                                 @Override
@@ -262,17 +224,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                     //If it's a time consumable
                                     if (i.getComponent(ConsumeableItemComponent.class) != null)
                                     {
-                                        /// Funky locator magic to identify the entity that contains the time display
-                                        Array<Entity> timeEntityLocator = ServiceLocator.getEntityService().getEntities();
-                                        for (Entity timeDisplay: timeEntityLocator)
-                                        {
-                                            if (timeDisplay.getComponent(countdownDisplay.class) != null)
-                                            {
-                                                float increaseValue = i.getComponent(ConsumeableItemComponent.class).increaseTime();
-                                                (timeDisplay.getComponent(countdownDisplay.class)).increaseTime(increaseValue);
-                                            }
-
-                                        }
+                                        consumeTimeItem(i, key);
                                     }
 
                                 }
@@ -283,7 +235,7 @@ public class InventoryDisplayComponent extends UIComponent {
                         if (i.getId() == value)
                         {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
-                            drawSlot6 = new ImageButton(buttonGraphic);
+                            drawSlot6 = new ImageButton(buttonGraphic, confirmDown);
 
                             drawSlot6.addListener(new ClickListener() {
                                 @Override
@@ -291,17 +243,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                     //If it's a time consumable
                                     if (i.getComponent(ConsumeableItemComponent.class) != null)
                                     {
-                                        /// Funky locator magic to identify the entity that contains the time display
-                                        Array<Entity> timeEntityLocator = ServiceLocator.getEntityService().getEntities();
-                                        for (Entity timeDisplay: timeEntityLocator)
-                                        {
-                                            if (timeDisplay.getComponent(countdownDisplay.class) != null)
-                                            {
-                                                float increaseValue = i.getComponent(ConsumeableItemComponent.class).increaseTime();
-                                                (timeDisplay.getComponent(countdownDisplay.class)).increaseTime(increaseValue);
-                                            }
-
-                                        }
+                                        consumeTimeItem(i, key);
                                     }
 
                                 }
@@ -312,7 +254,7 @@ public class InventoryDisplayComponent extends UIComponent {
                         if (i.getId() == value)
                         {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
-                            drawSlot7 = new ImageButton(buttonGraphic);
+                            drawSlot7 = new ImageButton(buttonGraphic, confirmDown);
 
                             drawSlot7.addListener(new ClickListener() {
                                 @Override
@@ -320,17 +262,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                     //If it's a time consumable
                                     if (i.getComponent(ConsumeableItemComponent.class) != null)
                                     {
-                                        /// Funky locator magic to identify the entity that contains the time display
-                                        Array<Entity> timeEntityLocator = ServiceLocator.getEntityService().getEntities();
-                                        for (Entity timeDisplay: timeEntityLocator)
-                                        {
-                                            if (timeDisplay.getComponent(countdownDisplay.class) != null)
-                                            {
-                                                float increaseValue = i.getComponent(ConsumeableItemComponent.class).increaseTime();
-                                                (timeDisplay.getComponent(countdownDisplay.class)).increaseTime(increaseValue);
-                                            }
-
-                                        }
+                                        consumeTimeItem(i, key);
                                     }
 
                                 }
@@ -341,7 +273,7 @@ public class InventoryDisplayComponent extends UIComponent {
                         if (i.getId() == value)
                         {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
-                            drawSlot8 = new ImageButton(buttonGraphic);
+                            drawSlot8 = new ImageButton(buttonGraphic, confirmDown);
 
                             drawSlot8.addListener(new ClickListener() {
                                 @Override
@@ -349,17 +281,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                     //If it's a time consumable
                                     if (i.getComponent(ConsumeableItemComponent.class) != null)
                                     {
-                                        /// Funky locator magic to identify the entity that contains the time display
-                                        Array<Entity> timeEntityLocator = ServiceLocator.getEntityService().getEntities();
-                                        for (Entity timeDisplay: timeEntityLocator)
-                                        {
-                                            if (timeDisplay.getComponent(countdownDisplay.class) != null)
-                                            {
-                                                float increaseValue = i.getComponent(ConsumeableItemComponent.class).increaseTime();
-                                                (timeDisplay.getComponent(countdownDisplay.class)).increaseTime(increaseValue);
-                                            }
-
-                                        }
+                                        consumeTimeItem(i, key);
                                     }
 
                                 }
@@ -370,7 +292,7 @@ public class InventoryDisplayComponent extends UIComponent {
                         if (i.getId() == value)
                         {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
-                            drawSlot9 = new ImageButton(buttonGraphic);
+                            drawSlot9 = new ImageButton(buttonGraphic, confirmDown);
 
                             drawSlot9.addListener(new ClickListener() {
                                 @Override
@@ -378,17 +300,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                     //If it's a time consumable
                                     if (i.getComponent(ConsumeableItemComponent.class) != null)
                                     {
-                                        /// Funky locator magic to identify the entity that contains the time display
-                                        Array<Entity> timeEntityLocator = ServiceLocator.getEntityService().getEntities();
-                                        for (Entity timeDisplay: timeEntityLocator)
-                                        {
-                                            if (timeDisplay.getComponent(countdownDisplay.class) != null)
-                                            {
-                                                float increaseValue = i.getComponent(ConsumeableItemComponent.class).increaseTime();
-                                                (timeDisplay.getComponent(countdownDisplay.class)).increaseTime(increaseValue);
-                                            }
-
-                                        }
+                                        consumeTimeItem(i, key);
                                     }
 
                                 }
@@ -399,24 +311,14 @@ public class InventoryDisplayComponent extends UIComponent {
                         if (i.getId() == value)
                         {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
-                            drawSlot10 = new ImageButton(buttonGraphic);
+                            drawSlot10 = new ImageButton(buttonGraphic, confirmDown);
                             drawSlot10.addListener(new ClickListener() {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
                                     //If it's a time consumable
                                     if (i.getComponent(ConsumeableItemComponent.class) != null)
                                     {
-                                        /// Funky locator magic to identify the entity that contains the time display
-                                        Array<Entity> timeEntityLocator = ServiceLocator.getEntityService().getEntities();
-                                        for (Entity timeDisplay: timeEntityLocator)
-                                        {
-                                            if (timeDisplay.getComponent(countdownDisplay.class) != null)
-                                            {
-                                                float increaseValue = i.getComponent(ConsumeableItemComponent.class).increaseTime();
-                                                (timeDisplay.getComponent(countdownDisplay.class)).increaseTime(increaseValue);
-                                            }
-
-                                        }
+                                        consumeTimeItem(i, key);
                                     }
 
                                 }
@@ -479,6 +381,32 @@ public class InventoryDisplayComponent extends UIComponent {
 
     @Override
     public void draw(SpriteBatch batch) {
+    }
+
+    public void consumeTimeItem(Entity i, int key){
+        /// Funky locator magic to identify the entity that contains the time display
+        Array<Entity> entityLocator = ServiceLocator.getEntityService().getEntities();
+        for (Entity timeDisplay: entityLocator)
+        {
+            if (timeDisplay.getComponent(countdownDisplay.class) != null)
+            {
+                float increaseValue = i.getComponent(ConsumeableItemComponent.class).increaseTime();
+                (timeDisplay.getComponent(countdownDisplay.class)).increaseTime(increaseValue);
+
+//                // find player to remove item after consumption
+//                for (Entity player: entityLocator) {
+//                    if (player.getComponent(InventoryComponent.class) != null) {
+//                        player.getComponent(InventoryComponent.class).removeItemFromInventory(key);
+//                        //Remove after consumption and close inventory
+//                        destroyInventory();
+//                    }
+//                }
+
+                inventoryHashMap.remove(key);
+                destroyInventory();
+            }
+
+        }
     }
 
     public void destroyInventory() {

@@ -5,8 +5,10 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -92,7 +94,19 @@ public class PlayerActions extends Component {
       playerInventory.destroyInventory();
     } else {
       inventoryOpen = true;
-      playerInventory = new InventoryDisplayComponent(entity.getComponent(InventoryComponent.class).getInventory());
+
+      // logic to locate the player and get inventory
+      Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
+      Entity player = null;
+      for (Entity i: entities)
+      {
+        if (i.getComponent(InventoryComponent.class) != null)
+        {
+          // Assign entity to player
+          player = i;
+        }
+      }
+      playerInventory = new InventoryDisplayComponent(player.getComponent(InventoryComponent.class).getInventory());
     }
   }
   }

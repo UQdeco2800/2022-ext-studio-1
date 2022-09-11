@@ -6,11 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.ItemFactory;
-import com.deco2800.game.entities.factories.ConsumableItemFactory;
-import com.deco2800.game.entities.factories.NPCFactory;
-import com.deco2800.game.entities.factories.ObstacleFactory;
-import com.deco2800.game.entities.factories.PlayerFactory;
+import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -52,7 +48,9 @@ public class ForestGameArea extends GameArea {
      "images/left_1.png",
      "images/right_0.png",
      "images/right_1.png",
-     "images/inventory/time_item.png"
+     "images/inventory/time_item.png",
+     "images/inventory/scales1.png",
+      "images/inventory/confirm.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas","images/player.atlas"
@@ -83,6 +81,7 @@ public class ForestGameArea extends GameArea {
     spawnGhosts();
     spawnGhostKing();
     spawnTimeConsumeableItem();
+    spawnClueItem();
     playMusic();
   }
 
@@ -138,10 +137,16 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }
-  private void spawnTimeConsumeableItem() {
+  public void spawnTimeConsumeableItem() {
     Entity item = ConsumableItemFactory.createItem(player, "images/inventory/time_item.png");
 
     spawnEntityAt(item, new GridPoint2(5, 10), true, true);
+  }
+
+  private void spawnClueItem() {
+    Entity item = ClueItemFactory.createItem(player, "images/inventory/scales1.png");
+
+    spawnEntityAt(item, new GridPoint2(5, 5), true, true);
   }
 
   private void spawnGhosts() {
@@ -193,7 +198,6 @@ public class ForestGameArea extends GameArea {
     resourceService.unloadAssets(forestSounds);
     resourceService.unloadAssets(forestMusic);
   }
-
   @Override
   public void dispose() {
     super.dispose();
