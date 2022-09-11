@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class InventoryDisplayComponent extends UIComponent {
@@ -120,7 +121,10 @@ public class InventoryDisplayComponent extends UIComponent {
         int slotIncrement = 1;
 
         // Implicitly going up. Should be done 1-10 for each inventory item
-        for (int value : inventoryHashMap.values()) {
+        for (Map.Entry<Integer, Integer> entry  : inventoryHashMap.entrySet()) {
+            Integer key = entry.getKey();
+            Integer value = entry.getValue();
+
             for (Entity i: entities)
             {
                 switch (slotIncrement) {
@@ -145,6 +149,10 @@ public class InventoryDisplayComponent extends UIComponent {
                                             {
                                                 float increaseValue = i.getComponent(ConsumeableItemComponent.class).increaseTime();
                                                 (timeDisplay.getComponent(countdownDisplay.class)).increaseTime(increaseValue);
+
+                                                //Remove after consumption and close inventory
+                                                inventoryHashMap.remove(key);
+                                                destroyInventory();
                                             }
 
                                         }
