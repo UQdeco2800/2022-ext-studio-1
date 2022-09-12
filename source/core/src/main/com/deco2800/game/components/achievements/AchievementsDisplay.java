@@ -40,39 +40,39 @@ public class AchievementsDisplay extends UIComponent {
     private Texture nextPageDownTexture;
     private Button nextPageBtn;
     private static final String[] gameProgressAchievementsPaths = {
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png",
-            "images/achievement/gods_pocket_unobtained.png"};
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png",
+            "images/achievement/gods_pocket_locked.png"};
     private static final String[] collectionsAchievementsPaths = {
-            "images/achievement/treasurer_unobtained.png",
-            "images/achievement/treasurer_unobtained.png",
-            "images/achievement/treasurer_unobtained.png",
-            "images/achievement/treasurer_unobtained.png",
-            "images/achievement/treasurer_unobtained.png",
-            "images/achievement/treasurer_unobtained.png",
-            "images/achievement/treasurer_unobtained.png",
-            "images/achievement/treasurer_unobtained.png",
-            "images/achievement/treasurer_unobtained.png"};
+            "images/achievement/treasurer_locked.png",
+            "images/achievement/treasurer_locked.png",
+            "images/achievement/treasurer_locked.png",
+            "images/achievement/treasurer_locked.png",
+            "images/achievement/treasurer_locked.png",
+            "images/achievement/treasurer_locked.png",
+            "images/achievement/treasurer_locked.png",
+            "images/achievement/treasurer_locked.png",
+            "images/achievement/treasurer_locked.png"};
     private static final String[] othersAchievementsPaths = {
-            "images/achievement/nereus!_unobtained.png",
-            "images/achievement/nereus!_unobtained.png",
-            "images/achievement/nereus!_unobtained.png",
-            "images/achievement/nereus!_unobtained.png"};
+            "images/achievement/nereus!_locked.png",
+            "images/achievement/nereus!_locked.png",
+            "images/achievement/nereus!_locked.png",
+            "images/achievement/nereus!_locked.png"};
     private List<Image> curAchievements;
     private List<Image> gameProgressAchievements = new ArrayList<Image>();
     private List<Image> collectionsAchievements = new ArrayList<Image>();
