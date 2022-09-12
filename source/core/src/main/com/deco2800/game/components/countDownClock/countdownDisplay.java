@@ -111,7 +111,7 @@ public class countdownDisplay extends UIComponent {
 
     public void increaseTime(float increment)
     {
-        this.timeRemaining = increment;
+        this.timeRemaining += increment;
     }
 
     public float getRemainingTime() {
