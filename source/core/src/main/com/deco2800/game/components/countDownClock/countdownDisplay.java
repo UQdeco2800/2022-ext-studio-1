@@ -47,11 +47,11 @@ public class countdownDisplay extends UIComponent {
 //            counterLabel.setText(String.valueOf(timeRemaining));
 //            timeCount = 0;
 //        }
-        if (timeRemaining <= 0) {
+        if (this.timeRemaining <= 0) {
             counterLabel.setText("GAME OVER!");
         } else {
-            timeRemaining -= timeCount;
-            counterLabel.setText(String.valueOf(timeRemaining));
+            this.timeRemaining -= timeCount;
+            counterLabel.setText(String.valueOf(this.timeRemaining));
         }
 
 
@@ -100,6 +100,10 @@ public class countdownDisplay extends UIComponent {
         Table table = new Table();
         table.add(exitBtn).expandX().left().pad(0f, 100f, 100f, 0f);
         return table;
+    }
+
+    public void increaseRemainingTime(float increment) {
+        this.timeRemaining += increment;
     }
 
 
