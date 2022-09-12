@@ -46,6 +46,7 @@ public class InventoryDisplayComponent extends UIComponent {
 
     private Table descriptionTable;
     private Label title;
+    private Label description;
     private HashMap<Integer, Integer> inventoryHashMap;
 
 
@@ -160,7 +161,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                 //Shows item description when mouse hovers item slot
                                 @Override
                                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                                    showItemDescription();
+                                    showItemDescription(i);
                                 }
                                 //Removes item description when not hovering
                                 @Override
@@ -190,7 +191,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                 //Shows item description when mouse hovers item slot
                                 @Override
                                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                                    showItemDescription();
+                                    showItemDescription(i);
                                 }
                                 //Removes item description when not hovering
                                 @Override
@@ -219,7 +220,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                 //Shows item description when mouse hovers item slot
                                 @Override
                                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                                    showItemDescription();
+                                    showItemDescription(i);
                                 }
                                 //Removes item description when not hovering
                                 @Override
@@ -248,7 +249,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                 //Shows item description when mouse hovers item slot
                                 @Override
                                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                                    showItemDescription();
+                                    showItemDescription(i);
                                 }
                                 //Removes item description when not hovering
                                 @Override
@@ -277,7 +278,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                 //Shows item description when mouse hovers item slot
                                 @Override
                                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                                    showItemDescription();
+                                    showItemDescription(i);
                                 }
                                 //Removes item description when not hovering
                                 @Override
@@ -306,7 +307,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                 //Shows item description when mouse hovers item slot
                                 @Override
                                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                                    showItemDescription();
+                                    showItemDescription(i);
                                 }
                                 //Removes item description when not hovering
                                 @Override
@@ -335,7 +336,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                 //Shows item description when mouse hovers item slot
                                 @Override
                                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                                    showItemDescription();
+                                    showItemDescription(i);
                                 }
                                 //Removes item description when not hovering
                                 @Override
@@ -364,7 +365,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                 //Shows item description when mouse hovers item slot
                                 @Override
                                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                                    showItemDescription();
+                                    showItemDescription(i);
                                 }
                                 //Removes item description when not hovering
                                 @Override
@@ -393,7 +394,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                 //Shows item description when mouse hovers item slot
                                 @Override
                                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                                    showItemDescription();
+                                    showItemDescription(i);
                                 }
                                 //Removes item description when not hovering
                                 @Override
@@ -422,7 +423,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                 //Shows item description when mouse hovers item slot
                                 @Override
                                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                                    showItemDescription();
+                                    showItemDescription(i);
                                 }
                                 //Removes item description when not hovering
                                 @Override
@@ -518,17 +519,33 @@ public class InventoryDisplayComponent extends UIComponent {
         }
     }
 
+    private String getItemDescriptionText(Entity i) {
 
-    //Shows the items specific description and buffs - TODO
-    //Currently stays on screen when item used as no hover off event happens
-    private Table showItemDescription() {
+        //If it's a time item
+        if (i.getComponent(ConsumeableItemComponent.class) != null)
+        {
+            return "Time Item - This item can be used to increase the countdown clock!";
+        }
+        //If it's a clue item
+        if (i.getComponent(ClueItemComponent.class) != null){
+            return "Mermaid Scale - This item can be used to increase the guilt rating of npcs!";
+        }
+
+        return "Emtpy Inventory Slot!"; //TODO - not setup to listen for empty slots
+
+    }
+
+
+    //Shows the items specific description and buffs
+    //TODO - Currently stays on screen when item used as no hover off event happens
+    private Table showItemDescription(Entity i) {
         descriptionTable = new Table();
         descriptionTable.setFillParent(true);
 
-        title = new Label("This is an Item that does something", skin);
-        title.setFontScale(1f);
-        title.setColor(Color.WHITE); //TODO doesn't work
-        descriptionTable.add(title).pad(5);
+        description = new Label(getItemDescriptionText(i), skin);
+        description.setFontScale(1f);
+        description.setColor(Color.WHITE); //TODO color setting doesn't work
+        descriptionTable.add(description).pad(5);
 
 
         stage.addActor(descriptionTable);
