@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.deco2800.game.GdxGame.ScreenType;
+//import com.deco2800.game.components.player.ConsumeableItemComponent;
 import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -23,10 +24,11 @@ public class countdownDisplay extends UIComponent {
     private final GdxGame game;
     private float timeRemaining;
     private float timeCount;
+    public boolean paused = false;
     public countdownDisplay(GdxGame game) {
         super();
         this.game = game;
-        timeRemaining = 30;
+        this.timeRemaining = 60480; //- (ServiceLocator.getTimeSource().getTime() / 1000);
         timeCount = 0;
     }
     Label counterLabel;
@@ -49,7 +51,8 @@ public class countdownDisplay extends UIComponent {
 //        }
         if (this.timeRemaining <= 0) {
             counterLabel.setText("GAME OVER!");
-        } else {
+        }
+        else {
             this.timeRemaining -= timeCount;
             counterLabel.setText(String.valueOf(this.timeRemaining));
         }
@@ -80,6 +83,10 @@ public class countdownDisplay extends UIComponent {
 //        stage.addActor(title);
         stage.addActor(counterLabel);
 //        stage.addActor(exitScreenBtn);
+    }
+
+    public void pauseGame() {
+        this.paused = true;
     }
 
     private void exitScreen() {
