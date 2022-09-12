@@ -49,6 +49,9 @@ public class InventoryDisplayComponent extends UIComponent {
     private Label description;
     private HashMap<Integer, Integer> inventoryHashMap;
 
+    //TODO - Stand in for integrated guilt values for seperate npcs
+    public int guiltLevel;
+
 
     public InventoryDisplayComponent(HashMap<Integer, Integer> inventory) {
         super();
@@ -564,7 +567,10 @@ public class InventoryDisplayComponent extends UIComponent {
     public void consumeClueItem(Entity i, int key) {
 
         //Increase the guilt rating of an NPC
+        float increaseGuilt = i.getComponent(ClueItemComponent.class).increaseGuilt();
+        guiltLevel += increaseGuilt;
 
+        System.out.println(guiltLevel);
 
         inventoryHashMap.remove(key);
         destroyInventory();
