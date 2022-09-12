@@ -32,25 +32,25 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         walkDirection.add(Vector2Utils.UP);
         triggerWalkEvent();
         entity.getEvents().trigger(("upStart"));
-//        MusicStuff.playMusic(movementPath, false);
+        MusicStuff.playMusic(movementPath, false);
         return true;
       case Keys.A:
         walkDirection.add(Vector2Utils.LEFT);
         triggerWalkEvent();
         entity.getEvents().trigger(("leftStart"));
-//        MusicStuff.playMusic(movementPath, false);
+        MusicStuff.playMusic(movementPath, false);
         return true;
       case Keys.S:
         walkDirection.add(Vector2Utils.DOWN);
         triggerWalkEvent();
         entity.getEvents().trigger(("downStart"));
-//        MusicStuff.playMusic(movementPath, false);
+        MusicStuff.playMusic(movementPath, false);
         return true;
       case Keys.D:
         walkDirection.add(Vector2Utils.RIGHT);
         triggerWalkEvent();
         entity.getEvents().trigger(("rightStart"));
-//        MusicStuff.playMusic(movementPath, false);
+        MusicStuff.playMusic(movementPath, false);
         return true;
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
