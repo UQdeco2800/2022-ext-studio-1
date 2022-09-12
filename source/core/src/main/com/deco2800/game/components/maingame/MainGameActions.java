@@ -25,7 +25,7 @@ public class MainGameActions extends Component {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("InventoryScreen", this::onInventoryScreen);
     entity.getEvents().addListener("NpcMenu", this::onNpcMenu);
-    entity.getEvents().addListener("CountdownScreen", this::onCountdownScreen);
+//    entity.getEvents().addListener("CountdownScreen", this::onCountdownScreen);
   }
 
   /**
