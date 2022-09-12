@@ -144,11 +144,18 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot1.addListener(new ClickListener() {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
+
                                     //If it's a time consumable
                                     if (i.getComponent(ConsumeableItemComponent.class) != null)
                                     {
                                         consumeTimeItem(i, key);
                                     }
+
+                                    //If it's a clue item
+                                    if (i.getComponent(ClueItemComponent.class) != null){
+                                        useClueItem(i, key);
+                                    }
+
 
                                 }
                             });
@@ -169,6 +176,10 @@ public class InventoryDisplayComponent extends UIComponent {
                                     {
                                         consumeTimeItem(i, key);
                                     }
+                                    //If it's a clue item
+                                    if (i.getComponent(ClueItemComponent.class) != null){
+                                        useClueItem(i, key);
+                                    }
 
                                 }
                             });
@@ -187,6 +198,10 @@ public class InventoryDisplayComponent extends UIComponent {
                                     if (i.getComponent(ConsumeableItemComponent.class) != null)
                                     {
                                         consumeTimeItem(i, key);
+                                    }
+                                    //If it's a clue item
+                                    if (i.getComponent(ClueItemComponent.class) != null){
+                                        useClueItem(i, key);
                                     }
 
                                 }
@@ -207,6 +222,10 @@ public class InventoryDisplayComponent extends UIComponent {
                                     {
                                         consumeTimeItem(i, key);
                                     }
+                                    //If it's a clue item
+                                    if (i.getComponent(ClueItemComponent.class) != null){
+                                        useClueItem(i, key);
+                                    }
 
                                 }
                             });
@@ -225,6 +244,10 @@ public class InventoryDisplayComponent extends UIComponent {
                                     if (i.getComponent(ConsumeableItemComponent.class) != null)
                                     {
                                         consumeTimeItem(i, key);
+                                    }
+                                    //If it's a clue item
+                                    if (i.getComponent(ClueItemComponent.class) != null){
+                                        useClueItem(i, key);
                                     }
 
                                 }
@@ -245,6 +268,10 @@ public class InventoryDisplayComponent extends UIComponent {
                                     {
                                         consumeTimeItem(i, key);
                                     }
+                                    //If it's a clue item
+                                    if (i.getComponent(ClueItemComponent.class) != null){
+                                        useClueItem(i, key);
+                                    }
 
                                 }
                             });
@@ -263,6 +290,10 @@ public class InventoryDisplayComponent extends UIComponent {
                                     if (i.getComponent(ConsumeableItemComponent.class) != null)
                                     {
                                         consumeTimeItem(i, key);
+                                    }
+                                    //If it's a clue item
+                                    if (i.getComponent(ClueItemComponent.class) != null){
+                                        useClueItem(i, key);
                                     }
 
                                 }
@@ -283,6 +314,10 @@ public class InventoryDisplayComponent extends UIComponent {
                                     {
                                         consumeTimeItem(i, key);
                                     }
+                                    //If it's a clue item
+                                    if (i.getComponent(ClueItemComponent.class) != null){
+                                        useClueItem(i, key);
+                                    }
 
                                 }
                             });
@@ -302,6 +337,10 @@ public class InventoryDisplayComponent extends UIComponent {
                                     {
                                         consumeTimeItem(i, key);
                                     }
+                                    //If it's a clue item
+                                    if (i.getComponent(ClueItemComponent.class) != null){
+                                        useClueItem(i, key);
+                                    }
 
                                 }
                             });
@@ -319,6 +358,10 @@ public class InventoryDisplayComponent extends UIComponent {
                                     if (i.getComponent(ConsumeableItemComponent.class) != null)
                                     {
                                         consumeTimeItem(i, key);
+                                    }
+                                    //If it's a clue item
+                                    if (i.getComponent(ClueItemComponent.class) != null){
+                                        useClueItem(i, key);
                                     }
 
                                 }
@@ -344,6 +387,7 @@ public class InventoryDisplayComponent extends UIComponent {
         ImageButton slot9 = drawSlot9;
         ImageButton slot10 = drawSlot10;
 
+        /*
         slot1.addListener(
                 new ChangeListener() {
                     @Override
@@ -351,7 +395,7 @@ public class InventoryDisplayComponent extends UIComponent {
                         useItem();
                     }
                 });
-
+        */
 
 
         Table table = new Table();
@@ -372,10 +416,6 @@ public class InventoryDisplayComponent extends UIComponent {
         table.row();
 
         return table;
-    }
-
-
-    public void useItem() {
     }
 
 
@@ -407,6 +447,15 @@ public class InventoryDisplayComponent extends UIComponent {
             }
 
         }
+    }
+
+    public void useClueItem(Entity i, int key) {
+
+        
+
+
+        inventoryHashMap.remove(key);
+        destroyInventory();
     }
 
     public void destroyInventory() {
