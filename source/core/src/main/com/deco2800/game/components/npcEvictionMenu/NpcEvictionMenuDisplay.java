@@ -34,6 +34,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(NpcEvictionMenuDisplay.class);
 
     private static final int NUMBER_OF_NPC = 8;
+    private static  final float FONT_SIZE_OF_CLUE=3.0f;
     private static float bgWidth;
     private static float bgHeight;
 
@@ -229,6 +230,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         // set the style of dialog include font color of title; background; size; position
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
                 resourceService.getAsset(IMAGE_PATH + "confirmBox.png", Texture.class));
+
         Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
         Window dialog = new Window("", windowStyle);
         dialog.setModal(true);    // The dialog is always at the front
@@ -300,9 +302,9 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         // set the style of dialog include font color of title; background; size; position
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
                 resourceService.getAsset(IMAGE_PATH + "infoWindow.png", Texture.class));
-        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLUE, styleImage);
         Window dialog = new Window("", windowStyle);
-        dialog.setModal(true);    // The dialog is always at the front
+
         float dialog_size_x = (float) (bgWidth * (810.0 / 1600));
         float dialog_size_y = (float) (bgHeight * (653.33 / 900));
         dialog.setSize(dialog_size_x, dialog_size_y);
@@ -315,6 +317,13 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                 return true;
             }
         });
+
+        //  add clues of npc
+        Label message = new Label(card_name,new Label.LabelStyle(new BitmapFont(),Color.YELLOW));
+        message.setFontScale(FONT_SIZE_OF_CLUE);
+        dialog.setModal(true);    // The dialog is always at the front
+        dialog.add(message);
+
         stage.addActor(dialog);
     }
 
