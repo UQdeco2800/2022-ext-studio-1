@@ -152,14 +152,8 @@ public class InventoryDisplayComponent extends UIComponent {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
                             drawSlot1 = new ImageButton(buttonGraphic, confirmDown);
 
-                            drawSlot1.addListener(new ClickListener() {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    useItem(i, key);
-                                }
-                            });
-
-                            //Hover popup for item description
+                            //TODO - Apply new hover and onclick logic to all slots
+                            //Hover popup for item description and Item slot click event
                             drawSlot1.addListener(new InputListener() {
                                 //Shows item description when mouse hovers item slot
                                 @Override
@@ -170,6 +164,13 @@ public class InventoryDisplayComponent extends UIComponent {
                                 @Override
                                 public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                                     destroyItemDescription();
+                                }
+                                //Uses the item once an item slot is clicked
+                                @Override
+                                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                                    useItem(i, key);
+                                    destroyItemDescription();
+                                    return true;
                                 }
 
                             });
@@ -569,8 +570,6 @@ public class InventoryDisplayComponent extends UIComponent {
         //Increase the guilt rating of an NPC
         float increaseGuilt = i.getComponent(ClueItemComponent.class).increaseGuilt();
         guiltLevel += increaseGuilt;
-
-        System.out.println(guiltLevel);
 
         inventoryHashMap.remove(key);
         destroyInventory();

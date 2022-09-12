@@ -1,8 +1,13 @@
 package com.deco2800.game.components.player;
 
+import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.ClueItemFactory;
 import com.deco2800.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -44,4 +49,22 @@ class InventoryComponentTest {
     inventory.inventoryHashMap.put(1,1);
     assertEquals(1, inventory.inventoryHashMap.size());
   }
+
+  @Test
+  void shouldAddGuilt() {
+
+
+  }
+
+  @Test
+  void shouldIncreaseTime() {
+    ConsumeableItemComponent consumable = new ConsumeableItemComponent(30);
+    assertEquals(30, consumable.increaseTime());
+
+  }
+  @Test
+  void shouldLimitInventoryCapacity() {
+
+  }
+
 }
