@@ -2,6 +2,7 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.components.achievements.AchievementsUpdater;
 import com.deco2800.game.components.player.AddToInventoryComponent;
 import com.deco2800.game.components.player.ConsumeableItemComponent;
 import com.deco2800.game.components.tasks.WanderTask;
@@ -53,7 +54,8 @@ public class ConsumableItemFactory extends ItemFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.Item))
                         .addComponent(aiComponent)
                         .addComponent(new AddToInventoryComponent(PhysicsLayer.Item))
-                        .addComponent(new ConsumeableItemComponent(getConsumeableTimeIncrease()));
+                        .addComponent(new ConsumeableItemComponent(getConsumeableTimeIncrease()))
+                        .addComponent(new AchievementsUpdater());
 
         PhysicsUtils.setScaledCollider(item, 0.9f, 0.4f);
         return item;
