@@ -155,6 +155,7 @@ public class InventoryDisplayComponent extends UIComponent {
                                 }
                             });
 
+                            //Hover popup for item description
                             drawSlot1.addListener(new InputListener() {
                                 //Shows item description when mouse hovers item slot
                                 @Override
@@ -181,8 +182,22 @@ public class InventoryDisplayComponent extends UIComponent {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
                                     useItem(i, key);
-
                                 }
+                            });
+
+                            //Hover popup for item description
+                            drawSlot2.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription();
+                                }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+
                             });
                         }
                         break;
@@ -198,6 +213,21 @@ public class InventoryDisplayComponent extends UIComponent {
                                     useItem(i, key);
                                 }
                             });
+
+                            //Hover popup for item description
+                            drawSlot3.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription();
+                                }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+
+                            });
                         }
                         break;
                     case 4:
@@ -211,6 +241,21 @@ public class InventoryDisplayComponent extends UIComponent {
                                 public void clicked(InputEvent event, float x, float y) {
                                     useItem(i, key);
                                 }
+                            });
+
+                            //Hover popup for item description
+                            drawSlot4.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription();
+                                }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+
                             });
                         }
                         break;
@@ -226,6 +271,21 @@ public class InventoryDisplayComponent extends UIComponent {
                                     useItem(i, key);
                                 }
                             });
+
+                            //Hover popup for item description
+                            drawSlot5.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription();
+                                }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+
+                            });
                         }
                         break;
                     case 6:
@@ -239,6 +299,21 @@ public class InventoryDisplayComponent extends UIComponent {
                                 public void clicked(InputEvent event, float x, float y) {
                                     useItem(i, key);
                                 }
+                            });
+
+                            //Hover popup for item description
+                            drawSlot6.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription();
+                                }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+
                             });
                         }
                         break;
@@ -254,6 +329,21 @@ public class InventoryDisplayComponent extends UIComponent {
                                     useItem(i, key);
                                 }
                             });
+
+                            //Hover popup for item description
+                            drawSlot7.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription();
+                                }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+
+                            });
                         }
                         break;
                     case 8:
@@ -267,6 +357,21 @@ public class InventoryDisplayComponent extends UIComponent {
                                 public void clicked(InputEvent event, float x, float y) {
                                     useItem(i, key);
                                 }
+                            });
+
+                            //Hover popup for item description
+                            drawSlot8.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription();
+                                }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+
                             });
                         }
                         break;
@@ -282,6 +387,21 @@ public class InventoryDisplayComponent extends UIComponent {
                                     useItem(i, key);
                                 }
                             });
+
+                            //Hover popup for item description
+                            drawSlot9.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription();
+                                }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+
+                            });
                         }
                         break;
                     case 10:
@@ -295,6 +415,21 @@ public class InventoryDisplayComponent extends UIComponent {
                                     useItem(i, key);
 
                                 }
+                            });
+
+                            //Hover popup for item description
+                            drawSlot10.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription();
+                                }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+
                             });
                         }
                         break;
@@ -340,20 +475,15 @@ public class InventoryDisplayComponent extends UIComponent {
 
 
     public void useItem(Entity i, Integer key) {
-
         //If it's a time item
         if (i.getComponent(ConsumeableItemComponent.class) != null)
         {
             consumeTimeItem(i, key);
-
         }
-
         //If it's a clue item
         if (i.getComponent(ClueItemComponent.class) != null){
             consumeClueItem(i, key);
-
         }
-
     }
 
 
@@ -390,6 +520,7 @@ public class InventoryDisplayComponent extends UIComponent {
 
 
     //Shows the items specific description and buffs - TODO
+    //Currently stays on screen when item used as no hover off event happens
     private Table showItemDescription() {
         descriptionTable = new Table();
         descriptionTable.setFillParent(true);
