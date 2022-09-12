@@ -34,8 +34,9 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(NpcEvictionMenuDisplay.class);
 
     private static final int NUMBER_OF_NPC = 8;
-    private static float bgWidth;
-    private static float bgHeight;
+    private static  final float FONT_SIZE_OF_CLUE=3.0f;
+    private static float backgroundWidth;
+    private static float backgroundHeight;
 
     private static final String IMAGE_PATH = "images/eviction_menu/";  //path of team7 images
     private ResourceService resourceService;
@@ -51,8 +52,8 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
-        bgWidth = stage.getWidth();
-        bgHeight = stage.getHeight();
+        backgroundWidth = stage.getWidth();
+        backgroundHeight = stage.getHeight();
         resourceService = ServiceLocator.getResourceService();
         addActors();
     }
@@ -66,14 +67,14 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         // Adding background
         Image backgroundNpcMenu =
                 new Image(resourceService.getAsset(IMAGE_PATH + "evictionMenu_background.png", Texture.class));
-        backgroundNpcMenu.setSize((float) (bgWidth * 0.89), (float) (bgHeight * 0.9851));
-        backgroundNpcMenu.setPosition(bgWidth / 2, 0, Align.bottom);
+        backgroundNpcMenu.setSize((float) (backgroundWidth * 0.89), (float) (backgroundHeight * 0.9851));
+        backgroundNpcMenu.setPosition(backgroundWidth / 2, 0, Align.bottom);
         stage.addActor(backgroundNpcMenu);
 
         // Button for exit the select page, will go back to previous page
         Button exitBtn = createButton(IMAGE_PATH + "exitButton.png", IMAGE_PATH + "exitButton_selected.png");
-        exitBtn.setSize((float) (bgWidth * ((1493.33 - 1436.67) / 1600)), (float) (bgHeight * (53.33 / 900)));
-        exitBtn.setPosition((float) (bgWidth * 0.887), (float) (bgHeight * (1 - 153.33 / 900)));
+        exitBtn.setSize((float) (backgroundWidth * ((1493.33 - 1436.67) / 1600)), (float) (backgroundHeight * (53.33 / 900)));
+        exitBtn.setPosition((float) (backgroundWidth * 0.887), (float) (backgroundHeight * (1 - 153.33 / 900)));
         exitBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -145,17 +146,17 @@ public class NpcEvictionMenuDisplay extends UIComponent {
      */
     private void setButton(Button[] buttons, int i, String type) {
         if (Objects.equals(type, "cardDefault")) {
-            buttons[i].setSize((float) (bgWidth * (207.26 / 1600)), (float) (bgHeight * (283.91 / 900)));
-            buttons[i].setPosition((float) (bgWidth * ((454.13 + ((i % 4) * 230.32)) / 1600)),
-                    (float) (bgHeight * (1 - (295.055 + (i / 4) * 334.09) / 900)), Align.center);
+            buttons[i].setSize((float) (backgroundWidth * (207.26 / 1600)), (float) (backgroundHeight * (283.91 / 900)));
+            buttons[i].setPosition((float) (backgroundWidth * ((454.13 + ((i % 4) * 230.32)) / 1600)),
+                    (float) (backgroundHeight * (1 - (295.055 + (i / 4) * 334.09) / 900)), Align.center);
         } else if (Objects.equals(type, "cardHovering")) {
-            buttons[i].setSize((float) (bgWidth * (235.79 / 1600)), (float) (bgHeight * (323.0 / 900)));
-            buttons[i].setPosition((float) (bgWidth * ((452.135 + ((i % 4) * 230.32)) / 1600)),
-                    (float) (bgHeight * (1 - (294.06 + (i / 4) * 334.09) / 900)), Align.center);
+            buttons[i].setSize((float) (backgroundWidth * (235.79 / 1600)), (float) (backgroundHeight * (323.0 / 900)));
+            buttons[i].setPosition((float) (backgroundWidth * ((452.135 + ((i % 4) * 230.32)) / 1600)),
+                    (float) (backgroundHeight * (1 - (294.06 + (i / 4) * 334.09) / 900)), Align.center);
         } else if (Objects.equals(type, "selectButton")) {
-            buttons[i].setSize((float) (bgWidth * (112.48 / 1600)), (float) (bgHeight * (47.5 / 900)));
-            buttons[i].setPosition((float) (bgWidth * ((420.34 + ((i % 4) * 231.03)) / 1600)),
-                    (float) (bgHeight * (1 - (473.36 + (i / 4) * 335.39) / 900)));
+            buttons[i].setSize((float) (backgroundWidth * (112.48 / 1600)), (float) (backgroundHeight * (47.5 / 900)));
+            buttons[i].setPosition((float) (backgroundWidth * ((420.34 + ((i % 4) * 231.03)) / 1600)),
+                    (float) (backgroundHeight * (1 - (473.36 + (i / 4) * 335.39) / 900)));
         }
     }
 
@@ -174,14 +175,15 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         // set the style of dialog include font color of title; background; size; position
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
                 resourceService.getAsset(IMAGE_PATH + "confirmBox.png", Texture.class));
+
         Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
         Window dialog = new Window("", windowStyle);
         dialog.setModal(true);    // The dialog is always at the front
-        float dialog_size_x = (float) (bgWidth * 0.2537);
-        float dialog_size_y = (float) (bgHeight * 0.3037);
+        float dialog_size_x = (float) (backgroundWidth * 0.2537);
+        float dialog_size_y = (float) (backgroundHeight * 0.3037);
         dialog.setSize(dialog_size_x, dialog_size_y);
-        float dialog_pos_x = (float) (bgWidth * 0.3756);
-        float dialog_pos_y = (float) (bgHeight * (1 - 0.65));
+        float dialog_pos_x = (float) (backgroundWidth * 0.3756);
+        float dialog_pos_y = (float) (backgroundHeight * (1 - 0.65));
         dialog.setPosition(dialog_pos_x, dialog_pos_y);
 
         // Set Cancel and Ok buttons for dialog
@@ -245,13 +247,16 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         // set the style of dialog include font color of title; background; size; position
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
                 resourceService.getAsset(IMAGE_PATH + "infoWindow.png", Texture.class));
-        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLUE, styleImage);
         Window dialog = new Window("", windowStyle);
-        dialog.setModal(true);    // The dialog is always at the front
-        float dialog_size_x = (float) (bgWidth * (810.0 / 1600));
-        float dialog_size_y = (float) (bgHeight * (653.33 / 900));
+        Label message = new Label(card_name,new Label.LabelStyle(new BitmapFont(),Color.YELLOW));
+        message.setFontScale(FONT_SIZE_OF_CLUE);
+      //  dialog.setModal(true);    // The dialog is always at the front
+        dialog.add(message);
+        float dialog_size_x = (float) (backgroundWidth * (810.0 / 1600));
+        float dialog_size_y = (float) (backgroundHeight * (653.33 / 900));
         dialog.setSize(dialog_size_x, dialog_size_y);
-        dialog.setPosition((float) (bgWidth * (407.34 / 1600)), (float) (bgHeight * (1 - 800.33 / 900)));
+        dialog.setPosition((float) (backgroundWidth * (407.34 / 1600)), (float) (backgroundHeight * (1 - 800.33 / 900)));
         dialog.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -262,6 +267,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         });
 
         /** dialog.addActor(label); @Shaohui Wang: the context will be added here */
+       // dialog.add("h");
         stage.addActor(dialog);
     }
 
