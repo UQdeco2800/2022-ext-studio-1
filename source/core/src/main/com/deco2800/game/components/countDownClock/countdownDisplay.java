@@ -39,7 +39,6 @@ public class countdownDisplay extends UIComponent {
         addActors();
     }
 
-    // https://youtu.be/gqxkeKaw1MY used to help code countdown part.
     @Override
     public void update() {
         super.update();

@@ -44,16 +44,13 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
-  private long timeRemaining;
+  private long timeSinceStart;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
-
-    this.timeRemaining = ServiceLocator.getTimeSource().getTime();
-    logger.info("time passed since game started: ", this.timeRemaining);
 
     PhysicsService physicsService = new PhysicsService();
     ServiceLocator.registerPhysicsService(physicsService);
@@ -137,6 +134,9 @@ public class MainGameScreen extends ScreenAdapter {
     Stage stage = ServiceLocator.getRenderService().getStage();
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
+
+    this.timeSinceStart = ServiceLocator.getTimeSource().getTime();
+    logger.info("time passed since game started: {}", this.timeSinceStart);
 
     Entity ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
