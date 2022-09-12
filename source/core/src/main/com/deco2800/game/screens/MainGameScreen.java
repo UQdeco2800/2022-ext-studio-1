@@ -44,11 +44,16 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
+  private long timeRemaining;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
+
+    this.timeRemaining = ServiceLocator.getTimeSource().getTime();
+    logger.info("time passed since game started: ", this.timeRemaining);
 
     PhysicsService physicsService = new PhysicsService();
     ServiceLocator.registerPhysicsService(physicsService);
