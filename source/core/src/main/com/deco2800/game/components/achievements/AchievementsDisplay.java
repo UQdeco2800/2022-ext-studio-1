@@ -5,13 +5,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.services.ServiceLocator;
@@ -36,12 +39,48 @@ public class AchievementsDisplay extends UIComponent {
     private Texture nextPageUpTexture;
     private Texture nextPageDownTexture;
     private Button nextPageBtn;
-    private static final String[] achievementPaths = {
+    private static final String[] gameProgressAchievementsPaths = {
             "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png",
+            "images/achievement/gods_pocket_unobtained.png"};
+    private static final String[] collectionsAchievementsPaths = {
             "images/achievement/treasurer_unobtained.png",
+            "images/achievement/treasurer_unobtained.png",
+            "images/achievement/treasurer_unobtained.png",
+            "images/achievement/treasurer_unobtained.png",
+            "images/achievement/treasurer_unobtained.png",
+            "images/achievement/treasurer_unobtained.png",
+            "images/achievement/treasurer_unobtained.png",
+            "images/achievement/treasurer_unobtained.png",
+            "images/achievement/treasurer_unobtained.png"};
+    private static final String[] othersAchievementsPaths = {
             "images/achievement/nereus!_unobtained.png",
-            "images/achievement/time_keeper_unobtained.png"};
-    private List<Image> achievements = new ArrayList<Image>();
+            "images/achievement/nereus!_unobtained.png",
+            "images/achievement/nereus!_unobtained.png",
+            "images/achievement/nereus!_unobtained.png"};
+    private List<Image> curAchievements;
+    private List<Image> gameProgressAchievements = new ArrayList<Image>();
+    private List<Image> collectionsAchievements = new ArrayList<Image>();
+    private List<Image> othersAchievements = new ArrayList<Image>();
+    private int curPage = 0;
+    private int minPage = 0;
+    private int maxPage = 0;
+
 
     public AchievementsDisplay(GdxGame game) {
         super();
@@ -115,6 +154,10 @@ public class AchievementsDisplay extends UIComponent {
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("LastPage button clicked");
                         // Page up
+                        if (curPage > 0) {
+                            curPage--;
+                            showAchievements(curPage * 8, Math.min((curPage + 1) * 8, curAchievements.size()));
+                        }
                     }
                 });
         nextPageBtn.addListener(
@@ -123,6 +166,10 @@ public class AchievementsDisplay extends UIComponent {
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("NextPage button clicked");
                         // Page down
+                        if (curPage < maxPage) {
+                            curPage++;
+                            showAchievements(curPage * 8, Math.min((curPage + 1) * 8, curAchievements.size()));
+                        }
                     }
                 });
 
@@ -136,6 +183,48 @@ public class AchievementsDisplay extends UIComponent {
         collectionLabel.setPosition(relativeWidth(160), relativeHeight(482));
         othersLabel.setPosition(relativeWidth(180), relativeHeight(372));
 
+        progressLabel.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        super.clicked(event, x, y);
+                        logger.debug("progress Label clicked");
+                        curAchievements = gameProgressAchievements;
+                        curPage = 0;
+                        minPage = 0;
+                        maxPage = (curAchievements.size() - 1) / 8;
+                        showAchievements(0, Math.min(8, curAchievements.size()));
+                    }
+                }
+        );
+
+        collectionLabel.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        super.clicked(event, x, y);
+                        logger.debug("collection Label clicked");
+                        curAchievements = collectionsAchievements;
+                        curPage = 0;
+                        minPage = 0;
+                        maxPage = (curAchievements.size() - 1) / 8;
+                        showAchievements(0, Math.min(8, curAchievements.size()));
+                    }
+                }
+        );
+
+        othersLabel.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        super.clicked(event, x, y);
+                        logger.debug("others Label clicked");
+                        curAchievements = othersAchievements;
+                        showAchievements(0, Math.min(8, curAchievements.size()));
+                    }
+                }
+        );
+
         stage.addActor(table);
         stage.addActor(backBtn);
         stage.addActor(lastPageBtn);
@@ -144,39 +233,70 @@ public class AchievementsDisplay extends UIComponent {
         stage.addActor(collectionLabel);
         stage.addActor(othersLabel);
 
-        // Show achievements
-        for (String path : achievementPaths) {
-            achievements.add(new Image(ServiceLocator.getResourceService()
-                    .getAsset(path, Texture.class)));
+        // Show achievements(default game progress)
+        for (String path : gameProgressAchievementsPaths) {
+            Image image = new Image(ServiceLocator.getResourceService().getAsset(path, Texture.class));
+            image.setPosition(-10000, -10000);
+            gameProgressAchievements.add(image);
+            stage.addActor(image);
         }
-        showAchievements(stage, achievements);
+        for (String path : collectionsAchievementsPaths) {
+            Image image = new Image(ServiceLocator.getResourceService().getAsset(path, Texture.class));
+            image.setPosition(-10000, -10000);
+            collectionsAchievements.add(image);
+            stage.addActor(image);
+        }
+        for (String path : othersAchievementsPaths) {
+            Image image = new Image(ServiceLocator.getResourceService().getAsset(path, Texture.class));
+            image.setPosition(-10000, -10000);
+            othersAchievements.add(image);
+            stage.addActor(image);
+        }
+        curAchievements = gameProgressAchievements;
+        curPage = 0;
+        minPage = 0;
+        maxPage = (curAchievements.size() - 1) / 8;
+        showAchievements(0, Math.min(8, curAchievements.size()));
     }
 
-    private void showAchievements(Stage stage, List<Image> achievements) {
+    private void removeAchievementsFromStage() {
+        for (Image gameProgressAchievement : gameProgressAchievements) {
+            gameProgressAchievement.setPosition(-10000, -10000);
+        }
+        for (Image collectionsAchievement : collectionsAchievements) {
+            collectionsAchievement.setPosition(-10000, -10000);
+        }
+        for (Image othersAchievement : othersAchievements) {
+            othersAchievement.setPosition(-10000, -10000);
+        }
+    }
+
+    private void showAchievements(int start, int end) {
+        removeAchievementsFromStage();
         float offsetX = relativeWidth(333);
         float offsetY = relativeHeight(151);
-        for (int i = 0; i < achievements.size(); i++) {
-            if (i >= 8) {
-                break; // Hide the remaining on the next pages
-            }
-            achievements.get(i).setSize(relativeWidth(292), relativeHeight(111));
+        for (int i = start; i < end; i++) {
+            curAchievements.get(i).setSize(relativeWidth(292), relativeHeight(111));
             if (i % 2 == 0) {
-                achievements.get(i).setPosition(relativeWidth(477),
-                        relativeHeight(533) - offsetY * i / 2);
+                curAchievements.get(i).setPosition(relativeWidth(477),
+                        relativeHeight(533) - offsetY * (i % 8) / 2);
             } else {
-                achievements.get(i).setPosition(relativeWidth(477) + offsetX,
-                        relativeHeight(533) - offsetY * (i - 1) / 2);
+                curAchievements.get(i).setPosition(relativeWidth(477) + offsetX,
+                        relativeHeight(533) - offsetY * ((i - 1) % 8) / 2);
             }
-            stage.addActor(achievements.get(i));
         }
     }
 
-    /** Relative width for dealing with windows of different sizes */
+    /**
+     * Relative width for dealing with windows of different sizes
+     */
     private float relativeWidth(int width) {
         return stage.getWidth() * width / 1280;
     }
 
-    /** Relative height for dealing with windows of different sizes */
+    /**
+     * Relative height for dealing with windows of different sizes
+     */
     private float relativeHeight(int height) {
         return stage.getHeight() * height / 800;
     }
