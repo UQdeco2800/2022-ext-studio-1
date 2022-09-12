@@ -32,6 +32,9 @@ public class AchievementsUpdater extends Component {
 
         Entity player = ((BodyUserData) other.getBody().getUserData()).entity;
         AchievementStatsComponent achvStatsComponent = player.getComponent(AchievementStatsComponent.class);
+        if (achvStatsComponent == null) {
+            return;
+        }
         if (isConsumableItem(entity)) {
             achvStatsComponent.updateConsumableCollectionAchievement(entity);
         }
