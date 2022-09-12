@@ -2,11 +2,14 @@ package com.deco2800.game.components.player;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -17,12 +20,14 @@ import com.badlogic.gdx.utils.Null;
 import com.deco2800.game.components.countDownClock.countdownDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
+import com.deco2800.game.entities.factories.ClueItemFactory;
 import com.deco2800.game.entities.factories.ConsumableItemFactory;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +43,8 @@ public class InventoryDisplayComponent extends UIComponent {
     private static final  int slotWidth = 250;
     private Table rootTable;
     private Table backgroundTable;
+
+    private Table descriptionTable;
     private Label title;
     private HashMap<Integer, Integer> inventoryHashMap;
 
@@ -60,7 +67,7 @@ public class InventoryDisplayComponent extends UIComponent {
         Image inventoryBG =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/blank.png", Texture.class)); //Placeholder graphic
+                                .getAsset("images/blank.png", Texture.class));
 
 
         Table inventoryMenu = createInventory();
@@ -101,7 +108,7 @@ public class InventoryDisplayComponent extends UIComponent {
     private Table createInventory() {
 
         //empty slot
-        Texture texture = new Texture(Gdx.files.internal("images/hex_grass_1.png")); //Placeholder graphic
+        Texture texture = new Texture(Gdx.files.internal("images/inventory/emptyInventorySlot.png"));
         Drawable emptySlot = new TextureRegionDrawable(new TextureRegion(texture));
 
         //Confirm down <a href="https://www.flaticon.com/free-icons/pixelated" title="pixelated icons">Pixelated icons created by Freepik - Flaticon</a>
@@ -146,6 +153,20 @@ public class InventoryDisplayComponent extends UIComponent {
                                 public void clicked(InputEvent event, float x, float y) {
                                     useItem(i, key);
                                 }
+                            });
+
+                            drawSlot1.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription();
+                                }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+
                             });
 
                         }
@@ -296,16 +317,6 @@ public class InventoryDisplayComponent extends UIComponent {
         ImageButton slot9 = drawSlot9;
         ImageButton slot10 = drawSlot10;
 
-        /*
-        slot1.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent event, Actor actor) {
-                        useItem();
-                    }
-                });
-        */
-
 
         Table table = new Table();
 
@@ -329,16 +340,20 @@ public class InventoryDisplayComponent extends UIComponent {
 
 
     public void useItem(Entity i, Integer key) {
+
         //If it's a time item
         if (i.getComponent(ConsumeableItemComponent.class) != null)
         {
             consumeTimeItem(i, key);
+
         }
 
         //If it's a clue item
         if (i.getComponent(ClueItemComponent.class) != null){
-            useClueItem(i, key);
+            consumeClueItem(i, key);
+
         }
+
     }
 
 
@@ -367,18 +382,45 @@ public class InventoryDisplayComponent extends UIComponent {
 
                 inventoryHashMap.remove(key);
                 destroyInventory();
+
             }
 
         }
     }
 
-    public void useClueItem(Entity i, int key) {
+
+    //Shows the items specific description and buffs - TODO
+    private Table showItemDescription() {
+        descriptionTable = new Table();
+        descriptionTable.setFillParent(true);
+
+        title = new Label("This is an Item that does something", skin);
+        title.setFontScale(1f);
+        title.setColor(Color.WHITE); //TODO doesn't work
+        descriptionTable.add(title).pad(5);
 
 
+        stage.addActor(descriptionTable);
+
+        return descriptionTable;
+
+    }
+
+    private void destroyItemDescription() {
+        super.dispose();
+        descriptionTable.remove();
+    }
+
+
+
+    public void consumeClueItem(Entity i, int key) {
+
+        //Increase the guilt rating of an NPC
 
 
         inventoryHashMap.remove(key);
         destroyInventory();
+
     }
 
     public void destroyInventory() {

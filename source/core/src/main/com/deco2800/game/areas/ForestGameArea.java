@@ -50,7 +50,9 @@ public class ForestGameArea extends GameArea {
      "images/right_1.png",
      "images/inventory/time_item.png",
      "images/inventory/scales1.png",
-      "images/inventory/confirm.png"
+     "images/inventory/confirm.png",
+     "images/inventory/emtpyInventorySlot.png",
+     "images/inventory/inventoryBG.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas","images/player.atlas"
