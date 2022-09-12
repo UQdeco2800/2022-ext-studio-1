@@ -144,19 +144,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot1.addListener(new ClickListener() {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
-
-                                    //If it's a clue item
-                                    if (i.getComponent(ClueItemComponent.class) != null){
-                                        useClueItem(i, key);
-                                    }
-
-
+                                    useItem(i, key);
                                 }
                             });
 
@@ -171,15 +159,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot2.addListener(new ClickListener() {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
-                                    //If it's a clue item
-                                    if (i.getComponent(ClueItemComponent.class) != null){
-                                        useClueItem(i, key);
-                                    }
+                                    useItem(i, key);
 
                                 }
                             });
@@ -194,16 +174,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot3.addListener(new ClickListener() {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
-                                    //If it's a clue item
-                                    if (i.getComponent(ClueItemComponent.class) != null){
-                                        useClueItem(i, key);
-                                    }
-
+                                    useItem(i, key);
                                 }
                             });
                         }
@@ -217,16 +188,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot4.addListener(new ClickListener() {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
-                                    //If it's a clue item
-                                    if (i.getComponent(ClueItemComponent.class) != null){
-                                        useClueItem(i, key);
-                                    }
-
+                                    useItem(i, key);
                                 }
                             });
                         }
@@ -240,16 +202,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot5.addListener(new ClickListener() {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
-                                    //If it's a clue item
-                                    if (i.getComponent(ClueItemComponent.class) != null){
-                                        useClueItem(i, key);
-                                    }
-
+                                    useItem(i, key);
                                 }
                             });
                         }
@@ -263,16 +216,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot6.addListener(new ClickListener() {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
-                                    //If it's a clue item
-                                    if (i.getComponent(ClueItemComponent.class) != null){
-                                        useClueItem(i, key);
-                                    }
-
+                                    useItem(i, key);
                                 }
                             });
                         }
@@ -286,16 +230,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot7.addListener(new ClickListener() {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
-                                    //If it's a clue item
-                                    if (i.getComponent(ClueItemComponent.class) != null){
-                                        useClueItem(i, key);
-                                    }
-
+                                    useItem(i, key);
                                 }
                             });
                         }
@@ -309,16 +244,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot8.addListener(new ClickListener() {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
-                                    //If it's a clue item
-                                    if (i.getComponent(ClueItemComponent.class) != null){
-                                        useClueItem(i, key);
-                                    }
-
+                                    useItem(i, key);
                                 }
                             });
                         }
@@ -332,16 +258,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot9.addListener(new ClickListener() {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
-                                    //If it's a clue item
-                                    if (i.getComponent(ClueItemComponent.class) != null){
-                                        useClueItem(i, key);
-                                    }
-
+                                    useItem(i, key);
                                 }
                             });
                         }
@@ -354,15 +271,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot10.addListener(new ClickListener() {
                                 @Override
                                 public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
-                                    //If it's a clue item
-                                    if (i.getComponent(ClueItemComponent.class) != null){
-                                        useClueItem(i, key);
-                                    }
+                                    useItem(i, key);
 
                                 }
                             });
@@ -419,6 +328,20 @@ public class InventoryDisplayComponent extends UIComponent {
     }
 
 
+    public void useItem(Entity i, Integer key) {
+        //If it's a time item
+        if (i.getComponent(ConsumeableItemComponent.class) != null)
+        {
+            consumeTimeItem(i, key);
+        }
+
+        //If it's a clue item
+        if (i.getComponent(ClueItemComponent.class) != null){
+            useClueItem(i, key);
+        }
+    }
+
+
     @Override
     public void draw(SpriteBatch batch) {
     }
@@ -451,7 +374,7 @@ public class InventoryDisplayComponent extends UIComponent {
 
     public void useClueItem(Entity i, int key) {
 
-        
+
 
 
         inventoryHashMap.remove(key);
