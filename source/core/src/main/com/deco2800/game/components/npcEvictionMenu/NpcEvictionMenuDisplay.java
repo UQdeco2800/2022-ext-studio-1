@@ -265,7 +265,6 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                 dialog.remove();
             }
         });
-
         dialog.addActor(cancelButton);
         dialog.addActor(okButton);
         stage.addActor(dialog);
