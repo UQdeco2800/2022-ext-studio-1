@@ -1,12 +1,8 @@
 package com.deco2800.game.components.player;
 
-import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.ClueItemFactory;
 import com.deco2800.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -44,7 +40,7 @@ class InventoryComponentTest {
     assertEquals(80, inventory.getGold());
   }
   @Test
-  void shouldAddItemToInventoy() {
+  void shouldAddItemToInventory() {
     InventoryComponent inventory = new InventoryComponent(0);
     inventory.inventoryHashMap.put(1,1);
     assertEquals(1, inventory.inventoryHashMap.size());
@@ -62,8 +58,32 @@ class InventoryComponentTest {
     assertEquals(30, consumable.increaseTime());
 
   }
+  /*
+  This test should show that another item is not added to the inventory system, otherwise will fail over
+   */
   @Test
   void shouldLimitInventoryCapacity() {
+    InventoryComponent inventory = new InventoryComponent(0);
+
+    short Item = (1 << 2);
+
+    inventory.inventoryHashMap.put(1,1);
+    inventory.inventoryHashMap.put(2,1);
+    inventory.inventoryHashMap.put(3,1);
+    inventory.inventoryHashMap.put(4,1);
+    inventory.inventoryHashMap.put(5,1);
+    inventory.inventoryHashMap.put(6,1);
+    inventory.inventoryHashMap.put(7,1);
+    inventory.inventoryHashMap.put(8,1);
+    inventory.inventoryHashMap.put(9,1);
+    inventory.inventoryHashMap.put(10,1);
+
+    // Desirable parameters
+    AddToInventoryComponent addToInventoryComponent = new AddToInventoryComponent(Item);
+
+    addToInventoryComponent.addToInventory(inventory.inventoryHashMap.size(), inventory, null);
+    assertEquals(30, inventory.inventoryHashMap.size());
+
 
   }
 
