@@ -82,9 +82,6 @@ class InventoryComponentTest {
     AddToInventoryComponent addToInventoryComponent = new AddToInventoryComponent(Item);
 
     addToInventoryComponent.addToInventory(inventory.inventoryHashMap.size(), inventory, null);
-    assertEquals(30, inventory.inventoryHashMap.size());
-
-
+    assertEquals(10, inventory.inventoryHashMap.size());
   }
-
 }
