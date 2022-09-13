@@ -27,7 +27,7 @@ public class CountdownComponentTest {
 //        } else {
 //            assertEquals(countdown.counterLabel.getText(), String.valueOf(countdown.getRemainingTime()));
 //        }
-        assertEquals(countdown.counterLabel.getText(), String.valueOf(countdown.getRemainingTime()));
+        assertEquals(countdown.counterLabel.getText().toString(), String.valueOf(countdown.getRemainingTime()));
     }
 //
     @Test
