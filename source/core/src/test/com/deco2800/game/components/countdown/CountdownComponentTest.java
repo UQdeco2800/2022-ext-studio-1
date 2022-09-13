@@ -2,33 +2,48 @@ package com.deco2800.game.components.countdown;
 
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.components.countDownClock.countdownDisplay;
+import com.deco2800.game.screens.MainGameScreen;
 import org.junit.Before;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.deco2800.game.GdxGame;
 
 @ExtendWith(GameExtension.class)
 public class CountdownComponentTest {
 
-    private countdownDisplay countdown;
+    private static final Logger logger = LoggerFactory.getLogger(CountdownComponentTest.class);
+    private GdxGame game =  mock(GdxGame.class);
+    private MainGameScreen mainGameScreen = mock(MainGameScreen.class);
 
-    @Before
-    public void testSetUp() {
-        countdown = mock(countdownDisplay.class);
-    }
+    private countdownDisplay countdown = new countdownDisplay(mainGameScreen.getGame());
+
+//    @Before
+//    public void testSetUp() {
+//        logger.info("setting up unit test");
+//        countdown = mock(countdownDisplay.class);
+//        logger.info(countdown.toString());
+////        countdown = new countdownDisplay(this.game);
+//    }
 
     @Test
     public void shouldDisplayCorrectTime() {
-        if (countdown.getRemainingTime() <= 0) {
-            assertTrue(countdown.counterLabel.textEquals("GAME OVER!"));
-        } else {
-            assertEquals(countdown.counterLabel.getText().toString(), String.valueOf(countdown.getRemainingTime()));
+        logger.info("shouldDisplayCorrectTime is called.");
+        if (countdown.counterLabel != null) {
+            if (countdown.getRemainingTime() <= 0) {
+                logger.info("testing whether label displays game over when it should.");
+                assertTrue(countdown.counterLabel.textEquals("GAME OVER!"));
+            } else {
+                logger.info("running test to display correct remaining time.");
+                assertEquals(countdown.counterLabel.getText().toString(), String.valueOf(countdown.getRemainingTime()));
+            }
         }
+
     }
-//
+
     @Test
     public void shouldPauseCountdown() {
 
@@ -45,7 +60,7 @@ public class CountdownComponentTest {
     }
 
     @Test
-    public void ctShouldNotRestart() {
+    public void cdShouldNotRestart() {
 
     }
 }

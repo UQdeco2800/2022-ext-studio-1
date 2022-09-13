@@ -28,7 +28,7 @@ public class countdownDisplay extends UIComponent {
     public countdownDisplay(GdxGame game) {
         super();
         this.game = game;
-        this.timeRemaining = 60480; //- (ServiceLocator.getTimeSource().getTime() / 1000);
+        this.timeRemaining = 300; //- (ServiceLocator.getTimeSource().getTime() / 1000);
         timeCount = 0;
     }
     public Label counterLabel;
@@ -43,17 +43,17 @@ public class countdownDisplay extends UIComponent {
     public void update() {
         super.update();
         timeCount = Gdx.graphics.getDeltaTime();
-//        if (timeCount >= 1) {
-//            timeRemaining--;
-//            counterLabel.setText(String.valueOf(timeRemaining));
-//            timeCount = 0;
-//        }
+
         if (this.timeRemaining <= 0) {
             counterLabel.setText("GAME OVER!");
+            logger.info("negative time: {}", String.valueOf(this.getRemainingTime()));
+            logger.info(counterLabel.getText().toString());
         }
         else {
             this.timeRemaining -= timeCount;
             counterLabel.setText(String.valueOf(this.timeRemaining));
+            logger.info("remaining time: {}", String.valueOf(this.getRemainingTime()));
+            logger.info(counterLabel.getText().toString());
         }
 
 
@@ -113,6 +113,10 @@ public class countdownDisplay extends UIComponent {
         super.dispose();
     }
 
+    @Override
+    public String toString() {
+        return "this is the countdown timer with remaining time: " + String.valueOf(getRemainingTime());
+    }
 
 
 }

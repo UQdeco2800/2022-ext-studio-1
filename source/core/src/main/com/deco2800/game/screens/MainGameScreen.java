@@ -112,6 +112,10 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.clear();
   }
 
+  public GdxGame getGame() {
+    return this.game;
+  }
+
   private void loadAssets() {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
