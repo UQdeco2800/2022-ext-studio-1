@@ -15,32 +15,37 @@ public class CountdownComponentTest {
 
     private countdownDisplay countdown;
 
-    @Before
-    public void testSetUp() {
-        countdown = mock(countdownDisplay.class);
-    }
-
-    @Test
-    public void shouldDisplayCorrectTime() {
-        if (countdown.getRemainingTime() <= 0) {
-            assertTrue(countdown.counterLabel.textEquals("GAME OVER!"));
-        } else {
-            assertEquals(countdown.counterLabel.getText(), String.valueOf(countdown.getRemainingTime()));
-        }
-    }
-
-    @Test
-    public void shouldPauseCountdown() {
-
-    }
-
-    @Test
-    public void shouldResumeCountdown() {
-
-    }
-
-    @Test
-    public void ctShouldNotRestart() {
-        
-    }
+//    @Before
+//    public void testSetUp() {
+//        countdown = mock(countdownDisplay.class);
+//    }
+//
+//    @Test
+//    public void shouldDisplayCorrectTime() {
+//        if (countdown.getRemainingTime() <= 0) {
+//            assertTrue(countdown.counterLabel.textEquals("GAME OVER!"));
+//        } else {
+//            assertEquals(countdown.counterLabel.getText(), String.valueOf(countdown.getRemainingTime()));
+//        }
+//    }
+//
+//    @Test
+//    public void shouldPauseCountdown() {
+//
+//    }
+//
+//    @Test
+//    public void shouldResumeCountdown() {
+//
+//    }
+//
+//    @Test
+//    public void shouldIncreaseTime() {
+//
+//    }
+//
+//    @Test
+//    public void ctShouldNotRestart() {
+//
+//    }
 }
