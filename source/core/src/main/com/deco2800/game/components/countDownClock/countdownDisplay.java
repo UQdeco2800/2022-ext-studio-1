@@ -31,7 +31,7 @@ public class countdownDisplay extends UIComponent {
         this.timeRemaining = 60480; //- (ServiceLocator.getTimeSource().getTime() / 1000);
         timeCount = 0;
     }
-    Label counterLabel;
+    public Label counterLabel;
 
     @Override
     public void create() {
@@ -61,27 +61,13 @@ public class countdownDisplay extends UIComponent {
 
     private void addActors() {
 
-//        Label.LabelStyle counterLabelStyle = new Label.LabelStyle();
-//        BitmapFont myFont = new BitmapFont(Gdx.files.internal());
-//        counterLabelStyle.font = myFont;
-//        counterLabelStyle.fontColor = Color.YELLOW;
-//        Label title = new Label("Countdown", skin, "title");
-//        title.setPosition((Gdx.graphics.getWidth()-title.getWidth())/2f,Gdx.graphics.getHeight()-title.getHeight()-15);
-
-//        Table main = new Table();
-//        main.setWidth();
-//        main.add(counterLabel);
         counterLabel = new Label(String.valueOf(timeRemaining), skin);
         counterLabel.setPosition((float) (stage.getWidth() * 0.8), (float) (stage.getHeight() * 0.1));
-//        counterLabel.setWidth(stage.getWidth());
-//        counterLabel.setHeight(stage.getHeight());
+
         counterLabel.setFontScale(2);
-//        counterLabel.setSize((int) (stage.getWidth()), (float) (stage.getHeight() * 0.8));
-//        Table exitScreenBtn = makeExitBtn();
-//
-//        stage.addActor(title);
+
         stage.addActor(counterLabel);
-//        stage.addActor(exitScreenBtn);
+
     }
 
     public void pauseGame() {
