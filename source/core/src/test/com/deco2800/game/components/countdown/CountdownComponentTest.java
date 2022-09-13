@@ -22,12 +22,11 @@ public class CountdownComponentTest {
 
     @Test
     public void shouldDisplayCorrectTime() {
-//        if (countdown.getRemainingTime() <= 0) {
-//            assertTrue(countdown.counterLabel.textEquals("GAME OVER!"));
-//        } else {
-//            assertEquals(countdown.counterLabel.getText(), String.valueOf(countdown.getRemainingTime()));
-//        }
-        assertEquals(countdown.counterLabel.getText().toString(), String.valueOf(countdown.getRemainingTime()));
+        if (countdown.getRemainingTime() <= 0) {
+            assertTrue(countdown.counterLabel.textEquals("GAME OVER!"));
+        } else {
+            assertEquals(countdown.counterLabel.getText().toString(), String.valueOf(countdown.getRemainingTime()));
+        }
     }
 //
     @Test
