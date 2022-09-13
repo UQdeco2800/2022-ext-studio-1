@@ -25,6 +25,7 @@ public class MainGameActions extends Component {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("InventoryScreen", this::onInventoryScreen);
     entity.getEvents().addListener("NpcMenu", this::onNpcMenu);
+//    entity.getEvents().addListener("CountdownScreen", this::onCountdownScreen);
   }
 
   /**
@@ -47,6 +48,11 @@ public class MainGameActions extends Component {
     logger.info("Opening Inventory");
     //game.setScreen(GdxGame.ScreenType.INVENTORY_SCREEN);
     playerInventory = new InventoryDisplayComponent();
+  }
+
+  private void onCountdownScreen() {
+    logger.info("Opening countdown screen");
+    game.setScreen(GdxGame.ScreenType.COUNTDOWN_SCREEN);
   }
 
 }
