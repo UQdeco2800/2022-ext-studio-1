@@ -40,7 +40,7 @@ public class NPCClueLibrary {
     private NPCClueLibrary() {
         clues = new HashMap<>();
 
-        clues.put("Metis", new String[]{"a man who was close to her", "has deep voice", "a tall, thin person"});
+        clues.put("Metis", new String[]{"A man who was close to her", "Has deep voice", "A tall, thin person"});
 
         // put more clues here later on.
     }

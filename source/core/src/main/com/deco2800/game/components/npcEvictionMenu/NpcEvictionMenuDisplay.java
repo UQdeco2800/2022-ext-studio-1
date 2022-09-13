@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.components.npc.NPCClueLibrary;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
@@ -34,14 +35,8 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(NpcEvictionMenuDisplay.class);
 
     private static final int NUMBER_OF_NPC = 8;
-    private static  final float FONT_SIZE_OF_CLUE=3.0f;
     private static float bgWidth;
     private static float bgHeight;
-    String clues ="He is highly skilled in a particular field." +
-            "He knew almost everything about Atlantis." +
-            "His hair is not long or short." +
-            "He carries the tools of self-defense with him";
-
 
     private static final String IMAGE_PATH = "images/eviction_menu/";  //path of team7 images
 
@@ -57,6 +52,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     private ResourceService resourceService;
 
     private final GdxGame game;
+    private NPCClueLibrary library = NPCClueLibrary.getInstance();
 
     public NpcEvictionMenuDisplay(GdxGame game) {
         super();
@@ -309,7 +305,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                 resourceService.getAsset(IMAGE_PATH + "infoWindow.png", Texture.class));
         Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLUE, styleImage);
         Window dialog = new Window("", windowStyle);
-
+        dialog.setModal(true);    // The dialog is always at the front
         float dialog_size_x = (float) (bgWidth * (810.0 / 1600));
         float dialog_size_y = (float) (bgHeight * (653.33 / 900));
         dialog.setSize(dialog_size_x, dialog_size_y);
@@ -324,17 +320,40 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         });
 
         //  add clues of npc
-        Label message = new Label(clues,skin,"large");
+        String[] clues = {};
+        try {
+            clues = library.getUnlockClues("Metis");
+        } catch (Exception ignored) {}
+        Label message = creatLabel(clues);
         message.setWrap(true);
         message.setAlignment(Align.left);
-
         Table table = new Table();
         table.add(message).width(dialog_size_x*3/5);
-
-        dialog.setModal(true);    // The dialog is always at the front
         dialog.add(table);
 
         stage.addActor(dialog);
+    }
+
+    /**
+     * Creat a label with the given set of clues
+     * @param clues the set of clues <br/>
+     *              <b>This parameter is from team9 function "getUnlockClues(npc name)"</b>
+     * @return A Label include the clues
+     * @author Team7 Yingxin Liu Shaohui Wang
+     */
+    protected Label creatLabel (String[] clues) {
+        StringBuilder message = new StringBuilder();
+        if (clues == null || clues.length == 0) {
+            message = new StringBuilder("This character has no clue yet");
+        } else {
+            for (int i = 0; i < clues.length; i++){
+                message.append(clues[i]);
+                if (i != (clues.length - 1)) {
+                    message.append("\n");
+                }
+            }
+        }
+        return new Label(message.toString(),skin,"large");
     }
 
     private void exitMenu() {
