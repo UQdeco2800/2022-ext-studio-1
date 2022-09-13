@@ -152,7 +152,6 @@ public class InventoryDisplayComponent extends UIComponent {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
                             drawSlot1 = new ImageButton(buttonGraphic, confirmDown);
 
-                            //TODO - Apply new hover and onclick logic to all slots
                             //Hover popup for item description and Item slot click event
                             drawSlot1.addListener(new InputListener() {
                                 //Shows item description when mouse hovers item slot
@@ -213,7 +212,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot3 = new ImageButton(buttonGraphic, confirmDown);
 
 
-                            //Hover popup for item description
+                            //Hover popup for item description and Item slot click event
                             drawSlot3.addListener(new InputListener() {
                                 //Shows item description when mouse hovers item slot
                                 @Override
@@ -243,7 +242,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot4 = new ImageButton(buttonGraphic, confirmDown);
 
 
-                            //Hover popup for item description
+                            //Hover popup for item description and Item slot click event
                             drawSlot4.addListener(new InputListener() {
                                 //Shows item description when mouse hovers item slot
                                 @Override
@@ -273,7 +272,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot5 = new ImageButton(buttonGraphic, confirmDown);
 
 
-                            //Hover popup for item description
+                            //Hover popup for item description and Item slot click event
                             drawSlot5.addListener(new InputListener() {
                                 //Shows item description when mouse hovers item slot
                                 @Override
@@ -303,7 +302,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot6 = new ImageButton(buttonGraphic, confirmDown);
 
 
-                            //Hover popup for item description
+                            //Hover popup for item description and Item slot click event
                             drawSlot6.addListener(new InputListener() {
                                 //Shows item description when mouse hovers item slot
                                 @Override
@@ -333,7 +332,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot7 = new ImageButton(buttonGraphic, confirmDown);
 
 
-                            //Hover popup for item description
+                            //Hover popup for item description and Item slot click event
                             drawSlot7.addListener(new InputListener() {
                                 //Shows item description when mouse hovers item slot
                                 @Override
@@ -363,7 +362,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot8 = new ImageButton(buttonGraphic, confirmDown);
 
 
-                            //Hover popup for item description
+                            //Hover popup for item description and Item slot click event
                             drawSlot8.addListener(new InputListener() {
                                 //Shows item description when mouse hovers item slot
                                 @Override
@@ -393,7 +392,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot9 = new ImageButton(buttonGraphic, confirmDown);
 
 
-                            //Hover popup for item description
+                            //Hover popup for item description and Item slot click event
                             drawSlot9.addListener(new InputListener() {
                                 //Shows item description when mouse hovers item slot
                                 @Override
@@ -423,7 +422,7 @@ public class InventoryDisplayComponent extends UIComponent {
                             drawSlot10 = new ImageButton(buttonGraphic, confirmDown);
 
 
-                            //Hover popup for item description
+                            //Hover popup for item description and Item slot click event
                             drawSlot10.addListener(new InputListener() {
                                 //Shows item description when mouse hovers item slot
                                 @Override
