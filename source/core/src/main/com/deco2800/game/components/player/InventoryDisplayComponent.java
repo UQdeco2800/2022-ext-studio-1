@@ -511,7 +511,9 @@ public class InventoryDisplayComponent extends UIComponent {
             if (timeDisplay.getComponent(countdownDisplay.class) != null)
             {
                 float increaseValue = i.getComponent(ConsumeableItemComponent.class).increaseTime();
+
                 (timeDisplay.getComponent(countdownDisplay.class)).increaseRemainingTime(increaseValue);
+
 
 //                // find player to remove item after consumption
 //                for (Entity player: entityLocator) {

@@ -12,13 +12,13 @@ import com.deco2800.game.rendering.TextureRenderComponent;
  * Used to determine if object is consumable
  */
 public class ConsumeableItemComponent extends Component {
-  private int timeIncrease;
+  private float timeIncrease;
 
   /**
    * Create a component which is used to increase the time
    * @param timeIncrease The physics layer of the target's collider.
    */
-  public ConsumeableItemComponent(int timeIncrease) {
+  public ConsumeableItemComponent(float timeIncrease) {
     this.timeIncrease = timeIncrease;
   }
 
@@ -26,7 +26,7 @@ public class ConsumeableItemComponent extends Component {
   public void create() {
   }
 
-  public int increaseTime()
+  public float increaseTime()
   {
     return this.timeIncrease;
   }

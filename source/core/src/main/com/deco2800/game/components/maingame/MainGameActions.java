@@ -54,6 +54,7 @@ public class MainGameActions extends Component {
 
     // logic to locate the player and get inventory
     Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
+    logger.info(String.valueOf(entities));
     Entity player = null;
     for (Entity i: entities)
     {
@@ -62,6 +63,9 @@ public class MainGameActions extends Component {
         // Assign entity to player
         player = i;
       }
+//      else if (i.getComponent(countdownDisplay.class) != null) {
+//        i.getComponent(countdownDisplay.class).increaseTime((float) 30.33);
+//      }
     }
     playerInventory = new InventoryDisplayComponent(player.getComponent(InventoryComponent.class).getInventory());
 
