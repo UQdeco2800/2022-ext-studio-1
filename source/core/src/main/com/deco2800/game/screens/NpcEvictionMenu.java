@@ -4,7 +4,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplay;
-import com.deco2800.game.components.settingsmenu.SettingsMenuDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -22,15 +21,21 @@ public class NpcEvictionMenu extends ScreenAdapter {
 
     private final GdxGame game;
     private final Renderer renderer;
-
+    private static final String IMAGES_PATH = "images/eviction_menu/";
     private static final String[] npcEvictionMenuTextures = {
-            "images/eviction_menu/evictionMenu_background.png",
-            "images/eviction_menu/confirmBox.png",
-            "images/eviction_menu/confirmBtn_ok.png", "images/eviction_menu/confirmBtn_ok1.png",
-            "images/eviction_menu/confirmBtn_cancel.png","images/eviction_menu/confirmBtn_cancel1.png",
-            "images/eviction_menu/selectButton_single.png","images/eviction_menu/selectButton_selected.png",
-            "images/eviction_menu/exitButton.png","images/eviction_menu/exitButton_selected.png",
-            "images/eviction_menu/evictionCard_single.png"};
+            IMAGES_PATH + "evictionMenu_background.png",
+            IMAGES_PATH + "exitButton.png", IMAGES_PATH + "exitButton_selected.png",
+            IMAGES_PATH + "selectButton_single.png", IMAGES_PATH + "selectButton_selected.png",
+            IMAGES_PATH + "evictionCard_single.png", IMAGES_PATH + "evictionCard_hover.png",
+            IMAGES_PATH + "confirmBox.png",
+            IMAGES_PATH + "confirmBtn_ok.png", IMAGES_PATH + "confirmBtn_ok1.png",
+            IMAGES_PATH + "confirmBtn_cancel.png", IMAGES_PATH + "confirmBtn_cancel1.png",
+            IMAGES_PATH + "infoWindow.png",
+            IMAGES_PATH + "npcNereus.png", IMAGES_PATH + "npcNereus_hover.png",
+            IMAGES_PATH + "npcHeph.png", IMAGES_PATH + "npcHeph_hover.png",
+            IMAGES_PATH + "npcMetis.png", IMAGES_PATH + "npcMetis_hover.png"};
+
+
     public NpcEvictionMenu(GdxGame game) {
         this.game = game;
 
