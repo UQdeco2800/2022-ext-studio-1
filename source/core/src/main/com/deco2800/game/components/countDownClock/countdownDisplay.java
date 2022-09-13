@@ -23,6 +23,8 @@ public class countdownDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(countdownDisplay.class);
     private final GdxGame game;
     private float timeRemaining;
+
+    private boolean stop=false;
     private float timeCount;
     public boolean paused = false;
     public countdownDisplay(GdxGame game) {
@@ -50,8 +52,9 @@ public class countdownDisplay extends UIComponent {
 //        }
         if (this.timeRemaining <= 0) {
             counterLabel.setText("GAME OVER!");
+            game.theGameScreen.changeStatus();
         }
-        else {
+        if(timeRemaining>0 && stop==false) {
             this.timeRemaining -= timeCount;
             counterLabel.setText(String.valueOf(this.timeRemaining));
         }
@@ -67,6 +70,15 @@ public class countdownDisplay extends UIComponent {
         counterLabel.setFontScale(2);
 
         stage.addActor(counterLabel);
+
+
+
+        Table pauseBtn = pauseButton();
+        Table resumeBtn = resumeButton();
+        stage.addActor(pauseBtn);
+        stage.addActor(resumeBtn);
+
+
 
     }
 
@@ -93,6 +105,58 @@ public class countdownDisplay extends UIComponent {
         table.add(exitBtn).expandX().left().pad(0f, 100f, 100f, 0f);
         return table;
     }
+
+    //Make the pause button, and change stop  to true when clicked
+    private   Table pauseButton(){
+        TextButton pauseButton = new TextButton("PAUSE", skin);
+
+
+        pauseButton.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("pause button clicked");
+                        stop = true;
+                        //  MainGameScreen.stopGame = true;
+                        //  MainGameScreen.render.stopGame = true;
+                        // game.stopGame = true;
+                        game.theGameScreen.changeStatus();
+                    }
+                });
+
+        Table table =new Table();
+        table.add(pauseButton).expandX().right().pad(0f, 2400f, 100f, 0f);
+        return table;
+
+
+    }
+
+
+    //Make the resume button, change stop to false when clicked
+    private   Table resumeButton(){
+        TextButton resumeButton = new TextButton("RESUME", skin);
+
+        resumeButton.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("resume button clicked");
+                        stop = false;
+                        game.theGameScreen.changeStatus2();
+                    }
+                });
+
+        Table table =new Table();
+        table.add(resumeButton).expandX().right().pad(0f, 2150f, 100f, 0f);
+        return table;
+
+
+    }
+
+
+
+
+
 
     public void increaseTime(float increment)
     {

@@ -46,8 +46,11 @@ public class MainGameScreen extends ScreenAdapter {
 
   private long timeSinceStart;
 
-  public MainGameScreen(GdxGame game) {
+  private  boolean stopGame;
+
+  public MainGameScreen(GdxGame game, boolean stop) {
     this.game = game;
+    this.stopGame = stop;
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
@@ -77,9 +80,26 @@ public class MainGameScreen extends ScreenAdapter {
 
   @Override
   public void render(float delta) {
-    physicsEngine.update();
-    ServiceLocator.getEntityService().update();
-    renderer.render();
+    //physicsEngine.update();
+    //ServiceLocator.getEntityService().update();
+    //renderer.render();
+    if (stopGame==true){
+      renderer.render();
+      ServiceLocator.getEntityService().update();
+
+
+
+
+
+    }else {
+      renderer.render();
+      ServiceLocator.getEntityService().update();
+      physicsEngine.update();
+
+
+
+
+    }
   }
 
   @Override
@@ -149,5 +169,14 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);
+  }
+  public void changeStatus(){
+
+    stopGame=true;
+
+  }
+  public void changeStatus2(){
+    stopGame=false;
+
   }
 }

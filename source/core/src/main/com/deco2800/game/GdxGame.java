@@ -20,6 +20,10 @@ import static com.badlogic.gdx.Gdx.app;
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
 
+  public boolean stopGame = false;
+
+  public MainGameScreen theGameScreen;
+
   @Override
   public void create() {
     logger.info("Creating game");
@@ -69,7 +73,8 @@ public class GdxGame extends Game {
       case MAIN_MENU:
         return new MainMenuScreen(this);
       case MAIN_GAME:
-        return new MainGameScreen(this);
+        theGameScreen = new MainGameScreen(this, stopGame);
+        return theGameScreen;
       case NPC_EVICTION_MENU:
         return new NpcEvictionMenu(this);
       case ACHIEVEMENTS:
