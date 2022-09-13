@@ -19,15 +19,15 @@ public class CountdownComponentTest {
     public void testSetUp() {
         countdown = mock(countdownDisplay.class);
     }
-//
-//    @Test
-//    public void shouldDisplayCorrectTime() {
-//        if (countdown.getRemainingTime() <= 0) {
-//            assertTrue(countdown.counterLabel.textEquals("GAME OVER!"));
-//        } else {
-//            assertEquals(countdown.counterLabel.getText(), String.valueOf(countdown.getRemainingTime()));
-//        }
-//    }
+
+    @Test
+    public void shouldDisplayCorrectTime() {
+        if (countdown.getRemainingTime() <= 0) {
+            assertTrue(countdown.counterLabel.textEquals("GAME OVER!"));
+        } else {
+            assertEquals(countdown.counterLabel.getText(), String.valueOf(countdown.getRemainingTime()));
+        }
+    }
 //
 //    @Test
 //    public void shouldPauseCountdown() {
