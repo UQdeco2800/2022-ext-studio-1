@@ -20,14 +20,7 @@ public class CountdownComponentTest {
     private MainGameScreen mainGameScreen = mock(MainGameScreen.class);
 
     private countdownDisplay countdown = new countdownDisplay(mainGameScreen.getGame());
-
-//    @Before
-//    public void testSetUp() {
-//        logger.info("setting up unit test");
-//        countdown = mock(countdownDisplay.class);
-//        logger.info(countdown.toString());
-////        countdown = new countdownDisplay(this.game);
-//    }
+    // game needs to run so that countdown ui can be created but how?
 
     @Test
     public void shouldDisplayCorrectTime() {
