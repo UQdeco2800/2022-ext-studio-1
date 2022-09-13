@@ -1,27 +1,43 @@
 package com.deco2800.game.components.npc;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+/**
+ * Singleton class for NPC Clue Library
+ */
 public class NPCClueLibrary {
 
-    private String name;
-    private ArrayList<String> clues;
+    /**
+     * Static variable reference of single_instance
+     */
+    private static NPCClueLibrary clueLibrary = null;
 
-    public NPCClueLibrary(String name) {
-        this.name = name;
-        this.clues = new ArrayList<>();
+    /**
+     * Declaring a variable of clues
+     */
+    public Map<String, String[]> clues;
+
+    /**
+     * Constructor
+     * Here we will be creating private constructor
+     * restricted to this class itself
+     */
+    private NPCClueLibrary() {
+        clues = new HashMap<>();
+
+        clues.put("Metis", new String[]{"a man who was close to her", "has deep voice", "a tall, thin person"});
+
+        // put more clues here later on.
     }
 
-    public void addClues(String clue) {
-        this.clues.add(clue);
-    }
+    /**
+     * Static method to create instance of NPCClueLibrary class
+     */
+    public static NPCClueLibrary getInstance() {
+        if (clueLibrary == null)
+            clueLibrary = new NPCClueLibrary();
 
-    public ArrayList<String> getClues() {
-        return this.clues;
+        return clueLibrary;
     }
-
-    public boolean removeClue(String clue) {
-        return this.clues.remove(clue);
-    }
-
 }
