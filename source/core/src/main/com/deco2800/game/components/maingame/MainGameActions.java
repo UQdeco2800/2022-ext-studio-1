@@ -1,8 +1,13 @@
 package com.deco2800.game.components.maingame;
 
+import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.countDownClock.countdownDisplay;
+import com.deco2800.game.components.player.InventoryComponent;
 import com.deco2800.game.components.player.InventoryDisplayComponent;
+import com.deco2800.game.entities.Entity;
+import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,8 +51,20 @@ public class MainGameActions extends Component {
 
   private void onInventoryScreen() {
     logger.info("Opening Inventory");
-    //game.setScreen(GdxGame.ScreenType.INVENTORY_SCREEN);
-    playerInventory = new InventoryDisplayComponent();
+
+    // logic to locate the player and get inventory
+    Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
+    Entity player = null;
+    for (Entity i: entities)
+    {
+      if (i.getComponent(InventoryComponent.class) != null)
+      {
+        // Assign entity to player
+        player = i;
+      }
+    }
+    playerInventory = new InventoryDisplayComponent(player.getComponent(InventoryComponent.class).getInventory());
+
   }
 
   private void onCountdownScreen() {
