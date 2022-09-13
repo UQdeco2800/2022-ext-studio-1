@@ -6,10 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.ItemFactory;
-import com.deco2800.game.entities.factories.NPCFactory;
-import com.deco2800.game.entities.factories.ObstacleFactory;
-import com.deco2800.game.entities.factories.PlayerFactory;
+import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -51,12 +48,18 @@ public class ForestGameArea extends GameArea {
      "images/left_1.png",
      "images/right_0.png",
      "images/right_1.png",
+     "images/inventory/time_item.png",
+     "images/inventory/scales1.png",
+     "images/inventory/confirm.png",
+     "images/inventory/emtpyInventorySlot.png",
+     "images/inventory/inventoryBG.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas","images/player.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/VillageBGM_2.mp3";
+  private static final String movementMusic = "sounds/Movement_sound.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
@@ -80,7 +83,8 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     spawnGhosts();
     spawnGhostKing();
-    spawnItem();
+    spawnTimeConsumeableItem();
+    spawnClueItem();
     playMusic();
   }
 
@@ -136,10 +140,16 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }
-  private void spawnItem() {
-    Entity item = ItemFactory.createItem(player);
+  public void spawnTimeConsumeableItem() {
+    Entity item = ConsumableItemFactory.createItem(player, "images/inventory/time_item.png");
 
     spawnEntityAt(item, new GridPoint2(5, 10), true, true);
+  }
+
+  private void spawnClueItem() {
+    Entity item = ClueItemFactory.createItem(player, "images/inventory/scales1.png");
+
+    spawnEntityAt(item, new GridPoint2(5, 5), true, true);
   }
 
   private void spawnGhosts() {
@@ -191,7 +201,6 @@ public class ForestGameArea extends GameArea {
     resourceService.unloadAssets(forestSounds);
     resourceService.unloadAssets(forestMusic);
   }
-
   @Override
   public void dispose() {
     super.dispose();
