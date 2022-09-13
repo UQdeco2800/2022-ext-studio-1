@@ -134,7 +134,7 @@ public class countdownDisplay extends UIComponent {
     }
 
     //Make the pause button, and change stop  to true when clicked
-    private   Table pauseButton(){
+    private Table pauseButton(){
         TextButton pauseButton = new TextButton("PAUSE", skin);
 
 
@@ -160,7 +160,7 @@ public class countdownDisplay extends UIComponent {
 
 
     //Make the resume button, change stop to false when clicked
-    private   Table resumeButton(){
+    private Table resumeButton(){
         TextButton resumeButton = new TextButton("RESUME", skin);
 
         resumeButton.addListener(
@@ -176,15 +176,7 @@ public class countdownDisplay extends UIComponent {
         Table table =new Table();
         table.add(resumeButton).expandX().right().pad(0f, 2150f, 100f, 0f);
         return table;
-
-
     }
-
-
-
-
-
-
 
     public void increaseRemainingTime(float increment) {
         this.timeRemaining += increment;

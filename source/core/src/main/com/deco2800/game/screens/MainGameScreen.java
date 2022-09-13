@@ -174,7 +174,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     ServiceLocator.getEntityService().register(ui);
   }
-  public void changeStatus(){
+  public void changeStatus() {
 
     stopGame=true;
 
