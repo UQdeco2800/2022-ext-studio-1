@@ -30,7 +30,7 @@ public class countdownDisplay extends UIComponent {
     public countdownDisplay(GdxGame game) {
         super();
         this.game = game;
-        this.timeRemaining = 300; //- (ServiceLocator.getTimeSource().getTime() / 1000);
+        this.timeRemaining = 7260; //- (ServiceLocator.getTimeSource().getTime() / 1000);
         timeCount = 0;
     }
     public Label counterLabel;
@@ -56,8 +56,32 @@ public class countdownDisplay extends UIComponent {
 
         }
         if(timeRemaining>0 && stop==false) {
+            int equHours;
+            int equMins;
+            int equSeconds;
             this.timeRemaining -= timeCount;
-            counterLabel.setText(String.valueOf(this.timeRemaining));
+            if (timeRemaining>=60){
+                float mins = timeRemaining/60;
+                if (mins>=60){
+                    int hours = (int)(mins/60);
+                    equHours = hours;
+                    equMins =(int) (mins-equHours*60);
+                    equSeconds=(int)(timeRemaining-equHours*60*60-equMins*60);
+
+
+                }else{
+                    equHours=0;
+                    equMins=(int) mins;
+                    equSeconds=(int)(timeRemaining-equMins*60);
+
+                }
+
+            }else{
+                equHours=0;
+                equMins=0;
+                equSeconds=(int)timeRemaining;
+            }
+            counterLabel.setText(String.valueOf(equHours+":"+equMins+":"+equSeconds));
             logger.info("remaining time: {}", String.valueOf(this.getRemainingTime()));
             logger.info(counterLabel.getText().toString());
         }
