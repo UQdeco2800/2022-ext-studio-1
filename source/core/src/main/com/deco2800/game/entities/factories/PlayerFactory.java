@@ -3,6 +3,8 @@ package com.deco2800.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.achievements.AchievementStatsComponent;
+import com.deco2800.game.components.achievements.pojo.AchievementStatus;
 import com.deco2800.game.components.player.InventoryComponent;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.components.player.PlayerAnimationController;
@@ -18,7 +20,10 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
+import com.deco2800.game.services.AchievementService;
 import com.deco2800.game.services.ServiceLocator;
+
+import java.util.Map;
 
 /**
  * Factory to create a player entity.
@@ -46,6 +51,10 @@ public class PlayerFactory {
     animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
 
+
+    AchievementService achievementService = ServiceLocator.getAchievementService();
+    Map<String, AchievementStatus> achievementStatusMap = achievementService.getAchievementStatusMap();
+
     Entity player =
         new Entity()
             .addComponent(new TextureRenderComponent("images/player_front.png"))
@@ -58,7 +67,8 @@ public class PlayerFactory {
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay())
             .addComponent(animator)
-            .addComponent(new PlayerAnimationController());
+            .addComponent(new PlayerAnimationController())
+            .addComponent(new AchievementStatsComponent(achievementStatusMap));
 
     PhysicsUtils.setScaledCollider(player, 0.3f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

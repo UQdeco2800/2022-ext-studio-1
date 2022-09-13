@@ -1,0 +1,56 @@
+{
+  "achievements": [
+    {
+      "type": "collection",
+      "name": "Time Robber",
+      "lockedPath": "images/achievement/time_robber_locked.png",
+      "obtainedPath": "images/achievement/time_robber.png",
+      "condition": {
+        "item": 5
+      }
+    },
+    {
+      "type": "collection",
+      "name": "Time Keeper",
+      "lockedPath": "images/achievement/time_keeper_locked.png",
+      "obtainedPath": "images/achievement/time_keeper.png",
+      "condition": {
+        "item": 10
+      }
+    },
+    {
+      "type": "collection",
+      "name": "Time Lover",
+      "lockedPath": "images/achievement/time_lover_locked.png",
+      "obtainedPath": "images/achievement/time_lover.png",
+      "condition": {
+        "item": 20
+      }
+    },
+    {
+      "type": "collection",
+      "name": "NEREUS!",
+      "lockedPath": "images/achievement/nereus!_locked.png",
+      "obtainedPath": "images/achievement/nereus!.png",
+      "condition": {
+        "item": 1
+      }
+    },
+    {
+      "type": "collection",
+      "name": "Treasurer",
+      "lockedPath": "images/achievement/treasurer_locked.png",
+      "condition": {
+        "item": 50
+      }
+    },
+    {
+      "type": "collection",
+      "name": "God's Pocket",
+      "lockedPath": "images/achievement/gods_pocket_locked.png",
+      "condition": {
+        "item": 100
+      }
+    }
+  ]
+}
