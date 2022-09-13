@@ -37,6 +37,11 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     private static  final float FONT_SIZE_OF_CLUE=3.0f;
     private static float bgWidth;
     private static float bgHeight;
+    String clues ="He is highly skilled in a particular field." +
+            "He knew almost everything about Atlantis." +
+            "His hair is not long or short." +
+            "He carries the tools of self-defense with him";
+
 
     private static final String IMAGE_PATH = "images/eviction_menu/";  //path of team7 images
 
@@ -319,10 +324,15 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         });
 
         //  add clues of npc
-        Label message = new Label(card_name,new Label.LabelStyle(new BitmapFont(),Color.YELLOW));
-        message.setFontScale(FONT_SIZE_OF_CLUE);
+        Label message = new Label(clues,skin,"large");
+        message.setWrap(true);
+        message.setAlignment(Align.left);
+
+        Table table = new Table();
+        table.add(message).width(dialog_size_x*3/5);
+
         dialog.setModal(true);    // The dialog is always at the front
-        dialog.add(message);
+        dialog.add(table);
 
         stage.addActor(dialog);
     }
