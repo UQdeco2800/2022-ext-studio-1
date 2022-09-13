@@ -47,11 +47,11 @@ public class CountdownComponentTest {
 
     @Test
     public void shouldIncreaseTime() {
-//        float initialTime = countdown.getRemainingTime();
-//        logger.info(String.valueOf(initialTime));
-//        countdown.increaseRemainingTime(300);
-//        float increasedTime = initialTime + 300;
-//
-//        assertEquals(increasedTime, countdown.getRemainingTime());
+        float initialTime = countdown.getRemainingTime();
+        logger.info(String.valueOf(initialTime));
+        countdown.increaseRemainingTime(300);
+        float increasedTime = initialTime + 300;
+
+        assertEquals(increasedTime, countdown.getRemainingTime());
     }
 }
