@@ -45,6 +45,8 @@ public class PlayerFactory {
     animator.addAnimation("down", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("pickUp", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("stand",0.1f, Animation.PlayMode.LOOP);
 
     Entity player =
         new Entity()

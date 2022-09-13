@@ -31,25 +31,25 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W:
         walkDirection.add(Vector2Utils.UP);
         triggerWalkEvent();
-        entity.getEvents().trigger(("upStart"));
+        entity.getEvents().trigger("up");
 //        MusicStuff.playMusic(movementPath, false);
         return true;
       case Keys.A:
         walkDirection.add(Vector2Utils.LEFT);
         triggerWalkEvent();
-        entity.getEvents().trigger(("leftStart"));
+        entity.getEvents().trigger("left");
 //        MusicStuff.playMusic(movementPath, false);
         return true;
       case Keys.S:
         walkDirection.add(Vector2Utils.DOWN);
         triggerWalkEvent();
-        entity.getEvents().trigger(("downStart"));
+        entity.getEvents().trigger("down");
 //        MusicStuff.playMusic(movementPath, false);
         return true;
       case Keys.D:
         walkDirection.add(Vector2Utils.RIGHT);
         triggerWalkEvent();
-        entity.getEvents().trigger(("rightStart"));
+        entity.getEvents().trigger("right");
 //        MusicStuff.playMusic(movementPath, false);
         return true;
       case Keys.SPACE:
@@ -57,6 +57,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.I:
         entity.getEvents().trigger("openInventory");
+        return true;
+      case Keys.K:
+        entity.getEvents().trigger("pickUp");
         return true;
       default:
         return false;
@@ -75,22 +78,25 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W:
         walkDirection.sub(Vector2Utils.UP);
         triggerWalkEvent();
-        entity.getEvents().trigger(("stand"));
+        entity.getEvents().trigger("stopUp");
         return true;
       case Keys.A:
         walkDirection.sub(Vector2Utils.LEFT);
         triggerWalkEvent();
-        entity.getEvents().trigger(("stand"));
+        entity.getEvents().trigger("stopLeft");
         return true;
       case Keys.S:
         walkDirection.sub(Vector2Utils.DOWN);
         triggerWalkEvent();
-        entity.getEvents().trigger(("stand"));
+        entity.getEvents().trigger("stopDown");
         return true;
       case Keys.D:
         walkDirection.sub(Vector2Utils.RIGHT);
         triggerWalkEvent();
-        entity.getEvents().trigger(("stand"));
+        entity.getEvents().trigger("stopRight");
+        return true;
+      case Keys.K:
+        entity.getEvents().trigger("stopPickup");
         return true;
       default:
         return false;
