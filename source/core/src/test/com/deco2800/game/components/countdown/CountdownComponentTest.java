@@ -15,10 +15,10 @@ public class CountdownComponentTest {
 
     private countdownDisplay countdown;
 
-//    @Before
-//    public void testSetUp() {
-//        countdown = mock(countdownDisplay.class);
-//    }
+    @Before
+    public void testSetUp() {
+        countdown = mock(countdownDisplay.class);
+    }
 //
 //    @Test
 //    public void shouldDisplayCorrectTime() {
