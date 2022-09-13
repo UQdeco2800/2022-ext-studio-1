@@ -4,7 +4,7 @@ package com.deco2800.game.screens;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
-import com.deco2800.game.components.map.MapDisplay;
+import com.deco2800.game.ui.map.MapDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -25,7 +25,7 @@ public class MapScreen extends ScreenAdapter {
     private final Renderer renderer;
 
     private static final String[] MapTextures = {
-            "images/map/Map.PNG"
+            "images/map/Map.PNG", "images/eviction_menu/exitButton.png","images/eviction_menu/exitButton_selected.png"
 
     };
 
