@@ -2,7 +2,6 @@ package com.deco2800.game.components.countdown;
 
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.components.countDownClock.countdownDisplay;
-import com.deco2800.game.screens.MainGameScreen;
 import org.junit.Before;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.Mockito.*;
@@ -17,9 +16,8 @@ public class CountdownComponentTest {
 
     private static final Logger logger = LoggerFactory.getLogger(CountdownComponentTest.class);
     private GdxGame game =  mock(GdxGame.class);
-    private MainGameScreen mainGameScreen = mock(MainGameScreen.class);
 
-    private countdownDisplay countdown = new countdownDisplay(mainGameScreen.getGame());
+    private countdownDisplay countdown = new countdownDisplay(game);
     // game needs to run so that countdown ui can be created but how?
 
     @Test

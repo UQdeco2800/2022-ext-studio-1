@@ -24,7 +24,7 @@ public class AddToInventoryComponent extends Component {
   private HitboxComponent hitboxComponent;
 
   /**
-   * Create a component which attacks entities on collision, with knockback.
+   * Create a component which is added to the player entities on collision
    * @param targetLayer The physics layer of the target's collider.
    */
   public AddToInventoryComponent(short targetLayer) {
@@ -49,7 +49,19 @@ public class AddToInventoryComponent extends Component {
 
     int inventoryCount = playerInventory.inventoryHashMap.size();
 
-    if (inventoryCount == 10 )
+    addToInventory(inventoryCount, playerInventory, me);
+
+  }
+
+  /**
+   * Determine if object can be added to the inventory
+   * @param inventoryCount the count of the inventory
+   * @param playerInventory the players inventory
+   * @param me the player
+   */
+  public void addToInventory (int inventoryCount, InventoryComponent playerInventory, Fixture me)
+  {
+    if (inventoryCount >= 10 )
     {
       showInventoryFull();
     }
@@ -63,7 +75,6 @@ public class AddToInventoryComponent extends Component {
       self.setEnabled(false);
       self.getComponent(TextureRenderComponent.class).dispose();
     }
-
   }
 
   public void showInventoryFull()

@@ -2,11 +2,14 @@ package com.deco2800.game.components.player;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -17,12 +20,14 @@ import com.badlogic.gdx.utils.Null;
 import com.deco2800.game.components.countDownClock.countdownDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
+import com.deco2800.game.entities.factories.ClueItemFactory;
 import com.deco2800.game.entities.factories.ConsumableItemFactory;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,8 +43,14 @@ public class InventoryDisplayComponent extends UIComponent {
     private static final  int slotWidth = 250;
     private Table rootTable;
     private Table backgroundTable;
+
+    private Table descriptionTable;
     private Label title;
+    private Label description;
     private HashMap<Integer, Integer> inventoryHashMap;
+
+    //TODO - Stand in for integrated guilt values for seperate npcs
+    public int guiltLevel;
 
 
     public InventoryDisplayComponent(HashMap<Integer, Integer> inventory) {
@@ -60,7 +71,7 @@ public class InventoryDisplayComponent extends UIComponent {
         Image inventoryBG =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/blank.png", Texture.class)); //Placeholder graphic
+                                .getAsset("images/blank.png", Texture.class));
 
 
         Table inventoryMenu = createInventory();
@@ -101,7 +112,7 @@ public class InventoryDisplayComponent extends UIComponent {
     private Table createInventory() {
 
         //empty slot
-        Texture texture = new Texture(Gdx.files.internal("images/hex_grass_1.png")); //Placeholder graphic
+        Texture texture = new Texture(Gdx.files.internal("images/inventory/emptyInventorySlot.png"));
         Drawable emptySlot = new TextureRegionDrawable(new TextureRegion(texture));
 
         //Confirm down <a href="https://www.flaticon.com/free-icons/pixelated" title="pixelated icons">Pixelated icons created by Freepik - Flaticon</a>
@@ -141,16 +152,26 @@ public class InventoryDisplayComponent extends UIComponent {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
                             drawSlot1 = new ImageButton(buttonGraphic, confirmDown);
 
-                            drawSlot1.addListener(new ClickListener() {
+                            //Hover popup for item description and Item slot click event
+                            drawSlot1.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
                                 @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
-
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription(i);
                                 }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+                                //Uses the item once an item slot is clicked
+                                @Override
+                                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                                    useItem(i, key);
+                                    destroyItemDescription();
+                                    return true;
+                                }
+
                             });
 
                         }
@@ -161,16 +182,26 @@ public class InventoryDisplayComponent extends UIComponent {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
                             drawSlot2 = new ImageButton(buttonGraphic, confirmDown);
 
-                            drawSlot2.addListener(new ClickListener() {
+                            //Hover popup for item description
+                            drawSlot2.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
                                 @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
-
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription(i);
                                 }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+                                //Uses the item once an item slot is clicked
+                                @Override
+                                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                                    useItem(i, key);
+                                    destroyItemDescription();
+                                    return true;
+                                }
+
                             });
                         }
                         break;
@@ -180,16 +211,27 @@ public class InventoryDisplayComponent extends UIComponent {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
                             drawSlot3 = new ImageButton(buttonGraphic, confirmDown);
 
-                            drawSlot3.addListener(new ClickListener() {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
 
+                            //Hover popup for item description and Item slot click event
+                            drawSlot3.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription(i);
                                 }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+                                //Uses the item once an item slot is clicked
+                                @Override
+                                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                                    useItem(i, key);
+                                    destroyItemDescription();
+                                    return true;
+                                }
+
                             });
                         }
                         break;
@@ -199,16 +241,27 @@ public class InventoryDisplayComponent extends UIComponent {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
                             drawSlot4 = new ImageButton(buttonGraphic, confirmDown);
 
-                            drawSlot4.addListener(new ClickListener() {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
 
+                            //Hover popup for item description and Item slot click event
+                            drawSlot4.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription(i);
                                 }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+                                //Uses the item once an item slot is clicked
+                                @Override
+                                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                                    useItem(i, key);
+                                    destroyItemDescription();
+                                    return true;
+                                }
+
                             });
                         }
                         break;
@@ -218,16 +271,27 @@ public class InventoryDisplayComponent extends UIComponent {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
                             drawSlot5 = new ImageButton(buttonGraphic, confirmDown);
 
-                            drawSlot5.addListener(new ClickListener() {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
 
+                            //Hover popup for item description and Item slot click event
+                            drawSlot5.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription(i);
                                 }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+                                //Uses the item once an item slot is clicked
+                                @Override
+                                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                                    useItem(i, key);
+                                    destroyItemDescription();
+                                    return true;
+                                }
+
                             });
                         }
                         break;
@@ -237,16 +301,27 @@ public class InventoryDisplayComponent extends UIComponent {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
                             drawSlot6 = new ImageButton(buttonGraphic, confirmDown);
 
-                            drawSlot6.addListener(new ClickListener() {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
 
+                            //Hover popup for item description and Item slot click event
+                            drawSlot6.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription(i);
                                 }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+                                //Uses the item once an item slot is clicked
+                                @Override
+                                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                                    useItem(i, key);
+                                    destroyItemDescription();
+                                    return true;
+                                }
+
                             });
                         }
                         break;
@@ -256,16 +331,27 @@ public class InventoryDisplayComponent extends UIComponent {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
                             drawSlot7 = new ImageButton(buttonGraphic, confirmDown);
 
-                            drawSlot7.addListener(new ClickListener() {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
 
+                            //Hover popup for item description and Item slot click event
+                            drawSlot7.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription(i);
                                 }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+                                //Uses the item once an item slot is clicked
+                                @Override
+                                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                                    useItem(i, key);
+                                    destroyItemDescription();
+                                    return true;
+                                }
+
                             });
                         }
                         break;
@@ -275,16 +361,27 @@ public class InventoryDisplayComponent extends UIComponent {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
                             drawSlot8 = new ImageButton(buttonGraphic, confirmDown);
 
-                            drawSlot8.addListener(new ClickListener() {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
 
+                            //Hover popup for item description and Item slot click event
+                            drawSlot8.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription(i);
                                 }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+                                //Uses the item once an item slot is clicked
+                                @Override
+                                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                                    useItem(i, key);
+                                    destroyItemDescription();
+                                    return true;
+                                }
+
                             });
                         }
                         break;
@@ -294,16 +391,27 @@ public class InventoryDisplayComponent extends UIComponent {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
                             drawSlot9 = new ImageButton(buttonGraphic, confirmDown);
 
-                            drawSlot9.addListener(new ClickListener() {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
 
+                            //Hover popup for item description and Item slot click event
+                            drawSlot9.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription(i);
                                 }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+                                //Uses the item once an item slot is clicked
+                                @Override
+                                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                                    useItem(i, key);
+                                    destroyItemDescription();
+                                    return true;
+                                }
+
                             });
                         }
                         break;
@@ -312,16 +420,28 @@ public class InventoryDisplayComponent extends UIComponent {
                         {
                             Drawable buttonGraphic = new TextureRegionDrawable((i.getComponent(TextureRenderComponent.class)).getTexture());
                             drawSlot10 = new ImageButton(buttonGraphic, confirmDown);
-                            drawSlot10.addListener(new ClickListener() {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    //If it's a time consumable
-                                    if (i.getComponent(ConsumeableItemComponent.class) != null)
-                                    {
-                                        consumeTimeItem(i, key);
-                                    }
 
+
+                            //Hover popup for item description and Item slot click event
+                            drawSlot10.addListener(new InputListener() {
+                                //Shows item description when mouse hovers item slot
+                                @Override
+                                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                                    showItemDescription(i);
                                 }
+                                //Removes item description when not hovering
+                                @Override
+                                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                                    destroyItemDescription();
+                                }
+                                //Uses the item once an item slot is clicked
+                                @Override
+                                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                                    useItem(i, key);
+                                    destroyItemDescription();
+                                    return true;
+                                }
+
                             });
                         }
                         break;
@@ -343,15 +463,6 @@ public class InventoryDisplayComponent extends UIComponent {
         ImageButton slot8 = drawSlot8;
         ImageButton slot9 = drawSlot9;
         ImageButton slot10 = drawSlot10;
-
-        slot1.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent event, Actor actor) {
-                        useItem();
-                    }
-                });
-
 
 
         Table table = new Table();
@@ -375,7 +486,16 @@ public class InventoryDisplayComponent extends UIComponent {
     }
 
 
-    public void useItem() {
+    public void useItem(Entity i, Integer key) {
+        //If it's a time item
+        if (i.getComponent(ConsumeableItemComponent.class) != null)
+        {
+            consumeTimeItem(i, key);
+        }
+        //If it's a clue item
+        if (i.getComponent(ClueItemComponent.class) != null){
+            consumeClueItem(i, key);
+        }
     }
 
 
@@ -391,7 +511,9 @@ public class InventoryDisplayComponent extends UIComponent {
             if (timeDisplay.getComponent(countdownDisplay.class) != null)
             {
                 float increaseValue = i.getComponent(ConsumeableItemComponent.class).increaseTime();
-                timeDisplay.getComponent(countdownDisplay.class).increaseTime(increaseValue);
+
+                (timeDisplay.getComponent(countdownDisplay.class)).increaseRemainingTime(increaseValue);
+
 
 //                // find player to remove item after consumption
 //                for (Entity player: entityLocator) {
@@ -404,9 +526,68 @@ public class InventoryDisplayComponent extends UIComponent {
 
                 inventoryHashMap.remove(key);
                 destroyInventory();
+
             }
 
         }
+    }
+
+    /**
+     * Logic to find the correct item descriptions to be displayed when a player hovers over an inventory slot
+     *
+     * @param i the item as an Entity
+     * @return The items description as a String
+     */
+    private String getItemDescriptionText(Entity i) {
+
+        //If it's a time item
+        if (i.getComponent(ConsumeableItemComponent.class) != null)
+        {
+            return "Time Item - This item can be used to increase the countdown clock!";
+        }
+        //If it's a clue item
+        if (i.getComponent(ClueItemComponent.class) != null){
+            return "Mermaid Scale - This item can be used to increase the guilt rating of npcs!";
+        }
+
+        return "Emtpy Inventory Slot!"; //TODO - not setup to listen for empty slots
+
+    }
+
+
+    //Shows the items specific description and buffs
+    private Table showItemDescription(Entity i) {
+        descriptionTable = new Table();
+        descriptionTable.setFillParent(true);
+
+        description = new Label(getItemDescriptionText(i), skin);
+        description.setFontScale(1f);
+        description.setColor(Color.WHITE); //TODO color setting doesn't work
+        descriptionTable.add(description).pad(5);
+
+
+        stage.addActor(descriptionTable);
+
+        return descriptionTable;
+
+    }
+
+    private void destroyItemDescription() {
+        super.dispose();
+        descriptionTable.remove();
+    }
+
+
+
+    public void consumeClueItem(Entity i, int key) {
+
+        //Increase the guilt rating of an NPC
+        float increaseGuilt = i.getComponent(ClueItemComponent.class).increaseGuilt();
+        guiltLevel += increaseGuilt;
+
+        inventoryHashMap.remove(key);
+        destroyInventory();
+
     }
 
     public void destroyInventory() {
