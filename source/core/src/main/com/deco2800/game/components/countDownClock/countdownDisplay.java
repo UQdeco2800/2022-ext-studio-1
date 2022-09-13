@@ -47,11 +47,11 @@ public class countdownDisplay extends UIComponent {
 //            counterLabel.setText(String.valueOf(timeRemaining));
 //            timeCount = 0;
 //        }
-        if (timeRemaining <= 0) {
+        if (this.timeRemaining <= 0) {
             counterLabel.setText("GAME OVER!");
         } else {
-            timeRemaining -= timeCount;
-            counterLabel.setText(String.valueOf(timeRemaining));
+            this.timeRemaining -= timeCount;
+            counterLabel.setText(String.valueOf(this.timeRemaining));
         }
 
 
@@ -63,23 +63,23 @@ public class countdownDisplay extends UIComponent {
 //        BitmapFont myFont = new BitmapFont(Gdx.files.internal());
 //        counterLabelStyle.font = myFont;
 //        counterLabelStyle.fontColor = Color.YELLOW;
-        Label title = new Label("Countdown", skin, "title");
-        title.setPosition((Gdx.graphics.getWidth()-title.getWidth())/2f,Gdx.graphics.getHeight()-title.getHeight()-15);
+//        Label title = new Label("Countdown", skin, "title");
+//        title.setPosition((Gdx.graphics.getWidth()-title.getWidth())/2f,Gdx.graphics.getHeight()-title.getHeight()-15);
 
 //        Table main = new Table();
 //        main.setWidth();
 //        main.add(counterLabel);
         counterLabel = new Label(String.valueOf(timeRemaining), skin);
-        counterLabel.setPosition((float) (stage.getWidth() * 0.05), (float) (stage.getHeight() * 0.05));
-        counterLabel.setWidth(stage.getWidth());
-        counterLabel.setHeight(stage.getHeight());
-        counterLabel.setFontScale(10);
+        counterLabel.setPosition((float) (stage.getWidth() * 0.8), (float) (stage.getHeight() * 0.1));
+//        counterLabel.setWidth(stage.getWidth());
+//        counterLabel.setHeight(stage.getHeight());
+        counterLabel.setFontScale(2);
 //        counterLabel.setSize((int) (stage.getWidth()), (float) (stage.getHeight() * 0.8));
-        Table exitScreenBtn = makeExitBtn();
+//        Table exitScreenBtn = makeExitBtn();
 //
-        stage.addActor(title);
+//        stage.addActor(title);
         stage.addActor(counterLabel);
-        stage.addActor(exitScreenBtn);
+//        stage.addActor(exitScreenBtn);
     }
 
     private void exitScreen() {
@@ -100,6 +100,10 @@ public class countdownDisplay extends UIComponent {
         Table table = new Table();
         table.add(exitBtn).expandX().left().pad(0f, 100f, 100f, 0f);
         return table;
+    }
+
+    public void increaseRemainingTime(float increment) {
+        this.timeRemaining += increment;
     }
 
 
