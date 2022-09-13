@@ -29,7 +29,11 @@ public class NpcEvictionMenu extends ScreenAdapter {
             IMAGES_PATH + "evictionCard_single.png", IMAGES_PATH + "evictionCard_hover.png",
             IMAGES_PATH + "confirmBox.png",
             IMAGES_PATH + "confirmBtn_ok.png", IMAGES_PATH + "confirmBtn_ok1.png",
-            IMAGES_PATH + "confirmBtn_cancel.png", IMAGES_PATH + "confirmBtn_cancel1.png"};
+            IMAGES_PATH + "confirmBtn_cancel.png", IMAGES_PATH + "confirmBtn_cancel1.png",
+            IMAGES_PATH + "infoWindow.png",
+            IMAGES_PATH + "npcNereus.png", IMAGES_PATH + "npcNereus_hover.png",
+            IMAGES_PATH + "npcHeph.png", IMAGES_PATH + "npcHeph_hover.png",
+            IMAGES_PATH + "npcMetis.png", IMAGES_PATH + "npcMetis_hover.png"};
 
 
     public NpcEvictionMenu(GdxGame game) {

@@ -34,10 +34,21 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(NpcEvictionMenuDisplay.class);
 
     private static final int NUMBER_OF_NPC = 8;
+    private static  final float FONT_SIZE_OF_CLUE=3.0f;
     private static float bgWidth;
     private static float bgHeight;
 
     private static final String IMAGE_PATH = "images/eviction_menu/";  //path of team7 images
+
+    /** Path of the image of the corresponding cards <br/>
+     * images for 8 characters in cards <br/>
+     * <b>The characters are designed by Team 1 </b><br/>
+     * <b>Integrate and design new display by Team 7 Yingxin Liu</b>*/
+    private static final String[] cardImages = {
+            IMAGE_PATH + "npcNereus", IMAGE_PATH + "npcHeph",
+            IMAGE_PATH + "npcMetis", IMAGE_PATH + "npcNereus",
+            IMAGE_PATH + "npcNereus", IMAGE_PATH + "npcNereus",
+            IMAGE_PATH + "npcNereus", IMAGE_PATH + "npcNereus"};
     private ResourceService resourceService;
 
     private final GdxGame game;
@@ -85,42 +96,16 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                 });
         stage.addActor(exitBtn);
 
-        // Images of cards, Will be updated in later sprints
-        String[] cardImages = { // images for 8 characters in cards: waiting for Team 1
-                IMAGE_PATH + "evictionCard_single.png", IMAGE_PATH + "evictionCard_single.png",
-                IMAGE_PATH + "evictionCard_single.png", IMAGE_PATH + "evictionCard_single.png",
-                IMAGE_PATH + "evictionCard_single.png", IMAGE_PATH + "evictionCard_single.png",
-                IMAGE_PATH + "evictionCard_single.png", IMAGE_PATH + "evictionCard_single.png"};
-
         // Creating cards and corresponding selected buttons
         Button[] buttons = new Button[NUMBER_OF_NPC];
         Button[] cards = new Button[NUMBER_OF_NPC];
         for (int i = 0; i < NUMBER_OF_NPC; i++) {
             int index = i;
-            cards[i] = createButton(IMAGE_PATH + "evictionCard_single.png",
-                    IMAGE_PATH + "evictionCard_hover.png");
-            setButton(cards, i, "cardDefault");
-            cards[i].addListener(new InputListener() {
-                @Override  // mouse hovering
-                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                    setButton(cards, index, "cardHovering");
-                }
-
-                @Override  // default
-                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                    setButton(cards, index, "cardDefault");
-                }
-
-                @Override // clicked
-                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    logger.debug("card" + index + "clicked");
-                    return true;
-                }
-            });
+            setCard(cards, index);
             stage.addActor(cards[i]);
 
             buttons[i] = createButton(IMAGE_PATH + "selectButton_single.png", IMAGE_PATH + "selectButton_selected.png");
-            setButton(buttons, i, "selectButton");
+            setButton(buttons[i], i, "selectButton");
             buttons[i].addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -132,32 +117,104 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         }
     }
 
+    /**
+     * set all attributes of the card <br/>
+     * this is an internal function, do not use it !
+     *
+     * @param cards  set of 8 cards
+     * @param index the index of the card in the set that will be set <br/>
+     *              it will also be used to calculate the position and find image in the card
+     * @author Team7 Yingxin Liu
+     */
+    private void setCard(Button[] cards, int index){
+        Button card = createButton(IMAGE_PATH + "evictionCard_single.png",
+                IMAGE_PATH + "evictionCard_hover.png");
+        cards[index] = card;
+        setButton(cards[index], index, "cardDefault");
+        TextureRegionDrawable imageDefault = new TextureRegionDrawable(
+                resourceService.getAsset(cardImages[index] + ".png", Texture.class));
+        TextureRegionDrawable imageHover = new TextureRegionDrawable(
+                resourceService.getAsset(cardImages[index] + "_hover.png", Texture.class));
+        Image cardImage = new Image(imageDefault);
+        setImage(cardImage, card, "imageDefault");
+        card.addActor(cardImage);
+        card.addListener(new InputListener() {
+            @Override  // mouse hovering
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                setButton(card, index, "cardHovering");
+                cardImage.setDrawable(imageHover);
+                setImage(cardImage, card, "imageHovering");
+            }
+
+            @Override  // default
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                setButton(card, index, "cardDefault");
+                cardImage.setDrawable(imageDefault);
+                setImage(cardImage, card, "imageDefault");
+            }
+
+            @Override // click down: return true to unlock function: touchUp
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            @Override // click up
+            // Dialog will be created when 'click up' only in the area of card rather than everywhere.
+            // Restored the characteristics of the basic button which implemented by using buttonStyle
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                if (card.isOver()) {
+                    logger.debug("card" + index + "clicked up");
+                    createCardInfo("card" + index);
+                }
+            }
+        });
+    }
+
+    /**
+     * set the position and size of the given image in the card <br/>
+     * this is an internal function, do not use it !
+     *
+     * @param image character image of the card
+     * @param card  card which the image belongs to
+     * @param type  state of image to be set [imageDefault|imageHovering]
+     * @author Team7 Yingxin Liu
+     */
+    private void setImage(Image image, Button card, String type) {
+        float width = card.getWidth();
+        float height = card.getHeight();
+        if (Objects.equals(type, "imageDefault")) {
+            image.setSize((float) (bgWidth * (141.59 / 1600)), (float) (bgHeight * (215.92 / 900)));
+            image.setPosition((float) (width * 65.36 / 207.26), (float) (height * (1 - 210.09 / 283.91)));
+        } else if (Objects.equals(type, "imageHovering")) {
+            image.setSize((float) (bgWidth * (168.57 / 1600)), (float) (bgHeight * (249.63 / 900)));
+            image.setPosition((float) (width * 72.83 / 235.79), (float) (height * (1 - 240.99 / 323)));
+        }
+    }
 
     /**
      * set the position and size of the given button <br/>
      * this is an internal function, do not use it !
      *
-     * @param buttons set of buttons
+     * @param button  the button to be set
      * @param i       index of the set buttons
      * @param type    type of button to be set
      * @author Team7 Yingxin Liu
      */
-    private void setButton(Button[] buttons, int i, String type) {
+    private void setButton(Button button, int i, String type) {
         if (Objects.equals(type, "cardDefault")) {
-            buttons[i].setSize((float) (bgWidth * (207.26 / 1600)), (float) (bgHeight * (283.91 / 900)));
-            buttons[i].setPosition((float) (bgWidth * ((454.13 + ((i % 4) * 230.32)) / 1600)),
+            button.setSize((float) (bgWidth * (207.26 / 1600)), (float) (bgHeight * (283.91 / 900)));
+            button.setPosition((float) (bgWidth * ((454.13 + ((i % 4) * 230.32)) / 1600)),
                     (float) (bgHeight * (1 - (295.055 + (i / 4) * 334.09) / 900)), Align.center);
         } else if (Objects.equals(type, "cardHovering")) {
-            buttons[i].setSize((float) (bgWidth * (235.79 / 1600)), (float) (bgHeight * (323.0 / 900)));
-            buttons[i].setPosition((float) (bgWidth * ((452.135 + ((i % 4) * 230.32)) / 1600)),
+            button.setSize((float) (bgWidth * (235.79 / 1600)), (float) (bgHeight * (323.0 / 900)));
+            button.setPosition((float) (bgWidth * ((452.135 + ((i % 4) * 230.32)) / 1600)),
                     (float) (bgHeight * (1 - (294.06 + (i / 4) * 334.09) / 900)), Align.center);
         } else if (Objects.equals(type, "selectButton")) {
-            buttons[i].setSize((float) (bgWidth * (112.48 / 1600)), (float) (bgHeight * (47.5 / 900)));
-            buttons[i].setPosition((float) (bgWidth * ((420.34 + ((i % 4) * 231.03)) / 1600)),
+            button.setSize((float) (bgWidth * (112.48 / 1600)), (float) (bgHeight * (47.5 / 900)));
+            button.setPosition((float) (bgWidth * ((420.34 + ((i % 4) * 231.03)) / 1600)),
                     (float) (bgHeight * (1 - (473.36 + (i / 4) * 335.39) / 900)));
         }
     }
-
 
     /**
      * Display a confirm dialog on the stage, the style is based on Team7 prototype <br/>
@@ -173,6 +230,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         // set the style of dialog include font color of title; background; size; position
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
                 resourceService.getAsset(IMAGE_PATH + "confirmBox.png", Texture.class));
+
         Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
         Window dialog = new Window("", windowStyle);
         dialog.setModal(true);    // The dialog is always at the front
@@ -230,6 +288,44 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         return new Button(style);
     }
 
+
+    /**
+     * Display a Card information dialog on the stage, the style is based on Team7 prototype <br/>
+     * All scales are calculated according to the prototype from team 7 only <br/>
+     * The context of this dialog will be provided by Team 9
+     *
+     * @param card_name The name of the card which calls this function
+     * @author Code: Team7 Yingxin Liu Shaohui Wang   <br/>Context: Team 9
+     */
+    private void createCardInfo(String card_name) {
+        logger.debug("create card information dialog from name: " + card_name);
+        // set the style of dialog include font color of title; background; size; position
+        TextureRegionDrawable styleImage = new TextureRegionDrawable(
+                resourceService.getAsset(IMAGE_PATH + "infoWindow.png", Texture.class));
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLUE, styleImage);
+        Window dialog = new Window("", windowStyle);
+
+        float dialog_size_x = (float) (bgWidth * (810.0 / 1600));
+        float dialog_size_y = (float) (bgHeight * (653.33 / 900));
+        dialog.setSize(dialog_size_x, dialog_size_y);
+        dialog.setPosition((float) (bgWidth * (407.34 / 1600)), (float) (bgHeight * (1 - 800.33 / 900)));
+        dialog.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                logger.debug(card_name + " clicked");
+                dialog.remove();
+                return true;
+            }
+        });
+
+        //  add clues of npc
+        Label message = new Label(card_name,new Label.LabelStyle(new BitmapFont(),Color.YELLOW));
+        message.setFontScale(FONT_SIZE_OF_CLUE);
+        dialog.setModal(true);    // The dialog is always at the front
+        dialog.add(message);
+
+        stage.addActor(dialog);
+    }
 
     private void exitMenu() {
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
