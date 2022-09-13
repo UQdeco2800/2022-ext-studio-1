@@ -16,7 +16,21 @@ public class NPCClueLibrary {
     /**
      * Declaring a variable of clues
      */
-    public Map<String, String[]> clues;
+    private Map<String, String[]> clues;
+
+    /**
+     * Return unlock clues
+     * @param name
+     * @return unlock clues
+     * @throws Exception if name not exists
+     */
+    public String[] getUnlockClues(String name) throws Exception {
+        if (clues.containsKey(name)) {
+            return clues.get(name);
+        }
+
+        throw new Exception("name not found");
+    }
 
     /**
      * Constructor
