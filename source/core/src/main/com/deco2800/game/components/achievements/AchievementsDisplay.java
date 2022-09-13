@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.components.achievements.pojo.AchievementStatus;
 import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
@@ -24,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AchievementsDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(AchievementsDisplay.class);
@@ -81,6 +83,11 @@ public class AchievementsDisplay extends UIComponent {
     private int minPage = 0;
     private int maxPage = 0;
 
+    /**
+     * Store achievement status information
+     */
+    private Map<String, AchievementStatus> achievementStatusMap;
+
 
     public AchievementsDisplay(GdxGame game) {
         super();
@@ -89,6 +96,7 @@ public class AchievementsDisplay extends UIComponent {
 
     @Override
     public void create() {
+        achievementStatusMap = ServiceLocator.getAchievementService().getAchievementStatusMap();
         super.create();
         addActors();
     }

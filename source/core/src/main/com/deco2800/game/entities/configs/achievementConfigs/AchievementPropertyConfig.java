@@ -10,7 +10,8 @@ public class AchievementPropertyConfig {
 
     public String type = "";
     public String name = "";
-    public String path = "";
+    public String lockedPath = "";
+    public String obtainedPath = "";
     public AchievementConditionConfig condition = new AchievementConditionConfig();
     public boolean obtained = false;
 

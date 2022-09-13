@@ -3,7 +3,8 @@
     {
       "type": "collection",
       "name": "Time Robber",
-      "path": "images/achievement/time_robber_locked.png",
+      "lockedPath": "images/achievement/time_robber_locked.png",
+      "obtainedPath": "images/achievement/time_robber.png",
       "condition": {
         "item": 5
       }
@@ -11,7 +12,8 @@
     {
       "type": "collection",
       "name": "Time Keeper",
-      "path": "images/achievement/time_keeper_locked.png",
+      "lockedPath": "images/achievement/time_keeper_locked.png",
+      "obtainedPath": "images/achievement/time_keeper.png",
       "condition": {
         "item": 10
       }
@@ -19,7 +21,8 @@
     {
       "type": "collection",
       "name": "Time Lover",
-      "path": "images/achievement/time_lover_locked.png",
+      "lockedPath": "images/achievement/time_lover_locked.png",
+      "obtainedPath": "images/achievement/time_lover.png",
       "condition": {
         "item": 20
       }
@@ -27,7 +30,8 @@
     {
       "type": "collection",
       "name": "NEREUS!",
-      "path": "images/achievement/nereus!_locked.png",
+      "lockedPath": "images/achievement/nereus!_locked.png",
+      "obtainedPath": "images/achievement/nereus!.png",
       "condition": {
         "item": 1
       }
@@ -35,7 +39,7 @@
     {
       "type": "collection",
       "name": "Treasurer",
-      "path": "images/achievement/treasurer_locked.png",
+      "lockedPath": "images/achievement/treasurer_locked.png",
       "condition": {
         "item": 50
       }
@@ -43,7 +47,7 @@
     {
       "type": "collection",
       "name": "God's Pocket",
-      "path": "images/achievement/gods_pocket_locked.png",
+      "lockedPath": "images/achievement/gods_pocket_locked.png",
       "condition": {
         "item": 100
       }

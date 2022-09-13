@@ -30,8 +30,8 @@ public class AchievementStatsComponent extends Component {
         return numOfAchievements;
     }
 
-    public void setNumOfAchievements(int numOfAchievements) {
-        this.numOfAchievements = numOfAchievements;
+    public AchievementStatsComponent(Map<String, AchievementStatus> achievementStatusMap) {
+        this.achievementStatusMap = achievementStatusMap;
     }
 
     public AchievementStatsComponent() {
@@ -52,6 +52,12 @@ public class AchievementStatsComponent extends Component {
             }
         });
     }
+
+    @Override
+    public void create() {
+
+    }
+
 
     public int numOfAchievementCompleted() {
         return achievementStatusMap.values().stream().filter(AchievementStatus::isObtained).toList().size();
