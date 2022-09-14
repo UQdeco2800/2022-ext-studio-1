@@ -8,7 +8,6 @@ import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
-import com.deco2800.game.components.npc.NpcAnimationController;
 import com.deco2800.game.components.tasks.ChaseTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
@@ -111,7 +110,7 @@ public class NPCFactory {
     animator.startAnimation("stand");
     orpheus.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
     orpheus.getComponent(TextureRenderComponent.class).scaleEntity();
-    orpheus.scaleHeight(1.5f);
+    orpheus.scaleHeight(1f);
     PhysicsUtils.setScaledCollider(orpheus, 0.5f, 0.2f);
     return orpheus;
   }
