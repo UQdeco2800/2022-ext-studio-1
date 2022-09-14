@@ -4,6 +4,7 @@ package com.deco2800.game.screens;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.components.map.LabDisplay;
 import com.deco2800.game.components.map.MapDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
@@ -18,18 +19,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** The game screen containing the map */
-public class MapScreen extends ScreenAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(MapScreen.class);
+public class LabScreen_1 extends ScreenAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(LabScreen_1.class);
 
     private final GdxGame game;
     private final Renderer renderer;
 
-    private static final String[] MapTextures = {
-            "images/map/Map.PNG","images/map/1house-2.png", "images/eviction_menu/exitButton.png","images/eviction_menu/exitButton_selected.png"
+    private static final String[] Lab_1_Textures = {
+            "images/map/LAB/whole lab.png", "images/eviction_menu/exitButton.png","images/eviction_menu/exitButton_selected.png"
 
     };
 
-    public MapScreen(GdxGame game) {
+    public LabScreen_1(GdxGame game) {
         this.game = game;
 
         logger.debug("Initialising map screen services");
@@ -67,18 +68,18 @@ public class MapScreen extends ScreenAdapter {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(MapTextures);
+        resourceService.loadTextures(Lab_1_Textures);
         ServiceLocator.getResourceService().loadAll();
     }
 
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(MapTextures);
+        resourceService.unloadAssets(Lab_1_Textures);
     }
 
     /**
-     * Creates the main map's ui including components for rendering ui elements to the screen and
+     * Creates the first lab's ui including components for rendering ui elements to the screen and
      * capturing and handling ui input.
      */
 
@@ -86,7 +87,7 @@ public class MapScreen extends ScreenAdapter {
         logger.debug("Creating ui");
         Stage stage = ServiceLocator.getRenderService().getStage();
         Entity ui = new Entity();
-        ui.addComponent(new MapDisplay(game)).addComponent(new InputDecorator(stage, 10));
+        ui.addComponent(new LabDisplay(game)).addComponent(new InputDecorator(stage, 10));
         ServiceLocator.getEntityService().register(ui);
     }
 }

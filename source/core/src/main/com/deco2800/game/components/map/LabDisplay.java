@@ -19,13 +19,13 @@ import org.slf4j.LoggerFactory;
 /**
  * An ui component for displaying the Map.
  */
-public class MapDisplay extends UIComponent{
-    private static final Logger logger = LoggerFactory.getLogger(MapDisplay.class);
+public class LabDisplay extends UIComponent{
+    private static final Logger logger = LoggerFactory.getLogger(LabDisplay.class);
     private static final float Z_INDEX = 2f;
     private Table table;
     private final GdxGame game;
 
-    public MapDisplay(GdxGame game) {
+    public LabDisplay(GdxGame game) {
         super();
         this.game = game;
     }
@@ -39,7 +39,7 @@ public class MapDisplay extends UIComponent{
     private void addActors() {
         table = new Table();
         table.setFillParent(true);
-        Image map = new Image(ServiceLocator.getResourceService().getAsset("images/map/Map.PNG", Texture.class));
+        Image lab = new Image(ServiceLocator.getResourceService().getAsset("images/map/LAB/whole lab.png", Texture.class));
 
         /**TextButton exitBtn = new TextButton("Exit", skin);
 
@@ -67,26 +67,15 @@ public class MapDisplay extends UIComponent{
                     }
                 });
 
-        Button loadLab = createButton("images/map/1house-2.png", "images/map/1house-2.png");
-        loadLab.setPosition((float) (stage.getWidth() * 0.2), (float) (stage.getHeight() * 0.78));
-        loadLab.setSize((float) (stage.getWidth()*0.042), (float) (stage.getHeight()*0.07116));
 
-        loadLab.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Lab button clicked");
-                        lab1();
-                    }
-                });
-        table.add(map);
+        table.add(lab);
         //table.row();
         //table.add(exitBtn).expandX().left();
 
 
+
         stage.addActor(table);
         stage.addActor(exitBtn);
-        stage.addActor(loadLab);
     }
 
     @Override
@@ -95,11 +84,7 @@ public class MapDisplay extends UIComponent{
     }
 
     private void exitMenu() {
-        game.setScreen(GdxGame.ScreenType.MAIN_MENU);}
-
-    private void lab1(){
-        game.setScreen(GdxGame.ScreenType.LAB_1);
-    }
+        game.setScreen(GdxGame.ScreenType.MAP);}
 
     @Override
     public float getZIndex(){
