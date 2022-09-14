@@ -1,0 +1,20 @@
+
+researcher.png
+size: 841, 818
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+stand
+  rotate: false
+  xy: 2, 36
+  size: 438, 780
+  orig: 438, 780
+  offset: 0, 0
+  index: 1
+stand
+  rotate: false
+  xy: 442, 2
+  size: 397, 814
+  orig: 397, 814
+  offset: 0, 0
+  index: 0
