@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.StringBuilder;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.npc.NPCClueLibrary;
 import com.deco2800.game.services.ResourceService;
@@ -25,6 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
+
+import static com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplayHelper.creatLabelContext;
 
 /**
  * An ui component for displaying the npc eviction menu.
@@ -40,15 +43,11 @@ public class NpcEvictionMenuDisplay extends UIComponent {
 
     private static final String IMAGE_PATH = "images/eviction_menu/";  //path of team7 images
 
-    /** Path of the image of the corresponding cards <br/>
-     * images for 8 characters in cards <br/>
-     * <b>The characters are designed by Team 1 </b><br/>
-     * <b>Integrate and design new display by Team 7 Yingxin Liu</b>*/
-    private static final String[] cardImages = {
-            IMAGE_PATH + "npcNereus", IMAGE_PATH + "npcHeph",
-            IMAGE_PATH + "npcMetis", IMAGE_PATH + "npcNereus",
-            IMAGE_PATH + "npcNereus", IMAGE_PATH + "npcNereus",
-            IMAGE_PATH + "npcNereus", IMAGE_PATH + "npcNereus"};
+    //with these names you can call clues as well as calling image path of each npc.
+    private static final String[] cardNames = {
+            "Nereus", "Heph", "Metis", "Nereus",
+            "Nereus", "Nereus", "Nereus", "Nereus"
+    };
     private ResourceService resourceService;
 
     private final GdxGame game;
@@ -122,20 +121,20 @@ public class NpcEvictionMenuDisplay extends UIComponent {
      * set all attributes of the card <br/>
      * this is an internal function, do not use it !
      *
-     * @param cards  set of 8 cards
+     * @param cards set of 8 cards
      * @param index the index of the card in the set that will be set <br/>
      *              it will also be used to calculate the position and find image in the card
      * @author Team7 Yingxin Liu
      */
-    private void setCard(Button[] cards, int index){
+    private void setCard(Button[] cards, int index) {
         Button card = createButton(IMAGE_PATH + "evictionCard_single.png",
                 IMAGE_PATH + "evictionCard_hover.png");
         cards[index] = card;
         setButton(cards[index], index, "cardDefault");
         TextureRegionDrawable imageDefault = new TextureRegionDrawable(
-                resourceService.getAsset(cardImages[index] + ".png", Texture.class));
+                resourceService.getAsset(IMAGE_PATH + "npc" + cardNames[index] + ".png", Texture.class));
         TextureRegionDrawable imageHover = new TextureRegionDrawable(
-                resourceService.getAsset(cardImages[index] + "_hover.png", Texture.class));
+                resourceService.getAsset(IMAGE_PATH + "npc" + cardNames[index] + "_hover.png", Texture.class));
         Image cardImage = new Image(imageDefault);
         setImage(cardImage, card, "imageDefault");
         card.addActor(cardImage);
@@ -165,7 +164,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 if (card.isOver()) {
                     logger.debug("card" + index + "clicked up");
-                    createCardInfo("card" + index);
+                    createCardInfo(cardNames[index]);
                 }
             }
         });
@@ -196,9 +195,9 @@ public class NpcEvictionMenuDisplay extends UIComponent {
      * set the position and size of the given button <br/>
      * this is an internal function, do not use it !
      *
-     * @param button  the button to be set
-     * @param i       index of the set buttons
-     * @param type    type of button to be set
+     * @param button the button to be set
+     * @param i      index of the set buttons
+     * @param type   type of button to be set
      * @author Team7 Yingxin Liu
      */
     private void setButton(Button button, int i, String type) {
@@ -319,41 +318,16 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         });
 
         //  add clues of npc
-        String[] clues = {};
-        try {
-            clues = library.getUnlockClues("Metis");
-        } catch (Exception ignored) {}
-        Label message = creatLabel(clues);
+        Label message = new Label(creatLabelContext(card_name, library), skin, "large");
         message.setWrap(true);
         message.setAlignment(Align.left);
         Table table = new Table();
-        table.add(message).width(dialog_size_x*3/5);
+        table.add(message).width(dialog_size_x * 3 / 5);
         dialog.add(table);
 
         stage.addActor(dialog);
     }
 
-    /**
-     * Creat a label with the given set of clues
-     * @param clues the set of clues <br/>
-     *              <b>This parameter is from team9 function "getUnlockClues(npc name)"</b>
-     * @return A Label include the clues
-     * @author Team7 Yingxin Liu Shaohui Wang
-     */
-    protected Label creatLabel (String[] clues) {
-        StringBuilder message = new StringBuilder();
-        if (clues == null || clues.length == 0) {
-            message = new StringBuilder("This character has no clue yet");
-        } else {
-            for (int i = 0; i < clues.length; i++){
-                message.append(clues[i]);
-                if (i != (clues.length - 1)) {
-                    message.append("\n");
-                }
-            }
-        }
-        return new Label(message.toString(),skin,"large");
-    }
 
     private void exitMenu() {
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);

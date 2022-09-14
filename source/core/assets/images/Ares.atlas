@@ -1,0 +1,19 @@
+Ares.png
+size: 512, 256
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+stand
+  rotate: false
+  xy: 2, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 1
+stand
+  rotate: false
+  xy: 204, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0

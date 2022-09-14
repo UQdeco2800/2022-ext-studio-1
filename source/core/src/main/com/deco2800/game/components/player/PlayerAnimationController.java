@@ -11,35 +11,59 @@ import com.deco2800.game.rendering.TextureRenderComponent;
 public class PlayerAnimationController extends Component {
     AnimationRenderComponent animator;
 
+    private boolean texturePresent = true;
     @Override
     public void create() {
         super.create();
         animator = this.entity.getComponent(AnimationRenderComponent.class);
-        entity.getEvents().addListener("upStart", this::animateUp);
-        entity.getEvents().addListener("downStart", this::animateDown);
-        entity.getEvents().addListener("leftStart", this::animateLeft);
-        entity.getEvents().addListener("rightStart", this::animateRight);
-        entity.getEvents().addListener("stand", this::animateStand);
+        entity.getEvents().addListener("up", this::animateUp);
+        entity.getEvents().addListener("down", this::animateDown);
+        entity.getEvents().addListener("left", this::animateLeft);
+        entity.getEvents().addListener("right", this::animateRight);
+        entity.getEvents().addListener("pickUp", this::animatePickup);
+        entity.getEvents().addListener("stopUp", this::animateStand);
+        entity.getEvents().addListener("stopLeft", this::animateStand);
+        entity.getEvents().addListener("stopRight", this::animateStand);
+        entity.getEvents().addListener("stopDown", this::animateStand);
+        entity.getEvents().addListener("stopPickup", this::animateStand);
     }
 
-    void animateUp() {
+    private void animateUp() {
+        preAnimationCleanUp();
         animator.startAnimation("up");
     }
 
-    void animateDown() {
+    private void animateDown() {
+        preAnimationCleanUp();
         animator.startAnimation("down");
     }
 
-    void animateLeft() {
+    private void animateLeft() {
+        preAnimationCleanUp();
         animator.startAnimation("left");
     }
 
-    void animateRight() {
+    private void animateRight() {
+        preAnimationCleanUp();
         animator.startAnimation("right");
     }
 
-    void animateStand() {
-        animator.stopAnimation();
-        entity.addComponent(new TextureRenderComponent("images/player_front.png"));
+    private void animatePickup() {
+        preAnimationCleanUp();
+        animator.startAnimation("pickUp");
     }
+
+    private void animateStand() {
+        preAnimationCleanUp();
+        animator.startAnimation("stand");
+    }
+
+    private void preAnimationCleanUp() {
+        if(texturePresent) {
+            animator.getEntity().getComponent(TextureRenderComponent.class).dispose();
+            texturePresent = false;
+        }
+        animator.stopAnimation();
+    }
+
 }

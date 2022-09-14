@@ -23,39 +23,41 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/box_boy_leaf.png",
+    "images/player_front.png",
+    "images/orpheus_front.png",
+    "images/Ares_front.png",
+    "images/mermaid.png",
+    "images/blank.png",
+    "images/box_boy.png",
     "images/tree.png",
-    "images/ghost_king.png",
     "images/ghost_1.png",
     "images/grass_1.png",
     "images/grass_2.png",
     "images/grass_3.png",
-     "images/blank.png",
-     "images/box_boy.png",
-     "images/tree.png",
-     "images/hex_grass_1.png",
-     "images/hex_grass_2.png",
-     "images/hex_grass_3.png",
-     "images/iso_grass_1.png",
-     "images/iso_grass_2.png",
-     "images/iso_grass_3.png",
-     "images/player_front.png",
-     "images/up_0.png",
-     "images/up_1.png",
-     "images/down_0.png",
-     "images/down_1.png",
-     "images/left_0.png",
-     "images/left_1.png",
-     "images/right_0.png",
-     "images/right_1.png",
-     "images/inventory/time_item.png",
-     "images/inventory/scales1.png",
-     "images/inventory/confirm.png",
-     "images/inventory/emtpyInventorySlot.png",
-     "images/inventory/inventoryBG.png"
+    "images/hex_grass_1.png",
+    "images/hex_grass_2.png",
+    "images/hex_grass_3.png",
+    "images/iso_grass_1.png",
+    "images/iso_grass_2.png",
+    "images/iso_grass_3.png",
+    "images/player_front.png",
+    "images/up_0.png",
+    "images/up_1.png",
+    "images/down_0.png",
+    "images/down_1.png",
+    "images/left_0.png",
+    "images/left_1.png",
+    "images/right_0.png",
+    "images/right_1.png",
+    "images/inventory/time_item.png",
+    "images/inventory/scales1.png",
+    "images/inventory/confirm.png",
+    "images/inventory/emtpyInventorySlot.png",
+    "images/inventory/inventoryBG.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas","images/player.atlas"
+    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas","images/player.atlas","images/orpheus.atlas",
+    "images/Ares.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/VillageBGM_2.mp3";
@@ -75,14 +77,13 @@ public class ForestGameArea extends GameArea {
   @Override
   public void create() {
     loadAssets();
-
     displayUI();
-
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
     spawnGhosts();
     spawnGhostKing();
+    spawnOrpheus();
     spawnTimeConsumeableItem();
     spawnClueItem();
     playMusic();
@@ -170,6 +171,15 @@ public class ForestGameArea extends GameArea {
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
     Entity ghostKing = NPCFactory.createGhostKing(player);
     spawnEntityAt(ghostKing, randomPos, true, true);
+  }
+
+  private void spawnOrpheus() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+    Entity orpheus = NPCFactory.createOrpheus();
+    spawnEntityAt(orpheus, randomPos, true, true);
   }
 
   private void playMusic() {
