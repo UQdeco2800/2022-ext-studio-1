@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.StringBuilder;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -37,11 +38,12 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     private static  final float FONT_SIZE_OF_CLUE=3.0f;
     private static float bgWidth;
     private static float bgHeight;
-    String clues ="He is highly skilled in a particular field." +
-            "He knew almost everything about Atlantis." +
-            "His hair is not long or short." +
-            "He carries the tools of self-defense with him";
-
+    String[] clues = new String[]{
+            "He is highly skilled in a particular field.",
+            "He knew almost everything about Atlantis.",
+            "His hair is not long or short.",
+            "He carries the tools of self-defense with him"
+    };
 
     private static final String IMAGE_PATH = "images/eviction_menu/";  //path of team7 images
 
@@ -324,19 +326,36 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         });
 
         //  add clues of npc
-        Label message = new Label(clues,skin,"large");
-        message.setWrap(true);
-        message.setAlignment(Align.left);
+//        Label message = new Label(clues,skin,"large");
+//        message.setWrap(true);
+//        message.setAlignment(Align.left);
+//
+//        Table table = new Table();
+//        table.add(message).width(dialog_size_x*3/5);
 
-        Table table = new Table();
-        table.add(message).width(dialog_size_x*3/5);
 
         dialog.setModal(true);    // The dialog is always at the front
-        dialog.add(table);
+        dialog.add(creatLabel(clues));
+
 
         stage.addActor(dialog);
     }
 
+    private Label creatLabel(String[] clues){
+        StringBuilder message=new StringBuilder();
+        if (clues==null||clues.length == 0){
+            message = new StringBuilder("no clue yet");
+
+        }else {
+            for(int i = 0;i<clues.length;i++){
+                message.append(clues[i]);
+                if(i!=clues.length-1){
+                    message.append("\n");
+                }
+            }
+        }
+        return new Label(message.toString(),skin,"large");
+    }
     private void exitMenu() {
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
