@@ -1,0 +1,89 @@
+orpheus.png
+size: 3834, 1739
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+down
+  rotate: false
+  xy: 3290, 902
+  size: 542, 835
+  orig: 542, 835
+  offset: 0, 0
+  index: 0
+down
+  rotate: false
+  xy: 2680, 44
+  size: 605, 835
+  orig: 605, 835
+  offset: 0, 0
+  index: 2
+down
+  rotate: false
+  xy: 3287, 65
+  size: 542, 835
+  orig: 542, 835
+  offset: 0, 0
+  index: 1
+left
+  rotate: false
+  xy: 2, 25
+  size: 729, 855
+  orig: 729, 855
+  offset: 0, 0
+  index: 2
+left
+  rotate: false
+  xy: 1403, 2
+  size: 668, 877
+  orig: 668, 877
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 2073, 24
+  size: 605, 855
+  orig: 605, 855
+  offset: 0, 0
+  index: 1
+right
+  rotate: false
+  xy: 2, 882
+  size: 731, 855
+  orig: 731, 855
+  offset: 0, 0
+  index: 2
+right
+  rotate: false
+  xy: 733, 4
+  size: 668, 876
+  orig: 668, 876
+  offset: 0, 0
+  index: 0
+right
+  rotate: false
+  xy: 2075, 881
+  size: 606, 856
+  orig: 606, 856
+  offset: 0, 0
+  index: 1
+up
+  rotate: false
+  xy: 735, 882
+  size: 668, 855
+  orig: 668, 855
+  offset: 0, 0
+  index: 1
+up
+  rotate: false
+  xy: 1405, 881
+  size: 668, 856
+  orig: 668, 856
+  offset: 0, 0
+  index: 2
+up
+  rotate: false
+  xy: 2683, 902
+  size: 605, 835
+  orig: 605, 835
+  offset: 0, 0
+  index: 0
