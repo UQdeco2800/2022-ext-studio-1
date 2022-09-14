@@ -26,7 +26,7 @@ public class ForestGameArea extends GameArea {
     "images/player_front.png",
     "images/orpheus_front.png",
     "images/Ares_front.png",
-    "images/mermaid.png"
+    "images/mermaid.png",
     "images/blank.png",
     "images/box_boy.png",
     "images/tree.png",
