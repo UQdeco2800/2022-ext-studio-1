@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
-import static com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplayHelper.creatLabelContext;
 
 /**
  * An ui component for displaying the npc eviction menu.
@@ -52,7 +51,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
 
     private final GdxGame game;
     private NPCClueLibrary library = NPCClueLibrary.getInstance();
-
+    private NpcEvictionMenuDisplayHelper helper = new NpcEvictionMenuDisplayHelper();
     public NpcEvictionMenuDisplay(GdxGame game) {
         super();
         this.game = game;
@@ -318,7 +317,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         });
 
         //  add clues of npc
-        Label message = new Label(creatLabelContext(card_name, library), skin, "large");
+        Label message = new Label(helper.creatLabelContext(card_name, library), skin, "large");
         message.setWrap(true);
         message.setAlignment(Align.left);
         Table table = new Table();
@@ -327,6 +326,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
 
         stage.addActor(dialog);
     }
+
 
 
     private void exitMenu() {
