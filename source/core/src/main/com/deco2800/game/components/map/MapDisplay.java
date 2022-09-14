@@ -1,15 +1,16 @@
-package com.deco2800.game.components.map;
+package com.deco2800.game.ui.map;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.GdxGame;
-import com.deco2800.game.components.mainmenu.MainMenuDisplay;
-import com.deco2800.game.screens.MapScreen;
+import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -40,9 +41,23 @@ public class MapDisplay extends UIComponent{
         table.setFillParent(true);
         Image map = new Image(ServiceLocator.getResourceService().getAsset("images/map/Map.PNG", Texture.class));
 
-        TextButton exitBtn = new TextButton("Exit", skin);
+        /**TextButton exitBtn = new TextButton("Exit", skin);
 
-        // Triggers an event when the button is pressed
+         // Triggers an event when the button is pressed
+         exitBtn.addListener(
+         new ChangeListener() {
+        @Override
+        public void changed(ChangeEvent changeEvent, Actor actor) {
+        logger.debug("Exit button clicked");
+        exitMenu();
+        }
+        });
+         */
+
+        Button exitBtn = createButton("images/eviction_menu/exitButton.png",
+                "images/eviction_menu/exitButton_selected.png");
+        exitBtn.setPosition((float) (stage.getWidth() * 0.944), (float) (stage.getHeight() * 0.91));
+        exitBtn.setSize((float) (stage.getWidth()*0.042), (float) (stage.getHeight()*0.07116));
         exitBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -53,11 +68,12 @@ public class MapDisplay extends UIComponent{
                 });
 
         table.add(map);
-        table.row();
-        table.add(exitBtn).expandX().left();
+        //table.row();
+        //table.add(exitBtn).expandX().left();
 
 
         stage.addActor(table);
+        stage.addActor(exitBtn);
     }
 
     @Override
@@ -77,5 +93,15 @@ public class MapDisplay extends UIComponent{
     public void dispose() {
         table.clear();
         super.dispose();
+    }
+    private Button createButton(String Up, String Down) {
+        logger.debug("createButton with path:" + Up + Down);
+        ResourceService resService = ServiceLocator.getResourceService();
+        TextureRegionDrawable up = new TextureRegionDrawable(resService.getAsset(Up, Texture.class));
+        TextureRegionDrawable down = new TextureRegionDrawable(resService.getAsset(Down, Texture.class));
+        Button.ButtonStyle style = new Button.ButtonStyle();
+        style.up = up;
+        style.over = down;
+        return new Button(style);
     }
 }

@@ -7,11 +7,13 @@ import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.achievements.AchievementsDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
+import com.deco2800.game.entities.factories.AchievementFactory;
 import com.deco2800.game.entities.factories.RenderFactory;
 import com.deco2800.game.input.InputDecorator;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
+import com.deco2800.game.services.AchievementService;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -24,13 +26,13 @@ public class AchievementsScreen extends ScreenAdapter {
     private final GdxGame game;
     private final Renderer renderer;
 
-    private static final String[] AchievementsTextures = {
+    private static final String[] UITextures = {
             "images/achievement/achievement_background.png",
             "images/achievement/back_button.png", "images/achievement/back_button_pressed.png",
             "images/achievement/last_page_button.png", "images/achievement/last_page_button_pressed.png",
-            "images/achievement/next_page_button.png", "images/achievement/next_page_button_pressed.png",
-            "images/achievement/gods_pocket_unobtained.png", "images/achievement/treasurer_unobtained.png",
-            "images/achievement/nereus!_unobtained.png", "images/achievement/time_keeper_unobtained.png"};
+            "images/achievement/next_page_button.png", "images/achievement/next_page_button_pressed.png"};
+
+    private static final String[] achievementTextures = AchievementFactory.getTextures();
 
     public AchievementsScreen(GdxGame game) {
         this.game = game;
@@ -40,6 +42,7 @@ public class AchievementsScreen extends ScreenAdapter {
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
+        ServiceLocator.registerAchievementService(new AchievementService());
         renderer = RenderFactory.createRenderer();
 
         loadAssets();
@@ -70,14 +73,16 @@ public class AchievementsScreen extends ScreenAdapter {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(AchievementsTextures);
+        resourceService.loadTextures(UITextures);
+        resourceService.loadTextures(achievementTextures);
         ServiceLocator.getResourceService().loadAll();
     }
 
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(AchievementsTextures);
+        resourceService.unloadAssets(UITextures);
+        resourceService.unloadAssets(achievementTextures);
     }
 
     private void createUI() {

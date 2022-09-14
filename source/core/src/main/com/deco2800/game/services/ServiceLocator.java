@@ -24,6 +24,11 @@ public class ServiceLocator {
   private static InputService inputService;
   private static ResourceService resourceService;
 
+  private static AchievementService achievementService;
+
+  public static AchievementService getAchievementService() {
+    return achievementService;
+  }
 
   public static EntityService getEntityService() {
     return entityService;
@@ -79,6 +84,11 @@ public class ServiceLocator {
     resourceService = source;
   }
 
+  public static void registerAchievementService(AchievementService source) {
+    logger.debug("Registering achievement service {}", source);
+    achievementService = source;
+  }
+
   public static void clear() {
     entityService = null;
     renderService = null;
@@ -86,6 +96,7 @@ public class ServiceLocator {
     timeSource = null;
     inputService = null;
     resourceService = null;
+    achievementService = null;
   }
 
   private ServiceLocator() {

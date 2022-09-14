@@ -2,7 +2,8 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
-import com.deco2800.game.components.AddToInventoryComponent;
+import com.deco2800.game.components.achievements.AchievementsUpdater;
+import com.deco2800.game.components.player.AddToInventoryComponent;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -22,23 +23,23 @@ import com.deco2800.game.rendering.TextureRenderComponent;
  * "ItemConfigs".
  */
 public class ItemFactory {
+
   /**
    * Creates an item entity.
    *
    * @param target entity to chase
    * @return entity
    */
-  public static Entity createItem(Entity target) {
+  public static Entity createItem(Entity target, String texturePath) {
     Entity item = createBaseItem(target);
 
     item
-        /** .addComponent(new CombatStatsComponent(config.health, config.baseAttack)) */
-        .addComponent(new TextureRenderComponent("images/heart.png"))
+        .addComponent(new TextureRenderComponent(texturePath))
         .addComponent(new ColliderComponent());
     return item;
   }
   /**
-   * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
+   * Creates a generic item to be used as a base entity by more specific item creation methods.
    *
    * @return entity
    */
@@ -53,13 +54,14 @@ public class ItemFactory {
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.Item))
             .addComponent(aiComponent)
-            .addComponent(new AddToInventoryComponent(PhysicsLayer.Item));
+            .addComponent(new AddToInventoryComponent(PhysicsLayer.Item))
+            .addComponent(new AchievementsUpdater());
 
     PhysicsUtils.setScaledCollider(item, 0.9f, 0.4f);
     return item;
   }
 
-  private ItemFactory() {
+  public ItemFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }
 }
