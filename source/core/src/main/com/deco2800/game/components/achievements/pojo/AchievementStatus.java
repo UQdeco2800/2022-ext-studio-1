@@ -20,6 +20,10 @@ public abstract class AchievementStatus {
         this.obtained = obtained;
     }
 
+    public AchievementStatus() {
+
+    }
+
     public String getName() {
         return name;
     }

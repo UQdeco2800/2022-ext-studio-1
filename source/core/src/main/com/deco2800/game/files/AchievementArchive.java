@@ -10,4 +10,7 @@ public class AchievementArchive {
     public AchievementArchive(Map<String, AchievementStatus> achievementStatusMap) {
         this.achievementStatusMap = achievementStatusMap;
     }
+
+    public AchievementArchive() {
+    }
 }

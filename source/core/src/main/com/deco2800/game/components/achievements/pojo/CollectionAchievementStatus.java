@@ -20,6 +20,10 @@ public class CollectionAchievementStatus extends AchievementStatus {
         this.targetNum = targetNum;
     }
 
+    public CollectionAchievementStatus() {
+        super();
+    }
+
     public int getTargetNum() {
         return targetNum;
     }
