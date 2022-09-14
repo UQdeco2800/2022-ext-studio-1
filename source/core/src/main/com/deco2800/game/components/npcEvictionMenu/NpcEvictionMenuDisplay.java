@@ -27,6 +27,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
+import static com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplayHelper.creatLabelContext;
+
 /**
  * An ui component for displaying the npc eviction menu.
  *
@@ -316,37 +318,16 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         });
 
         //  add clues of npc
-        String[] clues = {};
-        try {
-            clues = library.getUnlockClues(card_name);
-        } catch (Exception ignored) {
-                    }
-        Label message = creatLabel(clues, card_name);
+        Label message = new Label(creatLabelContext(card_name, library), skin, "large");
         message.setWrap(true);
         message.setAlignment(Align.left);
         Table table = new Table();
         table.add(message).width(dialog_size_x * 3 / 5);
         dialog.add(table);
 
-        dialog.setModal(true);    // The dialog is always at the front
         stage.addActor(dialog);
     }
 
-    private Label creatLabel(String[] clues, String card_name) {
-        StringBuilder message = new StringBuilder();
-        if (clues == null || clues.length == 0) {
-            message = new StringBuilder("This npc card " + card_name + " has no clue yet.");
-
-        } else {
-            for (int i = 0; i < clues.length; i++) {
-                message.append(clues[i]);
-                if (i != clues.length - 1) {
-                    message.append("\n");
-                }
-            }
-        }
-        return new Label(message.toString(), skin, "large");
-    }
 
     private void exitMenu() {
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
