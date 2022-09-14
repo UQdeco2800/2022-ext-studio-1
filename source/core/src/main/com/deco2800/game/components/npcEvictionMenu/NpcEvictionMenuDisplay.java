@@ -39,25 +39,13 @@ public class NpcEvictionMenuDisplay extends UIComponent {
     private static float bgWidth;
     private static float bgHeight;
 
-    String[] clues = new String[]{
-            "He is highly skilled in a particular field.",
-            "He knew almost everything about Atlantis.",
-            "His hair is not long or short.",
-            "He carries the tools of self-defense with him"
-    };
-
-
     private static final String IMAGE_PATH = "images/eviction_menu/";  //path of team7 images
 
-    /** Path of the image of the corresponding cards <br/>
-     * images for 8 characters in cards <br/>
-     * <b>The characters are designed by Team 1 </b><br/>
-     * <b>Integrate and design new display by Team 7 Yingxin Liu</b>*/
-    private static final String[] cardImages = {
-            IMAGE_PATH + "npcNereus", IMAGE_PATH + "npcHeph",
-            IMAGE_PATH + "npcMetis", IMAGE_PATH + "npcNereus",
-            IMAGE_PATH + "npcNereus", IMAGE_PATH + "npcNereus",
-            IMAGE_PATH + "npcNereus", IMAGE_PATH + "npcNereus"};
+    //with these names you can call clues as well as calling image path of each npc.
+    private static final String[] cardNames = {
+            "Nereus", "Heph", "Metis", "Nereus",
+            "Nereus", "Nereus", "Nereus", "Nereus"
+    };
     private ResourceService resourceService;
 
     private final GdxGame game;
@@ -131,20 +119,20 @@ public class NpcEvictionMenuDisplay extends UIComponent {
      * set all attributes of the card <br/>
      * this is an internal function, do not use it !
      *
-     * @param cards  set of 8 cards
+     * @param cards set of 8 cards
      * @param index the index of the card in the set that will be set <br/>
      *              it will also be used to calculate the position and find image in the card
      * @author Team7 Yingxin Liu
      */
-    private void setCard(Button[] cards, int index){
+    private void setCard(Button[] cards, int index) {
         Button card = createButton(IMAGE_PATH + "evictionCard_single.png",
                 IMAGE_PATH + "evictionCard_hover.png");
         cards[index] = card;
         setButton(cards[index], index, "cardDefault");
         TextureRegionDrawable imageDefault = new TextureRegionDrawable(
-                resourceService.getAsset(cardImages[index] + ".png", Texture.class));
+                resourceService.getAsset(IMAGE_PATH + "npc" + cardNames[index] + ".png", Texture.class));
         TextureRegionDrawable imageHover = new TextureRegionDrawable(
-                resourceService.getAsset(cardImages[index] + "_hover.png", Texture.class));
+                resourceService.getAsset(IMAGE_PATH + "npc" + cardNames[index] + "_hover.png", Texture.class));
         Image cardImage = new Image(imageDefault);
         setImage(cardImage, card, "imageDefault");
         card.addActor(cardImage);
@@ -174,7 +162,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 if (card.isOver()) {
                     logger.debug("card" + index + "clicked up");
-                    createCardInfo("card" + index);
+                    createCardInfo(cardNames[index]);
                 }
             }
         });
@@ -205,9 +193,9 @@ public class NpcEvictionMenuDisplay extends UIComponent {
      * set the position and size of the given button <br/>
      * this is an internal function, do not use it !
      *
-     * @param button  the button to be set
-     * @param i       index of the set buttons
-     * @param type    type of button to be set
+     * @param button the button to be set
+     * @param i      index of the set buttons
+     * @param type   type of button to be set
      * @author Team7 Yingxin Liu
      */
     private void setButton(Button button, int i, String type) {
@@ -330,23 +318,24 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         //  add clues of npc
         String[] clues = {};
         try {
-            clues = library.getUnlockClues("Metis");
-        } catch (Exception ignored) {}
-        Label message = creatLabel(clues);
+            clues = library.getUnlockClues(card_name);
+        } catch (Exception ignored) {
+                    }
+        Label message = creatLabel(clues, card_name);
         message.setWrap(true);
         message.setAlignment(Align.left);
         Table table = new Table();
-        table.add(message).width(dialog_size_x*3/5);
+        table.add(message).width(dialog_size_x * 3 / 5);
         dialog.add(table);
 
         dialog.setModal(true);    // The dialog is always at the front
         stage.addActor(dialog);
     }
 
-    private Label creatLabel(String[] clues) {
+    private Label creatLabel(String[] clues, String card_name) {
         StringBuilder message = new StringBuilder();
         if (clues == null || clues.length == 0) {
-            message = new StringBuilder("no clue yet");
+            message = new StringBuilder("This npc card " + card_name + " has no clue yet.");
 
         } else {
             for (int i = 0; i < clues.length; i++) {
@@ -356,7 +345,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
                 }
             }
         }
-        return new Label(message.toString(),skin,"large");
+        return new Label(message.toString(), skin, "large");
     }
 
     private void exitMenu() {
