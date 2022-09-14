@@ -22,7 +22,7 @@ class NpcEvictionMenuDisplayHelper {
      *
      * @author Team7 Yingxin Liu Shaohui Wang
      */
-    protected static String creatLabelContext(String name, NPCClueLibrary library) {
+    public  String creatLabelContext(String name, NPCClueLibrary library) {
         String[] clues = {};
         try {
             clues = library.getUnlockClues(name);
