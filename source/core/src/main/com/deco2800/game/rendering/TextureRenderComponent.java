@@ -26,6 +26,12 @@ public class TextureRenderComponent extends RenderComponent {
   public void scaleEntity() {
     entity.setScale(1f, (float) texture.getHeight() / texture.getWidth());
   }
+  /** Gets component texture to be used across objects **/
+  public Texture getTexture()
+  {
+    return texture;
+  }
+
 
   @Override
   protected void draw(SpriteBatch batch) {

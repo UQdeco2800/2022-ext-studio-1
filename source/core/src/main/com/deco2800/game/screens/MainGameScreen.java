@@ -18,6 +18,7 @@ import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
+import com.deco2800.game.services.AchievementService;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -44,8 +45,13 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
-  public MainGameScreen(GdxGame game) {
+  private long timeSinceStart;
+
+  private  boolean stopGame;
+
+  public MainGameScreen(GdxGame game, boolean stop) {
     this.game = game;
+    this.stopGame = stop;
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
@@ -59,6 +65,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
+    ServiceLocator.registerAchievementService(new AchievementService());
 
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -75,9 +82,26 @@ public class MainGameScreen extends ScreenAdapter {
 
   @Override
   public void render(float delta) {
-    physicsEngine.update();
-    ServiceLocator.getEntityService().update();
-    renderer.render();
+    //physicsEngine.update();
+    //ServiceLocator.getEntityService().update();
+    //renderer.render();
+    if (stopGame==true){
+      renderer.render();
+      ServiceLocator.getEntityService().update();
+
+
+
+
+
+    }else {
+      renderer.render();
+      ServiceLocator.getEntityService().update();
+      physicsEngine.update();
+
+
+
+
+    }
   }
 
   @Override
@@ -106,8 +130,13 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.getEntityService().dispose();
     ServiceLocator.getRenderService().dispose();
     ServiceLocator.getResourceService().dispose();
+    ServiceLocator.getAchievementService().dispose();
 
     ServiceLocator.clear();
+  }
+
+  public GdxGame getGame() {
+    return this.game;
   }
 
   private void loadAssets() {
@@ -133,6 +162,9 @@ public class MainGameScreen extends ScreenAdapter {
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
+    this.timeSinceStart = ServiceLocator.getTimeSource().getTime();
+    logger.info("time passed since game started: {}", this.timeSinceStart);
+
     Entity ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
         .addComponent(new PerformanceDisplay())
@@ -144,5 +176,14 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);
+  }
+  public void changeStatus() {
+
+    stopGame=true;
+
+  }
+  public void changeStatus2(){
+    stopGame=false;
+
   }
 }

@@ -6,10 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.ItemFactory;
-import com.deco2800.game.entities.factories.NPCFactory;
-import com.deco2800.game.entities.factories.ObstacleFactory;
-import com.deco2800.game.entities.factories.PlayerFactory;
+import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -26,13 +23,10 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/box_boy_leaf.png",
-    "images/tree.png",
-    "images/ghost_king.png",
-    "images/ghost_1.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
+    "images/player_front.png",
+    "images/orpheus_front.png",
+    "images/Ares_front.png",
+    "images/mermaid.png"
     "images/blank.png",
     "images/box_boy.png",
     "images/tree.png",
@@ -43,9 +37,19 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
     "images/player_front.png",
-    "images/orpheus_front.png",
-    "images/Ares_front.png",
-    "images/mermaid.png"
+    "images/up_0.png",
+    "images/up_1.png",
+    "images/down_0.png",
+    "images/down_1.png",
+    "images/left_0.png",
+    "images/left_1.png",
+    "images/right_0.png",
+    "images/right_1.png",
+    "images/inventory/time_item.png",
+    "images/inventory/scales1.png",
+    "images/inventory/confirm.png",
+    "images/inventory/emtpyInventorySlot.png",
+    "images/inventory/inventoryBG.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas","images/player.atlas","images/orpheus.atlas",
@@ -53,6 +57,7 @@ public class ForestGameArea extends GameArea {
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/VillageBGM_2.mp3";
+  private static final String movementMusic = "sounds/Movement_sound.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
@@ -68,16 +73,15 @@ public class ForestGameArea extends GameArea {
   @Override
   public void create() {
     loadAssets();
-
     displayUI();
-
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
     spawnGhosts();
     spawnGhostKing();
     spawnOrpheus();
-    spawnItem();
+    spawnTimeConsumeableItem();
+    spawnClueItem();
     playMusic();
   }
 
@@ -133,10 +137,16 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }
-  private void spawnItem() {
-    Entity item = ItemFactory.createItem(player);
+  public void spawnTimeConsumeableItem() {
+    Entity item = ConsumableItemFactory.createItem(player, "images/inventory/time_item.png");
 
     spawnEntityAt(item, new GridPoint2(5, 10), true, true);
+  }
+
+  private void spawnClueItem() {
+    Entity item = ClueItemFactory.createItem(player, "images/inventory/scales1.png");
+
+    spawnEntityAt(item, new GridPoint2(5, 5), true, true);
   }
 
   private void spawnGhosts() {
@@ -197,7 +207,6 @@ public class ForestGameArea extends GameArea {
     resourceService.unloadAssets(forestSounds);
     resourceService.unloadAssets(forestMusic);
   }
-
   @Override
   public void dispose() {
     super.dispose();
