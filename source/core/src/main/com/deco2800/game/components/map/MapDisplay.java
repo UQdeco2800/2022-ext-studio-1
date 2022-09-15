@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.GdxGame;
@@ -67,18 +66,84 @@ public class MapDisplay extends UIComponent{
                     }
                 });
 
-        Button loadLab = createButton("images/map/1house-2.png", "images/map/1house-2.png");
-        loadLab.setPosition((float) (stage.getWidth() * 0.2), (float) (stage.getHeight() * 0.78));
-        loadLab.setSize((float) (stage.getWidth()*0.042), (float) (stage.getHeight()*0.07116));
+        Button loadLab1 = createButton("images/map/1house-2.png", "images/map/1house-2.png");
+        loadLab1.setPosition((float) (stage.getWidth() * 0.2), (float) (stage.getHeight() * 0.78));
+        loadLab1.setSize((float) (stage.getWidth()*0.042), (float) (stage.getHeight()*0.07116));
 
-        loadLab.addListener(
+        loadLab1.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Lab button clicked");
+                        logger.debug("Lab1 button clicked");
                         lab1();
                     }
                 });
+
+        Button loadLab2 = createButton("images/map/3house-2.png", "images/map/3house-2.png");
+        loadLab2.setPosition((float) (stage.getWidth() * 0.283), (float) (stage.getHeight() * 0.69));
+        loadLab2.setSize((float) (stage.getWidth()*0.03), (float) (stage.getHeight()*0.0611));
+
+        loadLab2.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Lab2 button clicked");
+                        lab2();
+                    }
+                });
+
+        Button loadLab3 = createButton("images/map/the ellips house-2.png", "images/map/the ellips house-2.png");
+        loadLab3.setPosition((float) (stage.getWidth() * 0.15), (float) (stage.getHeight() * 0.72));
+        loadLab3.setSize((float) (stage.getWidth()*0.03), (float) (stage.getHeight()*0.063));
+
+        loadLab3.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Lab3 button clicked");
+                        lab3();
+                    }
+                });
+
+        Button loadLab4 = createButton("images/map/church-2.png", "images/map/church-2.png");
+        loadLab4.setPosition((float) (stage.getWidth() * 0.255), (float) (stage.getHeight() * 0.555));
+        loadLab4.setSize((float) (stage.getWidth()*0.035), (float) (stage.getHeight()*0.065));
+
+        loadLab4.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Lab4 button clicked");
+                        lab4();
+                    }
+                });
+
+        Button loadLab5 = createButton("images/map/thatched cattage-2.png", "images/map/thatched cattage-2.png");
+        loadLab5.setPosition((float) (stage.getWidth() * 0.275), (float) (stage.getHeight() * 0.755));
+        loadLab5.setSize((float) (stage.getWidth()*0.035), (float) (stage.getHeight()*0.065));
+
+        loadLab5.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Lab5 button clicked");
+                        lab5();
+                    }
+                });
+
+        Button loadLabHouse = createButton("images/map/lab house.png", "images/map/lab house.png");
+        loadLabHouse.setPosition((float) (stage.getWidth() * 0.2), (float) (stage.getHeight() * 0.64));
+        loadLabHouse.setSize((float) (stage.getWidth()*0.06), (float) (stage.getHeight()*0.1));
+
+        loadLabHouse.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Lab5 button clicked");
+                        labHouse();
+                    }
+                });
+
         table.add(map);
         //table.row();
         //table.add(exitBtn).expandX().left();
@@ -86,7 +151,12 @@ public class MapDisplay extends UIComponent{
 
         stage.addActor(table);
         stage.addActor(exitBtn);
-        stage.addActor(loadLab);
+        stage.addActor(loadLab1);
+        stage.addActor(loadLab2);
+        stage.addActor(loadLab3);
+        stage.addActor(loadLab4);
+        stage.addActor(loadLab5);
+        stage.addActor(loadLabHouse);
     }
 
     @Override
@@ -100,6 +170,16 @@ public class MapDisplay extends UIComponent{
     private void lab1(){
         game.setScreen(GdxGame.ScreenType.LAB_1);
     }
+
+    private void lab2(){game.setScreen(GdxGame.ScreenType.LAB_2);}
+
+    private void lab3(){game.setScreen(GdxGame.ScreenType.LAB_3);}
+
+    private void lab4(){game.setScreen(GdxGame.ScreenType.LAB_4);}
+
+    private void lab5(){game.setScreen(GdxGame.ScreenType.LAB_5);}
+
+    private void labHouse(){game.setScreen(GdxGame.ScreenType.LAB_HOUSE);}
 
     @Override
     public float getZIndex(){

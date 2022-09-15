@@ -19,13 +19,13 @@ import org.slf4j.LoggerFactory;
 /**
  * An ui component for displaying the Map.
  */
-public class LabDisplay extends UIComponent{
-    private static final Logger logger = LoggerFactory.getLogger(LabDisplay.class);
+public class LabHouseDisplay extends UIComponent{
+    private static final Logger logger = LoggerFactory.getLogger(LabHouseDisplay.class);
     private static final float Z_INDEX = 2f;
     private Table table;
     private final GdxGame game;
 
-    public LabDisplay(GdxGame game) {
+    public LabHouseDisplay(GdxGame game) {
         super();
         this.game = game;
     }

@@ -4,6 +4,7 @@ package com.deco2800.game.screens;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.components.map.LabHouseDisplay;
 import com.deco2800.game.components.map.Lab_1_Display;
 import com.deco2800.game.components.map.MapDisplay;
 import com.deco2800.game.entities.Entity;
@@ -19,18 +20,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** The game screen containing the map */
-public class LabScreen_1 extends ScreenAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(LabScreen_1.class);
+public class LabHouseScreen extends ScreenAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(LabHouseScreen.class);
 
     private final GdxGame game;
     private final Renderer renderer;
 
-    private static final String[] Lab_1_Textures = {
-            "images/map/LAB/lab 1.png", "images/eviction_menu/exitButton.png","images/eviction_menu/exitButton_selected.png"
+    private static final String[] LabHouseTextures = {
+            "images/map/LAB/whole lab.png", "images/eviction_menu/exitButton.png","images/eviction_menu/exitButton_selected.png"
 
     };
 
-    public LabScreen_1(GdxGame game) {
+    public LabHouseScreen(GdxGame game) {
         this.game = game;
 
         logger.debug("Initialising map screen services");
@@ -68,14 +69,14 @@ public class LabScreen_1 extends ScreenAdapter {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(Lab_1_Textures);
+        resourceService.loadTextures(LabHouseTextures);
         ServiceLocator.getResourceService().loadAll();
     }
 
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(Lab_1_Textures);
+        resourceService.unloadAssets(LabHouseTextures);
     }
 
     /**
@@ -87,7 +88,7 @@ public class LabScreen_1 extends ScreenAdapter {
         logger.debug("Creating ui");
         Stage stage = ServiceLocator.getRenderService().getStage();
         Entity ui = new Entity();
-        ui.addComponent(new Lab_1_Display(game)).addComponent(new InputDecorator(stage, 10));
+        ui.addComponent(new LabHouseDisplay(game)).addComponent(new InputDecorator(stage, 10));
         ServiceLocator.getEntityService().register(ui);
     }
 }

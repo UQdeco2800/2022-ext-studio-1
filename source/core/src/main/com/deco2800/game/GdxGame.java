@@ -72,6 +72,16 @@ public class GdxGame extends Game {
     switch (screenType) {
       case LAB_1:
         return new LabScreen_1(this);
+      case LAB_2:
+        return new LabScreen_2(this);
+      case LAB_3:
+        return new LabScreen_3(this);
+      case LAB_4:
+        return new LabScreen_4(this);
+      case LAB_5:
+        return new LabScreen_5(this);
+      case LAB_HOUSE:
+        return new LabHouseScreen(this);
       case MAIN_MENU:
         return new MainMenuScreen(this);
       case MAIN_GAME:
@@ -95,7 +105,7 @@ public class GdxGame extends Game {
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, NPC_EVICTION_MENU, ACHIEVEMENTS, STORYLINE, SETTINGS, MAP, COUNTDOWN_SCREEN, LAB_1
+    MAIN_MENU, MAIN_GAME, NPC_EVICTION_MENU, ACHIEVEMENTS, STORYLINE, SETTINGS, MAP, COUNTDOWN_SCREEN, LAB_1, LAB_2, LAB_3, LAB_4, LAB_5, LAB_HOUSE
   }
 
   /**
