@@ -33,7 +33,11 @@ public class NpcEvictionMenu extends ScreenAdapter {
             IMAGES_PATH + "infoWindow.png",
             IMAGES_PATH + "npcNereus.png", IMAGES_PATH + "npcNereus_hover.png",
             IMAGES_PATH + "npcHeph.png", IMAGES_PATH + "npcHeph_hover.png",
-            IMAGES_PATH + "npcMetis.png", IMAGES_PATH + "npcMetis_hover.png"};
+            IMAGES_PATH + "npcMetis.png", IMAGES_PATH + "npcMetis_hover.png",
+            IMAGES_PATH + "npcDoris.png", IMAGES_PATH + "npcDoris_hover.png",
+            IMAGES_PATH + "npcZoe.png", IMAGES_PATH + "npcZoe_hover.png",
+            IMAGES_PATH + "npcAres.png", IMAGES_PATH + "npcAres_hover.png",
+            IMAGES_PATH + "npcOrpheus.png", IMAGES_PATH + "npcOrpheus_hover.png"};
 
 
     public NpcEvictionMenu(GdxGame game) {
