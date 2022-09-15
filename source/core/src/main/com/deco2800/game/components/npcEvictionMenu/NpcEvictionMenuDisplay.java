@@ -44,8 +44,8 @@ public class NpcEvictionMenuDisplay extends UIComponent {
 
     //with these names you can call clues as well as calling image path of each npc.
     private static final String[] cardNames = {
-            "Nereus", "Heph", "Metis", "Nereus",
-            "Nereus", "Nereus", "Nereus", "Nereus"
+            "Nereus", "Heph", "Metis", "Doris",
+            "Zoe", "Ares", "Orpheus", "Nereus"
     };
     private ResourceService resourceService;
 
