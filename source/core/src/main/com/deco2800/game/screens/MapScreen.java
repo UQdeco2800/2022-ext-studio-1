@@ -19,13 +19,21 @@ import org.slf4j.LoggerFactory;
 
 /** The game screen containing the map */
 public class MapScreen extends ScreenAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(AchievementsScreen.class);
+    private static final Logger logger = LoggerFactory.getLogger(MapScreen.class);
 
     private final GdxGame game;
     private final Renderer renderer;
 
     private static final String[] MapTextures = {
-            "images/map/Map.PNG"
+            "images/map/Map.PNG",
+            "images/map/1house-2.png",
+            "images/map/3house-2.png",
+            "images/map/the ellips house-2.png",
+            "images/map/church-2.png",
+            "images/map/thatched cattage-2.png",
+            "images/eviction_menu/exitButton.png",
+            "images/map/lab house.png",
+            "images/eviction_menu/exitButton_selected.png"
 
     };
 

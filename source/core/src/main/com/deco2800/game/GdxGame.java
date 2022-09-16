@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.screens.*;
+import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +19,10 @@ import static com.badlogic.gdx.Gdx.app;
  */
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
+
+  public boolean stopGame = false;
+
+  public MainGameScreen theGameScreen;
 
   @Override
   public void create() {
@@ -65,12 +70,23 @@ public class GdxGame extends Game {
    */
   private Screen newScreen(ScreenType screenType) {
     switch (screenType) {
+      case LAB_1:
+        return new LabScreen_1(this);
+      case LAB_2:
+        return new LabScreen_2(this);
+      case LAB_3:
+        return new LabScreen_3(this);
+      case LAB_4:
+        return new LabScreen_4(this);
+      case LAB_5:
+        return new LabScreen_5(this);
+      case LAB_HOUSE:
+        return new LabHouseScreen(this);
       case MAIN_MENU:
         return new MainMenuScreen(this);
       case MAIN_GAME:
-        return new MainGameScreen(this);
-//      case NPC_EVICTION_MENU: [Deprecated by team 7]
-//        return new NpcEvictionMenu(this);
+        theGameScreen = new MainGameScreen(this, stopGame);
+        return theGameScreen;
       case ACHIEVEMENTS:
         return new AchievementsScreen(this);
       case SETTINGS:
@@ -87,7 +103,7 @@ public class GdxGame extends Game {
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, ACHIEVEMENTS, STORYLINE, SETTINGS, MAP, COUNTDOWN_SCREEN
+    MAIN_MENU, MAIN_GAME, ACHIEVEMENTS, STORYLINE, SETTINGS, MAP, COUNTDOWN_SCREEN, LAB_1, LAB_2, LAB_3, LAB_4, LAB_5, LAB_HOUSE
   }
 
   /**
