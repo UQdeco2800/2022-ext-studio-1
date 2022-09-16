@@ -38,6 +38,23 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] mainGameTextures = {
           "images/heart.png","images/eviction_menu/menuIcon_black.png",
           "images/eviction_menu/menuIcon_white.png"};
+  private static final String IMAGES_PATH = "images/eviction_menu/";  //path of team7 images
+  private static final String[] npcEvictionMenuTextures = { //path of team7 images
+          IMAGES_PATH + "evictionMenu_background.png",IMAGES_PATH + "transparentBg.png",
+          IMAGES_PATH + "exitButton.png", IMAGES_PATH + "exitButton_selected.png",
+          IMAGES_PATH + "selectButton_single.png", IMAGES_PATH + "selectButton_selected.png",
+          IMAGES_PATH + "evictionCard_single.png", IMAGES_PATH + "evictionCard_hover.png",
+          IMAGES_PATH + "confirmBox.png",
+          IMAGES_PATH + "confirmBtn_ok.png", IMAGES_PATH + "confirmBtn_ok1.png",
+          IMAGES_PATH + "confirmBtn_cancel.png", IMAGES_PATH + "confirmBtn_cancel1.png",
+          IMAGES_PATH + "infoWindow.png",
+          IMAGES_PATH + "npcNereus.png", IMAGES_PATH + "npcNereus_hover.png",
+          IMAGES_PATH + "npcHeph.png", IMAGES_PATH + "npcHeph_hover.png",
+          IMAGES_PATH + "npcMetis.png", IMAGES_PATH + "npcMetis_hover.png",
+          IMAGES_PATH + "npcDoris.png", IMAGES_PATH + "npcDoris_hover.png",
+          IMAGES_PATH + "npcZoe.png", IMAGES_PATH + "npcZoe_hover.png",
+          IMAGES_PATH + "npcAres.png", IMAGES_PATH + "npcAres_hover.png",
+          IMAGES_PATH + "npcOrpheus.png", IMAGES_PATH + "npcOrpheus_hover.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
   private final GdxGame game;
@@ -114,6 +131,7 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainGameTextures);
+    resourceService.loadTextures(npcEvictionMenuTextures);
     ServiceLocator.getResourceService().loadAll();
   }
 
@@ -121,6 +139,7 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(mainGameTextures);
+    resourceService.unloadAssets(npcEvictionMenuTextures);
   }
 
   /**

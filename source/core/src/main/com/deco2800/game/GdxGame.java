@@ -69,8 +69,8 @@ public class GdxGame extends Game {
         return new MainMenuScreen(this);
       case MAIN_GAME:
         return new MainGameScreen(this);
-      case NPC_EVICTION_MENU:
-        return new NpcEvictionMenu(this);
+//      case NPC_EVICTION_MENU: [Deprecated by team 7]
+//        return new NpcEvictionMenu(this);
       case ACHIEVEMENTS:
         return new AchievementsScreen(this);
       case SETTINGS:
@@ -87,7 +87,7 @@ public class GdxGame extends Game {
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, NPC_EVICTION_MENU, ACHIEVEMENTS, STORYLINE, SETTINGS, MAP, COUNTDOWN_SCREEN
+    MAIN_MENU, MAIN_GAME, ACHIEVEMENTS, STORYLINE, SETTINGS, MAP, COUNTDOWN_SCREEN
   }
 
   /**

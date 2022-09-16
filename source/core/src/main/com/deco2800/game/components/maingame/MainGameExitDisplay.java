@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplayNew;
 import com.deco2800.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.ui.UIComponent;
@@ -81,8 +82,10 @@ public class MainGameExitDisplay extends UIComponent {
             new ChangeListener() {
               @Override
               public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("Load button clicked");
-                entity.getEvents().trigger("NpcMenu");
+                logger.debug("Load NpcEvictionMenu button clicked");
+                NpcEvictionMenuDisplayNew npc = new NpcEvictionMenuDisplayNew(
+                        logger,ServiceLocator.getResourceService(),stage.getWidth(),stage.getHeight());
+                stage.addActor(npc.creatEvictionMenu());
               }
             });
 

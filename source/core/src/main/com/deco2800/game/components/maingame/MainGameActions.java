@@ -24,18 +24,18 @@ public class MainGameActions extends Component {
   public void create() {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("InventoryScreen", this::onInventoryScreen);
-    entity.getEvents().addListener("NpcMenu", this::onNpcMenu);
+//    entity.getEvents().addListener("NpcMenu", this::onNpcMenu); [Deprecated]
 //    entity.getEvents().addListener("CountdownScreen", this::onCountdownScreen);
   }
 
-  /**
-   * Intended for loading a saved game state.
-   * load npc menu.
-   */
-  private void onNpcMenu() {
-    logger.info("Load npc menu");
-    game.setScreen(GdxGame.ScreenType.NPC_EVICTION_MENU);
-  }
+//  /**
+//   * Intended for loading a saved game state.
+//   * load npc menu.
+//   */
+//  private void onNpcMenu() { [Deprecated]
+//    logger.info("Load npc menu");
+//    game.setScreen(GdxGame.ScreenType.NPC_EVICTION_MENU);
+//  }
   /**
    * Swaps to the Main Menu screen.
    */

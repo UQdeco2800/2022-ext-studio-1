@@ -4,6 +4,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplay;
+import com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplayNew;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -15,7 +16,16 @@ import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * Update by 15/9/2022 -- Yingxin Liu  IMPORTANT !!! <br/>
+ * In this update, in order to match the game, this class is rebuilt passing Window() <br/>
+ * Rather than ScreenAdapter <br/>
+ * Therefore, from now on , this class will be deprecated , all code and new update will be moved to <br/>
+ * @see NpcEvictionMenuDisplayNew <br/>
+ * @see NpcEvictionMenuDisplay for more about what happen
+ * @author 2022-ext-studio-1-Team7
+ */
+@Deprecated
 public class NpcEvictionMenu extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(SettingsScreen.class);
 
