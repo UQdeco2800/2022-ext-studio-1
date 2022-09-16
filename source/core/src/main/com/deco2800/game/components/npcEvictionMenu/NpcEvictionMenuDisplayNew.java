@@ -1,13 +1,14 @@
 package com.deco2800.game.components.npcEvictionMenu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 
@@ -16,12 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.StringBuilder;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.npc.NPCClueLibrary;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,66 +28,91 @@ import java.util.Objects;
 
 
 /**
- * An ui component for displaying the npc eviction menu.
- * Update by 15/9/2022 -- Yingxin Liu  IMPORTANT !!! <br/>
- * In this update, in order to match the game, this class is rebuilt passing Window() <br/>
- * Rather than UIComponent <br/>
- * Therefore, from now on , this class will be deprecated , all code and new update will be moved to <br/>
- * @see NpcEvictionMenuDisplayNew, Rebuilt by Team 7 Yingxin Liu <br/>
- * @see com.deco2800.game.screens.NpcEvictionMenu This class will also be deprecated at the same time.
- * As a memorial, these class will be retained, but will no longer be used <br/>
- * @author 2022-ext-studio-1-Team7
+ * A Window actor for displaying the npc eviction menu. <br/>
+ * In order to match the game, this class is rebuilt passing Window() rather than UIComponent <br/>
+ * How to use: <br/>
+ * NpcEvictionMenuDisplayNew var = new NpcEvictionMenuDisplayNew(...);<br/>
+ * stage.addActor(var.creatEvictionMenu()); <br/>
+ * @see NpcEvictionMenuDisplay for the old version of code and more information
+ * @see com.deco2800.game.screens.MainGameScreen all textures will load from here
+ *
+ * @author 2022-ext-studio-1-Team7, rebuilt by Yingxin Liu 15/09/2022
  */
-@Deprecated
-public class NpcEvictionMenuDisplay extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(NpcEvictionMenuDisplay.class);
+public class NpcEvictionMenuDisplayNew {
+    private Logger logger;
 
     private static final int NUMBER_OF_NPC = 8;
     private static float bgWidth;
     private static float bgHeight;
 
-    private static final String IMAGE_PATH = "images/eviction_menu/";  //path of team7 images
+    private static final String IMAGES_PATH = "images/eviction_menu/";  //path of team7 images
 
     //with these names you can call clues as well as calling image path of each npc.
     private static final String[] cardNames = {
             "Nereus", "Heph", "Metis", "Doris",
             "Zoe", "Ares", "Orpheus", "Nereus"
     };
-    private ResourceService resourceService;
+    private final ResourceService resourceService;
 
-    private final GdxGame game;
-    private NPCClueLibrary library = NPCClueLibrary.getInstance();
-    private NpcEvictionMenuDisplayHelper helper = new NpcEvictionMenuDisplayHelper();
-    public NpcEvictionMenuDisplay(GdxGame game) {
-        super();
-        this.game = game;
+    private final Window stage;
 
-    }
+    private static final Skin skin =
+            new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+    private final NPCClueLibrary library = NPCClueLibrary.getInstance();
+    private final NpcEvictionMenuDisplayHelper helper = new NpcEvictionMenuDisplayHelper();
 
-    @Override
-    public void create() {
-        super.create();
-        bgWidth = stage.getWidth();
-        bgHeight = stage.getHeight();
-        resourceService = ServiceLocator.getResourceService();
+    /**
+     * Implement NpcEvictionMenu in to a Window(), use creatEvictionMenu() to get this Window()
+     * @param logger logger from Screen
+     * @param resourceService resourceService where load/unload the textures
+     * @param width  width of stage of the Screen
+     * @param height height of stage of the Screen
+     * @author Team7 Yingxin Liu
+     */
+    public NpcEvictionMenuDisplayNew(Logger logger, ResourceService resourceService, float width, float height) {
+        this.logger = logger;
+        logger.debug("initialize NpcEvictionMenu Window");
+        this.resourceService = resourceService;
+        bgWidth = width;
+        bgHeight = height;
+
+        // creat the Npc eviction menu window with transparent background
+        TextureRegionDrawable styleImage = new TextureRegionDrawable(
+                resourceService.getAsset(IMAGES_PATH + "transparentBg.png", Texture.class));
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLUE, styleImage);
+        this.stage = new Window("", windowStyle);
+        this.stage.setModal(true);       // The window is always in front
+        this.stage.setFillParent(true);  // Fill all space with the stage
         addActors();
     }
 
     /**
+     * return the window of Eviction Menu, use stage.addActor() to add onto stage
+     * @return the window of Eviction Menu
+     * @author Team7 Yingxin Liu
+     */
+    public Window creatEvictionMenu (){
+        return this.stage;
+    }
+
+
+    /**
      * Add actors of eviction_menu to the stage
+     * All functions below are Moved from:
+     * @see NpcEvictionMenuDisplay
      *
      * @author Team7: Shaohui Wang Yingxin Liu
      */
     private void addActors() {
         // Adding background
         Image backgroundNpcMenu =
-                new Image(resourceService.getAsset(IMAGE_PATH + "evictionMenu_background.png", Texture.class));
+                new Image(resourceService.getAsset(IMAGES_PATH + "evictionMenu_background.png", Texture.class));
         backgroundNpcMenu.setSize((float) (bgWidth * 0.89), (float) (bgHeight * 0.9851));
         backgroundNpcMenu.setPosition(bgWidth / 2, 0, Align.bottom);
         stage.addActor(backgroundNpcMenu);
 
         // Button for exit the select page, will go back to previous page
-        Button exitBtn = createButton(IMAGE_PATH + "exitButton.png", IMAGE_PATH + "exitButton_selected.png");
+        Button exitBtn = createButton(IMAGES_PATH + "exitButton.png", IMAGES_PATH + "exitButton_selected.png");
         exitBtn.setSize((float) (bgWidth * ((1493.33 - 1436.67) / 1600)), (float) (bgHeight * (53.33 / 900)));
         exitBtn.setPosition((float) (bgWidth * 0.887), (float) (bgHeight * (1 - 153.33 / 900)));
         exitBtn.addListener(
@@ -110,7 +134,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
             setCard(cards, index);
             stage.addActor(cards[i]);
 
-            buttons[i] = createButton(IMAGE_PATH + "selectButton_single.png", IMAGE_PATH + "selectButton_selected.png");
+            buttons[i] = createButton(IMAGES_PATH + "selectButton_single.png", IMAGES_PATH + "selectButton_selected.png");
             setButton(buttons[i], i, "selectButton");
             buttons[i].addListener(new ChangeListener() {
                 @Override
@@ -133,14 +157,14 @@ public class NpcEvictionMenuDisplay extends UIComponent {
      * @author Team7 Yingxin Liu
      */
     private void setCard(Button[] cards, int index) {
-        Button card = createButton(IMAGE_PATH + "evictionCard_single.png",
-                IMAGE_PATH + "evictionCard_hover.png");
+        Button card = createButton(IMAGES_PATH + "evictionCard_single.png",
+                IMAGES_PATH + "evictionCard_hover.png");
         cards[index] = card;
         setButton(cards[index], index, "cardDefault");
         TextureRegionDrawable imageDefault = new TextureRegionDrawable(
-                resourceService.getAsset(IMAGE_PATH + "npc" + cardNames[index] + ".png", Texture.class));
+                resourceService.getAsset(IMAGES_PATH + "npc" + cardNames[index] + ".png", Texture.class));
         TextureRegionDrawable imageHover = new TextureRegionDrawable(
-                resourceService.getAsset(IMAGE_PATH + "npc" + cardNames[index] + "_hover.png", Texture.class));
+                resourceService.getAsset(IMAGES_PATH + "npc" + cardNames[index] + "_hover.png", Texture.class));
         Image cardImage = new Image(imageDefault);
         setImage(cardImage, card, "imageDefault");
         card.addActor(cardImage);
@@ -235,7 +259,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         logger.debug("create confirm dialog from name: " + button_name);
         // set the style of dialog include font color of title; background; size; position
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
-                resourceService.getAsset(IMAGE_PATH + "confirmBox.png", Texture.class));
+                resourceService.getAsset(IMAGES_PATH + "confirmBox.png", Texture.class));
 
         Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
         Window dialog = new Window("", windowStyle);
@@ -248,7 +272,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         dialog.setPosition(dialog_pos_x, dialog_pos_y);
 
         // Set Cancel and Ok buttons for dialog
-        Button cancelButton = createButton(IMAGE_PATH + "confirmBtn_cancel.png", IMAGE_PATH + "confirmBtn_cancel1.png");
+        Button cancelButton = createButton(IMAGES_PATH + "confirmBtn_cancel.png", IMAGES_PATH + "confirmBtn_cancel1.png");
         cancelButton.setSize((float) (dialog_size_x * 0.361), (float) (dialog_size_y * 0.2317));
         cancelButton.setPosition((float) (dialog.getWidth() * 0.1067), 0);
         cancelButton.addListener(new ChangeListener() {
@@ -259,7 +283,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
             }
         });
 
-        Button okButton = createButton(IMAGE_PATH + "confirmBtn_ok.png", IMAGE_PATH + "confirmBtn_ok1.png");
+        Button okButton = createButton(IMAGES_PATH + "confirmBtn_ok.png", IMAGES_PATH + "confirmBtn_ok1.png");
         okButton.setSize((float) (dialog_size_x * 0.377), (float) (dialog_size_y * 0.2317));
         okButton.setPosition((float) (dialog.getWidth() * 0.5239), 0);
         okButton.addListener(new ChangeListener() {
@@ -306,7 +330,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         logger.debug("create card information dialog from name: " + card_name);
         // set the style of dialog include font color of title; background; size; position
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
-                resourceService.getAsset(IMAGE_PATH + "infoWindow.png", Texture.class));
+                resourceService.getAsset(IMAGES_PATH + "infoWindow.png", Texture.class));
         Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLUE, styleImage);
         Window dialog = new Window("", windowStyle);
         dialog.setModal(true);    // The dialog is always at the front
@@ -337,12 +361,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
 
 
     private void exitMenu() {
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
-    }
-
-    @Override
-    protected void draw(SpriteBatch batch) {
-
+        stage.remove();
     }
 
 

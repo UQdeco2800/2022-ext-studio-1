@@ -87,8 +87,6 @@ public class GdxGame extends Game {
       case MAIN_GAME:
         theGameScreen = new MainGameScreen(this, stopGame);
         return theGameScreen;
-      case NPC_EVICTION_MENU:
-        return new NpcEvictionMenu(this);
       case ACHIEVEMENTS:
         return new AchievementsScreen(this);
       case SETTINGS:
@@ -105,7 +103,7 @@ public class GdxGame extends Game {
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, NPC_EVICTION_MENU, ACHIEVEMENTS, STORYLINE, SETTINGS, MAP, COUNTDOWN_SCREEN, LAB_1, LAB_2, LAB_3, LAB_4, LAB_5, LAB_HOUSE
+    MAIN_MENU, MAIN_GAME, ACHIEVEMENTS, STORYLINE, SETTINGS, MAP, COUNTDOWN_SCREEN, LAB_1, LAB_2, LAB_3, LAB_4, LAB_5, LAB_HOUSE
   }
 
   /**
