@@ -34,7 +34,7 @@ import java.util.Objects;
  * In this update, in order to match the game, this class is rebuilt passing Window() <br/>
  * Rather than UIComponent <br/>
  * Therefore, from now on , this class will be deprecated , all code and new update will be moved to <br/>
- * @see NpcEvictionMenuDisplayNew, Rebuilt by Team 7 Yingxin Liu <br/>
+ * @see NpcEvictionMenuDisplayNew Rebuilt by Team 7 Yingxin Liu
  * @see com.deco2800.game.screens.NpcEvictionMenu This class will also be deprecated at the same time.
  * As a memorial, these class will be retained, but will no longer be used <br/>
  * @author 2022-ext-studio-1-Team7
