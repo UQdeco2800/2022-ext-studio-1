@@ -550,6 +550,10 @@ public class InventoryDisplayComponent extends UIComponent {
             return "Mermaid Scale - This item can be used to increase the guilt rating of npcs!";
         }
 
+        if (i.getComponent(BatteryComponent.class) != null){
+            return "Battery - This item can be used to fix the switch (three of them required)!";
+        }
+
         return "Emtpy Inventory Slot!"; //TODO - not setup to listen for empty slots
 
     }
