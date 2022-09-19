@@ -21,9 +21,10 @@ public class MainGameScreenTest extends ScreenAdapter {
     private final GdxGame game;
     private final Renderer renderer;
 
-    private static final String[] MainGameScreenTest_Textures = {
-            "images/black.jpg", "images/map/LAB/whole lab blood.png", "images/black.jpg", "images/map/LAB/whole lab dark.png",
-            "images/eviction_menu/exitButton.png","images/eviction_menu/exitButton_selected.png"
+    private static final String[] mainGameScreenTestTextures = {
+            "images/black.jpg", "images/map/LAB/whole lab blood.png", "images/black.jpg",
+            "images/map/LAB/whole lab dark.png","images/eviction_menu/exitButton.png",
+            "images/eviction_menu/exitButton_selected.png", "images/npc_interaction/dialog_box.png"
     };
 
     public MainGameScreenTest(GdxGame game) {
@@ -64,14 +65,14 @@ public class MainGameScreenTest extends ScreenAdapter {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(MainGameScreenTest_Textures);
+        resourceService.loadTextures(mainGameScreenTestTextures);
         ServiceLocator.getResourceService().loadAll();
     }
 
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(MainGameScreenTest_Textures);
+        resourceService.unloadAssets(mainGameScreenTestTextures);
     }
 
     /**
