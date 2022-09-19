@@ -41,9 +41,12 @@ public class MainScreenTest_Display extends UIComponent {
         table = new Table();
         table.setFillParent(true);
         Image background = new Image(ServiceLocator.getResourceService().getAsset("images/black.jpg", Texture.class));
-        Image lab = new Image(ServiceLocator.getResourceService().getAsset("images/map/LAB/whole lab.png", Texture.class));
-        lab.setPosition(0, 0);
-        lab.setSize(stage.getWidth(), stage.getHeight());
+        Image darkLab = new Image(ServiceLocator.getResourceService().getAsset("images/map/LAB/whole lab dark.png", Texture.class));
+        Image bloodLab = new Image(ServiceLocator.getResourceService().getAsset("images/map/LAB/whole lab blood.png", Texture.class));
+        darkLab.setPosition(0, 0);
+        darkLab.setSize(stage.getWidth(), stage.getHeight());
+        bloodLab.setPosition(0, 0);
+        bloodLab.setSize(stage.getWidth(), stage.getHeight());
 
         /**TextButton exitBtn = new TextButton("Exit", skin);
 
@@ -74,52 +77,54 @@ public class MainScreenTest_Display extends UIComponent {
         stage.addActor(table);
         stage.addActor(exitBtn);
 
-        String playerName = "test";
-        TextField text1 = new TextField("Dr." + playerName + "! Wake up!", skin);
+        String playerName = "Player";
+        TextField text1 = new TextField("???: Dr." + playerName + "! Wake up!", skin);
         text1.setDisabled(true);
-        text1.setPosition((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.5));
-        text1.setSize((float) (stage.getWidth() * 0.11), (float) (stage.getHeight() * 0.05));
+        text1.setPosition((float) (stage.getWidth() * 0.41), (float) (stage.getHeight() * 0.5));
+        text1.setSize((float) (stage.getWidth() * 0.18), (float) (stage.getHeight() * 0.05));
         stage.addActor(text1);
 
-        TextArea text2 = new TextArea("Ugh...What happended...Why the power is off?\n" +
-                "Zoe, is that you? Are you okay? It's too dark now, I have to restore the power.", skin);
+        TextArea text2 = new TextArea(playerName + ": Ugh...What happened...Why the power is off?\n" +
+                "Zoe, is that you? Are you okay?\n" +
+                "It's too dark now, I have to restore the power.", skin);
         text2.setDisabled(true);
         text2.setPosition(-1000000, -1000000);
-        text2.setSize((float) (stage.getWidth() * 0.30), (float) (stage.getHeight() * 0.05));
+        text2.setSize((float) (stage.getWidth() * 0.34), (float) (stage.getHeight() * 0.08));
         stage.addActor(text2);
 
-        TextField text3 = new TextField("Go to the electric switch.", skin);
+        TextField text3 = new TextField("Task: Go to the electric switch.", skin);
         text3.setDisabled(true);
         text3.setPosition(-1000000, -1000000);
-        text3.setSize((float) (stage.getWidth() * 0.18), (float) (stage.getHeight() * 0.05));
+        text3.setSize((float) (stage.getWidth() * 0.22), (float) (stage.getHeight() * 0.05));
         stage.addActor(text3);
 
-        TextField text4 = new TextField("You are at the electric switch.", skin);
+        TextField text4 = new TextField("Tips: You are at the electric switch.", skin);
         text4.setDisabled(true);
         text4.setPosition(-1000000, -1000000);
-        text4.setSize((float) (stage.getWidth() * 0.25), (float) (stage.getHeight() * 0.05));
+        text4.setSize((float) (stage.getWidth() * 0.24), (float) (stage.getHeight() * 0.05));
         stage.addActor(text4);
 
-        TextField text5 = new TextField("This does not look right...but I have to fix it first anyway.", skin);
+        TextField text5 = new TextField(playerName + ": This does not look right...but I have to fix it first anyway.", skin);
         text5.setDisabled(true);
         text5.setPosition(-1000000, -1000000);
-        text5.setSize((float) (stage.getWidth() * 0.40), (float) (stage.getHeight() * 0.05));
+        text5.setSize((float) (stage.getWidth() * 0.42), (float) (stage.getHeight() * 0.05));
         stage.addActor(text5);
 
-        TextField text6 = new TextField("Collect 3 batteries to fix it.", skin);
+        TextField text6 = new TextField("Task: Collect 3 batteries to fix it.", skin);
         text6.setDisabled(true);
         text6.setPosition(-1000000, -1000000);
-        text6.setSize((float) (stage.getWidth() * 0.25), (float) (stage.getHeight() * 0.05));
+        text6.setSize((float) (stage.getWidth() * 0.24), (float) (stage.getHeight() * 0.05));
         stage.addActor(text6);
 
-        TextArea text7 = new TextArea("No! It's Princess Nereus! She can't be dead! Princess Nereus is the guardian of Atlantics. " +
+        TextArea text7 = new TextArea("Zoe: No! It's Princess Nereus! She can't be dead!\n" +
+                "Princess Nereus is the guardian of Atlantics.\n" +
                 "If she dies, it means that Atlantics will be fallen soon!", skin);
         text7.setDisabled(true);
         text7.setPosition(-1000000, -1000000);
         text7.setSize((float) (stage.getWidth() * 0.40), (float) (stage.getHeight() * 0.08));
         stage.addActor(text7);
 
-        TextField text8 = new TextField("She hurts so bad! We have to help her!", skin);
+        TextField text8 = new TextField(playerName + ": She hurts so bad! We have to help her!", skin);
         text8.setDisabled(true);
         text8.setPosition(-1000000, -1000000);
         text8.setSize((float) (stage.getWidth() * 0.30), (float) (stage.getHeight() * 0.05));
@@ -130,16 +135,16 @@ public class MainScreenTest_Display extends UIComponent {
                 + "CLUE 3: SHATTERED SCALE FROM NEREUS", skin);
         text9.setDisabled(true);
         text9.setPosition(-1000000, -1000000);
-        text9.setSize((float) (stage.getWidth() * 0.50), (float) (stage.getHeight() * 0.10));
+        text9.setSize((float) (stage.getWidth() * 0.60), (float) (stage.getHeight() * 0.08));
         stage.addActor(text9);
 
-        TextField text10 = new TextField("No...we are already too late.", skin);
+        TextField text10 = new TextField("Zoe: No...we are already too late.", skin);
         text10.setDisabled(true);
         text10.setPosition(-1000000, -1000000);
-        text10.setSize((float) (stage.getWidth() * 0.20), (float) (stage.getHeight() * 0.05));
+        text10.setSize((float) (stage.getWidth() * 0.24), (float) (stage.getHeight() * 0.05));
         stage.addActor(text10);
 
-        TextField text11 = new TextField("PLAYER: Why someone wants to kill Princess Nereus? What should we do?", skin);
+        TextField text11 = new TextField(playerName + ": Why someone wants to kill Princess Nereus? What should we do?", skin);
         text11.setDisabled(true);
         text11.setPosition(-1000000, -1000000);
         text11.setSize((float) (stage.getWidth() * 0.50), (float) (stage.getHeight() * 0.05));
@@ -154,10 +159,10 @@ public class MainScreenTest_Display extends UIComponent {
         text12.setSize((float) (stage.getWidth() * 0.50), (float) (stage.getHeight() * 0.10));
         stage.addActor(text12);
 
-        TextField text13 = new TextField("PLAYER: You are right. Let's move now. We only have 3 days.", skin);
+        TextField text13 = new TextField(playerName + ": You are right. Let's move now. We only have 3 days.", skin);
         text13.setDisabled(true);
         text13.setPosition(-1000000, -1000000);
-        text13.setSize((float) (stage.getWidth() * 0.40), (float) (stage.getHeight() * 0.05));
+        text13.setSize((float) (stage.getWidth() * 0.36), (float) (stage.getHeight() * 0.05));
         stage.addActor(text13);
 
         table.addListener(
@@ -167,34 +172,34 @@ public class MainScreenTest_Display extends UIComponent {
                         super.clicked(event, x, y);
                         switch (stepNum) {
                             case 0:
-                                table.addActor(lab);//show the lab
+                                table.addActor(darkLab);//show the lab
                                 text1.setPosition(-100000, -100000);
-                                text2.setPosition((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.5));
+                                text2.setPosition((float) (stage.getWidth() * 0.33), (float) (stage.getHeight() * 0.5));
                                 break;
                             case 1:
                                 text2.setPosition(-100000, -100000);
-                                text3.setPosition((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.5));
+                                text3.setPosition((float) (stage.getWidth() * 0.39), (float) (stage.getHeight() * 0.5));
                                 break;
                             case 2:
                                 text3.setPosition(-100000, -100000);
-                                text4.setPosition((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.5));
+                                text4.setPosition((float) (stage.getWidth() * 0.38), (float) (stage.getHeight() * 0.5));
                                 break;
                             case 3:
                                 text4.setPosition(-100000, -100000);
-                                text5.setPosition((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.5));
+                                text5.setPosition((float) (stage.getWidth() * 0.29), (float) (stage.getHeight() * 0.5));
                                 break;
                             case 4:
                                 text5.setPosition(-100000, -100000);
-                                text6.setPosition((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.5));
+                                text6.setPosition((float) (stage.getWidth() * 0.38), (float) (stage.getHeight() * 0.5));
                                 break;
                             case 5:
-                                //show the lab and blooding.
+                                table.addActor(bloodLab);
                                 text6.setPosition(-100000, -100000);
-                                text7.setPosition((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.5));
+                                text7.setPosition((float) (stage.getWidth() * 0.3), (float) (stage.getHeight() * 0.5));
                                 break;
                             case 6:
                                 text7.setPosition(-100000, -100000);
-                                text8.setPosition((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.5));
+                                text8.setPosition((float) (stage.getWidth() * 0.35), (float) (stage.getHeight() * 0.5));
                                 break;
                             case 7:
                                 text8.setPosition(-100000, -100000);
@@ -202,7 +207,7 @@ public class MainScreenTest_Display extends UIComponent {
                                 break;
                             case 8:
                                 text9.setPosition(-100000, -100000);
-                                text10.setPosition((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.5));
+                                text10.setPosition((float) (stage.getWidth() * 0.38), (float) (stage.getHeight() * 0.5));
                                 break;
                             case 9:
                                 text10.setPosition(-100000, -100000);
@@ -214,11 +219,12 @@ public class MainScreenTest_Display extends UIComponent {
                                 break;
                             case 11:
                                 text12.setPosition(-100000, -100000);
-                                text13.setPosition((float) (stage.getWidth() * 0.4), (float) (stage.getHeight() * 0.5));
+                                text13.setPosition((float) (stage.getWidth() * 0.32), (float) (stage.getHeight() * 0.5));
                                 break;
                             case 12:
                                 text13.setPosition(-100000, -100000);
-                                lab.setPosition(-100000, -100000);
+                                darkLab.setPosition(-100000, -100000);
+                                bloodLab.setPosition(-100000, -100000);
                                 break;
                             default:
                                 break;

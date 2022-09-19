@@ -22,7 +22,7 @@ public class MainGameScreenTest extends ScreenAdapter {
     private final Renderer renderer;
 
     private static final String[] MainGameScreenTest_Textures = {
-            "images/black.jpg", "images/map/LAB/whole lab.png",
+            "images/black.jpg", "images/map/LAB/whole lab blood.png", "images/black.jpg", "images/map/LAB/whole lab dark.png",
             "images/eviction_menu/exitButton.png","images/eviction_menu/exitButton_selected.png"
     };
 
