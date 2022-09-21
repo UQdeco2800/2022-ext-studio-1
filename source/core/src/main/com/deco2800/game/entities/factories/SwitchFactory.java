@@ -2,10 +2,7 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.deco2800.game.components.achievements.AchievementsUpdater;
-import com.deco2800.game.components.player.AddToInventoryComponent;
-import com.deco2800.game.components.player.BatteryComponent;
-import com.deco2800.game.components.player.ClueItemComponent;
-import com.deco2800.game.components.player.ConsumeableItemComponent;
+import com.deco2800.game.components.player.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -22,7 +19,8 @@ public class SwitchFactory {
                 new Entity()
                         .addComponent(new TextureRenderComponent("images/switch/Electric Switch Broken.png"))
                         .addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                        .addComponent(new SwitchComponent());
 
         switchItem.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         switchItem.getComponent(TextureRenderComponent.class).scaleEntity();
