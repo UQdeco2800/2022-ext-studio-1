@@ -24,7 +24,8 @@ public class MainGameScreenTest extends ScreenAdapter {
     private static final String[] mainGameScreenTestTextures = {
             "images/black.jpg", "images/map/LAB/whole lab blood.png", "images/black.jpg",
             "images/map/LAB/whole lab dark.png","images/eviction_menu/exitButton.png",
-            "images/eviction_menu/exitButton_selected.png", "images/npc_interaction/dialog_box.png"
+            "images/eviction_menu/exitButton_selected.png", "images/npc_interaction/dialog_box.png",
+            "images/map/LAB/whole lab.png"
     };
 
     public MainGameScreenTest(GdxGame game) {
