@@ -28,6 +28,8 @@ public class MainScreenTest_Display extends UIComponent {
     private Image dialogBox;
     private Label dialog;
 
+    private ClickListener clickListener;
+
     public MainScreenTest_Display(GdxGame game) {
         super();
         this.game = game;
@@ -306,20 +308,19 @@ public class MainScreenTest_Display extends UIComponent {
             dialog.setWrap(true);
             dialog.setWidth((float) (stage.getWidth() * 0.8));
             stage.addActor(dialog);
-            table.addListener(
-                    new ClickListener() {
-                        @Override
-                        public void clicked(InputEvent event, float x, float y) {
-                            super.clicked(event, x, y);
-                            switch (chapterNum) {
-                                case 1 -> chapter1Listener(it, dialog);
-                                case 2 -> chapter2Listener(it, dialog);
-                                default -> {
-                                }
-                            }
+            clickListener = new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    super.clicked(event, x, y);
+                    switch (chapterNum) {
+                        case 1 -> chapter1Listener(it, dialog);
+                        case 2 -> chapter2Listener(it, dialog);
+                        default -> {
                         }
                     }
-            );
+                }
+            };
+            table.addListener(clickListener);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -348,6 +349,7 @@ public class MainScreenTest_Display extends UIComponent {
         } else {// chapter 1 ends
             bloodLab.remove();
             dialog.remove();
+            table.removeListener(clickListener);
             setDialog(2);
         }
     }
