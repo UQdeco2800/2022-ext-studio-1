@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.services.ResourceService;
@@ -13,7 +14,10 @@ import org.slf4j.Logger;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+
+import java.security.Provider;
 
 
 public class PlayerProfileDisplay extends UIComponent {
@@ -23,7 +27,7 @@ public class PlayerProfileDisplay extends UIComponent {
 
     Table root;
 
-    TextButton exitButton;
+    Button exitButton;
 
     @Override
     public void create() {
@@ -39,7 +43,11 @@ public class PlayerProfileDisplay extends UIComponent {
                 )
         );
 
-        exitButton = new TextButton("Exit", skin);
+        TextureRegionDrawable exitBtnStyle = new TextureRegionDrawable(ServiceLocator.getResourceService().getAsset(
+                "images/eviction_menu/exitButton.png", Texture.class
+        ));
+
+        exitButton = new Button(exitBtnStyle);
 
         exitButton.addListener(
                 new ChangeListener() {
@@ -51,7 +59,7 @@ public class PlayerProfileDisplay extends UIComponent {
         );
 
         exitButton.setPosition((float) (this.stage.getWidth() * 0.45), (float) (this.stage.getHeight() * 0.1));
-
+        exitButton.setSize((float) (this.stage.getWidth() * ((1493.33 - 1436.67) / 1600)), (float) (this.stage.getHeight() * (53.33 / 900)));
 
         root = new Table();
         root.setFillParent(true);
