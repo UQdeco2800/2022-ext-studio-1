@@ -6,6 +6,7 @@ import com.deco2800.game.components.Component;
 import com.deco2800.game.components.countDownClock.countdownDisplay;
 import com.deco2800.game.components.player.InventoryComponent;
 import com.deco2800.game.components.player.InventoryDisplayComponent;
+import com.deco2800.game.components.player.PlayerProfileDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -29,8 +30,8 @@ public class MainGameActions extends Component {
   public void create() {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("InventoryScreen", this::onInventoryScreen);
+    entity.getEvents().addListener("playerProfile", this::onPlayerProfile);
 //    entity.getEvents().addListener("NpcMenu", this::onNpcMenu); [Deprecated]
-//    entity.getEvents().addListener("CountdownScreen", this::onCountdownScreen);
   }
 
 //  /**
@@ -71,9 +72,9 @@ public class MainGameActions extends Component {
 
   }
 
-  private void onCountdownScreen() {
-    logger.info("Opening countdown screen");
-    game.setScreen(GdxGame.ScreenType.COUNTDOWN_SCREEN);
+  private void onPlayerProfile() {
+    logger.info("Opening player profile");
+    new PlayerProfileDisplay().create();
   }
 
 }
