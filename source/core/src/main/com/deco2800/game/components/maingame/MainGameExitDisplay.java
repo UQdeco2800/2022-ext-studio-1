@@ -56,17 +56,22 @@ public class MainGameExitDisplay extends UIComponent {
     TextButton inventoryButton = new TextButton("Inventory", skin);
 
     /**
-     * Button to go to countdown scree
+     * Button to display player profile
      */
-//    Button.ButtonStyle styleCountdown = new Button.ButtonStyle();
-//    styleCountdown.over = new TextureRegionDrawable(
-//            ServiceLocator.getResourceService()
-//                    .getAsset("images/countdown_clock/clock.png", Texture.class)
+
+    TextButton profileButton = new TextButton("Player Profile", skin);
+
+//    profileButton.addListener(
+//            new ChangeListener() {
+//              @Override
+//              public void changed(ChangeEvent event, Actor actor) {
+//
+//              }
+//            }
 //    );
 
-//    Button countdownBtn = new TextButton("Countdown", skin);
     /**
-     * countdown button code block ends here.
+     * player profile button code block ends here.
      */
 
     // Triggers an event when the button is pressed.
@@ -100,18 +105,6 @@ public class MainGameExitDisplay extends UIComponent {
               }
             });
 
-    /**
-     * Event listener for countdown button
-     */
-//    countdownBtn.addListener(
-//            new ChangeListener() {
-//              @Override
-//              public void changed(ChangeEvent event, Actor actor) {
-//                logger.debug("countdown button clicked");
-//                entity.getEvents().trigger("CountdownScreen");
-//              }
-//            }
-//    );
 
 
 
@@ -122,10 +115,8 @@ public class MainGameExitDisplay extends UIComponent {
     table.row();
     table.add(inventoryButton).padTop(10f).padRight(10f);
     table.row();
-    // Add countdown button to table.
-//    table.add(countdownBtn).padTop(20f).padRight(10f);
-//    table.row();
-    //
+    table.add(profileButton).padTop(20f).padRight(10f);
+    table.row();
 
     stage.addActor(table);
   }
