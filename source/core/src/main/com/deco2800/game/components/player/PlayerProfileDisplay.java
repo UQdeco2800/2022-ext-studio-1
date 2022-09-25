@@ -50,7 +50,7 @@ public class PlayerProfileDisplay extends UIComponent {
                 }
         );
 
-        exitButton.setPosition((float) (this.stage.getWidth() * 0.5), (float) (this.stage.getHeight() * 0.1));
+        exitButton.setPosition((float) (this.stage.getWidth() * 0.45), (float) (this.stage.getHeight() * 0.1));
 
 
         root = new Table();
