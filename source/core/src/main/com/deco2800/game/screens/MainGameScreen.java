@@ -55,7 +55,12 @@ public class MainGameScreen extends ScreenAdapter {
           IMAGES_PATH + "npcDoris.png", IMAGES_PATH + "npcDoris_hover.png",
           IMAGES_PATH + "npcZoe.png", IMAGES_PATH + "npcZoe_hover.png",
           IMAGES_PATH + "npcAres.png", IMAGES_PATH + "npcAres_hover.png",
-          IMAGES_PATH + "npcOrpheus.png", IMAGES_PATH + "npcOrpheus_hover.png"};
+          IMAGES_PATH + "npcOrpheus.png", IMAGES_PATH + "npcOrpheus_hover.png",
+          IMAGES_PATH + "rightBox.png",
+          IMAGES_PATH + "rightBtn.png", IMAGES_PATH + "rightBtn_H.png",
+          IMAGES_PATH + "wrongBox1.png", IMAGES_PATH + "wrongBox2.png",
+          IMAGES_PATH + "chanceBtn.png", IMAGES_PATH + "chanceBtn_H.png",
+          IMAGES_PATH + "chanceBtn2.png", IMAGES_PATH + "chanceBtn2_H.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
   private final GdxGame game;

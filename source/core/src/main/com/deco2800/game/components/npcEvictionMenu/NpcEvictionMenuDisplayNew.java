@@ -61,6 +61,8 @@ public class NpcEvictionMenuDisplayNew {
     private final NPCClueLibrary library = NPCClueLibrary.getInstance();
     private final NpcEvictionMenuDisplayHelper helper = new NpcEvictionMenuDisplayHelper();
 
+    private Integer errorNum;
+
     /**
      * Implement NpcEvictionMenu in to a Window(), use creatEvictionMenu() to get this Window()
      * @param logger logger from Screen
@@ -75,6 +77,7 @@ public class NpcEvictionMenuDisplayNew {
         this.resourceService = resourceService;
         bgWidth = width;
         bgHeight = height;
+        errorNum = 0;
 
         // creat the Npc eviction menu window with transparent background
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
@@ -140,7 +143,7 @@ public class NpcEvictionMenuDisplayNew {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
                     logger.debug("button" + index + "clicked");
-                    createConfirmDialog("button" + index);
+                    createConfirmDialog(cardNames[index]);
                 }
             });
             stage.addActor(buttons[i]);
@@ -290,8 +293,23 @@ public class NpcEvictionMenuDisplayNew {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("yes_button from " + button_name + " clicked");
-                // No action yet
                 dialog.remove();
+                // different name will lead to different result
+                if (Objects.equals(button_name, cardNames[0])){ // select npc correctly
+                    createResultDialog(button_name,NpcResultDialogType.RIGHT_BOX);
+                } else {
+                    if (errorNum == 0){
+                        errorNum++;
+                        createResultDialog(button_name,NpcResultDialogType.WRONG_BOX1);
+                    } else if (errorNum == 1) {
+                        errorNum++;
+                        createResultDialog(button_name,NpcResultDialogType.WRONG_BOX2);
+                    } else {
+                        errorNum = 0;
+                        // game over
+                    }
+
+                }
             }
         });
         dialog.addActor(cancelButton);
@@ -358,7 +376,77 @@ public class NpcEvictionMenuDisplayNew {
         stage.addActor(dialog);
     }
 
+    /**
+     *
+     */
+    protected enum NpcResultDialogType {
+        RIGHT_BOX, WRONG_BOX1, WRONG_BOX2
+    }
+    /**
+     * Display a result dialog on the stage, the style is based on Team7 prototype <br/>
+     * All scales are calculated according to the prototype from team 7 only <br/>
+     * Button Ok    : confirm the action from selected button <br/>
+     *
+     * @param button_name The name of the button that calls this function
+     * @param type The type of dialog will be created
+     * @author Team7 Yingxin Liu
+     */
+    private void createResultDialog(String button_name, NpcResultDialogType type) {
+        logger.debug("create Result dialog from name: " + button_name);
+        // set the style of dialog include font color of title; background; size; position
+        String backgroundPath, buttonPathDefault, buttonPathHover;
 
+        if (type == NpcResultDialogType.RIGHT_BOX) {
+            backgroundPath = IMAGES_PATH + "rightBox.png";
+            buttonPathDefault = IMAGES_PATH + "rightBtn.png";
+            buttonPathHover = IMAGES_PATH + "rightBtn_H.png";
+        } else if (type == NpcResultDialogType.WRONG_BOX1) {
+            backgroundPath = IMAGES_PATH + "wrongBox1.png";
+            buttonPathDefault = IMAGES_PATH + "chanceBtn.png";
+            buttonPathHover = IMAGES_PATH + "chanceBtn_H.png";
+        } else {
+            backgroundPath = IMAGES_PATH + "wrongBox2.png";
+            buttonPathDefault = IMAGES_PATH + "chanceBtn2.png";
+            buttonPathHover = IMAGES_PATH + "chanceBtn2_H.png";
+        }
+        TextureRegionDrawable styleImage = new TextureRegionDrawable(
+                resourceService.getAsset(backgroundPath, Texture.class));
+
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
+        Window dialog = new Window("", windowStyle);
+        dialog.setModal(true);    // The dialog is always at the front
+        Button okButton = createButton(buttonPathDefault, buttonPathHover);
+
+        if (type == NpcResultDialogType.RIGHT_BOX) {
+            float dialog_size_x = (float) (bgWidth * (683.67 / 1600));
+            float dialog_size_y = (float) (bgHeight * (416.24 / 900));
+            dialog.setSize(dialog_size_x, dialog_size_y);
+            dialog.setPosition((float) (bgWidth * (433.33 / 1600)), (float) (bgHeight * (1 - 663.33 / 900)));
+
+            okButton.setSize((float) (dialog_size_x * (116.67/683.67)), (float) (dialog_size_y * (53.33/416.24)));
+            okButton.setPosition((float) (dialog.getWidth() * ((764.04-433.33)/683.67)),
+                    (float) (dialog.getHeight() * ((663.33 - 635.65) / 416.24)));
+        } else {
+            float dialog_size_x = (float) (bgWidth * (678.67 / 1600));
+            float dialog_size_y = (float) (bgHeight * (382.38 / 900));
+            dialog.setSize(dialog_size_x, dialog_size_y);
+            dialog.setPosition((float) (bgWidth * (438.33 / 1600)), (float) (bgHeight * (1 - 663.33 / 900)));
+
+            okButton.setSize((float) (dialog_size_x * (116.67/678.67)), (float) (dialog_size_y * (53.33/382.38)));
+            okButton.setPosition((float) (dialog.getWidth() * ((748.04-438.33)/678.67)),
+                    (float) (dialog.getHeight() * ((663.33 - 635.65) / 382.38)));
+        }
+        okButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("yes_button from " + button_name + " clicked");
+                // No action yet
+                dialog.remove();
+            }
+        });
+        dialog.addActor(okButton);
+        stage.addActor(dialog);
+    }
 
     private void exitMenu() {
         stage.remove();
