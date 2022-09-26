@@ -12,11 +12,11 @@ class NpcEvictionMenuDisplayHelperTest {
         NpcEvictionMenuDisplayHelper helper = new NpcEvictionMenuDisplayHelper();
         NPCClueLibrary library = NPCClueLibrary.getInstance();
         //when npc card has no clues it will display : This npc card xxx has no clue yet.
-        assertEquals("This npc card xxx has no clue yet.",helper.creatLabelContext("xxx",library));
+        assertEquals("This npc card xxx has no clue yet.",helper.createLabelContext("xxx",library));
         //when npc name is "Metis"
         assertEquals("A man who was close to her.\n" +
                 "Has deep voice.\n" +
-                "A tall, thin person.",helper.creatLabelContext("Metis",library));
+                "A tall, thin person.",helper.createLabelContext("Metis",library));
     }
 
 }

@@ -366,7 +366,7 @@ public class NpcEvictionMenuDisplayNew {
         });
 
         //  add clues of npc
-        Label message = new Label(helper.creatLabelContext(card_name, library), skin, "large");
+        Label message = new Label(helper.createLabelContext(card_name, library), skin, "large");
         message.setWrap(true);
         message.setAlignment(Align.left);
         Table table = new Table();
@@ -392,6 +392,7 @@ public class NpcEvictionMenuDisplayNew {
      * @author Team7 Yingxin Liu
      */
     private void createResultDialog(String button_name, NpcResultDialogType type) {
+        float dialog_size_x,dialog_size_y;
         logger.debug("create Result dialog from name: " + button_name);
         // set the style of dialog include font color of title; background; size; position
         String backgroundPath, buttonPathDefault, buttonPathHover;
@@ -418,8 +419,8 @@ public class NpcEvictionMenuDisplayNew {
         Button okButton = createButton(buttonPathDefault, buttonPathHover);
 
         if (type == NpcResultDialogType.RIGHT_BOX) {
-            float dialog_size_x = (float) (bgWidth * (683.67 / 1600));
-            float dialog_size_y = (float) (bgHeight * (416.24 / 900));
+            dialog_size_x = (float) (bgWidth * (683.67 / 1600));
+            dialog_size_y = (float) (bgHeight * (416.24 / 900));
             dialog.setSize(dialog_size_x, dialog_size_y);
             dialog.setPosition((float) (bgWidth * (433.33 / 1600)), (float) (bgHeight * (1 - 663.33 / 900)));
 
@@ -427,8 +428,8 @@ public class NpcEvictionMenuDisplayNew {
             okButton.setPosition((float) (dialog.getWidth() * ((764.04-433.33)/683.67)),
                     (float) (dialog.getHeight() * ((663.33 - 635.65) / 416.24)));
         } else {
-            float dialog_size_x = (float) (bgWidth * (678.67 / 1600));
-            float dialog_size_y = (float) (bgHeight * (382.38 / 900));
+            dialog_size_x = (float) (bgWidth * (678.67 / 1600));
+            dialog_size_y = (float) (bgHeight * (382.38 / 900));
             dialog.setSize(dialog_size_x, dialog_size_y);
             dialog.setPosition((float) (bgWidth * (438.33 / 1600)), (float) (bgHeight * (1 - 663.33 / 900)));
 
@@ -440,11 +441,24 @@ public class NpcEvictionMenuDisplayNew {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("yes_button from " + button_name + " clicked");
-                // No action yet
+                //when you select ok button
                 dialog.remove();
             }
         });
         dialog.addActor(okButton);
+        Label message_interjection =new Label(helper.createTraitorMessageInterjection(type),skin,"large");
+        message_interjection.setAlignment(Align.center);
+        Label message = new Label(helper.createTraitorMessageForSaveAtlantis(button_name,type), skin, "large");
+        message.setWrap(true);
+        message.setAlignment(Align.left);
+        Table table = new Table();
+        table.add(message_interjection).width(dialog_size_x * 3 / 5);
+        table.row();
+        table.add(message).width(dialog_size_x * 3 / 5);
+        table.padLeft(dialog_size_x/7).padTop(dialog_size_y/6);
+
+        //table.debug();
+        dialog.add(table);
         stage.addActor(dialog);
     }
 
