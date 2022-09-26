@@ -427,6 +427,17 @@ public class NpcEvictionMenuDisplayNew {
             okButton.setSize((float) (dialog_size_x * (116.67/683.67)), (float) (dialog_size_y * (53.33/416.24)));
             okButton.setPosition((float) (dialog.getWidth() * ((764.04-433.33)/683.67)),
                     (float) (dialog.getHeight() * ((663.33 - 635.65) / 416.24)));
+            Label message_interjection =new Label(helper.createTraitorMessageInterjection(type),skin,"large");
+            message_interjection.setAlignment(Align.center);
+            Label message = new Label(helper.createTraitorMessageForSaveAtlantis(button_name,type), skin, "large");
+            message.setWrap(true);
+            message.setAlignment(Align.left);
+            Table table = new Table();
+            table.add(message_interjection).width(dialog_size_x * 3 / 5);
+            table.row();
+            table.add(message).width(dialog_size_x * 3 / 5);
+            table.padLeft(dialog_size_x/6).padTop(dialog_size_y/6);
+            dialog.add(table);
         } else {
             dialog_size_x = (float) (bgWidth * (678.67 / 1600));
             dialog_size_y = (float) (bgHeight * (382.38 / 900));
@@ -436,6 +447,18 @@ public class NpcEvictionMenuDisplayNew {
             okButton.setSize((float) (dialog_size_x * (116.67/678.67)), (float) (dialog_size_y * (53.33/382.38)));
             okButton.setPosition((float) (dialog.getWidth() * ((748.04-438.33)/678.67)),
                     (float) (dialog.getHeight() * ((663.33 - 635.65) / 382.38)));
+            Label message_interjection =new Label(helper.createTraitorMessageInterjection(type),skin,"large");
+            message_interjection.setAlignment(Align.center);
+            Label message = new Label(helper.createTraitorMessageForSaveAtlantis(button_name,type), skin, "large");
+            message.setWrap(true);
+            message.setAlignment(Align.left);
+            Table table = new Table();
+            table.add(message_interjection).width((float) (dialog_size_x * (400/678.67)));
+            table.row();
+            table.add(message).width((float) (dialog_size_x * (400/678.67)));
+            table.padLeft((float) (dialog_size_x * (55/678.67)));
+            dialog.add(table);
+
         }
         okButton.addListener(new ChangeListener() {
             @Override
@@ -446,19 +469,8 @@ public class NpcEvictionMenuDisplayNew {
             }
         });
         dialog.addActor(okButton);
-        Label message_interjection =new Label(helper.createTraitorMessageInterjection(type),skin,"large");
-        message_interjection.setAlignment(Align.center);
-        Label message = new Label(helper.createTraitorMessageForSaveAtlantis(button_name,type), skin, "large");
-        message.setWrap(true);
-        message.setAlignment(Align.left);
-        Table table = new Table();
-        table.add(message_interjection).width(dialog_size_x * 3 / 5);
-        table.row();
-        table.add(message).width(dialog_size_x * 3 / 5);
-        table.padLeft(dialog_size_x/7).padTop(dialog_size_y/6);
 
-        //table.debug();
-        dialog.add(table);
+
         stage.addActor(dialog);
     }
 
