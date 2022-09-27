@@ -18,5 +18,28 @@ class NpcEvictionMenuDisplayHelperTest {
                 "Has deep voice.\n" +
                 "A tall, thin person.",helper.createLabelContext("Metis",library));
     }
+    @Test
+    void testCreateInterjection(){
+        NpcEvictionMenuDisplayHelper helper = new NpcEvictionMenuDisplayHelper();
+        assertEquals("That's great!!!\n",helper.createTraitorMessageInterjection(NpcEvictionMenuDisplayNew.NpcResultDialogType.RIGHT_BOX));
+        assertEquals("Unfortunately\n",helper.createTraitorMessageInterjection(NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX1));
+        assertEquals("Oops\n",helper.createTraitorMessageInterjection(NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX2));
+    }
+    @Test
+    void testCreateTraitorMessage(){
+        NpcEvictionMenuDisplayHelper helper = new NpcEvictionMenuDisplayHelper();
+        assertEquals("You found the traitor xxx who destroyed Atlantis.\n" +
+                "Maybe xxx can give you some useful information:).\n" +
+                "Go and expel him and try to save Atlantis!\n",helper.createTraitorMessageForSaveAtlantis("xxx",NpcEvictionMenuDisplayNew.NpcResultDialogType.RIGHT_BOX));
+        assertEquals("xxx does not seem to be the traitor :(\n" +
+                "Don't worry, you still have two chances to try.\n" +
+                "Combine the clues and try again!\n" +
+                "\n",helper.createTraitorMessageForSaveAtlantis("xxx",NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX1));
+        assertEquals("xxx does not seem to be a traitor either :(\n" +
+                "Be careful, you only have one chance left to try.\n" +
+                "Go and see whether there are any missing clues!\n" +
+                "\n",helper.createTraitorMessageForSaveAtlantis("xxx",NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX2));
+
+    }
 
 }
