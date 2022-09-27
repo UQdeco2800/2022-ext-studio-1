@@ -453,12 +453,10 @@ public class NpcEvictionMenuDisplayNew {
             message.setWrap(true);
             message.setAlignment(Align.left);
             Table table = new Table();
-            table.add(message_interjection).width((float) (dialog_size_x * (400/678.67)));
+            table.add(message_interjection).prefWidth((float) (dialog_size_x * (400/678.67)));
             table.row();
-            table.add(message).width((float) (dialog_size_x * (400/678.67)));
-            table.setHeight((float) (dialog_size_y * (295/382.38)));
+            table.add(message).prefWidth((float) (dialog_size_x * (400/678.67)));
             table.padLeft((float) (dialog_size_x * (55/678.67)));
-            table.debug();
             dialog.add(table);
 
         }
