@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -18,9 +19,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.npc.NPCClueLibrary;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +41,7 @@ import java.util.Objects;
  *
  * @author 2022-ext-studio-1-Team7, rebuilt by Yingxin Liu 15/09/2022
  */
-public class NpcEvictionMenuDisplayNew {
+public class NpcEvictionMenuDisplayNew extends UIComponent {
     private Logger logger;
 
     private static final int NUMBER_OF_NPC = 8;
@@ -59,9 +62,11 @@ public class NpcEvictionMenuDisplayNew {
     private static final Skin skin =
             new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
     private final NPCClueLibrary library = NPCClueLibrary.getInstance();
+
     private final NpcEvictionMenuDisplayHelper helper = new NpcEvictionMenuDisplayHelper();
 
     private Integer errorNum;
+
 
     /**
      * Implement NpcEvictionMenu in to a Window(), use creatEvictionMenu() to get this Window()
@@ -75,9 +80,11 @@ public class NpcEvictionMenuDisplayNew {
         this.logger = logger;
         logger.debug("initialize NpcEvictionMenu Window");
         this.resourceService = resourceService;
+
         bgWidth = width;
         bgHeight = height;
         errorNum = 0;
+
 
         // creat the Npc eviction menu window with transparent background
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
@@ -259,6 +266,7 @@ public class NpcEvictionMenuDisplayNew {
      * @author Team7 Yingxin Liu
      */
     private void createConfirmDialog(String button_name) {
+
         logger.debug("create confirm dialog from name: " + button_name);
         // set the style of dialog include font color of title; background; size; position
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
@@ -295,18 +303,29 @@ public class NpcEvictionMenuDisplayNew {
                 logger.debug("yes_button from " + button_name + " clicked");
                 dialog.remove();
                 // different name will lead to different result
-                if (Objects.equals(button_name, cardNames[0])){ // select npc correctly
+                // traitor is Ares.So here we check it.
+                if (Objects.equals(button_name, "Ares")){ // select npc correctly
                     createResultDialog(button_name,NpcResultDialogType.RIGHT_BOX);
                 } else {
+
                     if (errorNum == 0){
+                        //decrease blood 15%
+                        int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+                        entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.85));
+
+
                         errorNum++;
                         createResultDialog(button_name,NpcResultDialogType.WRONG_BOX1);
                     } else if (errorNum == 1) {
+                        //decrease blood 15%
+                        int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+                        entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.85));
                         errorNum++;
                         createResultDialog(button_name,NpcResultDialogType.WRONG_BOX2);
                     } else {
                         errorNum = 0;
                         // game over
+                        //call ending function from group 3
                     }
 
                 }
@@ -376,6 +395,11 @@ public class NpcEvictionMenuDisplayNew {
         stage.addActor(dialog);
     }
 
+    @Override
+    protected void draw(SpriteBatch batch) {
+
+    }
+
     /**
      *
      */
@@ -383,13 +407,13 @@ public class NpcEvictionMenuDisplayNew {
         RIGHT_BOX, WRONG_BOX1, WRONG_BOX2
     }
     /**
-     * Display a result dialog on the stage, the style is based on Team7 prototype <br/>
+     * Display a result dialog and traitor message on the stage, the style is based on Team7 prototype <br/>
      * All scales are calculated according to the prototype from team 7 only <br/>
      * Button Ok    : confirm the action from selected button <br/>
      *
      * @param button_name The name of the button that calls this function
      * @param type The type of dialog will be created
-     * @author Team7 Yingxin Liu
+     * @author Team7 Yingxin Liu Shaohui Wang
      */
     private void createResultDialog(String button_name, NpcResultDialogType type) {
         float dialog_size_x,dialog_size_y;

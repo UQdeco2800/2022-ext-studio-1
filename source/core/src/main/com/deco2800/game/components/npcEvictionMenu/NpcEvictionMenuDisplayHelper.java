@@ -57,16 +57,14 @@ class NpcEvictionMenuDisplayHelper {
             message.append("Don't worry, you still have two chances to try.");
             message.append("\n");
             message.append("Combine the clues and try again!");
-            message.append("\n");
-            message.append("\n");
+
         } else {
             message.append(name+" does not seem to be a traitor either :(");
             message.append("\n");
             message.append("Be careful, you only have one chance left to try.");
             message.append("\n");
             message.append("Go and see whether there are any missing clues!");
-            message.append("\n");
-            message.append("\n");
+
         }
 
         return  message.toString();

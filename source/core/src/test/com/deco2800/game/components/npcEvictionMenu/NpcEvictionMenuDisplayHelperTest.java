@@ -33,12 +33,10 @@ class NpcEvictionMenuDisplayHelperTest {
                 "Go and expel him and try to save Atlantis!\n",helper.createTraitorMessageForSaveAtlantis("xxx",NpcEvictionMenuDisplayNew.NpcResultDialogType.RIGHT_BOX));
         assertEquals("xxx does not seem to be the traitor :(\n" +
                 "Don't worry, you still have two chances to try.\n" +
-                "Combine the clues and try again!\n" +
-                "\n",helper.createTraitorMessageForSaveAtlantis("xxx",NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX1));
+                "Combine the clues and try again!" ,helper.createTraitorMessageForSaveAtlantis("xxx",NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX1));
         assertEquals("xxx does not seem to be a traitor either :(\n" +
                 "Be careful, you only have one chance left to try.\n" +
-                "Go and see whether there are any missing clues!\n" +
-                "\n",helper.createTraitorMessageForSaveAtlantis("xxx",NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX2));
+                "Go and see whether there are any missing clues!",helper.createTraitorMessageForSaveAtlantis("xxx",NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX2));
 
     }
 
