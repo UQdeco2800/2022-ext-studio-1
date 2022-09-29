@@ -311,7 +311,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                     if (errorNum == 0){
                         //decrease blood 15%
                         int health = entity.getComponent(CombatStatsComponent.class).getHealth();
-                        entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.85));
+                        entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.9));
 
 
                         errorNum++;
@@ -319,7 +319,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                     } else if (errorNum == 1) {
                         //decrease blood 15%
                         int health = entity.getComponent(CombatStatsComponent.class).getHealth();
-                        entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.85));
+                        entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.8));
                         errorNum++;
                         createResultDialog(button_name,NpcResultDialogType.WRONG_BOX2);
                     } else {
@@ -487,13 +487,59 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         okButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("yes_button from " + button_name + " clicked");
-                //when you select ok button
+                logger.info("yes_button from " + button_name + " clicked");
+                 //when you select ok button
                 dialog.remove();
+                if (Objects.equals(button_name, "Ares"))
+                    createTraitorClueInfo(button_name);
             }
         });
         dialog.addActor(okButton);
 
+
+        stage.addActor(dialog);
+    }
+    /**
+     * Shows the details of what the traitor said about Atlanta.
+     * After clicking on the window, the key on the map is displayed by calling the function provided by team5.<br/>
+     * All scales are calculated according to the prototype from team 7 only <br/>
+     * The context of this dialog will be provided by Team 9
+     *
+     * @param card_name The name of the card which calls this function
+     * @author Code: Team7 Shaohui Wang   <br/>Context: Team 9
+     */
+    private void createTraitorClueInfo(String card_name) {
+        logger.info("create TraitorClueInformation window");
+        // set the style of dialog include font color of title; background; size; position
+        //here need to change image path for TraitorClueInformation
+        TextureRegionDrawable styleImage = new TextureRegionDrawable(
+                resourceService.getAsset(IMAGES_PATH + "infoWindow.png", Texture.class));
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLUE, styleImage);
+        Window dialog = new Window("", windowStyle);
+        dialog.setModal(true);    // The dialog is always at the front
+        float dialog_size_x = (float) (bgWidth * (810.0 / 1600));
+        float dialog_size_y = (float) (bgHeight * (653.33 / 900));
+        dialog.setSize(dialog_size_x, dialog_size_y);
+        dialog.setPosition((float) (bgWidth * (407.34 / 1600)), (float) (bgHeight * (1 - 800.33 / 900)));
+        dialog.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                logger.info(card_name + " clicked");
+                dialog.remove();
+                exitMenu();
+                //here we need call findkey function from team 5.
+
+                return true;
+            }
+        });
+
+        //  add clues of npc
+        Label message = new Label(helper.createInformationFromTraitor(card_name), skin, "large");
+        message.setWrap(true);
+        message.setAlignment(Align.left);
+        Table table = new Table();
+        table.add(message).width(dialog_size_x * 3 / 5);
+        dialog.add(table);
 
         stage.addActor(dialog);
     }

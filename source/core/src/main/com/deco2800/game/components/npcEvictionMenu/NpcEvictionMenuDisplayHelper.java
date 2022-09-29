@@ -85,4 +85,11 @@ class NpcEvictionMenuDisplayHelper {
 
         return  message.toString();
     }
+
+    public String createInformationFromTraitor(String name){
+        StringBuilder message = new StringBuilder();
+        message.append(name+" said ....");
+
+        return  message.toString();
+    }
 }
