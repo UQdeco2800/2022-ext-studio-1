@@ -19,12 +19,20 @@ public class EndingMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(EndingMenuDisplay.class);
     private static final float Z_INDEX = 2f;
     private Table table;
-    private boolean judge = true;
+    private static boolean judge = true;
 
     @Override
     public void create() {
         super.create();
         addActors();
+    }
+
+    public static void setWin() {
+        judge = true;
+    }
+
+    public static void setLose() {
+        judge = false;
     }
 
     private void addActors() {

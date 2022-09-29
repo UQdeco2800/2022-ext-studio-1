@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.Align;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.npc.NPCClueLibrary;
+import com.deco2800.game.components.endingmenu.*;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
@@ -266,6 +267,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * @author Team7 Yingxin Liu
      */
     private void createConfirmDialog(String button_name) {
+//        entity.getEvents().addListener("ending", this::onEnding);
 
         logger.debug("create confirm dialog from name: " + button_name);
         // set the style of dialog include font color of title; background; size; position
@@ -325,7 +327,8 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                     } else {
                         errorNum = 0;
                         // game over
-                        //call ending function from group 3
+                        EndingMenuDisplay.setLose();
+                        entity.getEvents().trigger("ending");
                     }
 
                 }

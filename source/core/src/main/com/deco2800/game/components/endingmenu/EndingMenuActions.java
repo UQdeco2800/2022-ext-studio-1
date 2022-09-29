@@ -40,4 +40,8 @@ public class EndingMenuActions extends Component {
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
 
+    public void onEnding() {
+        logger.info("Launching ending screen");
+        game.setScreen(GdxGame.ScreenType.ENDING);
+    }
 }
