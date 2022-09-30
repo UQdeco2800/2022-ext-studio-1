@@ -22,9 +22,10 @@ public class PlayerProfileDisplay extends UIComponent {
 
     Table root;
     Table background;
+    Table title;
     Table content;
 
-    Button exitButton;
+    Button backButton;
 
     private static final String[] playerProfileTextures = {
             "images/exitbtn.png"
@@ -53,14 +54,7 @@ public class PlayerProfileDisplay extends UIComponent {
 
 //        exitButton = new ImageButton(exitBtnStyle);
 //
-//        exitButton.addListener(
-//                new ChangeListener() {
-//                    @Override
-//                    public void changed(ChangeEvent event, Actor actor) {
-//                        closeWindow();
-//                    }
-//                }
-//        );
+//
 
 //        exitButton.setPosition((float) (this.stage.getWidth() * 0.45), (float) (this.stage.getHeight() * 0.1));
 //        exitButton.setSize((float) (this.stage.getWidth() * ((1493.33 - 1436.67) / 1600)), (float) (this.stage.getHeight() * (53.33 / 900)));
@@ -75,13 +69,46 @@ public class PlayerProfileDisplay extends UIComponent {
         background.setFillParent(true);
         background.add(bgImage).height(Gdx.graphics.getHeight()-bgHeight).width(Gdx.graphics.getWidth()-bgWidth);
 
-        Label title = new Label("Player Profile", skin);
-
+        Label titleLabel = new Label("Player Profile", skin);
+        titleLabel.setFontScale(2);
+        Label clueLabel = new Label("Collected Clues: ", skin);
+        Label clue = new Label("10", skin);
+        Label timeLabel = new Label ("Average time spent on each clue: ", skin);
+        Label time = new Label("01:29", skin);
+        Label remainingStepsLabel = new Label("Remaining steps to win the game: ", skin);
+        Label remainingSteps = new Label("10", skin);
+        Label levelLabel = new Label("Current Level: ", skin);
+        Label level = new Label("2", skin);
 
         content = new Table();
-        content.add(title);
-        content.row();
 
+        content.add(titleLabel).colspan(2).expandY();
+        content.row();
+        content.add(clueLabel).expandX().expandY();
+        content.add(clue).width(300);
+        content.row();
+        content.add(timeLabel).expandX().expandY();
+        content.add(time).width(300);
+        content.row();
+        content.add(remainingStepsLabel).expandX().expandY();
+        content.add(remainingSteps).width(300);
+        content.row();
+        content.add(levelLabel).expandX().expandY();
+        content.add(level).width(300);
+
+        backButton = new TextButton("Back", skin);
+        backButton.setPosition((float) (bgWidth * 2.25), (float) bgHeight * 2);
+
+        backButton.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        closeWindow();
+                    }
+                }
+        );
+//        background.row();
+//        background.add(backButton);
 
         stack.add(background);
         stack.add(content);
@@ -89,6 +116,7 @@ public class PlayerProfileDisplay extends UIComponent {
         root.add(stack);
 
         this.stage.addActor(root);
+        this.stage.addActor(backButton);
 //        this.stage.addActor(exitButton);
     }
 
@@ -100,7 +128,7 @@ public class PlayerProfileDisplay extends UIComponent {
     private void closeWindow() {
         super.dispose();
         root.remove();
-        exitButton.remove();
+        backButton.remove();
     }
 
 }
