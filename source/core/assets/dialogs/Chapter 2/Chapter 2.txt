@@ -1,6 +1,7 @@
 Zoe: "Get the wetsuit! It's water everywhere!"
 SELECTION 1: Find the wetsuit. / SELECTION 2: Go to the village first.
-SELECTION 1: You: "Yes, you are right."
+SELECTION 1:
+You: "Yes, you are right."
 (PLAYER GO FIND THE WETSUIT)
 SELECTION 2:
 You: "I don't think we need the wetsuit now. Let's just go outside first."
@@ -10,7 +11,7 @@ You: "I don't think we need the wetsuit now. Let's just go outside first."
 ???: "Hey! You! What happened! Is Nereus died?!"
 SELECTION 1: Ignore this woman. / SELECTION 2: Try to get clues from this woman.
 SELECTION 1:
-You:This woman looks crazy and dangerous, we'd better ignore her and get away from her.
+You: This woman looks crazy and dangerous, we'd better ignore her and get away from her.
 (PLAYER RUSH AWAY FROM METIS)
 (PLAYER DIRECTLY GO TO THE VILLAGE SCENE)
 SELECTION 2:
@@ -19,13 +20,13 @@ You: This woman seems know something, maybe she can help me.
 You: Who are you? Do you know anything about this scale?
 ???: My name is Metis, and yes I can read the message in your scale. I can see that Nereus got injured from a man who was really close to her. It looked like a usual meeting, but that man hurt her when he hugged her. The damage of this scale is too bad, I could not see enough of it.
 You: No, your help is important for us! We are looking for the murderer who did it to Nereus. You have to help us! What else could you see?
-SELECTION 1: Ask for information about that person's voice. / SELECTION 2: Ask for information about that person's shape.
+SELECTION 1: Ask for information about that person's voice. / SELECTION 2: Ask for information about that person's appearance.
 SELECTION 1:
 You: "Could you hear the voice of the murderer?"
 METIS: "Yes. He has a deep voice."
 SELECTION 2:
-You: "Could you see the bodily form of the murderer?"
-Metis: "Yes. He is a tall, thin person."
+You: "Could you see the appearance of the murderer?"
+Metis: "Yes. He is a tall, and thin person."
 You: "Thanks for your help. If we get other scales, can we come to you to look at them?"
 Metis: "Of course."
 Zoe: "Dr. (Player's Name), let us keep going."
@@ -36,17 +37,17 @@ You: "Let's go to ask her some questions."
 (PLAYER AND ZOE COME TO THE GARDEN)
 Zoe: "Hi, I'm Zoe, this is Doctor. We work in the lab. Could you please tell us where did you get this scale?"
 Doris: "Hi, I'm Doris. This scale was a gift from Princess Nereus several years ago. She believes the scale will protect me so she made me a necklace of it. I don't know what happened, probably I did not preserve it well, the color of it suddenly starts to fade out. But I know there are some ways could help me bring the shininess back. You said you are from the lab? Could you please help me with it? Just to collect few things."
-Zoe: "Actually I don’t think it could help her to bring back the shininess. It turns grey because Princess Nereus..."
+Zoe: "Actually I don't think it could help her to bring back the shininess. It turns grey because Princess Nereus..."
 SELECTION 1: Tell her the truth. / SELECTION 2: Temporarily hide the truth.
 SELECTION 1:
 You: "I think we could tell her the truth. Tell her the true reason of why her scale starts to turning grey. And we could ask her for the scale to investigate more clues."
 Zoe: "You are right."
 You: "Sorry Doris, we don't think your method is going to work. The truth is, Princess Nereus is dead. It is impossible to bring the shininess back now. We are investigating this event, so can we borrow your scale? It could help us to find out what happened to Prince Nereus."
-Doris: "What!!! No!!! You must be fooling me!!!! I don’t believe that Princess Nereus has been dead! Why are you cursing her! You will never get this scale from me!"
+Doris: "What!!! No!!! You must be fooling me!!!! I don't believe that Princess Nereus has been dead! Why are you cursing her! You will never get this scale from me!"
 (DORIS LEAVES WITH ANGER)
 (PLAYER DOES NOT GET THE CLUE FROM THIS SCALE)
 SELECTION 2:
-You: "Right. But she does not know it. We do not need to bother her with it either. I think it worth a try. At lease we could borrow the scale from her afterwards."
+You: "Right. But she does not know it. We do not need to bother her with it either. I think it worth a try. At least we could borrow the scale from her afterwards."
 Zoe: "You are right."
 You: "Sure, what materials do you need?"
 Doris: "I need 5 Fluorescent Corals."
@@ -56,6 +57,6 @@ Doris: "Ah, already! Thank you. I am going to try the method now."
 (THE SCALE STILL LOOKS PALE)
 Doris: "It failed...But I have no idea why..."
 You: "Maybe we could help. Would you mind to lend us this necklace? Maybe we could find a way to bring the shininess back."
-Doris: "You two don’t look like a bad person, and you just helped me to collect Fluorescent Corals…Fine. I can lend the scale to you. But be careful of it. It is my most precious treasure."
+Doris: "You two don't look like a bad person, and you just helped me to collect Fluorescent Corals... Fine. I can lend the scale to you. But be careful of it. It is my most precious treasure."
 You: "We will take care of it."
 (PLAYER GETS 1 SCALE)

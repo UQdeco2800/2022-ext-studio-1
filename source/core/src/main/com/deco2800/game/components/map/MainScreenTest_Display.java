@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.components.npc.DialogWithSelection;
 import com.deco2800.game.components.npc.NpcInteraction;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -27,8 +28,8 @@ public class MainScreenTest_Display extends UIComponent {
     private int step;
     private Image dialogBox;
     private Label dialog;
-
     private ClickListener clickListener;
+    private DialogWithSelection root;
 
     public MainScreenTest_Display(GdxGame game) {
         super();
@@ -300,33 +301,116 @@ public class MainScreenTest_Display extends UIComponent {
 
     private void setDialog(int chapterNum) {
         step = 0;
+        dialog = new Label("Chapter " + chapterNum, skin);
+        dialog.setPosition((float) (stage.getWidth() * 0.1), (float) (stage.getHeight() * 0.1));
+        dialog.setWrap(true);
+        dialog.setWidth((float) (stage.getWidth() * 0.8));
+        stage.addActor(dialog);
+
         try {
-            ArrayList<String> texts = NpcInteraction.readNpcFiles(chapterNum);
-            Iterator<String> it = texts.iterator();
-            dialog = new Label(it.next(), skin);
-            dialog.setPosition((float) (stage.getWidth() * 0.1), (float) (stage.getHeight() * 0.1));
-            dialog.setWrap(true);
-            dialog.setWidth((float) (stage.getWidth() * 0.8));
-            stage.addActor(dialog);
-            clickListener = new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    super.clicked(event, x, y);
-                    switch (chapterNum) {
-                        case 1 -> chapter1Listener(it, dialog);
-                        case 2 -> chapter2Listener(it, dialog);
-                        default -> {
-                        }
+            if (chapterNum == 1) {// chapter without selections
+                ArrayList<String> texts = NpcInteraction.readNpcFiles(chapterNum);
+                Iterator<String> it = texts.iterator();
+                clickListener = new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        super.clicked(event, x, y);
+                        chapter1Listener(it);
                     }
+                };
+            } else {// chapter with selections
+                if (chapterNum == 2) {
+                    chapter2Opening();
+                    root = DialogWithSelection.getChapter2Dialog();
+                    clickListener = new ClickListener() {
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            super.clicked(event, x, y);
+                            chapter2Listener();
+                        }
+                    };
                 }
-            };
-            table.addListener(clickListener);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        dialogBox.addListener(clickListener);
     }
 
-    private void chapter1Listener(Iterator<String> it, Label dialog) {
+    private void setSelection() {
+        // hide the origin dialog box
+        dialog.setPosition(-10000, -10000);
+        dialogBox.setPosition(-10000, -10000);
+        dialogBox.removeListener(clickListener);
+
+        // add new dialog box for selection
+        Image optionBox1 = new Image(ServiceLocator.getResourceService().getAsset(
+                "images/npc_interaction/dialog_box.png", Texture.class));
+        Image optionBox2 = new Image(ServiceLocator.getResourceService().getAsset(
+                "images/npc_interaction/dialog_box.png", Texture.class));
+        optionBox1.setPosition((float) (stage.getWidth() * 0.05), 0);
+        optionBox2.setPosition((float) (stage.getWidth() * 0.5), 0);
+        optionBox1.setSize((float) (stage.getWidth() * 0.44), (float) (stage.getHeight() * 0.3));
+        optionBox2.setSize((float) (stage.getWidth() * 0.44), (float) (stage.getHeight() * 0.3));
+        stage.addActor(optionBox1);
+        stage.addActor(optionBox2);
+
+        // add option texts on the boxes
+        Label option1 = new Label(root.getOption1().getDialog(), skin);
+        Label option2 = new Label(root.getOption2().getDialog(), skin);
+        option1.setPosition((float) (stage.getWidth() * 0.08), (float) (stage.getHeight() * 0.1));
+        option2.setPosition((float) (stage.getWidth() * 0.53), (float) (stage.getHeight() * 0.1));
+        option1.setWrap(true);
+        option2.setWrap(true);
+        option1.setWidth((float) (stage.getWidth() * 0.4));
+        option2.setWidth((float) (stage.getWidth() * 0.4));
+        stage.addActor(option1);
+        stage.addActor(option2);
+
+        // add click listeners for options
+        optionBox1.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                option1.remove();
+                optionBox1.remove();
+                option2.remove();
+                optionBox2.remove();
+                root = root.getOption1();
+                addListenerAfterSelection();
+            }
+        });
+
+        optionBox2.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                option1.remove();
+                optionBox1.remove();
+                option2.remove();
+                optionBox2.remove();
+                root = root.getOption2();
+                addListenerAfterSelection();
+            }
+        });
+    }
+
+    private void addListenerAfterSelection() {
+        root = root.getNext();
+        dialog.setText(root.getDialog());
+        dialog.setPosition((float) (stage.getWidth() * 0.1), (float) (stage.getHeight() * 0.1));
+        dialogBox.setPosition((float) (stage.getWidth() * 0.05), 0);
+        clickListener = new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                chapter2Listener();
+            }
+        };
+        dialogBox.addListener(clickListener);
+    }
+
+    private void chapter1Listener(Iterator<String> it) {
         Image darkLab = new Image(ServiceLocator.getResourceService().getAsset(
                 "images/map/LAB/whole lab dark.png", Texture.class));
         darkLab.setPosition(0, 0);
@@ -349,27 +433,34 @@ public class MainScreenTest_Display extends UIComponent {
         } else {// chapter 1 ends
             bloodLab.remove();
             dialog.remove();
-            table.removeListener(clickListener);
+            dialogBox.removeListener(clickListener);
             setDialog(2);
         }
     }
 
-    private void chapter2Listener(Iterator<String> it, Label dialog) {
+    private void chapter2Opening() {
         Image lab = new Image(ServiceLocator.getResourceService().getAsset(
                 "images/map/LAB/whole lab.png", Texture.class));
         lab.setPosition(0, 0);
         lab.setSize(stage.getWidth(), stage.getHeight());
+        table.addActor(lab);
+    }
 
-        if (it.hasNext()) {
-            dialog.setText(it.next());
-            if (step == 0) {
-                table.addActor(lab); // show the lab
-            }
-            step++;
-        } else {// chapter 2 ends
+    private void chapter2Listener() {
+        readDialogWithSelections();
+        // condition for switch map
+    }
+
+    private void readDialogWithSelections() {
+        if (root.getNext() != null) {
+            dialog.setText(root.getDialog());
+            root = root.getNext();
+        } else if (root.isSelectionPoint()) {
+            setSelection();
+        } else {
             dialogBox.remove();
             dialog.remove();
-            lab.remove();
+            dialogBox.removeListener(clickListener);
         }
     }
 }

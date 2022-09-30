@@ -1,0 +1,7 @@
+You: "I think we could tell her the truth. Tell her the true reason of why her scale starts to turning grey. And we could ask her for the scale to investigate more clues."
+Zoe: "You are right."
+You: "Sorry Doris, we don't think your method is going to work. The truth is, Princess Nereus is dead. It is impossible to bring the shininess back now. We are investigating this event, so can we borrow your scale? It could help us to find out what happened to Prince Nereus."
+Doris: "What!!! No!!! You must be fooling me!!!! I don't believe that Princess Nereus has been dead! Why are you cursing her! You will never get this scale from me!"
+(DORIS LEAVES WITH ANGER)
+(PLAYER DOES NOT GET THE CLUE FROM THIS SCALE)
+ENDING

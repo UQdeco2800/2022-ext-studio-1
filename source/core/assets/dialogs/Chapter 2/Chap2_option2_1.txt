@@ -1,0 +1,4 @@
+You: This woman looks crazy and dangerous, we'd better ignore her and get away from her.
+(PLAYER RUSH AWAY FROM METIS)
+(PLAYER DIRECTLY GO TO THE VILLAGE SCENE)
+ENDING
