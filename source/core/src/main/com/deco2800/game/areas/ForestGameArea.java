@@ -53,7 +53,8 @@ public class ForestGameArea extends GameArea {
     "images/inventory/scales1.png",
     "images/inventory/confirm.png",
     "images/inventory/emtpyInventorySlot.png",
-    "images/inventory/inventoryBG.png"
+    "images/inventory/inventoryBG.png",
+          "images/KEY.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas","images/player.atlas","images/orpheus.atlas",
@@ -87,6 +88,8 @@ public class ForestGameArea extends GameArea {
     spawnTimeConsumeableItem();
     spawnClueItem();
     playMusic();
+    spawnKey();
+
   }
 
   private void displayUI() {
@@ -151,6 +154,13 @@ public class ForestGameArea extends GameArea {
     Entity item = ClueItemFactory.createItem(player, "images/inventory/scales1.png");
 
     spawnEntityAt(item, new GridPoint2(5, 5), true, true);
+  }
+
+
+  private void spawnKey() {
+    Entity item = ClueItemFactory.createItem(player, "images/KEY.png");
+
+    spawnEntityAt(item, new GridPoint2(6, 6), true, true);
   }
 
   private void spawnGhosts() {

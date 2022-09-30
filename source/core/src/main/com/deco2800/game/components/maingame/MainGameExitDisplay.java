@@ -62,14 +62,15 @@ public class MainGameExitDisplay extends UIComponent {
 
     TextButton profileButton = new TextButton("Player Profile", skin);
 
-//    profileButton.addListener(
-//            new ChangeListener() {
-//              @Override
-//              public void changed(ChangeEvent event, Actor actor) {
-//
-//              }
-//            }
-//    );
+    profileButton.addListener(
+            new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent event, Actor actor) {
+                logger.debug("profile button clicked");
+                entity.getEvents().trigger("playerProfile");
+              }
+            }
+    );
 
     /**
      * player profile button code block ends here.
