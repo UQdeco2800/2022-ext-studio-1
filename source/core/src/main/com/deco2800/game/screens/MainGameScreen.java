@@ -76,9 +76,11 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
+  private ForestGameArea forestGameArea;
+
   private long timeSinceStart;
 
-  private  boolean stopGame;
+  private boolean stopGame;
 
   public MainGameScreen(GdxGame game, boolean stop) {
     this.game = game;
@@ -103,12 +105,13 @@ public class MainGameScreen extends ScreenAdapter {
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
     loadAssets();
-    createUI();
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
+    this.forestGameArea = new ForestGameArea(terrainFactory);
     forestGameArea.create();
+
+    createUI();
   }
 
   @Override
@@ -209,7 +212,8 @@ public class MainGameScreen extends ScreenAdapter {
             //for display health add PlayerStatsDisplay()
             .addComponent(new CombatStatsComponent(stats.health,stats.baseAttack))
             .addComponent(new PlayerStatsDisplay())
-            .addComponent(new NpcEvictionMenuDisplayNew(logger,ServiceLocator.getResourceService(),stage.getWidth(),stage.getHeight()))
+            .addComponent(new NpcEvictionMenuDisplayNew(logger,ServiceLocator.getResourceService(),
+                    stage.getWidth(),stage.getHeight(), this.forestGameArea, this.game))
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay());
