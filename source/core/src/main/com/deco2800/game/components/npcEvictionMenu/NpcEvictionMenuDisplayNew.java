@@ -542,7 +542,8 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         });
 
         //  add clues of npc
-        Label message = new Label(helper.createInformationFromTraitor(card_name), skin, "large");
+        Label message = new Label(helper.createInformationFromTraitor(card_name), skin);
+        message.setFontScale(dialog_size_y/800);
         message.setWrap(true);
         message.setAlignment(Align.left);
         Table table = new Table();
