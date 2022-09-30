@@ -388,7 +388,8 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         });
 
         //  add clues of npc
-        Label message = new Label(helper.createLabelContext(card_name, library), skin, "large");
+        Label message = new Label(helper.createClueContext(card_name, library),skin);
+        message.setFontScale(dialog_size_y/800);
         message.setWrap(true);
         message.setAlignment(Align.left);
         Table table = new Table();
@@ -454,9 +455,11 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             okButton.setSize((float) (dialog_size_x * (116.67/683.67)), (float) (dialog_size_y * (53.33/416.24)));
             okButton.setPosition((float) (dialog.getWidth() * ((764.04-433.33)/683.67)),
                     (float) (dialog.getHeight() * ((663.33 - 635.65) / 416.24)));
-            Label message_interjection =new Label(helper.createTraitorMessageInterjection(type),skin,"large");
+            Label message_interjection =new Label(helper.createTraitorMessageInterjection(type),skin);
+            message_interjection.setFontScale(dialog_size_y/400);
             message_interjection.setAlignment(Align.center);
-            Label message = new Label(helper.createTraitorMessageForSaveAtlantis(button_name,type), skin, "large");
+            Label message = new Label(helper.createTraitorMessageForSaveAtlantis(button_name,type), skin);
+            message.setFontScale(dialog_size_y/400);
             message.setWrap(true);
             message.setAlignment(Align.left);
             Table table = new Table();
@@ -474,9 +477,11 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             okButton.setSize((float) (dialog_size_x * (116.67/678.67)), (float) (dialog_size_y * (53.33/382.38)));
             okButton.setPosition((float) (dialog.getWidth() * ((748.04-438.33)/678.67)),
                     (float) (dialog.getHeight() * ((663.33 - 635.65) / 382.38)));
-            Label message_interjection =new Label(helper.createTraitorMessageInterjection(type),skin,"large");
+            Label message_interjection =new Label(helper.createTraitorMessageInterjection(type),skin);
+            message_interjection.setFontScale(dialog_size_y/400);
             message_interjection.setAlignment(Align.center);
-            Label message = new Label(helper.createTraitorMessageForSaveAtlantis(button_name,type), skin, "large");
+            Label message = new Label(helper.createTraitorMessageForSaveAtlantis(button_name,type), skin);
+            message.setFontScale(dialog_size_y/400);
             message.setWrap(true);
             message.setAlignment(Align.left);
             Table table = new Table();

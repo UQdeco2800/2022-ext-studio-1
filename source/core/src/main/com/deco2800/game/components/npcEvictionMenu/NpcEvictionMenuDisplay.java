@@ -324,7 +324,7 @@ public class NpcEvictionMenuDisplay extends UIComponent {
         });
 
         //  add clues of npc
-        Label message = new Label(helper.createLabelContext(card_name, library), skin, "large");
+        Label message = new Label(helper.createClueContext(card_name, library), skin, "large");
         message.setWrap(true);
         message.setAlignment(Align.left);
         Table table = new Table();
