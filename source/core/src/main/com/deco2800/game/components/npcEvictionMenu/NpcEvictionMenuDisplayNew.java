@@ -15,7 +15,11 @@ import com.badlogic.gdx.utils.Align;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.components.CombatStatsComponent;
+
+import com.deco2800.game.components.countDownClock.countdownDisplay;
+
 import com.deco2800.game.components.endingmenu.EndingMenuDisplay;
+
 import com.deco2800.game.components.npc.NPCClueLibrary;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.ui.UIComponent;
@@ -104,9 +108,17 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * @author Team7 Yingxin Liu
      */
     public Window creatEvictionMenu (){
+        if (findKey) {handleWin();}
         return this.stage;
     }
-
+    /**
+     * return the errorNum
+     * @return errorNum
+     * @author Team7 WangShaohui
+     */
+    public Integer getErrorNum() {
+        return errorNum;
+    }
 
     /**
      * Add actors of eviction_menu to the stage
@@ -276,7 +288,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * When correct, <b>team 5</b> provides code for spawn the key <br/>
      *
      */
-    private void createConfirmDialog(String button_name) {
+    public void createConfirmDialog(String button_name) {
 //        entity.getEvents().addListener("ending", this::onEnding);
 
         logger.debug("create confirm dialog from name: " + button_name);
@@ -309,6 +321,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         Button okButton = createButton(IMAGES_PATH + "confirmBtn_ok.png", IMAGES_PATH + "confirmBtn_ok1.png");
         okButton.setSize((float) (dialog_size_x * 0.377), (float) (dialog_size_y * 0.2317));
         okButton.setPosition((float) (dialog.getWidth() * 0.5239), 0);
+
         okButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -316,30 +329,9 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 dialog.remove();
                 // different name will lead to different result
                 // traitor is Ares.So here we check it.
-                if (Objects.equals(button_name, "Ares")){ // select npc correctly
-                    errorNum = 0;
-                    createResultDialog(button_name,NpcResultDialogType.RIGHT_BOX);
-                } else {
-                    if (errorNum == 0){
-                        //decrease blood 15%
-                        int health = entity.getComponent(CombatStatsComponent.class).getHealth();
-                        entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.9));
-                        errorNum++;
-                        createResultDialog(button_name,NpcResultDialogType.WRONG_BOX1);
-                    } else if (errorNum == 1) {
-                        //decrease blood 15%
-                        int health = entity.getComponent(CombatStatsComponent.class).getHealth();
-                        entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.8));
-                        errorNum++;
-                        createResultDialog(button_name,NpcResultDialogType.WRONG_BOX2);
-                    } else if (errorNum == 2){
-                        errorNum = 0;
-                        // game over
-                        EndingMenuDisplay.setLose();
-                        entity.getEvents().trigger("ending");
-                    }
+                NpcResultDialogType result = handleLogic(button_name);
+                createResultDialog(button_name, result);
 
-                }
             }
         });
         dialog.addActor(cancelButton);
@@ -416,7 +408,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * Types of result dialog box
      */
     protected enum NpcResultDialogType {
-        RIGHT_BOX, WRONG_BOX1, WRONG_BOX2
+        RIGHT_BOX, WRONG_BOX1, WRONG_BOX2, LOSE, WIN
     }
     /**
      * Display a result dialog and traitor message on the stage, the style is based on Team7 prototype <br/>
@@ -428,9 +420,16 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * @author Team7 Yingxin Liu Shaohui Wang
      */
     private void createResultDialog(String button_name, NpcResultDialogType type) {
-        float dialog_size_x,dialog_size_y;
-        logger.debug("create Result dialog from name: " + button_name);
+        logger.debug("create Result dialog from name: " + button_name + " type:" + type);
+        // if Lose, it will jump to ending screen, no need to create dialog
+        if (type == NpcResultDialogType.LOSE) {
+            EndingMenuDisplay.setLose();
+            entity.getEvents().trigger("ending");
+            return;}
+        if (type == NpcResultDialogType.WIN) {handleWin();return;}
+
         // set the style of dialog include font color of title; background; size; position
+        float dialog_size_x,dialog_size_y;
         String backgroundPath, buttonPathDefault, buttonPathHover;
 
         if (type == NpcResultDialogType.RIGHT_BOX) {
@@ -507,7 +506,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                  //when you select ok button
                 dialog.remove();
                 if (type == NpcResultDialogType.RIGHT_BOX)
-                    createTraitorClueInfo(button_name);
+                    handleWin();
             }
         });
         dialog.addActor(okButton);
@@ -515,35 +514,34 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
 
         stage.addActor(dialog);
     }
+
+
+    private void exitMenu() {
+        stage.remove();
+    }
+
     /**
-     * Shows the details of what the traitor said about Atlanta.
-     * After clicking on the window, the key on the map is displayed by calling the function provided by team5.<br/>
-     * All scales are calculated according to the prototype from team 7 only <br/>
-     * The context of this dialog will be provided by Team 9
-     *
-     * @param card_name The name of the card which calls this function
-     * @author Code: Team7 Shaohui Wang   <br/>Context: Team 9
+     * When player select the correct traitor, after click OK button on right_box,
+     * An win Information page will appear and the key will be spawn on the game area.
+     * @author Team 7 Yingxin Liu <br/>
+     * code of spawn key is from <b>Team 5</b>
      */
-    private void createTraitorClueInfo(String card_name) {
-        logger.info("create TraitorClueInformation window");
+    private void handleWin() {
+        logger.debug("Function handleWin is called");
         // set the style of dialog include font color of title; background; size; position
-        //here need to change image path for TraitorClueInformation
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
-                resourceService.getAsset(IMAGES_PATH + "infoWindow.png", Texture.class));
-        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLUE, styleImage);
+                resourceService.getAsset(IMAGES_PATH + "saveMessage.png", Texture.class));
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
         Window dialog = new Window("", windowStyle);
         dialog.setModal(true);    // The dialog is always at the front
-        float dialog_size_x = (float) (bgWidth * (810.0 / 1600));
-        float dialog_size_y = (float) (bgHeight * (653.33 / 900));
-        dialog.setSize(dialog_size_x, dialog_size_y);
-        dialog.setPosition((float) (bgWidth * (407.34 / 1600)), (float) (bgHeight * (1 - 800.33 / 900)));
+        dialog.setFillParent(true);
         dialog.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                logger.info(card_name + " clicked");
+                logger.debug("win game page clicked");
                 dialog.remove();
                 exitMenu();
-                // here we need call findkey function from team 5.
+                // here we need call findKey function from team 5.
                 if (!findKey){
                     gameArea.spawnKey(game);
                     findKey = true;
@@ -551,22 +549,62 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 return true;
             }
         });
-
-        //  add clues of npc
-        Label message = new Label(helper.createInformationFromTraitor(card_name), skin);
-        message.setFontScale(dialog_size_y/800);
-        message.setWrap(true);
-        message.setAlignment(Align.left);
-        Table table = new Table();
-        table.add(message).width(dialog_size_x * 3 / 5);
-        dialog.add(table);
-
         stage.addActor(dialog);
     }
 
-    private void exitMenu() {
-        stage.remove();
+    /**
+     * Handle the game logic of select the traitor<br/>
+     * player has 3 choices to find traitor<br/>
+     * if wrong, it will decrease the blood and time at the same time
+     *
+     * @param name name of npc selected
+     * @return
+     * NpcResultDialogType.RIGHT_BOX: if player correctly select the traitor <br/>
+     * NpcResultDialogType.WRONG_BOX1: if player fails for the first time<br/>
+     * NpcResultDialogType.WRONG_BOX2: if player fails for the second time <br/>
+     * NpcResultDialogType.LOSE: if player select 3 times and all fail <br/>
+     * NpcResultDialogType.WIN: if player have correctly select in the past<br/>
+     * null: This is not a return result that should occur. If it does,
+     * it indicates that there is a problem with in the code
+     * @author Team7 Yingxin Liu <br/>
+     * decrease blood/decrease remaing time: Shaohui Wang
+     *
+     */
+    protected NpcResultDialogType handleLogic (String name) {
+        if (findKey) { // player have selected correct in the past
+            return NpcResultDialogType.WIN;
+        }
+        if (Objects.equals(name, "Ares")){ // select npc correctly
+            errorNum = 0;
+            return NpcResultDialogType.RIGHT_BOX;
+        } else {
+            if (errorNum == 0){
+                //decrease blood 10%
+                int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+                entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.9));
+
+                //at the same time decrease remaing time 10%
+                float remainingTime =entity.getComponent(countdownDisplay.class).getRemainingTime();
+                entity.getComponent(countdownDisplay.class).setTimeRemaining((float) remainingTime*0.9f);
+
+                errorNum++;
+                return NpcResultDialogType.WRONG_BOX1;
+            } else if (errorNum == 1) {
+                //decrease blood 20%
+                int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+                entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.8));
+
+                //at the same time decrease remaing time 20%
+                float remainingTime =entity.getComponent(countdownDisplay.class).getRemainingTime();
+                entity.getComponent(countdownDisplay.class).setTimeRemaining((float) remainingTime*0.8f);
+                errorNum++;
+                return NpcResultDialogType.WRONG_BOX2;
+            } else if (errorNum == 2){
+                // game over
+                errorNum = 0;
+                return NpcResultDialogType.LOSE;
+            }
+        }
+        return null; // if return null, it means some error in code, please check
     }
-
-
 }
