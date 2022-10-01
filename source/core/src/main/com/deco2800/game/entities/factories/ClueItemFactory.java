@@ -23,6 +23,7 @@ import com.deco2800.game.rendering.TextureRenderComponent;
  * "ItemConfigs".
  *
 */
+@Deprecated
 public class ClueItemFactory extends ItemFactory {
 
     private static int guiltyRating = 30;

@@ -142,15 +142,19 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
   public void spawnTimeConsumeableItem() {
-    Entity item = ConsumableItemFactory.createItem(player, "images/inventory/time_item.png");
-
+//    Entity item = ConsumableItemFactory.createItem(player, "images/inventory/time_item.png");
+    Entity item = ItemFactory.createItem(1);
     spawnEntityAt(item, new GridPoint2(5, 10), true, true);
   }
 
   private void spawnClueItem() {
-    Entity item = ClueItemFactory.createItem(player, "images/inventory/scales1.png");
+    Entity item = ItemFactory.createItem(1);
+    Entity item1 = ItemFactory.createItem(1);
+    Entity item2 = ItemFactory.createItem(1);
 
     spawnEntityAt(item, new GridPoint2(5, 5), true, true);
+    spawnEntityAt(item1, new GridPoint2(10, 5), true, true);
+    spawnEntityAt(item2, new GridPoint2(15, 5), true, true);
   }
 
   private void spawnGhosts() {

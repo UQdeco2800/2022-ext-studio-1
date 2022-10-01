@@ -82,8 +82,8 @@ public class countdownDisplay extends UIComponent {
                 equSeconds=(int)timeRemaining;
             }
             counterLabel.setText(String.valueOf(equHours+":"+equMins+":"+equSeconds));
-            logger.info("remaining time: {}", String.valueOf(this.getRemainingTime()));
-            logger.info(counterLabel.getText().toString());
+            logger.debug("remaining time: {}", String.valueOf(this.getRemainingTime()));
+            logger.debug(counterLabel.getText().toString());
         }
 
 
