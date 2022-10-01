@@ -185,6 +185,9 @@ public class countdownDisplay extends UIComponent {
     public float getRemainingTime() {
         return this.timeRemaining;
     }
+    public void setTimeRemaining(float time){
+        this.timeRemaining = time;
+    }
 
     @Override
     protected void draw(SpriteBatch batch) {
