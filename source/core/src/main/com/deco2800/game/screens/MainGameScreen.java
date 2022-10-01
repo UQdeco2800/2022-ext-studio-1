@@ -69,7 +69,8 @@ public class MainGameScreen extends ScreenAdapter {
           IMAGES_PATH + "rightBtn.png", IMAGES_PATH + "rightBtn_H.png",
           IMAGES_PATH + "wrongBox1.png", IMAGES_PATH + "wrongBox2.png",
           IMAGES_PATH + "chanceBtn.png", IMAGES_PATH + "chanceBtn_H.png",
-          IMAGES_PATH + "chanceBtn2.png", IMAGES_PATH + "chanceBtn2_H.png"};
+          IMAGES_PATH + "chanceBtn2.png", IMAGES_PATH + "chanceBtn2_H.png",
+          IMAGES_PATH + "saveMessage.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
   private final GdxGame game;

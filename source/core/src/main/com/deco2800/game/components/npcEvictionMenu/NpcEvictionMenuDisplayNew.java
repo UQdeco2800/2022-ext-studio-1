@@ -507,7 +507,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                  //when you select ok button
                 dialog.remove();
                 if (type == NpcResultDialogType.RIGHT_BOX)
-                    createTraitorClueInfo(button_name);
+                    handleWin();
             }
         });
         dialog.addActor(okButton);
@@ -515,35 +515,34 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
 
         stage.addActor(dialog);
     }
+
+
+    private void exitMenu() {
+        stage.remove();
+    }
+
     /**
-     * Shows the details of what the traitor said about Atlanta.
-     * After clicking on the window, the key on the map is displayed by calling the function provided by team5.<br/>
-     * All scales are calculated according to the prototype from team 7 only <br/>
-     * The context of this dialog will be provided by Team 9
-     *
-     * @param card_name The name of the card which calls this function
-     * @author Code: Team7 Shaohui Wang   <br/>Context: Team 9
+     * When player select the correct traitor, after click OK button on right_box,
+     * An win Information page will appear and the key will be spawn on the game area.
+     * @author Team 7 Yingxin Liu <br/>
+     * code of spawn key is from <b>Team 5</b>
      */
-    private void createTraitorClueInfo(String card_name) {
-        logger.info("create TraitorClueInformation window");
+    private void handleWin() {
+        logger.debug("Function handleWin is called");
         // set the style of dialog include font color of title; background; size; position
-        //here need to change image path for TraitorClueInformation
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
-                resourceService.getAsset(IMAGES_PATH + "infoWindow.png", Texture.class));
-        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLUE, styleImage);
+                resourceService.getAsset(IMAGES_PATH + "saveMessage.png", Texture.class));
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
         Window dialog = new Window("", windowStyle);
         dialog.setModal(true);    // The dialog is always at the front
-        float dialog_size_x = (float) (bgWidth * (810.0 / 1600));
-        float dialog_size_y = (float) (bgHeight * (653.33 / 900));
-        dialog.setSize(dialog_size_x, dialog_size_y);
-        dialog.setPosition((float) (bgWidth * (407.34 / 1600)), (float) (bgHeight * (1 - 800.33 / 900)));
+        dialog.setFillParent(true);
         dialog.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                logger.info(card_name + " clicked");
+                logger.debug("win game page clicked");
                 dialog.remove();
                 exitMenu();
-                // here we need call findkey function from team 5.
+                // here we need call findKey function from team 5.
                 if (!findKey){
                     gameArea.spawnKey(game);
                     findKey = true;
@@ -551,21 +550,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 return true;
             }
         });
-
-        //  add clues of npc
-        Label message = new Label(helper.createInformationFromTraitor(card_name), skin);
-        message.setFontScale(dialog_size_y/800);
-        message.setWrap(true);
-        message.setAlignment(Align.left);
-        Table table = new Table();
-        table.add(message).width(dialog_size_x * 3 / 5);
-        dialog.add(table);
-
         stage.addActor(dialog);
-    }
-
-    private void exitMenu() {
-        stage.remove();
     }
 
 
