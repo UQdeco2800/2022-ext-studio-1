@@ -162,15 +162,36 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.Window</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#creatEvictionMenu()" class="member-name-link">creatEvictionMenu</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createConfirmDialog(java.lang.String)" class="member-name-link">createConfirmDialog</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;button_name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Display a confirm dialog on the stage, the style is based on Team7 prototype <br/>
+ All scales are calculated according to the prototype from team 7 only <br/>
+ player has 3 choices to find traitor, if all fail, the game will directly over <br/>
+ if correct, A key will be spawned on the map,
+ player can pick it up and use it in the warehouse.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.Window</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#creatEvictionMenu()" class="member-name-link">creatEvictionMenu</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">return the window of Eviction Menu, use stage.addActor() to add onto stage</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Draw the renderable.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getErrorNum()" class="member-name-link">getErrorNum</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">return the errorNum</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="NpcEvictionMenuDisplayNew.NpcResultDialogType.html" title="enum class in com.deco2800.game.components.npcEvictionMenu">NpcEvictionMenuDisplayNew.NpcResultDialogType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleLogic(java.lang.String)" class="member-name-link">handleLogic</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Handle the game logic of select the traitor<br/>
+ player has 3 choices to find traitor<br/>
+ if wrong, it will decrease the blood and time at the same time</div>
 </div>
 </div>
 </div>
@@ -243,6 +264,41 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getErrorNum()">
+<h3>getErrorNum</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></span>&nbsp;<span class="element-name">getErrorNum</span>()</div>
+<div class="block">return the errorNum</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>errorNum</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createConfirmDialog(java.lang.String)">
+<h3>createConfirmDialog</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createConfirmDialog</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;button_name)</span></div>
+<div class="block">Display a confirm dialog on the stage, the style is based on Team7 prototype <br/>
+ All scales are calculated according to the prototype from team 7 only <br/>
+ player has 3 choices to find traitor, if all fail, the game will directly over <br/>
+ if correct, A key will be spawned on the map,
+ player can pick it up and use it in the warehouse. The game will win <br/>
+ For using the key, we have written the code in the warehouse component of <b>team 8</b></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>button_name</code> - The name of the button that calls this function</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list-long">
+<li><a href="../player/InventoryDisplayComponent.html" title="class in com.deco2800.game.components.player"><code>Button cancel: remove the dialog <br/>
+ Button Ok    : confirm the action from selected button <br/></code></a></li>
+<li><a href="../endingmenu/EndingMenuDisplay.html" title="class in com.deco2800.game.components.endingmenu"><code>EndingMenuDisplay</code></a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">
 <h3>draw</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">draw</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</span></div>
@@ -253,6 +309,27 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="../../rendering/RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></code>&nbsp;in class&nbsp;<code><a href="../../rendering/RenderComponent.html" title="class in com.deco2800.game.rendering">RenderComponent</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>batch</code> - Batch to render to.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="handleLogic(java.lang.String)">
+<h3>handleLogic</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="NpcEvictionMenuDisplayNew.NpcResultDialogType.html" title="enum class in com.deco2800.game.components.npcEvictionMenu">NpcEvictionMenuDisplayNew.NpcResultDialogType</a></span>&nbsp;<span class="element-name">handleLogic</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="block">Handle the game logic of select the traitor<br/>
+ player has 3 choices to find traitor<br/>
+ if wrong, it will decrease the blood and time at the same time</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - name of npc selected</dd>
+<dt>Returns:</dt>
+<dd>NpcResultDialogType.RIGHT_BOX: if player correctly select the traitor <br/>
+ NpcResultDialogType.WRONG_BOX1: if player fails for the first time<br/>
+ NpcResultDialogType.WRONG_BOX2: if player fails for the second time <br/>
+ NpcResultDialogType.LOSE: if player select 3 times and all fail <br/>
+ NpcResultDialogType.WIN: if player have correctly select in the past<br/>
+ null: This is not a return result that should occur. If it does,
+ it indicates that there is a problem with in the code</dd>
 </dl>
 </section>
 </li>
