@@ -103,7 +103,11 @@ public class NpcEvictionMenuDisplayNewTest {
                 test_entity.getComponent(NpcEvictionMenuDisplayNew.class).handleLogic("xxx"));
         assertEquals(0,test_entity.getComponent(NpcEvictionMenuDisplayNew.class).getErrorNum());
 
-
+        //If the handleLogic function is called when findKey is true
+        // it will return NpcResultDialogType.WIN .
+        test_entity.getComponent(NpcEvictionMenuDisplayNew.class).setFindKey(true);
+        assertEquals(NpcEvictionMenuDisplayNew.NpcResultDialogType.WIN,
+                test_entity.getComponent(NpcEvictionMenuDisplayNew.class).handleLogic("xxx"));
 
     }
 

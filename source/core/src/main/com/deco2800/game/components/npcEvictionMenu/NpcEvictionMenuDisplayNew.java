@@ -520,6 +520,10 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         stage.remove();
     }
 
+    public void setFindKey(Boolean findKey) {
+        this.findKey = findKey;
+    }
+
     /**
      * When player select the correct traitor, after click OK button on right_box,
      * An win Information page will appear and the key will be spawn on the game area.
