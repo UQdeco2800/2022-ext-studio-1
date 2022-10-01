@@ -1,6 +1,13 @@
 package com.deco2800.game.components.npcEvictionMenu;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.deco2800.game.GdxGame;
+import com.deco2800.game.areas.ForestGameArea;
+import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.countDownClock.countdownDisplay;
+import com.deco2800.game.entities.Entity;
+import com.deco2800.game.physics.PhysicsEngine;
+import com.deco2800.game.rendering.Renderer;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.extensions.GameExtension;
@@ -16,7 +23,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(GameExtension.class)
 public class NpcEvictionMenuDisplayNewTest {
     private static final Logger logger = LoggerFactory.getLogger(NpcEvictionMenuDisplayNewTest.class);
+    private GdxGame game;
 
+    private ForestGameArea forestGameArea;
     private static final String[] mainGameTextures = {
             "images/heart.png","images/eviction_menu/menuIcon_black.png",
             "images/eviction_menu/menuIcon_white.png"};
@@ -41,7 +50,12 @@ public class NpcEvictionMenuDisplayNewTest {
             IMAGES_PATH + "rightBtn.png", IMAGES_PATH + "rightBtn_H.png",
             IMAGES_PATH + "wrongBox1.png", IMAGES_PATH + "wrongBox2.png",
             IMAGES_PATH + "chanceBtn.png", IMAGES_PATH + "chanceBtn_H.png",
-            IMAGES_PATH + "chanceBtn2.png", IMAGES_PATH + "chanceBtn2_H.png"};
+            IMAGES_PATH + "chanceBtn2.png", IMAGES_PATH + "chanceBtn2_H.png",
+            IMAGES_PATH + "saveMessage.png"};
+
+    public NpcEvictionMenuDisplayNewTest() {
+    }
+
     @Test
     void healthTest(){
         ServiceLocator.registerResourceService(new ResourceService());
@@ -49,6 +63,46 @@ public class NpcEvictionMenuDisplayNewTest {
         resourceService.loadTextures(mainGameTextures);
         resourceService.loadTextures(npcEvictionMenuTextures);
         ServiceLocator.getResourceService().loadAll();
+        Entity test_entity=new Entity();
+        test_entity.addComponent(new NpcEvictionMenuDisplayNew(logger,ServiceLocator.getResourceService(),1000,500,forestGameArea,game))
+                .addComponent(new CombatStatsComponent(100,0))
+                .addComponent(new countdownDisplay(game));
+
+        assertEquals(NpcEvictionMenuDisplayNew.NpcResultDialogType.RIGHT_BOX,
+                test_entity.getComponent(NpcEvictionMenuDisplayNew.class).handleLogic("Ares"));
+        assertEquals(0,test_entity.getComponent(NpcEvictionMenuDisplayNew.class).getErrorNum());
+        //If the handleLogic function is called with the wrong name,
+        // according to the logic we designed,
+        // the errorNum will be increased by one, and the health and time will be reduced to 90% of the current value.
+        //and finally it will return NpcResultDialogType.WRONG_BOX1
+        int health = test_entity.getComponent(CombatStatsComponent.class).getHealth();
+        float remainingTime =test_entity.getComponent(countdownDisplay.class).getRemainingTime();
+        assertEquals(NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX1,
+                test_entity.getComponent(NpcEvictionMenuDisplayNew.class).handleLogic("xxx"));
+        assertEquals(health*0.9,test_entity.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(remainingTime*0.9f,test_entity.getComponent(countdownDisplay.class).getRemainingTime());
+        assertEquals(1,test_entity.getComponent(NpcEvictionMenuDisplayNew.class).getErrorNum());
+
+        //If the handleLogic function is called second time with the wrong name,
+        // according to the logic we designed,
+        // the errorNum will be increased by one, and the health and time will be reduced to 80% of the current value.
+        //and finally it will return NpcResultDialogType.WRONG_BOX2
+        health = test_entity.getComponent(CombatStatsComponent.class).getHealth();
+        remainingTime =test_entity.getComponent(countdownDisplay.class).getRemainingTime();
+        assertEquals(NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX2,
+                test_entity.getComponent(NpcEvictionMenuDisplayNew.class).handleLogic("xxx"));
+        assertEquals(health*0.8,test_entity.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(remainingTime*0.8f,test_entity.getComponent(countdownDisplay.class).getRemainingTime());
+        assertEquals(2,test_entity.getComponent(NpcEvictionMenuDisplayNew.class).getErrorNum());
+
+        //If the handleLogic function is called third time with the wrong name,
+        // according to the logic we designed,
+        // it will return NpcResultDialogType.LOSE and errorNum is 0.
+
+        assertEquals(NpcEvictionMenuDisplayNew.NpcResultDialogType.LOSE,
+                test_entity.getComponent(NpcEvictionMenuDisplayNew.class).handleLogic("xxx"));
+        assertEquals(0,test_entity.getComponent(NpcEvictionMenuDisplayNew.class).getErrorNum());
+
 
 
     }
