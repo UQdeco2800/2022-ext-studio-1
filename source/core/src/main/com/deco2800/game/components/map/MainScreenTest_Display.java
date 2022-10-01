@@ -126,18 +126,7 @@ public class MainScreenTest_Display extends UIComponent {
                         chapter1Listener(it);
                     }
                 };
-            } else {// chapter with selections
-//                if (chapterNum == 2) {
-//                    chapter2Opening();
-//                    root = DialogWithSelection.getChapter2Dialog();
-//                    clickListener = new ClickListener() {
-//                        @Override
-//                        public void clicked(InputEvent event, float x, float y) {
-//                            super.clicked(event, x, y);
-//                            chapter2Listener();
-//                        }
-//                    };
-//                }
+            } else {
                 switch (chapterNum) {
                     case 2 -> {
                         chapter2Opening();
