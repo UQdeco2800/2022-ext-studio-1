@@ -23,16 +23,16 @@ You: No, your help is important for us! We are looking for the murderer who did 
 SELECTION 1: Ask for information about that person's voice. / SELECTION 2: Ask for information about that person's appearance.
 SELECTION 1:
 You: "Could you hear the voice of the murderer?"
-METIS: "Yes. He has a deep voice."
+Metis: "Yes. He has a deep voice."
 SELECTION 2:
 You: "Could you see the appearance of the murderer?"
 Metis: "Yes. He is a tall, and thin person."
 You: "Thanks for your help. If we get other scales, can we come to you to look at them?"
 Metis: "Of course."
-Zoe: "Dr. (Player's Name), let us keep going."
+Zoe: "Doctor, let us keep going."
 (PLAYER AND ZOE LEAVE METIS AND GO TO THE NEXT PLACE)
 (VILLAGE SCENE)
-Zoe: "Dr, (Player's Name), there is a girl siting in the garden. She has a scale on her hand."
+Zoe: "Doctor, there is a girl siting in the garden. She has a scale on her hand."
 You: "Let's go to ask her some questions."
 (PLAYER AND ZOE COME TO THE GARDEN)
 Zoe: "Hi, I'm Zoe, this is Doctor. We work in the lab. Could you please tell us where did you get this scale?"

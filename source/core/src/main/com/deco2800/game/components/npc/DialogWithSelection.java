@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DialogWithSelection {
     private final String dialog;
@@ -97,6 +98,19 @@ public class DialogWithSelection {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DialogWithSelection)) return false;
+        DialogWithSelection other = (DialogWithSelection) o;
+        return Objects.equals(dialog, other.dialog);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dialog);
+    }
+
     public static DialogWithSelection getChapter2Dialog() {
         DialogWithSelection pointer;
 
@@ -131,6 +145,89 @@ public class DialogWithSelection {
         DialogWithSelection selection4FromAppearance = pointer;
         selection4FromAppearance.setSelectionPoint("Tell her the truth.",
                 "Temporarily hide the truth.", 2, 4);
+
+        // return the whole dialogs
+        return root;
+    }
+
+    public static ArrayList<DialogWithSelection> getChapter2Endings() {
+        ArrayList<DialogWithSelection> endings = new ArrayList<>();
+        DialogWithSelection end1 = getChapter2Dialog().getNext().getOption2().getLastDialog()
+                .getOption2().getLastDialog()
+                .getOption1().getLastDialog()
+                .getOption1().getLastDialog();
+        DialogWithSelection end2 = getChapter2Dialog().getNext().getOption2().getLastDialog()
+                .getOption2().getLastDialog()
+                .getOption1().getLastDialog()
+                .getOption2().getLastDialog();
+        DialogWithSelection end3 = getChapter2Dialog().getNext().getOption2().getLastDialog()
+                .getOption2().getLastDialog()
+                .getOption2().getLastDialog()
+                .getOption1().getLastDialog();
+        DialogWithSelection end4 = getChapter2Dialog().getNext().getOption2().getLastDialog()
+                .getOption2().getLastDialog()
+                .getOption2().getLastDialog()
+                .getOption2().getLastDialog();
+        endings.add(end1);
+        endings.add(end2);
+        endings.add(end3);
+        endings.add(end4);
+        return endings;
+    }
+
+    public static DialogWithSelection getChapter3Dialog() {
+        DialogWithSelection pointer;
+
+        // set root dialog
+        DialogWithSelection root = new DialogWithSelection("You: \"Time to decide whether to go back to"
+        + "find Metis or move on in the village.\"");
+
+        // set selection point for root (1st selection)
+        root.setSelectionPoint("Back to find Metis.", "Move on in the village.",
+                3, 1);
+
+        // set selection points for 2nd selection
+        pointer = root.getNext().getOption1().getLastDialog();
+        DialogWithSelection selection2From1 = pointer;
+        selection2From1.setSelectionPoint("Observe from the sidelines.",
+                "Stop their quarrel.", 3, 2);
+
+        pointer = root.getNext().getOption2().getLastDialog();
+        DialogWithSelection selection2From2 = pointer;
+        selection2From2.setSelectionPoint("Observe from the sidelines.",
+                "Stop their quarrel.", 3, 2);
+
+        // set selection points for 3rd selection
+        pointer = selection2From1.getNext().getOption2().getLastDialog();
+        DialogWithSelection selection3From1 = pointer;
+        selection3From1.setSelectionPoint("Tell him the truth of Nereus' death.",
+                "Conceal the situation.", 3, 3);
+
+        pointer = selection2From2.getNext().getOption2().getLastDialog();
+        DialogWithSelection selection3From2 = pointer;
+        selection3From2.setSelectionPoint("Tell him the truth of Nereus' death.",
+                "Conceal the situation.", 3, 3);
+
+        // set selection points for 4th selection
+        pointer = selection3From1.getNext().getOption1().getLastDialog();
+        DialogWithSelection selection4From1_1 = pointer;
+        selection4From1_1.setSelectionPoint("Ignore this person.",
+                "Find a way to follow Orpheus back to the theater.", 3, 4);
+
+        pointer = selection3From1.getNext().getOption2().getLastDialog();
+        DialogWithSelection selection4From1_2 = pointer;
+        selection4From1_2.setSelectionPoint("Ignore this person.",
+                "Find a way to follow Orpheus back to the theater.", 3, 4);
+
+        pointer = selection3From2.getNext().getOption1().getLastDialog();
+        DialogWithSelection selection4From2_1 = pointer;
+        selection4From2_1.setSelectionPoint("Ignore this person.",
+                "Find a way to follow Orpheus back to the theater.", 3, 4);
+
+        pointer = selection3From2.getNext().getOption2().getLastDialog();
+        DialogWithSelection selection4From2_2 = pointer;
+        selection4From2_2.setSelectionPoint("Ignore this person.",
+                "Find a way to follow Orpheus back to the theater.", 3, 4);
 
         // return the whole dialogs
         return root;

@@ -11,4 +11,3 @@ You: "Maybe we could help. Would you mind to lend us this necklace? Maybe we cou
 Doris: "You two don't look like a bad person, and you just helped me to collect Fluorescent Corals... Fine. I can lend the scale to you. But be careful of it. It is my most precious treasure."
 You: "We will take care of it."
 (PLAYER GETS 1 SCALE)
-ENDING
