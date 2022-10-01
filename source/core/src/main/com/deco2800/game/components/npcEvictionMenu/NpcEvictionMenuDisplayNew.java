@@ -108,6 +108,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * @author Team7 Yingxin Liu
      */
     public Window creatEvictionMenu (){
+        if (findKey) {handleWin();}
         return this.stage;
     }
     /**
@@ -328,38 +329,9 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 dialog.remove();
                 // different name will lead to different result
                 // traitor is Ares.So here we check it.
-                if (Objects.equals(button_name, "Ares")){ // select npc correctly
-                    errorNum = 0;
-                    createResultDialog(button_name,NpcResultDialogType.RIGHT_BOX);
-                } else {
-                    if (errorNum == 0){
-                        //decrease blood 10%
-                        int health = entity.getComponent(CombatStatsComponent.class).getHealth();
-                        entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.9));
+                NpcResultDialogType result = handleLogic(button_name);
+                createResultDialog(button_name, result);
 
-                        //at the same time decrease remaing time 10%
-                        float remainingTime =entity.getComponent(countdownDisplay.class).getRemainingTime();
-                        entity.getComponent(countdownDisplay.class).setTimeRemaining((float) remainingTime*0.9f);
-
-                        errorNum++;
-                        createResultDialog(button_name,NpcResultDialogType.WRONG_BOX1);
-                    } else if (errorNum == 1) {
-                        //decrease blood 20%
-                        int health = entity.getComponent(CombatStatsComponent.class).getHealth();
-                        entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.8));
-                        //at the same time decrease remaing time 20%
-                        float remainingTime =entity.getComponent(countdownDisplay.class).getRemainingTime();
-                        entity.getComponent(countdownDisplay.class).setTimeRemaining((float) remainingTime*0.8f);
-                        errorNum++;
-                        createResultDialog(button_name,NpcResultDialogType.WRONG_BOX2);
-                    } else if (errorNum == 2){
-                        errorNum = 0;
-                        // game over
-                        EndingMenuDisplay.setLose();
-                        entity.getEvents().trigger("ending");
-                    }
-
-                }
             }
         });
         dialog.addActor(cancelButton);
@@ -436,7 +408,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * Types of result dialog box
      */
     protected enum NpcResultDialogType {
-        RIGHT_BOX, WRONG_BOX1, WRONG_BOX2
+        RIGHT_BOX, WRONG_BOX1, WRONG_BOX2, LOSE, WIN
     }
     /**
      * Display a result dialog and traitor message on the stage, the style is based on Team7 prototype <br/>
@@ -448,9 +420,16 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * @author Team7 Yingxin Liu Shaohui Wang
      */
     private void createResultDialog(String button_name, NpcResultDialogType type) {
-        float dialog_size_x,dialog_size_y;
-        logger.debug("create Result dialog from name: " + button_name);
+        logger.debug("create Result dialog from name: " + button_name + " type:" + type);
+        // if Lose, it will jump to ending screen, no need to create dialog
+        if (type == NpcResultDialogType.LOSE) {
+            EndingMenuDisplay.setLose();
+            entity.getEvents().trigger("ending");
+            return;}
+        if (type == NpcResultDialogType.WIN) {handleWin();return;}
+
         // set the style of dialog include font color of title; background; size; position
+        float dialog_size_x,dialog_size_y;
         String backgroundPath, buttonPathDefault, buttonPathHover;
 
         if (type == NpcResultDialogType.RIGHT_BOX) {
@@ -573,5 +552,59 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         stage.addActor(dialog);
     }
 
+    /**
+     * Handle the game logic of select the traitor<br/>
+     * player has 3 choices to find traitor<br/>
+     * if wrong, it will decrease the blood and time at the same time
+     *
+     * @param name name of npc selected
+     * @return
+     * NpcResultDialogType.RIGHT_BOX: if player correctly select the traitor <br/>
+     * NpcResultDialogType.WRONG_BOX1: if player fails for the first time<br/>
+     * NpcResultDialogType.WRONG_BOX2: if player fails for the second time <br/>
+     * NpcResultDialogType.LOSE: if player select 3 times and all fail <br/>
+     * NpcResultDialogType.WIN: if player have correctly select in the past<br/>
+     * null: This is not a return result that should occur. If it does,
+     * it indicates that there is a problem with in the code
+     * @author Team7 Yingxin Liu <br/>
+     * decrease blood/decrease remaing time: Shaohui Wang
+     *
+     */
+    protected NpcResultDialogType handleLogic (String name) {
+        if (findKey) { // player have selected correct in the past
+            return NpcResultDialogType.WIN;
+        }
+        if (Objects.equals(name, "Ares")){ // select npc correctly
+            errorNum = 0;
+            return NpcResultDialogType.RIGHT_BOX;
+        } else {
+            if (errorNum == 0){
+                //decrease blood 10%
+                int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+                entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.9));
 
+                //at the same time decrease remaing time 10%
+                float remainingTime =entity.getComponent(countdownDisplay.class).getRemainingTime();
+                entity.getComponent(countdownDisplay.class).setTimeRemaining((float) remainingTime*0.9f);
+
+                errorNum++;
+                return NpcResultDialogType.WRONG_BOX1;
+            } else if (errorNum == 1) {
+                //decrease blood 20%
+                int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+                entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.8));
+
+                //at the same time decrease remaing time 20%
+                float remainingTime =entity.getComponent(countdownDisplay.class).getRemainingTime();
+                entity.getComponent(countdownDisplay.class).setTimeRemaining((float) remainingTime*0.8f);
+                errorNum++;
+                return NpcResultDialogType.WRONG_BOX2;
+            } else if (errorNum == 2){
+                // game over
+                errorNum = 0;
+                return NpcResultDialogType.LOSE;
+            }
+        }
+        return null; // if return null, it means some error in code, please check
+    }
 }
