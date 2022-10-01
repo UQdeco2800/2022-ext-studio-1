@@ -23,12 +23,20 @@ public class AddToInventoryComponent extends Component {
   private short targetLayer;
   private HitboxComponent hitboxComponent;
 
+  private Integer id;
+
+
   /**
    * Create a component which is added to the player entities on collision
    * @param targetLayer The physics layer of the target's collider.
    */
   public AddToInventoryComponent(short targetLayer) {
     this.targetLayer = targetLayer;
+  }
+
+  public AddToInventoryComponent(short targetLayer, int id) {
+    this.targetLayer = targetLayer;
+    this.id = id;
   }
 
   @Override
@@ -47,10 +55,22 @@ public class AddToInventoryComponent extends Component {
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
     InventoryComponent playerInventory = target.getComponent(InventoryComponent.class);
 
-    int inventoryCount = playerInventory.inventoryHashMap.size();
+//    int inventoryCount = playerInventory.inventoryHashMap.size();
 
-    addToInventory(inventoryCount, playerInventory, me);
+    try {
+      playerInventory.add(id);
+    } catch (NullPointerException e) {
+    }
+//    addToInventory(inventoryCount, playerInventory, me);
+    Entity self = ((BodyUserData) me.getBody().getUserData()).entity;
+    self.setEnabled(false);
+    self.getComponent(TextureRenderComponent.class).dispose();
+    self.getComponent(AddToInventoryComponent.class).dispose();
+  }
 
+  @Override
+  public void dispose() {
+    id = null;
   }
 
   /**
@@ -59,6 +79,7 @@ public class AddToInventoryComponent extends Component {
    * @param playerInventory the players inventory
    * @param me the player
    */
+  @Deprecated
   public void addToInventory (int inventoryCount, InventoryComponent playerInventory, Fixture me)
   {
     if (inventoryCount >= 10 )
