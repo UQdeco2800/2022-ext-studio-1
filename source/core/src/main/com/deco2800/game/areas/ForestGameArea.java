@@ -3,6 +3,7 @@ package com.deco2800.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.entities.Entity;
@@ -69,6 +70,8 @@ public class ForestGameArea extends GameArea {
 
   private Entity player;
 
+  public Entity key;
+
   public ForestGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
@@ -88,7 +91,6 @@ public class ForestGameArea extends GameArea {
     spawnTimeConsumeableItem();
     spawnClueItem();
     playMusic();
-    spawnKey();
 
   }
 
@@ -153,14 +155,16 @@ public class ForestGameArea extends GameArea {
   private void spawnClueItem() {
     Entity item = ClueItemFactory.createItem(player, "images/inventory/scales1.png");
 
+
     spawnEntityAt(item, new GridPoint2(5, 5), true, true);
   }
 
 
-  private void spawnKey() {
-    Entity item = ClueItemFactory.createItem(player, "images/KEY.png");
-
-    spawnEntityAt(item, new GridPoint2(6, 6), true, true);
+  public void spawnKey(GdxGame game) {
+    this.key = ClueItemFactory.createItem(player, "images/KEY.png");
+    key.type = "key";
+    key.game = game;
+    spawnEntityAt(key, new GridPoint2(6, 6), true, true);
   }
 
   private void spawnGhosts() {

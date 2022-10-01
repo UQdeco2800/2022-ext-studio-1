@@ -4,30 +4,26 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-
-
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.components.CombatStatsComponent;
+
 import com.deco2800.game.components.countDownClock.countdownDisplay;
+
+import com.deco2800.game.components.endingmenu.EndingMenuDisplay;
+
 import com.deco2800.game.components.npc.NPCClueLibrary;
-import com.deco2800.game.components.endingmenu.*;
 import com.deco2800.game.services.ResourceService;
-import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
@@ -44,7 +40,7 @@ import java.util.Objects;
  * @author 2022-ext-studio-1-Team7, rebuilt by Yingxin Liu 15/09/2022
  */
 public class NpcEvictionMenuDisplayNew extends UIComponent {
-    private Logger logger;
+    private final Logger logger;
 
     private static final int NUMBER_OF_NPC = 8;
     private static float bgWidth;
@@ -59,6 +55,9 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
     };
     private final ResourceService resourceService;
 
+    private final ForestGameArea gameArea;
+    private final GdxGame game;
+
     private final Window stage;
 
     private static final Skin skin =
@@ -68,6 +67,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
     private final NpcEvictionMenuDisplayHelper helper = new NpcEvictionMenuDisplayHelper();
 
     private Integer errorNum;
+    private Boolean findKey;
 
 
     /**
@@ -78,14 +78,18 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * @param height height of stage of the Screen
      * @author Team7 Yingxin Liu
      */
-    public NpcEvictionMenuDisplayNew(Logger logger, ResourceService resourceService, float width, float height) {
+    public NpcEvictionMenuDisplayNew(Logger logger, ResourceService resourceService,
+                                     float width, float height, ForestGameArea gameArea, GdxGame game) {
         this.logger = logger;
         logger.debug("initialize NpcEvictionMenu Window");
         this.resourceService = resourceService;
+        this.gameArea = gameArea;
+        this.game = game;
 
         bgWidth = width;
         bgHeight = height;
         errorNum = 0;
+        findKey = false;
 
 
         // creat the Npc eviction menu window with transparent background
@@ -268,11 +272,20 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
     /**
      * Display a confirm dialog on the stage, the style is based on Team7 prototype <br/>
      * All scales are calculated according to the prototype from team 7 only <br/>
+     * player has 3 choices to find traitor, if all fail, the game will directly over <br/>
+     * if correct, A key will be spawned on the map,
+     * player can pick it up and use it in the warehouse. The game will win <br/>
+     * For using the key, we have written the code in the warehouse component of <b>team 8</b>
+     * @see com.deco2800.game.components.player.InventoryDisplayComponent
      * Button cancel: remove the dialog <br/>
      * Button Ok    : confirm the action from selected button <br/>
-     *
+     * @see EndingMenuDisplay
      * @param button_name The name of the button that calls this function
-     * @author Team7 Yingxin Liu
+     * @author Team7 Yingxin Liu <br/>
+     * When lose the game ,it will go to other screen: EndingMenu
+     * These code is provided from <b>team 3</b> <br/>
+     * When correct, <b>team 5</b> provides code for spawn the key <br/>
+     *
      */
     public void createConfirmDialog(String button_name) {
 //        entity.getEvents().addListener("ending", this::onEnding);
@@ -316,16 +329,18 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 // different name will lead to different result
                 // traitor is Ares.So here we check it.
                 if (Objects.equals(button_name, "Ares")){ // select npc correctly
+                    errorNum = 0;
                     createResultDialog(button_name,NpcResultDialogType.RIGHT_BOX);
                 } else {
-
                     if (errorNum == 0){
                         //decrease blood 10%
                         int health = entity.getComponent(CombatStatsComponent.class).getHealth();
                         entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.9));
+
                         //at the same time decrease remaing time 10%
                         float remainingTime =entity.getComponent(countdownDisplay.class).getRemainingTime();
                         entity.getComponent(countdownDisplay.class).setTimeRemaining((float) remainingTime*0.9f);
+
                         errorNum++;
                         createResultDialog(button_name,NpcResultDialogType.WRONG_BOX1);
                     } else if (errorNum == 1) {
@@ -337,7 +352,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                         entity.getComponent(countdownDisplay.class).setTimeRemaining((float) remainingTime*0.8f);
                         errorNum++;
                         createResultDialog(button_name,NpcResultDialogType.WRONG_BOX2);
-                    } else {
+                    } else if (errorNum == 2){
                         errorNum = 0;
                         // game over
                         EndingMenuDisplay.setLose();
@@ -418,7 +433,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
     }
 
     /**
-     *
+     * Types of result dialog box
      */
     protected enum NpcResultDialogType {
         RIGHT_BOX, WRONG_BOX1, WRONG_BOX2
@@ -511,7 +526,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 logger.info("yes_button from " + button_name + " clicked");
                  //when you select ok button
                 dialog.remove();
-                if (Objects.equals(button_name, "Ares"))
+                if (type == NpcResultDialogType.RIGHT_BOX)
                     createTraitorClueInfo(button_name);
             }
         });
@@ -548,8 +563,11 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 logger.info(card_name + " clicked");
                 dialog.remove();
                 exitMenu();
-                //here we need call findkey function from team 5.
-
+                // here we need call findkey function from team 5.
+                if (!findKey){
+                    gameArea.spawnKey(game);
+                    findKey = true;
+                }
                 return true;
             }
         });

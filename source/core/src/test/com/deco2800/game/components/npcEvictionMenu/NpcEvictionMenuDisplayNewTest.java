@@ -50,10 +50,6 @@ public class NpcEvictionMenuDisplayNewTest {
         resourceService.loadTextures(npcEvictionMenuTextures);
         ServiceLocator.getResourceService().loadAll();
 
-        NpcEvictionMenuDisplayNew npcmenu = new NpcEvictionMenuDisplayNew(logger, ServiceLocator.getResourceService(),1000,500);
-
-        npcmenu.createConfirmDialog("xxx");
-        assertEquals(0,npcmenu.getErrorNum());
 
     }
 
