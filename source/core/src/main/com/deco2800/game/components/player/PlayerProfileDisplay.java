@@ -26,6 +26,7 @@ public class PlayerProfileDisplay extends UIComponent {
     Table content;
 
     Button backButton;
+    Button exitButton;
 
     private static final String[] playerProfileTextures = {
             "images/exitbtn.png"
