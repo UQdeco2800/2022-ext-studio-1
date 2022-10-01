@@ -15,7 +15,11 @@ import com.badlogic.gdx.utils.Align;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.components.CombatStatsComponent;
+
+import com.deco2800.game.components.countDownClock.countdownDisplay;
+
 import com.deco2800.game.components.endingmenu.EndingMenuDisplay;
+
 import com.deco2800.game.components.npc.NPCClueLibrary;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.ui.UIComponent;
@@ -106,7 +110,14 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
     public Window creatEvictionMenu (){
         return this.stage;
     }
-
+    /**
+     * return the errorNum
+     * @return errorNum
+     * @author Team7 WangShaohui
+     */
+    public Integer getErrorNum() {
+        return errorNum;
+    }
 
     /**
      * Add actors of eviction_menu to the stage
@@ -276,7 +287,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * When correct, <b>team 5</b> provides code for spawn the key <br/>
      *
      */
-    private void createConfirmDialog(String button_name) {
+    public void createConfirmDialog(String button_name) {
 //        entity.getEvents().addListener("ending", this::onEnding);
 
         logger.debug("create confirm dialog from name: " + button_name);
@@ -309,6 +320,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         Button okButton = createButton(IMAGES_PATH + "confirmBtn_ok.png", IMAGES_PATH + "confirmBtn_ok1.png");
         okButton.setSize((float) (dialog_size_x * 0.377), (float) (dialog_size_y * 0.2317));
         okButton.setPosition((float) (dialog.getWidth() * 0.5239), 0);
+
         okButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -321,15 +333,23 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                     createResultDialog(button_name,NpcResultDialogType.RIGHT_BOX);
                 } else {
                     if (errorNum == 0){
-                        //decrease blood 15%
+                        //decrease blood 10%
                         int health = entity.getComponent(CombatStatsComponent.class).getHealth();
                         entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.9));
+
+                        //at the same time decrease remaing time 10%
+                        float remainingTime =entity.getComponent(countdownDisplay.class).getRemainingTime();
+                        entity.getComponent(countdownDisplay.class).setTimeRemaining((float) remainingTime*0.9f);
+
                         errorNum++;
                         createResultDialog(button_name,NpcResultDialogType.WRONG_BOX1);
                     } else if (errorNum == 1) {
-                        //decrease blood 15%
+                        //decrease blood 20%
                         int health = entity.getComponent(CombatStatsComponent.class).getHealth();
                         entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.8));
+                        //at the same time decrease remaing time 20%
+                        float remainingTime =entity.getComponent(countdownDisplay.class).getRemainingTime();
+                        entity.getComponent(countdownDisplay.class).setTimeRemaining((float) remainingTime*0.8f);
                         errorNum++;
                         createResultDialog(button_name,NpcResultDialogType.WRONG_BOX2);
                     } else if (errorNum == 2){
