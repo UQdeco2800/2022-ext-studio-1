@@ -3,6 +3,7 @@ package com.deco2800.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.entities.Entity;
@@ -57,7 +58,8 @@ public class ForestGameArea extends GameArea {
     "images/inventory/inventoryBG.png",
     "images/switch/Tools.png",
     "images/switch/Battery.png",
-    "images/switch/Electric Switch Broken.png"
+    "images/switch/Electric Switch Broken.png",
+    "images/KEY.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas","images/player.atlas","images/orpheus.atlas",
@@ -71,6 +73,8 @@ public class ForestGameArea extends GameArea {
   private final TerrainFactory terrainFactory;
 
   private Entity player;
+
+  public Entity key;
 
   public ForestGameArea(TerrainFactory terrainFactory) {
     super();
@@ -92,6 +96,7 @@ public class ForestGameArea extends GameArea {
     spawnClueItem();
     spawnSwitchItems();
     playMusic();
+
   }
 
   private void displayUI() {
@@ -155,8 +160,10 @@ public class ForestGameArea extends GameArea {
   private void spawnClueItem() {
     Entity item = ClueItemFactory.createItem(player, "images/inventory/scales1.png");
 
+
     spawnEntityAt(item, new GridPoint2(5, 5), true, true);
   }
+
 
   private void spawnSwitchItems() {
     Entity switchItem = SwitchFactory.createSwitch();
@@ -175,6 +182,12 @@ public class ForestGameArea extends GameArea {
     }
   }
 
+  public void spawnKey(GdxGame game) {
+    this.key = ClueItemFactory.createItem(player, "images/KEY.png");
+    key.type = "key";
+    key.game = game;
+    spawnEntityAt(key, new GridPoint2(6, 6), true, true);
+  }
 
   private void spawnGhosts() {
     GridPoint2 minPos = new GridPoint2(0, 0);
@@ -222,7 +235,7 @@ public class ForestGameArea extends GameArea {
 
     while (!resourceService.loadForMillis(10)) {
       // This could be upgraded to a loading screen
-      logger.info("Loading... {}%", resourceService.getProgress());
+      //logger.info("Loading... {}%", resourceService.getProgress());
     }
   }
 
