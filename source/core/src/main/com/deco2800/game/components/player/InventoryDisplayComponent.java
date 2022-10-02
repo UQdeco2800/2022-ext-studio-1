@@ -567,7 +567,7 @@ public class InventoryDisplayComponent extends UIComponent {
         // the only different is i.type == null if it is Mermaid
         // Team 7 Yingxin Liu
         if (Objects.equals(i.type, "key")){
-            return "Key - This key can be used to win the game!";
+            return "Mysterious Key - This key can be used to win the game!";
         }
 
         //If it's a clue item

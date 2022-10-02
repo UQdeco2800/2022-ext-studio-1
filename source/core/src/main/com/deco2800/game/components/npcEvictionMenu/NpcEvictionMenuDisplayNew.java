@@ -364,7 +364,9 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * The context of this dialog will be provided by Team 9
      *
      * @param card_name The name of the card which calls this function
-     * @author Code: Team7 Yingxin Liu Shaohui Wang   <br/>Context: Team 9
+     * @author Code: Team7 Yingxin Liu <br/>
+     * Put the label with context: Team 7 Shaohui Wang <br/>
+     * Context: Team 9
      */
     private void createCardInfo(String card_name) {
         logger.debug("create card information dialog from name: " + card_name);
@@ -417,7 +419,8 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      *
      * @param button_name The name of the button that calls this function
      * @param type The type of dialog will be created
-     * @author Team7 Yingxin Liu Shaohui Wang
+     * @author Team7 Yingxin Liu <br/>
+     * Put the label with context: Team 7 Shaohui Wang
      */
     private void createResultDialog(String button_name, NpcResultDialogType type) {
         logger.debug("create Result dialog from name: " + button_name + " type:" + type);
