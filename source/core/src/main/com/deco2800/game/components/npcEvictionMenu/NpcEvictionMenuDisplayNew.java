@@ -599,8 +599,6 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                     Find the mysterious key, it can help you save Atlantis and help you out of here!""";
         }
 
-        // create skin of label same as default skin in main menu
-        Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
 
         // create and set the label with content
         Label titleLabel = new Label(titleContent, skin, "title",Color.NAVY);
