@@ -21,7 +21,7 @@ public class MainMenuActions extends Component {
   public void create() {
     entity.getEvents().addListener("start", this::onStart);
 
-    entity.getEvents().addListener("load", this::onLoad);
+    entity.getEvents().addListener("tutorial", this::onTutorial);
     entity.getEvents().addListener("storyline", this::onStoryline);
     entity.getEvents().addListener("map", this::onMap);
     entity.getEvents().addListener("achievements", this::onAchievements);
@@ -57,11 +57,11 @@ public class MainMenuActions extends Component {
 
 
   /**
-   * Intended for loading a saved game state.
-   * Load functionality is not actually implemented.
+   * Intended for displaying the games tutorials
    */
-  private void onLoad() {
+  private void onTutorial() {
     logger.info("Load game");
+    game.setScreen(GdxGame.ScreenType.TUTORIAL);
   }
 
   /**
