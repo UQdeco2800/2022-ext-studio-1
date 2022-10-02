@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 public class SwitchComponent extends Component {
 
-//    private HitboxComponent hitboxComponent;
+    //    private HitboxComponent hitboxComponent;
 
     @Override
     public void create() {
@@ -35,14 +35,18 @@ public class SwitchComponent extends Component {
 //
 //
 //        HashMap<Integer, Integer> inventoryHashMap = playerInventory.inventoryHashMap;
-        Skin uiSkin = new Skin(Gdx.files.internal("uiskin.json"));
-        Dialog dialog = new Dialog("Task", uiSkin, "dialog") {
-            public void result(Object obj) {
-                System.out.println("result "+ obj);
-            }
-        };
-        dialog.text("You need to find three batteries and one tool");
-        dialog.button("Ok", true); //sends "true" as the result
-        dialog.show(ServiceLocator.getRenderService().getStage());
+//        if (!displayed) {
+//            Skin uiSkin = new Skin(Gdx.files.internal("uiskin.json"));
+//            Dialog dialog = new Dialog("Task", uiSkin, "dialog") {
+//                public void result(Object obj) {
+//                    System.out.println("result "+ obj);
+//                }
+//            };
+//            dialog.text("You need to find three batteries and one tool");
+//            dialog.button("Ok", true); //sends "true" as the result
+//            dialog.show(ServiceLocator.getRenderService().getStage());
+//
+//            displayed = true;
+//        }
     }
 }
