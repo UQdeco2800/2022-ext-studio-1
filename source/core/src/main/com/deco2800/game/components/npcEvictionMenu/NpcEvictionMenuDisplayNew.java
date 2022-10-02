@@ -95,7 +95,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         // creat the Npc eviction menu window with transparent background
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
                 resourceService.getAsset(IMAGES_PATH + "transparentBg.png", Texture.class));
-        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLUE, styleImage);
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
         this.stage = new Window("", windowStyle);
         this.stage.setModal(true);       // The window is always in front
         this.stage.setFillParent(true);  // Fill all space with the stage
@@ -373,7 +373,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         // set the style of dialog include font color of title; background; size; position
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
                 resourceService.getAsset(IMAGES_PATH + "infoWindow.png", Texture.class));
-        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLUE, styleImage);
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
         Window dialog = new Window("", windowStyle);
         dialog.setModal(true);    // The dialog is always at the front
         float dialog_size_x = (float) (bgWidth * (810.0 / 1600));
@@ -556,7 +556,68 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 return true;
             }
         });
+        showWinContext(dialog);
         stage.addActor(dialog);
+    }
+
+    /**
+     * creat a table include the label with win context and title
+     * and add it to given stage
+     * @param dialog stage that will be added
+     * @author Team 7 Yingxin Liu
+     */
+    private void showWinContext(Window dialog){
+        // create frame for both title and context
+        Table title =  new Table();
+        title.setSize(stage.getWidth()*(1106-636)/1600,
+                stage.getHeight()*(220-160)/900);
+        title.setPosition((float) (stage.getWidth()*(636.67/1600)),
+                (float) (stage.getHeight()*(1-220.0/900)));
+
+        Table context =  new Table();
+        context.setSize((float) (stage.getWidth()*(1150.67-696.67)/1600),
+                stage.getHeight()*(750-290)/900);
+        context.setPosition((float) (stage.getWidth()*(696.67/1600)),
+                (float) (stage.getHeight()*(1-750.0/900)));
+
+        // set title/context srting
+        String titleContent;
+        String contextContent;
+        titleContent = "Message from Ares";
+        if (findKey) {
+            contextContent = """
+                    
+                    You have found the traitor and got the information to save Atlantis.
+                      
+                    Go and find the mysterious key!""";
+
+        } else {
+            contextContent = """
+                    \s
+                    I love my country and people very much, but I have to do it for the throne. However, I regretted it after Atlantis sank, but maybe you can save it:
+                    \s\s
+                    Find the mysterious key, it can help you save Atlantis and help you out of here!""";
+        }
+
+        // create skin of label same as default skin in main menu
+        Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+
+        // create and set the label with content
+        Label titleLabel = new Label(titleContent, skin, "title",Color.NAVY);
+        titleLabel.setAlignment(Align.center);
+        titleLabel.setFontScale(stage.getWidth()/1920,stage.getHeight()/980);
+
+        Label contextLabel = new Label(contextContent, skin, "font_large",Color.DARK_GRAY);
+        contextLabel.setSize(context.getWidth(),context.getHeight());
+        contextLabel.setAlignment(Align.top);
+        contextLabel.setFontScale(stage.getWidth()/1920,stage.getHeight()/980);
+        contextLabel.setWrap(true);
+
+        // add to goal position
+        title.add(titleLabel).center();
+        context.addActor(contextLabel);
+        dialog.addActor(title);
+        dialog.addActor(context);
     }
 
     /**
