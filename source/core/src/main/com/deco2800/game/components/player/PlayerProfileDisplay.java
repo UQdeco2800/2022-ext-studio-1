@@ -75,6 +75,22 @@ public class PlayerProfileDisplay extends UIComponent {
         return (float )sum / numElements;
     }
 
+
+    public float calculateAveTi(int timeLeft,int timeWins){
+        float average = timeLeft/timeWins;
+
+        return average;
+
+    }
+    public float calculateAvgAtm(int numberOfAttempt, int timeItWin){
+
+        float average = numberOfAttempt/timeItWin;
+
+        return average;
+
+
+    }
+
     /**
      * Creates the player profile window.
      */
@@ -129,29 +145,42 @@ public class PlayerProfileDisplay extends UIComponent {
         int sumTimeRemaining = 0;
         int sumResult = 0;
         int sumAttempt = 0;
+        int numberOfWin =0;
+        int numberOfLose =0;
+
 
         for (PlayerProfileProperties stat : playerProfile) {
 
             int timeRemaining = 7260 - stat.timeRemaining;
             int result = stat.result;
             int attempt = stat.attempt;
-
-            sumTimeRemaining += timeRemaining;
+           if(stat.result==1) {
+               sumTimeRemaining += timeRemaining;
+           }
             sumResult += result;
-            sumAttempt += attempt;
+           if(stat.result==1) {
+               sumAttempt += attempt;
+           }
+            if(stat.result==0){
+                numberOfLose+=1;
+
+            }
+            if(stat.result==1){
+                numberOfWin+=1;
+            }
 
         }
 
-        float avgTimeRemaining = calculateAvg(sumTimeRemaining, playerProfile.size());
+        float avgTimeRemaining = calculateAveTi(sumTimeRemaining, numberOfWin);
         float avgResult = calculateAvg(sumResult, playerProfile.size());
-        float avgAttempt = calculateAvg(sumAttempt, playerProfile.size());
+        float avgAttempt = calculateAvgAtm(sumAttempt, numberOfWin);
         //
 
         // creating labels to display the data retrieved from the json file.
         Label attempts = new Label(String.valueOf(avgAttempt), skin);
         Label time = new Label(String.valueOf(avgTimeRemaining) + " s", skin);
-        Label losses = new Label("1", skin);
-        Label wins = new Label(String.valueOf(avgResult), skin);
+        Label losses = new Label(String.valueOf(numberOfLose), skin);
+        Label wins = new Label(String.valueOf(numberOfWin), skin);
 
 
         // creating table to place and position all the labels in.
