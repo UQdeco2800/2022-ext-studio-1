@@ -1,8 +1,14 @@
 package com.deco2800.game.components.player;
 
+import com.deco2800.game.components.player.entity.ClueItem;
+import com.deco2800.game.components.player.entity.Item;
+import com.deco2800.game.entities.configs.ItemConfigs;
 import com.deco2800.game.extensions.GameExtension;
+import com.deco2800.game.files.FileLoader;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -83,5 +89,19 @@ class InventoryComponentTest {
 
     addToInventoryComponent.addToInventory(inventory.inventoryHashMap.size(), inventory, null);
     assertEquals(10, inventory.inventoryHashMap.size());
+  }
+
+  @Test
+  void readItemConfigsTest() {
+    ItemConfigs itemConfigs = FileLoader.readClass(ItemConfigs.class, "configs/items.json");
+    System.out.println(itemConfigs.itemList.size());
+
+//    ItemConfigs configs = new ItemConfigs();
+//    List<Item> itemList = configs.itemList;
+//    ClueItem clueItem = new ClueItem(1, "a", "des", "c://a");
+//    itemList.add(clueItem);
+//    itemList.add(clueItem);
+//    itemList.add(clueItem);
+//    FileLoader.writeClass(configs, "configs/items.json", FileLoader.Location.INTERNAL);
   }
 }

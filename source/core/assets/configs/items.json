@@ -1,0 +1,11 @@
+{
+  "itemList": [
+    {
+      "class": "com.deco2800.game.components.player.entity.ConsumableItem",
+      "id": 1,
+      "name": "Time Item",
+      "description": "Time Item - This item can be used to increase the countdown clock!",
+      "textureLocation": "images/inventory/time_item.png"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+Metis: "Do you need my help, Doctor?"
+You: "Yes, could you please help me read this scale's memory?"
+Metis: "I'm sorry, but I can't read this scale's memory. It's badly damaged. Maybe you can go to ask Heph to help fix it. He is stubborn but honest. You should be able to find him in the village ahead."
+You continue to go to the village.
+The people arguing on the street caught player's attention. As they walked through the crowd, they saw one man screaming at another person, with eyes blazing with fury.
+You: "Hey guys, what's going on here now?"
+Bystander: "Heph's weird temper, who knows what will happen."
+"Maybe that person is not satisfied with what he repaired, Heph's repair skills are still good. Just a bad temper."
