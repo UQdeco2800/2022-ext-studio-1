@@ -120,8 +120,12 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.HashMap)" class="member-name-link">InventoryDisplayComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;inventory)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.deco2800.game.components.player.InventoryComponent)" class="member-name-link">InventoryDisplayComponent</a><wbr>(<a href="InventoryComponent.html" title="class in com.deco2800.game.components.player">InventoryComponent</a>&nbsp;inventoryComponent)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.util.HashMap)" class="member-name-link">InventoryDisplayComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;inventory)</code></div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 </div>
 </section>
 </li>
@@ -130,7 +134,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifier and Type</div>
@@ -158,9 +162,14 @@ loadScripts(document, 'script');</script>
 <div class="block">Draw the renderable.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useItem(com.deco2800.game.entities.Entity,java.lang.Integer)" class="member-name-link">useItem</a><wbr>(<a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;i,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;key)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useItem(int)" class="member-name-link">useItem</a><wbr>(int&nbsp;id)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#useItem(com.deco2800.game.entities.Entity,java.lang.Integer)" class="member-name-link">useItem</a><wbr>(<a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;i,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;key)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 </div>
 </div>
 </div>
@@ -210,7 +219,15 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(java.util.HashMap)">
 <h3>InventoryDisplayComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InventoryDisplayComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;inventory)</span></div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="element-name">InventoryDisplayComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;inventory)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.deco2800.game.components.player.InventoryComponent)">
+<h3>InventoryDisplayComponent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InventoryDisplayComponent</span><wbr><span class="parameters">(<a href="InventoryComponent.html" title="class in com.deco2800.game.components.player">InventoryComponent</a>&nbsp;inventoryComponent)</span></div>
 </section>
 </li>
 </ul>
@@ -237,8 +254,16 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="useItem(com.deco2800.game.entities.Entity,java.lang.Integer)">
 <h3>useItem</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">useItem</span><wbr><span class="parameters">(<a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;i,
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">useItem</span><wbr><span class="parameters">(<a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;i,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;key)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="useItem(int)">
+<h3>useItem</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">useItem</span><wbr><span class="parameters">(int&nbsp;id)</span></div>
 </section>
 </li>
 <li>
