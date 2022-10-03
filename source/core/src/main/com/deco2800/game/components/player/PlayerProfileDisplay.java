@@ -79,12 +79,6 @@ public class PlayerProfileDisplay extends UIComponent {
     private void addActors() {
         ResourceService resourceService = ServiceLocator.getResourceService();
 
-        Image bgImage = new Image(
-                resourceService.getAsset(
-                        "images/blank.png", Texture.class
-                )
-        );
-
         // loading and creating background image.
         Texture backgroundTexture = new Texture(Gdx.files.internal("images/playerprofile/background.png"));
         TextureRegionDrawable ppBackground = new TextureRegionDrawable(backgroundTexture);
