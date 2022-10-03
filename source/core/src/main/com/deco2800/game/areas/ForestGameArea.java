@@ -173,7 +173,7 @@ public class ForestGameArea extends GameArea {
     Entity switchItem = SwitchFactory.createSwitch();
     spawnEntityAt(switchItem, new GridPoint2(20, 10), true, true);
 
-    Entity tool = SwitchFactory.createTools();
+    Entity tool = SwitchFactory.createTool();
     spawnEntityAt(tool, new GridPoint2(25, 10), true, true);
 
     GridPoint2 minPos = new GridPoint2(5, 5);
@@ -181,7 +181,8 @@ public class ForestGameArea extends GameArea {
 
     for (int i = 0; i < NUM_BATTERIES; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity battery = SwitchFactory.createBattery();
+//      Entity battery = SwitchFactory.createBattery();
+      Entity battery = ItemFactory.createItem(3);
       spawnEntityAt(battery, randomPos, true, false);
     }
   }

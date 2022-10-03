@@ -1,8 +1,6 @@
 package com.deco2800.game.components.player;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,26 +10,21 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Null;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.countDownClock.countdownDisplay;
 import com.deco2800.game.components.player.entity.Backpack;
 import com.deco2800.game.components.player.entity.Item;
 import com.deco2800.game.components.endingmenu.EndingMenuDisplay;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.EntityService;
-import com.deco2800.game.entities.factories.ClueItemFactory;
-import com.deco2800.game.entities.factories.ConsumableItemFactory;
+import com.deco2800.game.entities.factories.SwitchFactory;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -581,10 +574,18 @@ public class InventoryDisplayComponent extends UIComponent {
             return;
         }
 
-
         //If it's a clue item
         if (i.getComponent(ClueItemComponent.class) != null){
             consumeClueItem(i, key);
+        }
+    }
+
+    private void consumeToolItem(Integer key) {
+        if (inventoryComponent.contains(SwitchFactory.BATTERY_ID)
+                && inventoryComponent.count(SwitchFactory.BATTERY_ID) == 3){
+            inventoryComponent.remove(SwitchFactory.TOOL_ID);
+            inventoryComponent.remove(SwitchFactory.BATTERY_ID, 3);
+            SwitchFactory.isWorking = true;
         }
     }
 
@@ -593,6 +594,9 @@ public class InventoryDisplayComponent extends UIComponent {
             consumeTimeItem(id);
         }
 
+        if (id == SwitchFactory.TOOL_ID) {
+            consumeToolItem(id);
+        }
 
     }
 
@@ -670,7 +674,7 @@ public class InventoryDisplayComponent extends UIComponent {
         }
 
 
-        if (i.getComponent(BatteryComponent.class) != null){
+        if (i.getComponent(ToolComponent.class) != null){
             return "Battery - This item can be used to fix the switch (three of them required)!";
         }
 

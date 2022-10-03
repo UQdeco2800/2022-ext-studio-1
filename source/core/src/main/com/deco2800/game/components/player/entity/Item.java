@@ -67,7 +67,11 @@ public abstract class Item {
         /**
          * Clue items, usually only one can be obtained
          */
-        CLUE_ITEM
+        CLUE_ITEM,
+        /**
+         * Tool items, can be used to repair equipment
+         */
+        TOOL_ITEM,
     }
 
 }
