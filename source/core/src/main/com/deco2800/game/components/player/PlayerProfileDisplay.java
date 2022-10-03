@@ -6,11 +6,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.services.ResourceService;
 import org.slf4j.Logger;
 import com.badlogic.gdx.graphics.Texture;
+import org.slf4j.LoggerFactory;
 
 import java.security.Provider;
 
@@ -20,6 +22,9 @@ public class PlayerProfileDisplay extends UIComponent {
     private static final int bgWidth = 500;
     private static final int bgHeight = 350;
 
+    private static final Logger logger = LoggerFactory.getLogger(PlayerProfileDisplay.class);
+
+
     Table root;
     Table background;
     Table title;
@@ -28,37 +33,42 @@ public class PlayerProfileDisplay extends UIComponent {
     Button backButton;
     Button exitButton;
 
-    private static final String[] playerProfileTextures = {
-            "images/exitbtn.png"
-    };
+//    private static final String[] playerProfileTextures = {
+//            "images/exitbtn.png",
+//    };
+//
+//    private void loadAssets() {
+//        logger.debug("loading assets");
+//        ResourceService resourceService = ServiceLocator.getResourceService();
+//        resourceService.loadTextures(playerProfileTextures);
+//    }
+//
+//    private void unloadAssets() {
+//        logger.debug("unloading assets");
+//        ResourceService resourceService = ServiceLocator.getResourceService();
+//        resourceService.unloadAssets(playerProfileTextures);
+//    }
 
-    public final ResourceService resourceService = ServiceLocator.getResourceService();
 
     @Override
     public void create() {
+//        loadAssets();
         super.create();
-        resourceService.loadTextures(playerProfileTextures);
         addActors();
     }
 
 
     private void addActors() {
+        ResourceService resourceService = ServiceLocator.getResourceService();
+
         Image bgImage = new Image(
                 resourceService.getAsset(
                         "images/blank.png", Texture.class
                 )
         );
 
-//        TextureRegionDrawable exitBtnStyle = new TextureRegionDrawable(resourceService.getAsset(
-//                "images/exitbtn.png", Texture.class
-//        ));
-
-//        exitButton = new ImageButton(exitBtnStyle);
-//
-//
-
-//        exitButton.setPosition((float) (this.stage.getWidth() * 0.45), (float) (this.stage.getHeight() * 0.1));
-//        exitButton.setSize((float) (this.stage.getWidth() * ((1493.33 - 1436.67) / 1600)), (float) (this.stage.getHeight() * (53.33 / 900)));
+        Texture exitBtnTexture = new Texture(Gdx.files.internal("images/exitbtn.png"));
+        TextureRegionDrawable exitBtn = new TextureRegionDrawable(exitBtnTexture);
 
         Stack stack = new Stack();
 
@@ -97,8 +107,10 @@ public class PlayerProfileDisplay extends UIComponent {
         content.add(levelLabel).expandX().expandY();
         content.add(level).width(300);
 
-        backButton = new TextButton("Back", skin);
-        backButton.setPosition((float) (bgWidth * 2.25), (float) bgHeight * 2);
+//        backButton = new TextButton("Back", skin);
+        backButton = new ImageButton(exitBtn);
+        backButton.setSize((float) (bgWidth * 0.2), (float) (bgHeight * 0.2));
+        backButton.setPosition((float) (bgWidth * 2.27), (float) (bgHeight * 1.95));
 
         backButton.addListener(
                 new ChangeListener() {
@@ -108,8 +120,6 @@ public class PlayerProfileDisplay extends UIComponent {
                     }
                 }
         );
-//        background.row();
-//        background.add(backButton);
 
         stack.add(background);
         stack.add(content);
