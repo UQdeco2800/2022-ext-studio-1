@@ -18,6 +18,16 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 
+/**
+ * This class creates the player profile window.
+ *
+ * Description of the feature:
+ * This feature displays the player's profile for the current player of the game.
+ * The profile includes useful and perhaps interesting statistics about the player's performance in the game,
+ * including the average time they have taken to win the game,
+ * the average number of attempts taken to guess the traitor until they win,
+ * how many times they have lost the game, and how many times they have won the game.
+ */
 public class PlayerProfileDisplay extends UIComponent {
 
     private static final int bgWidth = 500;
@@ -25,13 +35,11 @@ public class PlayerProfileDisplay extends UIComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(PlayerProfileDisplay.class);
 
+    // Reading from json file created to store player's profile (performance stats).
     Json json = new Json();
-
-//    ArrayList<PlayerProfileConfig> statsList = json.fromJson(ArrayList.class, PlayerProfileConfig.class, Gdx.files.internal("configs/playerStatsInfo.json").readString());
-
-//    public static final PlayerProfileConfig playerProfileConfigs = FileLoader.readClass(PlayerProfileConfig.class, "configs/playerStatsInfo.json");
-
     PlayerProfileConfig playerProfileConfigs = json.fromJson(PlayerProfileConfig.class, Gdx.files.internal("configs/playerStatsInfo.json"));
+
+    // initialising ui elements.
     Table root;
     Table background;
     Table title;
@@ -43,19 +51,31 @@ public class PlayerProfileDisplay extends UIComponent {
     @Override
     public void create() {
         logger.info(String.valueOf(playerProfileConfigs.playerStats));
-//        loadAssets();
         super.create();
         addActors();
     }
 
+    /**
+     * Gets the list of performance stats of the player (player profile) in the json file.
+     * @return list of performance stats
+     */
     private List<PlayerProfileProperties> getPlayerProfile() {
         return playerProfileConfigs.playerStats;
     }
 
+    /**
+     * Calculates the average value.
+     * @param sum the sum of all elements.
+     * @param numElements the number of elements.
+     * @return the average of the elements.
+     */
     public float calculateAvg(int sum, int numElements) {
         return (float )sum / numElements;
     }
 
+    /**
+     * Creates the player profile window.
+     */
     private void addActors() {
         ResourceService resourceService = ServiceLocator.getResourceService();
 
@@ -65,30 +85,36 @@ public class PlayerProfileDisplay extends UIComponent {
                 )
         );
 
+        // loading and creating background image.
         Texture backgroundTexture = new Texture(Gdx.files.internal("images/playerprofile/background.png"));
         TextureRegionDrawable ppBackground = new TextureRegionDrawable(backgroundTexture);
 
         Image backgroundImage = new Image(ppBackground);
 
+        // loading exit button image.
         Texture exitBtnTexture = new Texture(Gdx.files.internal("images/exitbtn.png"));
         TextureRegionDrawable exitBtn = new TextureRegionDrawable(exitBtnTexture);
 
+        // create a Stack object to allow elements to be placed over the background image.
         Stack stack = new Stack();
 
+        // Setting parent table where all element exist.
         root = new Table();
         root.setFillParent(true);
 
+        // creating table for background where background image will be placed.
         background = new Table();
 
         background.setFillParent(true);
         background.add(backgroundImage).height(Gdx.graphics.getHeight()-bgHeight).width(Gdx.graphics.getWidth()-bgWidth);
 
-//        Labels (subheadings)
+//        Labels (subheadings) - create labels for each performance stat
         Label attemptsLabel = new Label("Average attempts to win: ", skin);
         Label timeLabel = new Label ("Average time take to win: ", skin);
         Label lossesLabel = new Label("Number of losses: ", skin);
         Label winLabel = new Label("Number of wins: ", skin);
 
+        // Processing the json data (calculating and storing average values)
         List<PlayerProfileProperties> playerProfile = getPlayerProfile();
 
         int sumTimeRemaining = 0;
@@ -110,13 +136,16 @@ public class PlayerProfileDisplay extends UIComponent {
         float avgTimeRemaining = calculateAvg(sumTimeRemaining, playerProfile.size());
         float avgResult = calculateAvg(sumResult, playerProfile.size());
         float avgAttempt = calculateAvg(sumAttempt, playerProfile.size());
+        //
 
-//        Dummy Data
+        // creating labels to display the data retrieved from the json file.
         Label attempts = new Label(String.valueOf(avgAttempt), skin);
         Label time = new Label(String.valueOf(avgTimeRemaining) + " s", skin);
         Label losses = new Label("1", skin);
         Label wins = new Label(String.valueOf(avgResult), skin);
 
+
+        // creating table to place and position all the labels in.
         content = new Table();
 
         content.add(attemptsLabel).height(150).expandX(); //.expandX().expandY();
@@ -131,11 +160,12 @@ public class PlayerProfileDisplay extends UIComponent {
         content.add(losses); //.width(300);
         content.add(wins); //.width(300);
 
-//        backButton = new TextButton("Back", skin);
+        // creating and positioning the exit button which returns to the main game screen.
         backButton = new ImageButton(exitBtn);
         backButton.setSize((float) (bgWidth * 0.2), (float) (bgHeight * 0.2));
         backButton.setPosition((float) (bgWidth * 2.27), (float) (bgHeight * 1.9));
 
+        // add event listener to the exit button.
         backButton.addListener(
                 new ChangeListener() {
                     @Override
@@ -152,7 +182,6 @@ public class PlayerProfileDisplay extends UIComponent {
 
         this.stage.addActor(root);
         this.stage.addActor(backButton);
-//        this.stage.addActor(exitButton);
     }
 
     @Override
@@ -160,6 +189,9 @@ public class PlayerProfileDisplay extends UIComponent {
         // draw is handled by the stage
     }
 
+    /**
+     * Method to close the player profile window and return to the main game screen.
+     */
     private void closeWindow() {
         super.dispose();
         root.remove();
