@@ -26,6 +26,8 @@ public class PlayerAnimationController extends Component {
         entity.getEvents().addListener("stopRight", this::animateStand);
         entity.getEvents().addListener("stopDown", this::animateStand);
         entity.getEvents().addListener("stopPickup", this::animateStand);
+        entity.getEvents().addListener("attack", this::animateAttack);
+        entity.getEvents().addListener("stopAttack", this::animateStand);
     }
 
     private void animateUp() {
@@ -51,6 +53,11 @@ public class PlayerAnimationController extends Component {
     private void animatePickup() {
         preAnimationCleanUp();
         animator.startAnimation("pickUp");
+    }
+
+    private void animateAttack() {
+        preAnimationCleanUp();
+        animator.startAnimation("attack");
     }
 
     private void animateStand() {

@@ -55,6 +55,13 @@ public class Entity {
     eventHandler = new EventHandler();
   }
 
+  public Entity(String type) {
+    id = nextId;
+    nextId++;
+    this.type = type;
+    components = new IntMap<>(4);
+    eventHandler = new EventHandler();
+  }
   /**
    * Enable or disable an entity. Disabled entities do not run update() or earlyUpdate() on their
    * components, but can still be disposed.

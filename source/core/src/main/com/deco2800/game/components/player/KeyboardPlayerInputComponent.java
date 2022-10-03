@@ -98,6 +98,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.K:
         entity.getEvents().trigger("stopPickup");
         return true;
+      case Keys.SPACE:
+        entity.getEvents().trigger("stopAttack");
+        return true;
       default:
         return false;
     }

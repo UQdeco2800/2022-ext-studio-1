@@ -51,6 +51,7 @@ public class PlayerFactory {
     animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("pickUp", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("attack",0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("stand",0.1f, Animation.PlayMode.LOOP);
 
 
