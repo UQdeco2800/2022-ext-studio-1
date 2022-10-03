@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.Texture;
 import org.slf4j.LoggerFactory;
 
 import java.security.Provider;
+import java.util.ArrayList;
 
 
 public class PlayerProfileDisplay extends UIComponent {
@@ -32,24 +33,8 @@ public class PlayerProfileDisplay extends UIComponent {
     Table content;
 
     Button backButton;
-    Button exitButton;
 
-//    private static final String[] playerProfileTextures = {
-//            "images/exitbtn.png",
-//    };
-//
-//    private void loadAssets() {
-//        logger.debug("loading assets");
-//        ResourceService resourceService = ServiceLocator.getResourceService();
-//        resourceService.loadTextures(playerProfileTextures);
-//    }
-//
-//    private void unloadAssets() {
-//        logger.debug("unloading assets");
-//        ResourceService resourceService = ServiceLocator.getResourceService();
-//        resourceService.unloadAssets(playerProfileTextures);
-//    }
-
+//    private static final ArrayList playerStatsConfig =
 
     @Override
     public void create() {
@@ -86,28 +71,31 @@ public class PlayerProfileDisplay extends UIComponent {
         background.setFillParent(true);
         background.add(backgroundImage).height(Gdx.graphics.getHeight()-bgHeight).width(Gdx.graphics.getWidth()-bgWidth);
 
-        Label clueLabel = new Label("Average attempts to win: ", skin);
-        Label clue = new Label("2", skin);
+//        Labels (subheadings)
+        Label attemptsLabel = new Label("Average attempts to win: ", skin);
         Label timeLabel = new Label ("Average time take to win: ", skin);
+        Label lossesLabel = new Label("Number of losses: ", skin);
+        Label winLabel = new Label("Number of wins: ", skin);
+
+//        Dummy Data
+        Label attempts = new Label("2", skin);
         Label time = new Label("01:29", skin);
-        Label remainingStepsLabel = new Label("Number of losses: ", skin);
-        Label remainingSteps = new Label("1", skin);
-        Label levelLabel = new Label("Number of wins: ", skin);
-        Label level = new Label("5", skin);
+        Label losses = new Label("1", skin);
+        Label wins = new Label("5", skin);
 
         content = new Table();
 
-        content.add(clueLabel).height(150).expandX(); //.expandX().expandY();
+        content.add(attemptsLabel).height(150).expandX(); //.expandX().expandY();
         content.add(timeLabel).expandX(); //.expandX().expandY();
         content.row();
-        content.add(clue); //.width(200);
+        content.add(attempts); //.width(200);
         content.add(time); //.width(200);
         content.row();
-        content.add(remainingStepsLabel).height(150); //.expandX().expandY();
-        content.add(levelLabel); //.expandX().expandY();
+        content.add(lossesLabel).height(150); //.expandX().expandY();
+        content.add(winLabel); //.expandX().expandY();
         content.row();
-        content.add(remainingSteps); //.width(300);
-        content.add(level); //.width(300);
+        content.add(losses); //.width(300);
+        content.add(wins); //.width(300);
 
 //        backButton = new TextButton("Back", skin);
         backButton = new ImageButton(exitBtn);
