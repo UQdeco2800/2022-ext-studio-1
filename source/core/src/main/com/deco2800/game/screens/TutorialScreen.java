@@ -3,7 +3,7 @@ package com.deco2800.game.screens;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
-import com.deco2800.game.components.storyline.StorylineDisplay;
+import com.deco2800.game.components.mainmenu.storyline.TutorialDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -17,7 +17,7 @@ import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** The game screen containing the settings. */
+/** The game screen containing the tutorials. */
 public class TutorialScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(TutorialScreen.class);
 
@@ -68,7 +68,7 @@ public class TutorialScreen extends ScreenAdapter {
     logger.debug("Creating ui");
     Stage stage = ServiceLocator.getRenderService().getStage();
     Entity ui = new Entity();
-    ui.addComponent(new StorylineDisplay(game)).addComponent(new InputDecorator(stage, 10));
+    ui.addComponent(new TutorialDisplay(game)).addComponent(new InputDecorator(stage, 10));
     ServiceLocator.getEntityService().register(ui);
   }
 }

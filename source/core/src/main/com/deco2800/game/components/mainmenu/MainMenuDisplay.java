@@ -34,13 +34,13 @@ public class MainMenuDisplay extends UIComponent {
             ServiceLocator.getResourceService()
                 .getAsset("images/box_boy_title.png", Texture.class));
 
-    TextButton startBtn = new TextButton("Start", skin);
+    TextButton startBtn = new TextButton("start", skin);
     TextButton storyline = new TextButton("storyline", skin);
     TextButton mapBtn = new TextButton("map", skin);
     TextButton tutorialBtn = new TextButton("tutorials", skin);
-    TextButton achievementsBtn = new TextButton("Achievements", skin);
-    TextButton settingsBtn = new TextButton("Settings", skin);
-    TextButton exitBtn = new TextButton("Exit", skin);
+    TextButton achievementsBtn = new TextButton("achievements", skin);
+    TextButton settingsBtn = new TextButton("settings", skin);
+    TextButton exitBtn = new TextButton("exit", skin);
 
     // Triggers an event when the button is pressed
     startBtn.addListener(
