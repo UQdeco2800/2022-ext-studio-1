@@ -38,7 +38,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {
           "images/heart.png","images/eviction_menu/menuIcon_black.png",
-          "images/eviction_menu/menuIcon_white.png"};
+          "images/eviction_menu/menuIcon_white.png", "images/npc_interaction/dialog_box.png"};
   private static final String IMAGES_PATH = "images/eviction_menu/";  //path of team7 images
   private static final String[] npcEvictionMenuTextures = { //path of team7 images
           IMAGES_PATH + "evictionMenu_background.png",IMAGES_PATH + "transparentBg.png",

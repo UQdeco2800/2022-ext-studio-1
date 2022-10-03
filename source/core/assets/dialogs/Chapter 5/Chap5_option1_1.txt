@@ -1,0 +1,9 @@
+Orpheus: "Here you are."
+(Player gets the scale.)
+You: "Time to go back to Lab to find Zoe for help."
+(Go back to Lab)
+Zoe: "Doctor, you have collected all the scales! Now we need to put all scales together and go to Village to ask Metis to read princess' memory."
+(Go to Village)
+Metis: "Okay, you found all the scales. Just give me a minute to read these."
+Metis: "... I... saw him..."
+ENDING

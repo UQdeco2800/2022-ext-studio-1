@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class MainScreenTest_Display extends UIComponent {
+public class NpcInteraction_Display extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(Lab_1_Display.class);
     private static final float Z_INDEX = 2f;
     private Table table;
@@ -28,10 +28,11 @@ public class MainScreenTest_Display extends UIComponent {
     private int step;
     private Image dialogBox;
     private Label dialog;
+    private int chapterNum;
     private ClickListener clickListener;
     private DialogWithSelection root;
 
-    public MainScreenTest_Display(GdxGame game) {
+    public NpcInteraction_Display(GdxGame game) {
         super();
         this.game = game;
     }
@@ -73,7 +74,8 @@ public class MainScreenTest_Display extends UIComponent {
         dialogBox.setSize((float) (stage.getWidth() * 0.9), (float) (stage.getHeight() * 0.2));
         stage.addActor(dialogBox);
 
-        setDialog(1);
+        chapterNum = 1;
+        setDialog();
     }
 
     @Override
@@ -107,7 +109,7 @@ public class MainScreenTest_Display extends UIComponent {
         return new Button(style);
     }
 
-    private void setDialog(int chapterNum) {
+    private void setDialog() {
         step = 0;
         dialog = new Label("Chapter " + chapterNum, skin);
         dialog.setPosition((float) (stage.getWidth() * 0.1), (float) (stage.getHeight() * 0.1));
@@ -116,16 +118,26 @@ public class MainScreenTest_Display extends UIComponent {
         stage.addActor(dialog);
 
         try {
-            if (chapterNum == 1) {// chapter without selections
+            if (chapterNum == 1 || chapterNum == 4) {// chapter without selections
                 ArrayList<String> texts = NpcInteraction.readNpcFiles(chapterNum);
                 Iterator<String> it = texts.iterator();
-                clickListener = new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        super.clicked(event, x, y);
-                        chapter1Listener(it);
-                    }
-                };
+                switch (chapterNum) {
+                    case 1 -> clickListener = new ClickListener() {
+                                @Override
+                                public void clicked(InputEvent event, float x, float y) {
+                                    super.clicked(event, x, y);
+                                    chapter1Listener(it);
+                                }
+                            };
+                    case 4 -> clickListener = new ClickListener() {
+                                @Override
+                                public void clicked(InputEvent event, float x, float y) {
+                                    super.clicked(event, x, y);
+                                    chapter4Listener(it);
+                                }
+                            };
+                }
+
             } else {
                 switch (chapterNum) {
                     case 2 -> {
@@ -146,6 +158,16 @@ public class MainScreenTest_Display extends UIComponent {
                             public void clicked(InputEvent event, float x, float y) {
                                 super.clicked(event, x, y);
                                 chapter3Listener();
+                            }
+                        };
+                    }
+                    case 5 -> {
+                        root = DialogWithSelection.getChapter5Dialog();
+                        clickListener = new ClickListener() {
+                            @Override
+                            public void clicked(InputEvent event, float x, float y) {
+                                super.clicked(event, x, y);
+                                chapter5Listener();
                             }
                         };
                     }
@@ -220,13 +242,29 @@ public class MainScreenTest_Display extends UIComponent {
         dialog.setText(root.getDialog());
         dialog.setPosition((float) (stage.getWidth() * 0.1), (float) (stage.getHeight() * 0.1));
         dialogBox.setPosition((float) (stage.getWidth() * 0.05), 0);
-        clickListener = new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                chapter2Listener();
-            }
-        };
+        switch (chapterNum) {
+            case 2 -> clickListener = new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    super.clicked(event, x, y);
+                    chapter2Listener();
+                }
+            };
+            case 3 -> clickListener = new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    super.clicked(event, x, y);
+                    chapter3Listener();
+                }
+            };
+            case 5 -> clickListener = new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    super.clicked(event, x, y);
+                    chapter5Listener();
+                }
+            };
+        }
         dialogBox.addListener(clickListener);
     }
 
@@ -254,20 +292,8 @@ public class MainScreenTest_Display extends UIComponent {
             bloodLab.remove();
             dialog.remove();
             dialogBox.removeListener(clickListener);
-            setDialog(2);
-        }
-    }
-
-    private void readDialogWithSelections() {
-        if (root.getNext() != null) {
-            dialog.setText(root.getDialog());
-            root = root.getNext();
-        } else if (root.isSelectionPoint()) {
-            setSelection();
-        } else {
-            dialogBox.remove();
-            dialog.remove();
-            dialogBox.removeListener(clickListener);
+            chapterNum = 2;
+            setDialog();
         }
     }
 
@@ -288,7 +314,8 @@ public class MainScreenTest_Display extends UIComponent {
         } else if (DialogWithSelection.getChapter2Endings().contains(root)) {
             dialogBox.removeListener(clickListener);
             dialog.remove();
-            setDialog(3);
+            chapterNum = 3;
+            setDialog();
         } else {
             dialogBox.remove();
             dialog.remove();
@@ -297,7 +324,48 @@ public class MainScreenTest_Display extends UIComponent {
     }
 
     private void chapter3Listener() {
-        readDialogWithSelections();
-        // condition for switch map and exchange items
+        if (root.getNext() != null) {
+            dialog.setText(root.getDialog());
+            root = root.getNext();
+        } else if (root.isSelectionPoint()) {
+            setSelection();
+        } else if (DialogWithSelection.getChapter3Endings().contains(root)) {
+            dialogBox.removeListener(clickListener);
+            dialog.remove();
+            chapterNum = 4;
+            setDialog();
+        } else {
+            dialogBox.remove();
+            dialog.remove();
+            dialogBox.removeListener(clickListener);
+        }
+    }
+
+    private void chapter4Listener(Iterator<String> it) {
+        if (it.hasNext()) {
+            dialog.setText(it.next());
+            step++;
+        } else {// chapter 4 ends
+            dialog.remove();
+            dialogBox.removeListener(clickListener);
+            chapterNum = 5;
+            setDialog();
+        }
+    }
+
+    private void chapter5Listener() {
+        if (root.getNext() != null) {
+            dialog.setText(root.getDialog());
+            root = root.getNext();
+        } else if (root.isSelectionPoint()) {
+            setSelection();
+        } else if (DialogWithSelection.getChapter5Ending().equals(root)) {// select the murderer
+            dialogBox.removeListener(clickListener);
+            // show murderer selection page
+        }else {
+            dialogBox.remove();
+            dialog.remove();
+            dialogBox.removeListener(clickListener);
+        }
     }
 }

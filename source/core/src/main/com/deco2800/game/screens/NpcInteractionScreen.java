@@ -3,7 +3,7 @@ package com.deco2800.game.screens;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
-import com.deco2800.game.components.map.MainScreenTest_Display;
+import com.deco2800.game.components.map.NpcInteraction_Display;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -16,8 +16,8 @@ import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MainGameScreenTest extends ScreenAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(MainGameScreenTest.class);
+public class NpcInteractionScreen extends ScreenAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(NpcInteractionScreen.class);
     private final GdxGame game;
     private final Renderer renderer;
 
@@ -28,7 +28,7 @@ public class MainGameScreenTest extends ScreenAdapter {
             "images/map/LAB/whole lab.png"
     };
 
-    public MainGameScreenTest(GdxGame game) {
+    public NpcInteractionScreen(GdxGame game) {
         this.game = game;
 
         logger.debug("Initialising map screen services");
@@ -85,7 +85,7 @@ public class MainGameScreenTest extends ScreenAdapter {
         logger.debug("Creating ui");
         Stage stage = ServiceLocator.getRenderService().getStage();
         Entity ui = new Entity();
-        ui.addComponent(new MainScreenTest_Display(game)).addComponent(new InputDecorator(stage, 10));
+        ui.addComponent(new NpcInteraction_Display(game)).addComponent(new InputDecorator(stage, 10));
         ServiceLocator.getEntityService().register(ui);
     }
 }
