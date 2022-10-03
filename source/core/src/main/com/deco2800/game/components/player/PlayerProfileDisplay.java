@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
@@ -85,33 +86,28 @@ public class PlayerProfileDisplay extends UIComponent {
         background.setFillParent(true);
         background.add(backgroundImage).height(Gdx.graphics.getHeight()-bgHeight).width(Gdx.graphics.getWidth()-bgWidth);
 
-//        Label titleLabel = new Label("Player Profile", skin);
-//        titleLabel.setFontScale(2);
-        Label clueLabel = new Label("Collected Clues: ", skin);
-        Label clue = new Label("10", skin);
-        Label timeLabel = new Label ("Average time spent on each clue: ", skin);
+        Label clueLabel = new Label("Average attempts to win: ", skin);
+        Label clue = new Label("2", skin);
+        Label timeLabel = new Label ("Average time take to win: ", skin);
         Label time = new Label("01:29", skin);
-        Label remainingStepsLabel = new Label("Remaining steps to win the game: ", skin);
-        Label remainingSteps = new Label("10", skin);
-        Label levelLabel = new Label("Current Level: ", skin);
-        Label level = new Label("2", skin);
+        Label remainingStepsLabel = new Label("Number of losses: ", skin);
+        Label remainingSteps = new Label("1", skin);
+        Label levelLabel = new Label("Number of wins: ", skin);
+        Label level = new Label("5", skin);
 
         content = new Table();
-//        content.setHeight((float) (bgHeight * 0.7));
 
-//        content.add(titleLabel).colspan(2).expandY();
+        content.add(clueLabel).height(150).expandX(); //.expandX().expandY();
+        content.add(timeLabel).expandX(); //.expandX().expandY();
         content.row();
-        content.add(clueLabel).expandX().expandY();
-        content.add(clue).width(300);
+        content.add(clue); //.width(200);
+        content.add(time); //.width(200);
         content.row();
-        content.add(timeLabel).expandX().expandY();
-        content.add(time).width(300);
+        content.add(remainingStepsLabel).height(150); //.expandX().expandY();
+        content.add(levelLabel); //.expandX().expandY();
         content.row();
-        content.add(remainingStepsLabel).expandX().expandY();
-        content.add(remainingSteps).width(300);
-        content.row();
-        content.add(levelLabel).expandX().expandY();
-        content.add(level).width(300);
+        content.add(remainingSteps); //.width(300);
+        content.add(level); //.width(300);
 
 //        backButton = new TextButton("Back", skin);
         backButton = new ImageButton(exitBtn);
