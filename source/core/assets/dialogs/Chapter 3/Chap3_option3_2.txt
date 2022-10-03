@@ -1,0 +1,8 @@
+Heph: "No, you are lying, what happened to Princess Nereus? What did you do to her?"
+You: "Sorry we can't tell you about Nereus, but repairing the scales is really important for us. We implore your help. The truth will be told to you afterwards."
+Heph: "Collect 5 seaweeds, 5 fluorescent corals and 5 jellyfish for me because of your careful thought. It's a fair exchange. Why are you still standing here? Go away."
+(Player collects 5 seaweed, 5 fluorescent coral and 5 jellyfish as instructed and then hand it to Heph.)
+Heph: "All right."
+(Player get repaired scales * 1)
+Orpheus hurried to him last week, begging him to save his irises, whose pedals were like being ripped off by someone. The poor musical actor was about to give the irises to the princess but somehow the plant was dead before he sent his feelings to her.
+Orpheus: "Heph, please help me. my scales! My scales are broken! My poor princess, can I no longer send flowers to her? What have I done?!"

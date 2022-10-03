@@ -6,13 +6,17 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
+import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.services.ResourceService;
 import org.slf4j.Logger;
 import com.badlogic.gdx.graphics.Texture;
+import org.slf4j.LoggerFactory;
 
 import java.security.Provider;
+import java.util.ArrayList;
 
 
 public class PlayerProfileDisplay extends UIComponent {
@@ -20,45 +24,42 @@ public class PlayerProfileDisplay extends UIComponent {
     private static final int bgWidth = 500;
     private static final int bgHeight = 350;
 
+    private static final Logger logger = LoggerFactory.getLogger(PlayerProfileDisplay.class);
+
+
     Table root;
     Table background;
     Table title;
     Table content;
 
     Button backButton;
-    Button exitButton;
 
-    private static final String[] playerProfileTextures = {
-            "images/exitbtn.png"
-    };
-
-    public final ResourceService resourceService = ServiceLocator.getResourceService();
+//    private static final ArrayList playerStatsConfig =
 
     @Override
     public void create() {
+//        loadAssets();
         super.create();
-        resourceService.loadTextures(playerProfileTextures);
         addActors();
     }
 
 
     private void addActors() {
+        ResourceService resourceService = ServiceLocator.getResourceService();
+
         Image bgImage = new Image(
                 resourceService.getAsset(
                         "images/blank.png", Texture.class
                 )
         );
 
-//        TextureRegionDrawable exitBtnStyle = new TextureRegionDrawable(resourceService.getAsset(
-//                "images/exitbtn.png", Texture.class
-//        ));
+        Texture backgroundTexture = new Texture(Gdx.files.internal("images/playerprofile/background.png"));
+        TextureRegionDrawable ppBackground = new TextureRegionDrawable(backgroundTexture);
 
-//        exitButton = new ImageButton(exitBtnStyle);
-//
-//
+        Image backgroundImage = new Image(ppBackground);
 
-//        exitButton.setPosition((float) (this.stage.getWidth() * 0.45), (float) (this.stage.getHeight() * 0.1));
-//        exitButton.setSize((float) (this.stage.getWidth() * ((1493.33 - 1436.67) / 1600)), (float) (this.stage.getHeight() * (53.33 / 900)));
+        Texture exitBtnTexture = new Texture(Gdx.files.internal("images/exitbtn.png"));
+        TextureRegionDrawable exitBtn = new TextureRegionDrawable(exitBtnTexture);
 
         Stack stack = new Stack();
 
@@ -68,37 +69,38 @@ public class PlayerProfileDisplay extends UIComponent {
         background = new Table();
 
         background.setFillParent(true);
-        background.add(bgImage).height(Gdx.graphics.getHeight()-bgHeight).width(Gdx.graphics.getWidth()-bgWidth);
+        background.add(backgroundImage).height(Gdx.graphics.getHeight()-bgHeight).width(Gdx.graphics.getWidth()-bgWidth);
 
-        Label titleLabel = new Label("Player Profile", skin);
-        titleLabel.setFontScale(2);
-        Label clueLabel = new Label("Collected Clues: ", skin);
-        Label clue = new Label("10", skin);
-        Label timeLabel = new Label ("Average time spent on each clue: ", skin);
+//        Labels (subheadings)
+        Label attemptsLabel = new Label("Average attempts to win: ", skin);
+        Label timeLabel = new Label ("Average time take to win: ", skin);
+        Label lossesLabel = new Label("Number of losses: ", skin);
+        Label winLabel = new Label("Number of wins: ", skin);
+
+//        Dummy Data
+        Label attempts = new Label("2", skin);
         Label time = new Label("01:29", skin);
-        Label remainingStepsLabel = new Label("Remaining steps to win the game: ", skin);
-        Label remainingSteps = new Label("10", skin);
-        Label levelLabel = new Label("Current Level: ", skin);
-        Label level = new Label("2", skin);
+        Label losses = new Label("1", skin);
+        Label wins = new Label("5", skin);
 
         content = new Table();
 
-        content.add(titleLabel).colspan(2).expandY();
+        content.add(attemptsLabel).height(150).expandX(); //.expandX().expandY();
+        content.add(timeLabel).expandX(); //.expandX().expandY();
         content.row();
-        content.add(clueLabel).expandX().expandY();
-        content.add(clue).width(300);
+        content.add(attempts); //.width(200);
+        content.add(time); //.width(200);
         content.row();
-        content.add(timeLabel).expandX().expandY();
-        content.add(time).width(300);
+        content.add(lossesLabel).height(150); //.expandX().expandY();
+        content.add(winLabel); //.expandX().expandY();
         content.row();
-        content.add(remainingStepsLabel).expandX().expandY();
-        content.add(remainingSteps).width(300);
-        content.row();
-        content.add(levelLabel).expandX().expandY();
-        content.add(level).width(300);
+        content.add(losses); //.width(300);
+        content.add(wins); //.width(300);
 
-        backButton = new TextButton("Back", skin);
-        backButton.setPosition((float) (bgWidth * 2.25), (float) bgHeight * 2);
+//        backButton = new TextButton("Back", skin);
+        backButton = new ImageButton(exitBtn);
+        backButton.setSize((float) (bgWidth * 0.2), (float) (bgHeight * 0.2));
+        backButton.setPosition((float) (bgWidth * 2.27), (float) (bgHeight * 1.9));
 
         backButton.addListener(
                 new ChangeListener() {
@@ -108,8 +110,6 @@ public class PlayerProfileDisplay extends UIComponent {
                     }
                 }
         );
-//        background.row();
-//        background.add(backButton);
 
         stack.add(background);
         stack.add(content);
