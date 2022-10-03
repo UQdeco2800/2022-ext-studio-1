@@ -7,7 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.deco2800.game.areas.ForestGameArea;
+import com.deco2800.game.entities.configs.PlayerProfileConfig;
+import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.services.ResourceService;
@@ -26,7 +30,13 @@ public class PlayerProfileDisplay extends UIComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(PlayerProfileDisplay.class);
 
+    Json json = new Json();
 
+//    ArrayList<PlayerProfileConfig> statsList = json.fromJson(ArrayList.class, PlayerProfileConfig.class, Gdx.files.internal("configs/playerStatsInfo.json").readString());
+
+//    public static final PlayerProfileConfig playerProfileConfigs = FileLoader.readClass(PlayerProfileConfig.class, "configs/playerStatsInfo.json");
+
+    PlayerProfileConfig playerProfileConfigs = json.fromJson(PlayerProfileConfig.class, Gdx.files.internal("configs/playerStatsInfo.json"));
     Table root;
     Table background;
     Table title;
@@ -34,10 +44,10 @@ public class PlayerProfileDisplay extends UIComponent {
 
     Button backButton;
 
-//    private static final ArrayList playerStatsConfig =
 
     @Override
     public void create() {
+        logger.info(String.valueOf(playerProfileConfigs.playerStats));
 //        loadAssets();
         super.create();
         addActors();
