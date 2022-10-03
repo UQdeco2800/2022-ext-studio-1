@@ -90,31 +90,7 @@ public class NPCFactory {
     ghostKing.getComponent(AnimationRenderComponent.class).scaleEntity();
     return ghostKing;
   }
-
-
-  public static Entity createOrpheus() {
-    AnimationRenderComponent animator =
-            new AnimationRenderComponent(
-                    ServiceLocator.getResourceService()
-                            .getAsset("images/Ares.atlas", TextureAtlas.class));
-    animator.addAnimation("stand", 0.1f, Animation.PlayMode.LOOP);
-
-
-    Entity orpheus =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/Ares_front.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(animator)
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
-    animator.startAnimation("stand");
-    orpheus.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-    orpheus.getComponent(TextureRenderComponent.class).scaleEntity();
-    orpheus.scaleHeight(1f);
-    PhysicsUtils.setScaledCollider(orpheus, 0.5f, 0.2f);
-    return orpheus;
-  }
-
+  
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
    *
