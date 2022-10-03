@@ -6,17 +6,16 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
-import com.deco2800.game.areas.ForestGameArea;
+import com.badlogic.gdx.utils.Json;
+import com.deco2800.game.entities.configs.PlayerProfileConfig;
+import com.deco2800.game.entities.configs.PlayerProfileProperties;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.services.ResourceService;
 import org.slf4j.Logger;
 import com.badlogic.gdx.graphics.Texture;
 import org.slf4j.LoggerFactory;
-
-import java.security.Provider;
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class PlayerProfileDisplay extends UIComponent {
@@ -26,7 +25,13 @@ public class PlayerProfileDisplay extends UIComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(PlayerProfileDisplay.class);
 
+    Json json = new Json();
 
+//    ArrayList<PlayerProfileConfig> statsList = json.fromJson(ArrayList.class, PlayerProfileConfig.class, Gdx.files.internal("configs/playerStatsInfo.json").readString());
+
+//    public static final PlayerProfileConfig playerProfileConfigs = FileLoader.readClass(PlayerProfileConfig.class, "configs/playerStatsInfo.json");
+
+    PlayerProfileConfig playerProfileConfigs = json.fromJson(PlayerProfileConfig.class, Gdx.files.internal("configs/playerStatsInfo.json"));
     Table root;
     Table background;
     Table title;
@@ -34,15 +39,22 @@ public class PlayerProfileDisplay extends UIComponent {
 
     Button backButton;
 
-//    private static final ArrayList playerStatsConfig =
 
     @Override
     public void create() {
+        logger.info(String.valueOf(playerProfileConfigs.playerStats));
 //        loadAssets();
         super.create();
         addActors();
     }
 
+    private List<PlayerProfileProperties> getPlayerProfile() {
+        return playerProfileConfigs.playerStats;
+    }
+
+    public float calculateAvg(int sum, int numElements) {
+        return (float )sum / numElements;
+    }
 
     private void addActors() {
         ResourceService resourceService = ServiceLocator.getResourceService();
@@ -77,11 +89,33 @@ public class PlayerProfileDisplay extends UIComponent {
         Label lossesLabel = new Label("Number of losses: ", skin);
         Label winLabel = new Label("Number of wins: ", skin);
 
+        List<PlayerProfileProperties> playerProfile = getPlayerProfile();
+
+        int sumTimeRemaining = 0;
+        int sumResult = 0;
+        int sumAttempt = 0;
+
+        for (PlayerProfileProperties stat : playerProfile) {
+
+            int timeRemaining = 7260 - stat.timeRemaining;
+            int result = stat.result;
+            int attempt = stat.attempt;
+
+            sumTimeRemaining += timeRemaining;
+            sumResult += result;
+            sumAttempt += attempt;
+
+        }
+
+        float avgTimeRemaining = calculateAvg(sumTimeRemaining, playerProfile.size());
+        float avgResult = calculateAvg(sumResult, playerProfile.size());
+        float avgAttempt = calculateAvg(sumAttempt, playerProfile.size());
+
 //        Dummy Data
-        Label attempts = new Label("2", skin);
-        Label time = new Label("01:29", skin);
+        Label attempts = new Label(String.valueOf(avgAttempt), skin);
+        Label time = new Label(String.valueOf(avgTimeRemaining) + " s", skin);
         Label losses = new Label("1", skin);
-        Label wins = new Label("5", skin);
+        Label wins = new Label(String.valueOf(avgResult), skin);
 
         content = new Table();
 
