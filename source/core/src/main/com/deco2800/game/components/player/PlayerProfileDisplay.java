@@ -43,6 +43,8 @@ public class PlayerProfileDisplay extends UIComponent {
     Table root;
     Table background;
     Table title;
+    Image cluesIconImg;
+    Image timeIconImg;
     Table content;
 
     Button backButton;
@@ -88,6 +90,19 @@ public class PlayerProfileDisplay extends UIComponent {
         // loading exit button image.
         Texture exitBtnTexture = new Texture(Gdx.files.internal("images/exitbtn.png"));
         TextureRegionDrawable exitBtn = new TextureRegionDrawable(exitBtnTexture);
+
+        // loading and creating icon images
+        Texture cluesTexture = new Texture(Gdx.files.internal("images/playerprofile/clues.png"));
+        TextureRegionDrawable cluesIcon = new TextureRegionDrawable(cluesTexture);
+        cluesIconImg = new Image(cluesIcon);
+        cluesIconImg.setSize((float) (bgWidth * 0.3), (float) (bgHeight * 0.3));
+        cluesIconImg.setPosition((float) (bgWidth * 1.3), (float) (bgHeight * 0.8));
+
+        Texture timeTexture = new Texture(Gdx.files.internal("images/playerprofile/time.png"));
+        TextureRegionDrawable timeIcon = new TextureRegionDrawable(timeTexture);
+        timeIconImg = new Image(timeIcon);
+        timeIconImg.setSize((float) (bgWidth * 0.3), (float) (bgHeight * 0.3));
+        timeIconImg.setPosition((float) (bgWidth * 1.3), (float) (bgHeight * 1.4));
 
         // create a Stack object to allow elements to be placed over the background image.
         Stack stack = new Stack();
@@ -176,6 +191,8 @@ public class PlayerProfileDisplay extends UIComponent {
 
         this.stage.addActor(root);
         this.stage.addActor(backButton);
+        this.stage.addActor(cluesIconImg);
+        this.stage.addActor(timeIconImg);
     }
 
     @Override
@@ -190,6 +207,8 @@ public class PlayerProfileDisplay extends UIComponent {
         super.dispose();
         root.remove();
         backButton.remove();
+        cluesIconImg.remove();
+        timeIconImg.remove();
     }
 
 }
