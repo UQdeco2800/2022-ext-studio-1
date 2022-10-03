@@ -4,13 +4,12 @@ import com.deco2800.game.entities.configs.ItemConfigs;
 import com.deco2800.game.files.FileLoader;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class Backpack implements Inventory {
     public static final Map<Integer, Item> ID_ITEM_MAP;
     public static final Map<String, Integer> NAME_ID_MAP;
     private Map<Integer, Integer> idNumMap;
-    private Set<Integer> inStockItems;
+    private Set<Integer> inStockItemIds;
 
     static {
         ItemConfigs itemConfigs = FileLoader.readClass(ItemConfigs.class, "configs/items.json");
@@ -27,7 +26,7 @@ public class Backpack implements Inventory {
 
     public Backpack() {
         idNumMap = new HashMap<>();
-        inStockItems = new TreeSet<>();
+        inStockItemIds = new TreeSet<>();
         ID_ITEM_MAP.keySet().stream().forEach((id) -> {
             idNumMap.put(id, 0);
         });
@@ -36,7 +35,7 @@ public class Backpack implements Inventory {
 
     @Override
     public boolean contains(int id) {
-        return inStockItems.contains(id);
+        return inStockItemIds.contains(id);
     }
 
     @Override
@@ -67,13 +66,13 @@ public class Backpack implements Inventory {
                 return false;
             } else {
                 idNumMap.put(id, idNumMap.get(id) + 1);
-                inStockItems.add(id);
+                inStockItemIds.add(id);
             }
         } else if (item.getType() == Item.Type.CONSUMABLE_ITEM) {
             int num = idNumMap.get(id);
             idNumMap.put(id, num + 1);
             if (idNumMap.get(id) == 1) {
-                inStockItems.add(id);
+                inStockItemIds.add(id);
             }
         } else if (item.getType() == Item.Type.EQUIPMENT_ITEM) {
             spliceEquipmentIfPossible(id);
@@ -93,7 +92,7 @@ public class Backpack implements Inventory {
         Integer curNum = idNumMap.get(id);
         idNumMap.put(id, curNum + num);
         if (curNum == 0) {
-            inStockItems.add(id);
+            inStockItemIds.add(id);
         }
         return true;
     }
@@ -110,7 +109,7 @@ public class Backpack implements Inventory {
         } else {
             idNumMap.put(id, idNumMap.get(id) + 1);
             if (idNumMap.get(id) == 1) {
-                inStockItems.add(id);
+                inStockItemIds.add(id);
             }
         }
     }
@@ -147,7 +146,7 @@ public class Backpack implements Inventory {
         Integer num = idNumMap.get(id);
         idNumMap.put(id, num - 1);
         if (num == 1) {
-            inStockItems.remove(id);
+            inStockItemIds.remove(id);
         }
         return true;
     }
@@ -184,7 +183,7 @@ public class Backpack implements Inventory {
         }
         idNumMap.put(id, beforeNum - num);
         if (beforeNum - num == 0) {
-            inStockItems.remove(id);
+            inStockItemIds.remove(id);
         }
         return true;
     }
@@ -196,15 +195,21 @@ public class Backpack implements Inventory {
     }
 
     @Override
+    public List<Integer> getInStockItemIds() {
+        return inStockItemIds.stream().toList();
+    }
+
+    @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("|||||||||||||||Inventory|||||||||||||||");
+        StringBuilder stringBuilder = new StringBuilder(System.lineSeparator());
+        stringBuilder.append("------------------Inventory----------------");
         stringBuilder.append(System.lineSeparator());
-        inStockItems.stream().forEach((id) -> {
+        inStockItemIds.stream().forEach((id) -> {
             Integer num = idNumMap.get(id);
             Item item = ID_ITEM_MAP.get(id);
             stringBuilder.append("item: " + item.getName() + " num: " + num + System.lineSeparator());
         });
+        stringBuilder.append("-------------------------------------------");
 
         return stringBuilder.toString();
     }
