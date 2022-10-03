@@ -67,6 +67,11 @@ public class PlayerProfileDisplay extends UIComponent {
                 )
         );
 
+        Texture backgroundTexture = new Texture(Gdx.files.internal("images/playerprofile/background.png"));
+        TextureRegionDrawable ppBackground = new TextureRegionDrawable(backgroundTexture);
+
+        Image backgroundImage = new Image(ppBackground);
+
         Texture exitBtnTexture = new Texture(Gdx.files.internal("images/exitbtn.png"));
         TextureRegionDrawable exitBtn = new TextureRegionDrawable(exitBtnTexture);
 
@@ -78,10 +83,10 @@ public class PlayerProfileDisplay extends UIComponent {
         background = new Table();
 
         background.setFillParent(true);
-        background.add(bgImage).height(Gdx.graphics.getHeight()-bgHeight).width(Gdx.graphics.getWidth()-bgWidth);
+        background.add(backgroundImage).height(Gdx.graphics.getHeight()-bgHeight).width(Gdx.graphics.getWidth()-bgWidth);
 
-        Label titleLabel = new Label("Player Profile", skin);
-        titleLabel.setFontScale(2);
+//        Label titleLabel = new Label("Player Profile", skin);
+//        titleLabel.setFontScale(2);
         Label clueLabel = new Label("Collected Clues: ", skin);
         Label clue = new Label("10", skin);
         Label timeLabel = new Label ("Average time spent on each clue: ", skin);
@@ -92,8 +97,9 @@ public class PlayerProfileDisplay extends UIComponent {
         Label level = new Label("2", skin);
 
         content = new Table();
+//        content.setHeight((float) (bgHeight * 0.7));
 
-        content.add(titleLabel).colspan(2).expandY();
+//        content.add(titleLabel).colspan(2).expandY();
         content.row();
         content.add(clueLabel).expandX().expandY();
         content.add(clue).width(300);
@@ -110,7 +116,7 @@ public class PlayerProfileDisplay extends UIComponent {
 //        backButton = new TextButton("Back", skin);
         backButton = new ImageButton(exitBtn);
         backButton.setSize((float) (bgWidth * 0.2), (float) (bgHeight * 0.2));
-        backButton.setPosition((float) (bgWidth * 2.27), (float) (bgHeight * 1.95));
+        backButton.setPosition((float) (bgWidth * 2.27), (float) (bgHeight * 1.9));
 
         backButton.addListener(
                 new ChangeListener() {
