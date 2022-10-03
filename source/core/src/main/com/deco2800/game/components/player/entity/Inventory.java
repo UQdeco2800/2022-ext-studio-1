@@ -1,5 +1,6 @@
 package com.deco2800.game.components.player.entity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -82,5 +83,6 @@ public interface Inventory {
     boolean remove(int id, int num);
 
     boolean remove(String itemName, int num);
+    List<Integer> getInStockItemIds();
 
 }

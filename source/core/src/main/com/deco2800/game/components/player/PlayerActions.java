@@ -106,7 +106,7 @@ public class PlayerActions extends Component {
           player = i;
         }
       }
-      playerInventory = new InventoryDisplayComponent(player.getComponent(InventoryComponent.class).getInventory());
+      playerInventory = new InventoryDisplayComponent(player.getComponent(InventoryComponent.class));
     }
   }
   }

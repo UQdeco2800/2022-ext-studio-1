@@ -6,6 +6,7 @@ import com.deco2800.game.components.player.entity.Inventory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * A component intended to be used by the player to track their inventory.
@@ -88,6 +89,10 @@ public class InventoryComponent extends Component implements Inventory {
     return backpack.remove(itemName, num);
   }
 
+  @Override
+  public List<Integer> getInStockItemIds() {
+    return backpack.getInStockItemIds();
+  }
 
 
   @Deprecated
