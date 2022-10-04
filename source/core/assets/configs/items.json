@@ -1,0 +1,25 @@
+{
+  "itemList": [
+    {
+      "class": "com.deco2800.game.components.player.entity.ConsumableItem",
+      "id": 1,
+      "name": "Time Item",
+      "description": "Time Item - This item can be used to increase the countdown clock!",
+      "textureLocation": "images/inventory/time_item.png"
+    },
+    {
+      "class": "com.deco2800.game.components.player.entity.ToolItem",
+      "id": 2,
+      "name": "Tool Item",
+      "description": "Tool Item - This item can be used to fix broken switch!",
+      "textureLocation": "images/switch/Tools.png"
+    },
+    {
+      "class": "com.deco2800.game.components.player.entity.BatteryItem",
+      "id": 3,
+      "name": "Battery Item",
+      "description": "Battery Item - This item can be used to fix broken switch!",
+      "textureLocation": "images/switch/Battery.png"
+    }
+  ]
+}

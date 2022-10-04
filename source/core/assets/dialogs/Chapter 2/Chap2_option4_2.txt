@@ -1,0 +1,13 @@
+You: "Right. But she does not know it. We do not need to bother her with it either. I think it worth a try. At least we could borrow the scale from her afterwards."
+Zoe: "You are right."
+You: "Sure, what materials do you need?"
+Doris: "I need 5 Fluorescent Corals."
+(PLAYER FOLLOWS THE INSTRUCTION TO COLLECT 5 FLUORESCENT CORALS TO DORIS)
+Doris: "Ah, already! Thank you. I am going to try the method now."
+(DORIS TRY TO BRING THE SHININESS OF THE SCALE BACK)
+(THE SCALE STILL LOOKS PALE)
+Doris: "It failed...But I have no idea why..."
+You: "Maybe we could help. Would you mind to lend us this necklace? Maybe we could find a way to bring the shininess back."
+Doris: "You two don't look like a bad person, and you just helped me to collect Fluorescent Corals... Fine. I can lend the scale to you. But be careful of it. It is my most precious treasure."
+You: "We will take care of it."
+(PLAYER GETS 1 SCALE)

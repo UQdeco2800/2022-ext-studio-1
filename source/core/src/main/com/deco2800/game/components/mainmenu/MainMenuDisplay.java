@@ -32,15 +32,15 @@ public class MainMenuDisplay extends UIComponent {
     Image title =
         new Image(
             ServiceLocator.getResourceService()
-                .getAsset("images/box_boy_title.png", Texture.class));
+                .getAsset("images/game logo.png", Texture.class));
 
-    TextButton startBtn = new TextButton("Start", skin);
+    TextButton startBtn = new TextButton("start", skin);
     TextButton storyline = new TextButton("storyline", skin);
     TextButton mapBtn = new TextButton("map", skin);
-    TextButton loadBtn = new TextButton("Load", skin);
-    TextButton achievementsBtn = new TextButton("Achievements", skin);
-    TextButton settingsBtn = new TextButton("Settings", skin);
-    TextButton exitBtn = new TextButton("Exit", skin);
+    TextButton tutorialBtn = new TextButton("tutorials", skin);
+    TextButton achievementsBtn = new TextButton("achievements", skin);
+    TextButton settingsBtn = new TextButton("settings", skin);
+    TextButton exitBtn = new TextButton("exit", skin);
 //    TextButton endingBtn = new TextButton("Ending", skin);
 
 //    endingBtn.addListener(
@@ -81,12 +81,12 @@ public class MainMenuDisplay extends UIComponent {
                   }
               });
 
-    loadBtn.addListener(
+    tutorialBtn.addListener(
         new ChangeListener() {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Load button clicked");
-            entity.getEvents().trigger("load");
+            logger.debug("Tutorial button clicked");
+            entity.getEvents().trigger("tutorial");
           }
         });
 
@@ -128,7 +128,7 @@ public class MainMenuDisplay extends UIComponent {
     table.add(mapBtn).padTop(15f);
     table.row();
 
-    table.add(loadBtn).padTop(15f);
+    table.add(tutorialBtn).padTop(15f);
     table.row();
     table.add(achievementsBtn).padTop(15f);
     table.row();
