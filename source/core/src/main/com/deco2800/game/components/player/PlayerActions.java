@@ -35,7 +35,9 @@ public class PlayerActions extends Component {
 
   private SaveGameDisplay saveGameDisplay;
 
-
+  public PlayerActions(GdxGame game) {
+    this.game = game;
+  }
 
   @Override
   public void create() {
@@ -111,7 +113,7 @@ public class PlayerActions extends Component {
           player = i;
         }
       }
-      playerInventory = new InventoryDisplayComponent(player.getComponent(InventoryComponent.class));
+      playerInventory = new InventoryDisplayComponent(player.getComponent(InventoryComponent.class), game);
     }
   }
 

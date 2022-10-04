@@ -110,7 +110,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    this.forestGameArea = new ForestGameArea(terrainFactory);
+    this.forestGameArea = new ForestGameArea(terrainFactory, game);
     forestGameArea.create();
 
     createUI();

@@ -49,7 +49,7 @@ public class ItemFactory {
             .addComponent(new AddToInventoryComponent(PhysicsLayer.Item, id))
             .addComponent(new AchievementsUpdater())
             .addComponent(new TextureRenderComponent(item.getTextureLocation()));;
-    PhysicsUtils.setScaledCollider(itemEntity, 0.9f, 0.4f);
+    PhysicsUtils.setScaledCollider(itemEntity, 0.3f, 0.3f);
     return itemEntity;
   }
 

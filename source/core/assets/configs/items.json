@@ -55,6 +55,13 @@
       "name": "Coral Item6",
       "description": "Mermaid Scale - This item can be used to get clue!",
       "textureLocation": "images/coral/scales5.png"
+    },
+    {
+      "class": "com.deco2800.game.components.player.entity.ClueItem",
+      "id": 9,
+      "name": "Mysterious Key",
+      "description": "Mysterious Key - This key can be used to win the game!",
+      "textureLocation": "images/KEY.png"
     }
   ]
 }

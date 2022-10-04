@@ -81,9 +81,11 @@ public class ForestGameArea extends GameArea {
 
   public Entity key;
 
-  public ForestGameArea(TerrainFactory terrainFactory) {
+  private GdxGame game;
+  public ForestGameArea(TerrainFactory terrainFactory, GdxGame game) {
     super();
     this.terrainFactory = terrainFactory;
+    this.game = game;
   }
 
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -152,7 +154,7 @@ public class ForestGameArea extends GameArea {
   }
 
   private Entity spawnPlayer() {
-    Entity newPlayer = PlayerFactory.createPlayer();
+    Entity newPlayer = PlayerFactory.createPlayer(game);
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }
@@ -168,9 +170,9 @@ public class ForestGameArea extends GameArea {
     Entity item2 = ItemFactory.createItem(1);
 
 
-    spawnEntityAt(item, new GridPoint2(5, 5), true, true);
-    spawnEntityAt(item1, new GridPoint2(10, 5), true, true);
-    spawnEntityAt(item2, new GridPoint2(15, 5), true, true);
+    spawnEntityAt(item, new GridPoint2(5, 25), true, true);
+    spawnEntityAt(item1, new GridPoint2(10, 24), true, true);
+    spawnEntityAt(item2, new GridPoint2(15, 23), true, true);
   }
 
   private void spawnCoralItems() {
@@ -203,10 +205,10 @@ public class ForestGameArea extends GameArea {
   }
 
   public void spawnKey(GdxGame game) {
-    this.key = ClueItemFactory.createItem(player, "images/KEY.png");
+    this.key = ItemFactory.createItem(9);
     key.type = "key";
     key.game = game;
-    spawnEntityAt(key, new GridPoint2(6, 6), true, true);
+    spawnEntityAt(key, new GridPoint2(6, 20), true, true);
   }
 
   private void spawnGhosts() {
