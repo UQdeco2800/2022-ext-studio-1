@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.entities.factories.SwitchFactory;
 import com.deco2800.game.components.npc.DialogWithSelection;
 import com.deco2800.game.components.npc.NpcInteraction;
 import com.deco2800.game.services.ResourceService;
@@ -57,7 +58,6 @@ public class NpcInteraction_Display extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Exit button clicked");
                         exitMenu();
                     }
                 }
