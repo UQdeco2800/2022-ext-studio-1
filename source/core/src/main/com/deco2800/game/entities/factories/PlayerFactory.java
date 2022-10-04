@@ -52,7 +52,10 @@ public class PlayerFactory {
     animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("pickUp", 0.1f, Animation.PlayMode.NORMAL);
     animator.addAnimation("attack",0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("stand",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("downAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("upAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("leftAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("rightAttack",0.1f, Animation.PlayMode.LOOP);
 
 
     AchievementService achievementService = ServiceLocator.getAchievementService();

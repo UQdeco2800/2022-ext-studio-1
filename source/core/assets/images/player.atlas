@@ -1,86 +1,108 @@
+
 player.png
-size: 1416, 426
+size: 1820, 426
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 down
   rotate: false
-  xy: 608, 2
+  xy: 810, 2
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 2
 down
   rotate: false
-  xy: 1214, 214
+  xy: 1416, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 1
+downAttack
+  rotate: false
+  xy: 1416, 214
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 1
 left
+  rotate: false
+  xy: 2, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 2
+left
+  rotate: false
+  xy: 608, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 1
+leftAttack
   rotate: false
   xy: 406, 214
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 1
+leftAttack
+  rotate: false
+  xy: 810, 214
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
 left
   rotate: false
   xy: 810, 214
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
-  index: 3
-left
-  rotate: false
-  xy: 1012, 2
-  size: 200, 210
-  orig: 200, 210
-  offset: 0, 0
   index: 0
 pickUp
   rotate: false
-  xy: 2, 214
+  xy: 204, 2
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 0
 down
   rotate: false
-  xy: 2, 214
+  xy: 204, 2
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 0
-stand
+downAttack
   rotate: false
-  xy: 2, 214
-  size: 200, 210
-  orig: 200, 210
-  offset: 0, 0
-  index: 1
-stand
-  rotate: false
-  xy: 2, 214
+  xy: 204, 2
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 0
 pickUp
   rotate: false
-  xy: 810, 2
+  xy: 1012, 2
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 1
 right
   rotate: false
-  xy: 204, 214
+  xy: 406, 2
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 1
 right
+  rotate: false
+  xy: 1214, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 2
+rightAttack
   rotate: false
   xy: 608, 214
   size: 200, 210
@@ -89,29 +111,50 @@ right
   index: 0
 right
   rotate: false
-  xy: 1012, 214
+  xy: 608, 214
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
-  index: 2
-up
+  index: 0
+rightAttack
   rotate: false
-  xy: 2, 2
+  xy: 1618, 214
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 1
 up
   rotate: false
-  xy: 204, 2
+  xy: 204, 214
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
-  index: 3
+  index: 1
 up
   rotate: false
-  xy: 406, 2
+  xy: 1214, 214
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 2
+upAttack
+  rotate: false
+  xy: 2, 214
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 0
+up
+  rotate: false
+  xy: 2, 214
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+upAttack
+  rotate: false
+  xy: 1012, 214
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 1

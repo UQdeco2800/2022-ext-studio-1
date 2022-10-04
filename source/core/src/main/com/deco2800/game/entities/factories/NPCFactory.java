@@ -43,6 +43,102 @@ public class NPCFactory {
       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
   private static final Logger logger = LoggerFactory.getLogger(NPCFactory.class);
+
+  public static Entity createKnight(Entity target) {
+    Entity knight = createBaseNPC(target);
+    BaseEntityConfig config = configs.ghost;
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/knight.atlas", TextureAtlas.class));
+    animator.addAnimation("down", 0.1f, Animation.PlayMode.LOOP);
+
+    knight
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+            .addComponent(animator)
+            .addComponent(new MonsterAnimationController());
+
+    knight.setScale(1f,1f);
+    logger.debug("Create a Knight");
+    return knight;
+  }
+
+  public static Entity createRobot(Entity target) {
+    Entity robot = createBaseNPC(target);
+    BaseEntityConfig config = configs.ghost;
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/robot.atlas", TextureAtlas.class));
+    animator.addAnimation("down", 0.1f, Animation.PlayMode.LOOP);
+
+    robot
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+            .addComponent(animator)
+            .addComponent(new MonsterAnimationController());
+
+    robot.setScale(1f,1f);
+    logger.debug("Create a Robot");
+    return robot;
+  }
+
+  public static Entity createSlime(Entity target) {
+    Entity slime = createBaseNPC(target);
+    BaseEntityConfig config = configs.ghost;
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/slime.atlas", TextureAtlas.class));
+    animator.addAnimation("down", 0.1f, Animation.PlayMode.LOOP);
+
+    slime
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+            .addComponent(animator)
+            .addComponent(new MonsterAnimationController());
+
+    slime.setScale(1f,1f);
+    logger.debug("Create a Slime");
+    return slime;
+  }
+
+  public static Entity createBobo(Entity target) {
+    Entity bobo = createBaseNPC(target);
+    BaseEntityConfig config = configs.ghost;
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/bobo.atlas", TextureAtlas.class));
+    animator.addAnimation("down", 0.1f, Animation.PlayMode.LOOP);
+
+    bobo
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+            .addComponent(animator)
+            .addComponent(new MonsterAnimationController());
+
+    bobo.setScale(1f,1f);
+    logger.debug("Create a Bobo");
+    return bobo;
+  }
+
+  public static Entity createPiranha(Entity target) {
+    Entity piranha = createBaseNPC(target);
+    BaseEntityConfig config = configs.ghost;
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/Piranha.atlas",
+                            TextureAtlas.class));
+    animator.addAnimation("down", 0.1f, Animation.PlayMode.LOOP);
+
+    piranha
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+            .addComponent(animator)
+            .addComponent(new MonsterAnimationController());
+
+    piranha.setScale(1f,1f);
+    logger.debug("Create a Piranha");
+    return piranha;
+  }
   /**
    * Creates a ghost entity.
    *
@@ -95,27 +191,6 @@ public class NPCFactory {
     return ghostKing;
   }
 
-  public static Entity createMonster(Entity target) {
-    Entity Monster = createBaseNPC(target);
-    BaseEntityConfig config = configs.ghost;
-
-    AnimationRenderComponent animator =
-            new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/ghostKing.atlas",
-                            TextureAtlas.class));
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-
-    Monster
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-            .addComponent(animator)
-            .addComponent(new MonsterAnimationController());
-
-    Monster.setScale(2.4f, 2.4f);
-    logger.debug("Create a Monster");
-    return Monster;
-  }
-
   public static Entity createNeutralLives(Entity target) {
     Entity NeutralLives = new Entity();
 
@@ -125,7 +200,7 @@ public class NPCFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/ghostKing.atlas",
+                    ServiceLocator.getResourceService().getAsset("images/bobo.atlas",
                             TextureAtlas.class));
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 

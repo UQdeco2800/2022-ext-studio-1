@@ -1,0 +1,27 @@
+
+Piranha.png
+size: 1634, 1716
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+down
+  rotate: false
+  xy: 2, 859
+  size: 834, 855
+  orig: 834, 855
+  offset: 0, 0
+  index: 2
+down
+  rotate: false
+  xy: 2, 2
+  size: 814, 855
+  orig: 814, 855
+  offset: 0, 0
+  index: 0
+down
+  rotate: false
+  xy: 818, 2
+  size: 814, 855
+  orig: 814, 855
+  offset: 0, 0
+  index: 1

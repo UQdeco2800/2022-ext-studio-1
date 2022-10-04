@@ -24,7 +24,6 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/player_front.png",
     "images/orpheus_front.png",
     "images/Ares_front.png",
     "images/mermaid.png",
@@ -55,11 +54,16 @@ public class ForestGameArea extends GameArea {
     "images/inventory/confirm.png",
     "images/inventory/emtpyInventorySlot.png",
     "images/inventory/inventoryBG.png",
-          "images/KEY.png"
+    "images/KEY.png",
+    "images/knight.png",
+    "images/Piranha.png",
+    "images/robot.png",
+    "images/slime.png",
+    "images/bobo.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas","images/player.atlas","images/orpheus.atlas",
-    "images/Ares.atlas"
+    "images/Ares.atlas","images/knight.atlas","images/Piranha.atlas","images/robot.atlas","images/slime.atlas","images/bobo.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/VillageBGM_2.mp3";
@@ -86,6 +90,7 @@ public class ForestGameArea extends GameArea {
     spawnTrees();
     player = spawnPlayer();
     spawnGhosts();
+    spawnKnight();
     spawnGhostKing();
     spawnTimeConsumeableItem();
     spawnClueItem();
@@ -175,6 +180,15 @@ public class ForestGameArea extends GameArea {
       Entity ghost = NPCFactory.createGhost(player);
       spawnEntityAt(ghost, randomPos, true, true);
     }
+  }
+
+  private void spawnKnight() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+    Entity knight = NPCFactory.createKnight(player);
+    spawnEntityAt(knight, randomPos, true, true);
   }
 
   private void spawnGhostKing() {
