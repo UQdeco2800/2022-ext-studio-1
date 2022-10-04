@@ -6,6 +6,7 @@ com.deco2800.game.areas.terrain
 com.deco2800.game.components
 com.deco2800.game.components.achievements
 com.deco2800.game.components.achievements.pojo
+com.deco2800.game.components.clues
 com.deco2800.game.components.countDownClock
 com.deco2800.game.components.endingmenu
 com.deco2800.game.components.gamearea
