@@ -1,6 +1,6 @@
 package com.deco2800.game.components.player.entity;
 
-public class CoralItem extends Item {
+public class CoralItem extends ClueItem {
     private final String TOOL_ITEM = "Coral Item";
 
     public CoralItem() {
