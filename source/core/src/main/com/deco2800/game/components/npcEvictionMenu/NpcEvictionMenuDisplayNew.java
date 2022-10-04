@@ -1,6 +1,7 @@
 package com.deco2800.game.components.npcEvictionMenu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.components.CombatStatsComponent;
@@ -21,11 +23,18 @@ import com.deco2800.game.components.countDownClock.countdownDisplay;
 import com.deco2800.game.components.endingmenu.EndingMenuDisplay;
 
 import com.deco2800.game.components.npc.NPCClueLibrary;
+import com.deco2800.game.entities.configs.PlayerProfileConfig;
+import com.deco2800.game.entities.configs.PlayerProfileProperties;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 
+import java.util.List;
 import java.util.Objects;
+
+import com.deco2800.game.components.player.PlayerProfileDisplay;
+import com.deco2800.game.entities.configs.PlayerProfileProperties;
+import com.badlogic.gdx.utils.Json;
 
 
 /**
@@ -68,6 +77,21 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
 
     private Integer errorNum;
     private Boolean findKey;
+
+    //create instance of playerProfileDisplay here
+    PlayerProfileDisplay profileObject = new PlayerProfileDisplay();
+    //Get the json object here
+    private List<PlayerProfileProperties> profileInfo = profileObject.getPlayerProfile();
+
+    //Create instance of PlayerProfileProperties
+    PlayerProfileProperties profileProp = new PlayerProfileProperties();
+
+
+    PlayerProfileConfig PPCInstance = new PlayerProfileConfig();
+
+
+
+
 
 
     /**
@@ -641,6 +665,31 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             return NpcResultDialogType.WIN;
         }
         if (Objects.equals(name, "Ares")){ // select npc correctly
+            //Add code here:Write one row of data to Json (win game record)
+            profileProp.timeRemaining=Math.round(entity.getComponent(countdownDisplay.class).getRemainingTime());
+            profileProp.result =1;
+            profileProp.attempt =errorNum+1;
+            Json json = new Json();
+            json.setOutputType(JsonWriter.OutputType.json);
+          //  json.setElementType(PlayerProfileConfig.class,"playerStats", PlayerProfileProperties.class);
+            String profileData = json.toJson(profileProp);
+            FileHandle file =Gdx.files.local("configs/playerStatsInfo.json");
+            profileInfo.add(profileProp);
+
+            PPCInstance.playerStats = profileInfo;
+
+            String profileData3 = json.toJson(PPCInstance);
+
+            String profileData2 = json.toJson(profileInfo);
+
+
+            file.writeString(profileData3,false);
+           // profileInfo.set(profileData);
+
+            System.out.println(file);
+            System.out.print(profileData);
+            //file[playerStats].writeString(profileData,true);
+
             errorNum = 0;
             return NpcResultDialogType.RIGHT_BOX;
         } else {
