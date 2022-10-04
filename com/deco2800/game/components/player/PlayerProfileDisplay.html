@@ -136,11 +136,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#calculateAvg(int,int)" class="member-name-link">calculateAvg</a><wbr>(int&nbsp;sum,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#calculateAveTi(int,int)" class="member-name-link">calculateAveTi</a><wbr>(int&nbsp;timeLeft,
+ int&nbsp;timeWins)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#calculateAvg(int,int)" class="member-name-link">calculateAvg</a><wbr>(int&nbsp;sum,
  int&nbsp;numElements)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Calculates the average value.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#calculateAvgAtm(int,int)" class="member-name-link">calculateAvgAtm</a><wbr>(int&nbsp;numberOfAttempt,
+ int&nbsp;timeItWin)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -150,6 +158,11 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Draw the renderable.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../entities/configs/PlayerProfileProperties.html" title="class in com.deco2800.game.entities.configs">PlayerProfileProperties</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPlayerProfile()" class="member-name-link">getPlayerProfile</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the list of performance stats of the player (player profile) in the json file.</div>
 </div>
 </div>
 </div>
@@ -211,6 +224,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getPlayerProfile()">
+<h3>getPlayerProfile</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../entities/configs/PlayerProfileProperties.html" title="class in com.deco2800.game.entities.configs">PlayerProfileProperties</a>&gt;</span>&nbsp;<span class="element-name">getPlayerProfile</span>()</div>
+<div class="block">Gets the list of performance stats of the player (player profile) in the json file.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>list of performance stats</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="calculateAvg(int,int)">
 <h3>calculateAvg</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">calculateAvg</span><wbr><span class="parameters">(int&nbsp;sum,
@@ -223,6 +247,20 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>the average of the elements.</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="calculateAveTi(int,int)">
+<h3>calculateAveTi</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">calculateAveTi</span><wbr><span class="parameters">(int&nbsp;timeLeft,
+ int&nbsp;timeWins)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="calculateAvgAtm(int,int)">
+<h3>calculateAvgAtm</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">calculateAvgAtm</span><wbr><span class="parameters">(int&nbsp;numberOfAttempt,
+ int&nbsp;timeItWin)</span></div>
 </section>
 </li>
 <li>
