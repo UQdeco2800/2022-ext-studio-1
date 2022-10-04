@@ -1,12 +1,12 @@
 package com.deco2800.game.components.player.entity;
 
-public class CorelItem extends Item {
-    private final String TOOL_ITEM = "Battery Item";
+public class CoralItem extends Item {
+    private final String TOOL_ITEM = "Coral Item";
 
-    public CorelItem() {
+    public CoralItem() {
     }
 
-    public CorelItem(int id, String name, String description, String textureLocation) {
+    public CoralItem(int id, String name, String description, String textureLocation) {
         super(id, name, description, textureLocation);
     }
 
