@@ -15,6 +15,7 @@ import com.deco2800.game.GdxGame.ScreenType;
 //import com.deco2800.game.components.player.ConsumeableItemComponent;
 import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.components.endingmenu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +54,10 @@ public class countdownDisplay extends UIComponent {
 
            // logger.info("negative time: {}", String.valueOf(this.getRemainingTime()));
            // logger.info(counterLabel.getText().toString());
-
+//            EndingMenuDisplay.setLose();
+//            System.out.println("111");
+//            entity.getEvents().trigger("ending");
+//
         }
         if(timeRemaining>0 && stop==false) {
             int equHours;

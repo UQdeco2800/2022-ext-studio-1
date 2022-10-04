@@ -22,8 +22,8 @@ public class EndingMenuScreen extends ScreenAdapter{
     private static final Logger logger = LoggerFactory.getLogger(EndingMenuScreen.class);
     private final GdxGame game;
     private final Renderer renderer;
-    private static final String[] endingMenuTextures = {"images/endingMenu/you_win.png",
-            "images/endingMenu/you_lose.png"};
+    private static final String[] endingMenuTextures = {"images/endingMenu/win.png",
+            "images/endingMenu/lose.png"};
 
     public EndingMenuScreen(GdxGame game) {
         this.game = game;
