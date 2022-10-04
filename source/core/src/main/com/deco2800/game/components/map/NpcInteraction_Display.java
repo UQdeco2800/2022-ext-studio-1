@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplayNew;
+import com.deco2800.game.entities.factories.SwitchFactory;
 import com.deco2800.game.components.npc.DialogWithSelection;
 import com.deco2800.game.components.npc.NpcInteraction;
 import com.deco2800.game.services.ResourceService;
@@ -16,22 +18,25 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class MainScreenTest_Display extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(Lab_1_Display.class);
+public class NpcInteraction_Display extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(NpcInteraction_Display.class);
     private static final float Z_INDEX = 2f;
     private Table table;
     private final GdxGame game;
     private int step;
     private Image dialogBox;
     private Label dialog;
+    private int chapterNum;
     private ClickListener clickListener;
     private DialogWithSelection root;
+    private Window npcEvictionMenuWindow;
 
-    public MainScreenTest_Display(GdxGame game) {
+    public NpcInteraction_Display(GdxGame game) {
         super();
         this.game = game;
     }
@@ -43,28 +48,27 @@ public class MainScreenTest_Display extends UIComponent {
     }
 
     private void addActors() {
-        table = new Table();
-        table.setFillParent(true);
-        Image background = new Image(ServiceLocator.getResourceService().getAsset(
-                "images/black.jpg", Texture.class));
-
-        Button exitBtn = createButton("images/eviction_menu/exitButton.png",
-                "images/eviction_menu/exitButton_selected.png");
-        exitBtn.setPosition((float) (stage.getWidth() * 0.944), (float) (stage.getHeight() * 0.91));
-        exitBtn.setSize((float) (stage.getWidth() * 0.042), (float) (stage.getHeight() * 0.07116));
-        exitBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Exit button clicked");
-                        exitMenu();
-                    }
-                }
-        );
-
-        table.add(background);
-        stage.addActor(table);
-        stage.addActor(exitBtn);
+//        table = new Table();
+//        table.setFillParent(true);
+//        Image background = new Image(ServiceLocator.getResourceService().getAsset(
+//                "images/black.jpg", Texture.class));
+//
+//        Button exitBtn = createButton("images/eviction_menu/exitButton.png",
+//                "images/eviction_menu/exitButton_selected.png");
+//        exitBtn.setPosition((float) (stage.getWidth() * 0.944), (float) (stage.getHeight() * 0.91));
+//        exitBtn.setSize((float) (stage.getWidth() * 0.042), (float) (stage.getHeight() * 0.07116));
+//        exitBtn.addListener(
+//                new ChangeListener() {
+//                    @Override
+//                    public void changed(ChangeEvent changeEvent, Actor actor) {
+//                        exitMenu();
+//                    }
+//                }
+//        );
+//
+//        table.add(background);
+//        stage.addActor(table);
+//        stage.addActor(exitBtn);
 
         // set dialog box
         dialogBox = new Image(ServiceLocator.getResourceService().getAsset(
@@ -73,7 +77,11 @@ public class MainScreenTest_Display extends UIComponent {
         dialogBox.setSize((float) (stage.getWidth() * 0.9), (float) (stage.getHeight() * 0.2));
         stage.addActor(dialogBox);
 
-        setDialog(1);
+        chapterNum = 1;
+        setDialog();
+
+//        npcEvictionMenuWindow = new NpcEvictionMenuDisplayNew(
+//                logger, ServiceLocator.getResourceService(), stage.getWidth(), stage.getHeight()).creatEvictionMenu();
     }
 
     @Override
@@ -92,7 +100,6 @@ public class MainScreenTest_Display extends UIComponent {
 
     @Override
     public void dispose() {
-        table.clear();
         super.dispose();
     }
 
@@ -107,7 +114,7 @@ public class MainScreenTest_Display extends UIComponent {
         return new Button(style);
     }
 
-    private void setDialog(int chapterNum) {
+    private void setDialog() {
         step = 0;
         dialog = new Label("Chapter " + chapterNum, skin);
         dialog.setPosition((float) (stage.getWidth() * 0.1), (float) (stage.getHeight() * 0.1));
@@ -116,20 +123,30 @@ public class MainScreenTest_Display extends UIComponent {
         stage.addActor(dialog);
 
         try {
-            if (chapterNum == 1) {// chapter without selections
+            if (chapterNum == 1 || chapterNum == 4) {// chapter without selections
                 ArrayList<String> texts = NpcInteraction.readNpcFiles(chapterNum);
                 Iterator<String> it = texts.iterator();
-                clickListener = new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        super.clicked(event, x, y);
-                        chapter1Listener(it);
-                    }
-                };
+                switch (chapterNum) {
+                    case 1 -> clickListener = new ClickListener() {
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            super.clicked(event, x, y);
+                            chapter1Listener(it);
+                        }
+                    };
+                    case 4 -> clickListener = new ClickListener() {
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            super.clicked(event, x, y);
+                            chapter4Listener(it);
+                        }
+                    };
+                }
+
             } else {
                 switch (chapterNum) {
                     case 2 -> {
-                        chapter2Opening();
+//                        chapter2Opening();
                         root = DialogWithSelection.getChapter2Dialog();
                         clickListener = new ClickListener() {
                             @Override
@@ -146,6 +163,16 @@ public class MainScreenTest_Display extends UIComponent {
                             public void clicked(InputEvent event, float x, float y) {
                                 super.clicked(event, x, y);
                                 chapter3Listener();
+                            }
+                        };
+                    }
+                    case 5 -> {
+                        root = DialogWithSelection.getChapter5Dialog();
+                        clickListener = new ClickListener() {
+                            @Override
+                            public void clicked(InputEvent event, float x, float y) {
+                                super.clicked(event, x, y);
+                                chapter5Listener();
                             }
                         };
                     }
@@ -220,54 +247,60 @@ public class MainScreenTest_Display extends UIComponent {
         dialog.setText(root.getDialog());
         dialog.setPosition((float) (stage.getWidth() * 0.1), (float) (stage.getHeight() * 0.1));
         dialogBox.setPosition((float) (stage.getWidth() * 0.05), 0);
-        clickListener = new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                chapter2Listener();
-            }
-        };
+        switch (chapterNum) {
+            case 2 -> clickListener = new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    super.clicked(event, x, y);
+                    chapter2Listener();
+                }
+            };
+            case 3 -> clickListener = new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    super.clicked(event, x, y);
+                    chapter3Listener();
+                }
+            };
+            case 5 -> clickListener = new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    super.clicked(event, x, y);
+                    chapter5Listener();
+                }
+            };
+        }
         dialogBox.addListener(clickListener);
     }
 
     private void chapter1Listener(Iterator<String> it) {
-        Image darkLab = new Image(ServiceLocator.getResourceService().getAsset(
-                "images/map/LAB/whole lab dark.png", Texture.class));
-        darkLab.setPosition(0, 0);
-        darkLab.setSize(stage.getWidth(), stage.getHeight());
+//        Image darkLab = new Image(ServiceLocator.getResourceService().getAsset(
+//                "images/map/LAB/whole lab dark.png", Texture.class));
+//        darkLab.setPosition(0, 0);
+//        darkLab.setSize(stage.getWidth(), stage.getHeight());
+//
+//        Image bloodLab = new Image(ServiceLocator.getResourceService().getAsset(
+//                "images/map/LAB/whole lab blood.png", Texture.class));
+//        bloodLab.setPosition(0, 0);
+//        bloodLab.setSize(stage.getWidth(), stage.getHeight());
 
-        Image bloodLab = new Image(ServiceLocator.getResourceService().getAsset(
-                "images/map/LAB/whole lab blood.png", Texture.class));
-        bloodLab.setPosition(0, 0);
-        bloodLab.setSize(stage.getWidth(), stage.getHeight());
-
-        if (it.hasNext()) {
-            dialog.setText(it.next());
-            if (step == 0) {
-                table.addActor(darkLab); // show the lab
-            } else if (step == 5) {
-                table.removeActor(darkLab);
-                table.addActor(bloodLab); // show the blooding lab
+        if (step != 6 || SwitchFactory.isWorking) {
+            if (it.hasNext()) {
+                dialog.setText(it.next());
+//                if (step == 0) {
+//                    table.addActor(darkLab); // show the lab
+//                } else if (step == 6) {
+//                    table.removeActor(darkLab);
+//                    table.addActor(bloodLab); // show the blooding lab
+//                }
+                step++;
+            } else {// chapter 1 ends
+//                bloodLab.remove();
+                dialog.remove();
+                dialogBox.removeListener(clickListener);
+                chapterNum = 2;
+                setDialog();
             }
-            step++;
-        } else {// chapter 1 ends
-            bloodLab.remove();
-            dialog.remove();
-            dialogBox.removeListener(clickListener);
-            setDialog(2);
-        }
-    }
-
-    private void readDialogWithSelections() {
-        if (root.getNext() != null) {
-            dialog.setText(root.getDialog());
-            root = root.getNext();
-        } else if (root.isSelectionPoint()) {
-            setSelection();
-        } else {
-            dialogBox.remove();
-            dialog.remove();
-            dialogBox.removeListener(clickListener);
         }
     }
 
@@ -288,7 +321,8 @@ public class MainScreenTest_Display extends UIComponent {
         } else if (DialogWithSelection.getChapter2Endings().contains(root)) {
             dialogBox.removeListener(clickListener);
             dialog.remove();
-            setDialog(3);
+            chapterNum = 3;
+            setDialog();
         } else {
             dialogBox.remove();
             dialog.remove();
@@ -297,7 +331,51 @@ public class MainScreenTest_Display extends UIComponent {
     }
 
     private void chapter3Listener() {
-        readDialogWithSelections();
-        // condition for switch map and exchange items
+        if (root.getNext() != null) {
+            dialog.setText(root.getDialog());
+            root = root.getNext();
+        } else if (root.isSelectionPoint()) {
+            setSelection();
+        } else if (DialogWithSelection.getChapter3Endings().contains(root)) {
+            dialogBox.removeListener(clickListener);
+            dialog.remove();
+            chapterNum = 4;
+            setDialog();
+        } else {
+            dialogBox.remove();
+            dialog.remove();
+            dialogBox.removeListener(clickListener);
+        }
+    }
+
+    private void chapter4Listener(Iterator<String> it) {
+        if (it.hasNext()) {
+            dialog.setText(it.next());
+            step++;
+        } else {// chapter 4 ends
+            dialog.remove();
+            dialogBox.removeListener(clickListener);
+            chapterNum = 5;
+            setDialog();
+        }
+    }
+
+    private void chapter5Listener() {
+        if (root.getNext() != null) {
+            dialog.setText(root.getDialog());
+            root = root.getNext();
+        } else if (root.isSelectionPoint()) {
+            setSelection();
+        } else if (DialogWithSelection.getChapter5Ending().equals(root)) {// select the murderer
+            dialogBox.removeListener(clickListener);
+            // show murderer selection page
+            stage.addActor(this.npcEvictionMenuWindow);
+            System.out.println(1);
+        } else {
+            dialogBox.remove();
+            dialog.remove();
+            dialogBox.removeListener(clickListener);
+
+        }
     }
 }

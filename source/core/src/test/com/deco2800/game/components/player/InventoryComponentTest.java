@@ -92,16 +92,35 @@ class InventoryComponentTest {
   }
 
   @Test
-  void readItemConfigsTest() {
+  void ShouldReadItemConfigs() {
     ItemConfigs itemConfigs = FileLoader.readClass(ItemConfigs.class, "configs/items.json");
-    System.out.println(itemConfigs.itemList.size());
-
-//    ItemConfigs configs = new ItemConfigs();
-//    List<Item> itemList = configs.itemList;
-//    ClueItem clueItem = new ClueItem(1, "a", "des", "c://a");
-//    itemList.add(clueItem);
-//    itemList.add(clueItem);
-//    itemList.add(clueItem);
-//    FileLoader.writeClass(configs, "configs/items.json", FileLoader.Location.INTERNAL);
+    List<Item> itemList = itemConfigs.itemList;
+    assertTrue(itemList.size() > 0);
   }
+
+  @Test
+  void shouldAddItem() {
+    InventoryComponent inventoryComponent = new InventoryComponent();
+    inventoryComponent.add(1);
+    assertTrue(inventoryComponent.contains(1));
+    assertEquals(1, inventoryComponent.count(1));
+  }
+
+  @Test
+  void shouldRemoveItem() {
+    InventoryComponent inventoryComponent = new InventoryComponent();
+    inventoryComponent.add(1);
+    assertEquals(1, inventoryComponent.count(1));
+    inventoryComponent.remove(1);
+    assertEquals(0, inventoryComponent.count(1));
+  }
+
+  @Test
+  void shouldLimitNumOfClueItem() {
+    InventoryComponent inventoryComponent = new InventoryComponent();
+    inventoryComponent.add(4);
+    assertFalse(inventoryComponent.add(4));
+  }
+
+
 }

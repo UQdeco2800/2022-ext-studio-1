@@ -96,7 +96,7 @@ public class countdownDisplay extends UIComponent {
     private void addActors() {
 
         counterLabel = new Label(String.valueOf(timeRemaining), skin);
-        counterLabel.setPosition((float) (stage.getWidth() * 0.8), (float) (stage.getHeight() * 0.1));
+        counterLabel.setPosition((float) (stage.getWidth() * 0.85), (float) (stage.getHeight() * 0.3));
 
         counterLabel.setFontScale(2);
 
@@ -156,7 +156,7 @@ public class countdownDisplay extends UIComponent {
                 });
 
         Table table =new Table();
-        table.add(pauseButton).expandX().right().pad(0f, 2400f, 100f, 0f);
+        table.add(pauseButton).expandX().right().pad(0f, 2400f, 400f, 0f);
         return table;
 
 
@@ -178,7 +178,7 @@ public class countdownDisplay extends UIComponent {
                 });
 
         Table table =new Table();
-        table.add(resumeButton).expandX().right().pad(0f, 2150f, 100f, 0f);
+        table.add(resumeButton).expandX().right().pad(0f, 2150f, 400f, 0f);
         return table;
     }
 

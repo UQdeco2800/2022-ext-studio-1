@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class DialogWithSelection {
-    private final String dialog;
+    private String dialog;
     private DialogWithSelection next;
     private DialogWithSelection option1;
     private DialogWithSelection option2;
@@ -42,6 +42,10 @@ public class DialogWithSelection {
             lastDialog = lastDialog.getNext();
         }
         return lastDialog;
+    }
+
+    public void setDialog(String dialog) {
+        this.dialog = dialog;
     }
 
     public void setNext(DialogWithSelection next) {
@@ -231,5 +235,67 @@ public class DialogWithSelection {
 
         // return the whole dialogs
         return root;
+    }
+
+    public static ArrayList<DialogWithSelection> getChapter3Endings() {
+        ArrayList<DialogWithSelection> endings = new ArrayList<>();
+        DialogWithSelection end1 = getChapter3Dialog().getNext().getOption1().getLastDialog()
+                .getOption2().getLastDialog()
+                .getOption1().getLastDialog()
+                .getOption2().getLastDialog();
+        DialogWithSelection end2 = getChapter3Dialog().getNext().getOption1().getLastDialog()
+                .getOption2().getLastDialog()
+                .getOption2().getLastDialog()
+                .getOption2().getLastDialog();
+        DialogWithSelection end3 = getChapter3Dialog().getNext().getOption2().getLastDialog()
+                .getOption2().getLastDialog()
+                .getOption1().getLastDialog()
+                .getOption2().getLastDialog();
+        DialogWithSelection end4 = getChapter3Dialog().getNext().getOption2().getLastDialog()
+                .getOption2().getLastDialog()
+                .getOption2().getLastDialog()
+                .getOption2().getLastDialog();
+        endings.add(end1);
+        endings.add(end2);
+        endings.add(end3);
+        endings.add(end4);
+        return endings;
+    }
+
+    public static DialogWithSelection getChapter5Dialog() {
+        // set root dialog
+        DialogWithSelection root = new DialogWithSelection("Information collected.");
+        DialogWithSelection tail = root;
+
+        // set texts after root
+        BufferedReader br;
+        ArrayList<String> dialogs = new ArrayList<>();
+        try {
+            br = new BufferedReader(new FileReader("dialogs/Chapter 5/Chap5_root.txt"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                dialogs.add(line);
+            }
+            br.close();
+
+            for (String dialog : dialogs) {
+                DialogWithSelection newDialog = new DialogWithSelection(dialog);
+                tail.setNext(newDialog);
+                tail = newDialog;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // set selection point for root
+        tail.setSelectionPoint("Keep secrets for Orpheus.", "Ignore his request.",
+                5, 1);
+
+        // return the whole dialogs
+        return root;
+    }
+
+    public static DialogWithSelection getChapter5Ending() {
+        return getChapter5Dialog().getLastDialog().getOption1().getLastDialog();
     }
 }
