@@ -8,7 +8,7 @@ import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.countDownClock.countdownDisplay;
 import com.deco2800.game.components.maingame.MainGameActions;
-import com.deco2800.game.components.map.NpcInteraction_Display;
+import com.deco2800.game.components.npc.NpcInteraction_Display;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
