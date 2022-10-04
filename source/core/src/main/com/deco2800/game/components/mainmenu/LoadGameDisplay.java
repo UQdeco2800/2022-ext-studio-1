@@ -76,7 +76,10 @@ public class LoadGameDisplay extends UIComponent {
 
     }
 
-
+    /**
+     * Creates the save game slots
+     * @return the save game slots formatted as a table
+     */
     private Table makeLoadSlots(){
 
         Table loadSlots = new Table();
@@ -215,7 +218,9 @@ public class LoadGameDisplay extends UIComponent {
     }
 
 
-
+    /**
+     * Shows the confirmation popup when a save slot is clicked, allowing for actions to be done with the save
+     */
     private void confirmLoad() {
 
         popupIsOpen = true;
@@ -242,7 +247,6 @@ public class LoadGameDisplay extends UIComponent {
 
         confirmPopup = new Table();
         confirmPopup.setFillParent(true);
-
 
 
         ImageButton confirmBtn = new ImageButton(confirmBtnImage);
@@ -324,18 +328,29 @@ public class LoadGameDisplay extends UIComponent {
     }
 
 
-
+    /**
+     * Show a description of the menu buttons action
+     */
     private void showActionDescription() {
 
     }
 
+    /**
+     * Delete a save file
+     */
     private void deleteSave() {
 
     }
 
+    /**
+     * Remove the menu button action description
+     */
     private void destroyActionDescription() {
     }
 
+    /**
+     * Remove the Confirmation button popup
+     */
     private void destroyConfirmPopup() {
         super.dispose();
         confirmPopup.remove();
@@ -343,10 +358,17 @@ public class LoadGameDisplay extends UIComponent {
         popupIsOpen = false;
     }
 
+    /**
+     * Load a selected save game file
+     */
     private void loadSavedGame() {
         //-TODO launches game with saved variables (time remaining, npc characters voted out)
     }
 
+    /**
+     * Shows a save games description and accompanying image, if available
+     * @return The save games description formatted as a table
+     */
     private Table showSaveDescription() {
 
         Image emptySlot =
@@ -371,6 +393,10 @@ public class LoadGameDisplay extends UIComponent {
 
     }
 
+    /**
+     * Gets the save files specific description
+     * @return The save files specific description, or a generic empty message if none exists
+     */
     private String getSaveDescription() {
 
         //-TODO return save specific information, Else return:
@@ -380,15 +406,25 @@ public class LoadGameDisplay extends UIComponent {
     }
 
 
+    /**
+     * Removes the save files description
+     */
     private void destroySaveDescription() {
         super.dispose();
         descriptionTable.remove();
     }
 
+    /**
+     * Handles exiting the load game screen
+     */
     private void exit() {
         game.setScreen(ScreenType.MAIN_MENU);
     }
 
+    /**
+     * Creates the screens exit button
+     * @return The exit button
+     */
     private Table makeExitBtn() {
         TextButton exitBtn = new TextButton("Exit", skin);
 
