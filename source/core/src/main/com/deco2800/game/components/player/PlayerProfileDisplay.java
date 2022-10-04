@@ -61,7 +61,7 @@ public class PlayerProfileDisplay extends UIComponent {
      * Gets the list of performance stats of the player (player profile) in the json file.
      * @return list of performance stats
      */
-    private List<PlayerProfileProperties> getPlayerProfile() {
+    public List<PlayerProfileProperties> getPlayerProfile() {
         return playerProfileConfigs.playerStats;
     }
 
