@@ -29,6 +29,9 @@ public class LoadGameDisplay extends UIComponent {
 
     private Table popupBGTable;
 
+    private Table confirmPopup;
+
+    private boolean popupIsOpen = false;
 
     public LoadGameDisplay(GdxGame game) {
         super();
@@ -107,7 +110,10 @@ public class LoadGameDisplay extends UIComponent {
                 //Shows save description when hovering
                 @Override
                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                    showSaveDescription();
+                    if (!popupIsOpen) {
+                        showSaveDescription();
+                    }
+
                 }
                 //Removes save description when not hovering
                 @Override
@@ -117,9 +123,12 @@ public class LoadGameDisplay extends UIComponent {
                 // Loads the selected save
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    confirmLoad();
-                    destroySaveDescription();
-                    return true;
+                    if (!popupIsOpen) {
+                        confirmLoad();
+                        destroySaveDescription();
+                        return true;
+                    }
+                    return false;
                 }
             });
 
@@ -128,7 +137,9 @@ public class LoadGameDisplay extends UIComponent {
                     //Shows save description when hovering
                     @Override
                     public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                        showSaveDescription();
+                        if (!popupIsOpen) {
+                            showSaveDescription();
+                        }
                     }
                     //Removes save description when not hovering
                     @Override
@@ -138,9 +149,12 @@ public class LoadGameDisplay extends UIComponent {
                     // Loads the selected save
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        confirmLoad();
-                        destroySaveDescription();
-                        return true;
+                        if (!popupIsOpen) {
+                            confirmLoad();
+                            destroySaveDescription();
+                            return true;
+                        }
+                        return false;
                     }
                 });
 
@@ -149,7 +163,9 @@ public class LoadGameDisplay extends UIComponent {
                     //Shows save description when hovering
                     @Override
                     public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                        showSaveDescription();
+                        if (!popupIsOpen) {
+                            showSaveDescription();
+                        }
                     }
                     //Removes save description when not hovering
                     @Override
@@ -159,9 +175,12 @@ public class LoadGameDisplay extends UIComponent {
                     // Loads the selected save
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        confirmLoad();
-                        destroySaveDescription();
-                        return true;
+                        if (!popupIsOpen) {
+                            confirmLoad();
+                            destroySaveDescription();
+                            return true;
+                        }
+                        return false;
                     }
                 });
 
@@ -170,7 +189,9 @@ public class LoadGameDisplay extends UIComponent {
                     //Shows save description when hovering
                     @Override
                     public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                        showSaveDescription();
+                        if (!popupIsOpen) {
+                            showSaveDescription();
+                        }
                     }
                     //Removes save description when not hovering
                     @Override
@@ -180,9 +201,12 @@ public class LoadGameDisplay extends UIComponent {
                     // Loads the selected save
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        confirmLoad();
-                        destroySaveDescription();
-                        return true;
+                        if (!popupIsOpen) {
+                            confirmLoad();
+                            destroySaveDescription();
+                            return true;
+                        }
+                        return false;
                     }
                 });
 
@@ -193,6 +217,8 @@ public class LoadGameDisplay extends UIComponent {
 
 
     private void confirmLoad() {
+
+        popupIsOpen = true;
         Image confirmLoadBG =
                 new Image(
                         ServiceLocator.getResourceService()
@@ -214,8 +240,7 @@ public class LoadGameDisplay extends UIComponent {
                 .width(500);
 
 
-
-        Table confirmPopup = new Table();
+        confirmPopup = new Table();
         confirmPopup.setFillParent(true);
 
 
@@ -230,11 +255,93 @@ public class LoadGameDisplay extends UIComponent {
         confirmPopup.add(deleteBtn);
 
 
+
+        confirmBtn.addListener(
+                new InputListener() {
+                    //Shows action description when hovering
+                    @Override
+                    public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                        showActionDescription();
+                    }
+                    //Removes action description when not hovering
+                    @Override
+                    public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                        destroyActionDescription();
+                    }
+                    // Loads the selected save
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        loadSavedGame();
+                        destroyConfirmPopup();
+                        return true;
+
+                    }
+                });
+
+        cancelBtn.addListener(
+                new InputListener() {
+                    //Shows action description when hovering
+                    @Override
+                    public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                        showActionDescription();
+                    }
+                    //Removes action description when not hovering
+                    @Override
+                    public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                        destroyActionDescription();
+                    }
+                    // Loads the selected save
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        destroyConfirmPopup();
+                        return true;
+                    }
+                });
+
+        deleteBtn.addListener(
+                new InputListener() {
+                    //Shows action description when hovering
+                    @Override
+                    public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                        showActionDescription();
+                    }
+                    //Removes action description when not hovering
+                    @Override
+                    public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                        destroyActionDescription();
+                    }
+                    // Loads the selected save
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        deleteSave();
+                        destroyConfirmPopup();
+                        return true;
+                    }
+                });
+
         stage.addActor(popupBGTable);
         stage.addActor(confirmPopup);
     }
 
 
+
+    private void showActionDescription() {
+
+    }
+
+    private void deleteSave() {
+
+    }
+
+    private void destroyActionDescription() {
+    }
+
+    private void destroyConfirmPopup() {
+        super.dispose();
+        confirmPopup.remove();
+        popupBGTable.remove();
+        popupIsOpen = false;
+    }
 
     private void loadSavedGame() {
         //-TODO launches game with saved variables (time remaining, npc characters voted out)
