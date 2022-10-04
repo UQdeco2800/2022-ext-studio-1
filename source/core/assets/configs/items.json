@@ -6,6 +6,34 @@
       "name": "Time Item",
       "description": "Time Item - This item can be used to increase the countdown clock!",
       "textureLocation": "images/inventory/time_item.png"
+    },
+    {
+      "class": "com.deco2800.game.components.player.entity.ClueItem",
+      "id": 4,
+      "name": "Mermaid Scales1",
+      "description": "",
+      "textureLocation": "images/inventory/scales1.png"
+    },
+    {
+      "class": "com.deco2800.game.components.player.entity.ClueItem",
+      "id": 5,
+      "name": "Mermaid Scales2",
+      "description": "",
+      "textureLocation": "images/inventory/scales2.png"
+    },
+    {
+      "class": "com.deco2800.game.components.player.entity.ClueItem",
+      "id": 6,
+      "name": "Mermaid Scales3",
+      "description": "",
+      "textureLocation": "images/inventory/scales3.png"
+    },
+    {
+      "class": "com.deco2800.game.components.player.entity.ClueItem",
+      "id": 7,
+      "name": "Mermaid Scales4",
+      "description": "",
+      "textureLocation": "images/inventory/scales4.png"
     }
   ]
 }
