@@ -18,6 +18,7 @@ class NpcEvictionMenuDisplayHelperTest {
                 "Has deep voice.\n" +
                 "A tall, thin person.\n" +
                 "Metis can read the memory from the scale.",helper.createClueContext("Metis",library));
+
     }
     @Test
     void testCreateInterjection(){
