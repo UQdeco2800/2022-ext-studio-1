@@ -86,8 +86,6 @@ public class GdxGame extends Game {
       case MAIN_GAME:
         theGameScreen = new MainGameScreen(this, stopGame);
         return theGameScreen;
-      case MAIN_GAME_Test:
-        return new NpcInteractionScreen(this);
       case ACHIEVEMENTS:
         return new AchievementsScreen(this);
       case SETTINGS:

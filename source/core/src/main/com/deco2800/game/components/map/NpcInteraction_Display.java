@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class NpcInteraction_Display extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(Lab_1_Display.class);
+    private static final Logger logger = LoggerFactory.getLogger(NpcInteraction_Display.class);
     private static final float Z_INDEX = 2f;
     private Table table;
     private final GdxGame game;
@@ -48,27 +48,27 @@ public class NpcInteraction_Display extends UIComponent {
     }
 
     private void addActors() {
-        table = new Table();
-        table.setFillParent(true);
-        Image background = new Image(ServiceLocator.getResourceService().getAsset(
-                "images/black.jpg", Texture.class));
-
-        Button exitBtn = createButton("images/eviction_menu/exitButton.png",
-                "images/eviction_menu/exitButton_selected.png");
-        exitBtn.setPosition((float) (stage.getWidth() * 0.944), (float) (stage.getHeight() * 0.91));
-        exitBtn.setSize((float) (stage.getWidth() * 0.042), (float) (stage.getHeight() * 0.07116));
-        exitBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        exitMenu();
-                    }
-                }
-        );
-
-        table.add(background);
-        stage.addActor(table);
-        stage.addActor(exitBtn);
+//        table = new Table();
+//        table.setFillParent(true);
+//        Image background = new Image(ServiceLocator.getResourceService().getAsset(
+//                "images/black.jpg", Texture.class));
+//
+//        Button exitBtn = createButton("images/eviction_menu/exitButton.png",
+//                "images/eviction_menu/exitButton_selected.png");
+//        exitBtn.setPosition((float) (stage.getWidth() * 0.944), (float) (stage.getHeight() * 0.91));
+//        exitBtn.setSize((float) (stage.getWidth() * 0.042), (float) (stage.getHeight() * 0.07116));
+//        exitBtn.addListener(
+//                new ChangeListener() {
+//                    @Override
+//                    public void changed(ChangeEvent changeEvent, Actor actor) {
+//                        exitMenu();
+//                    }
+//                }
+//        );
+//
+//        table.add(background);
+//        stage.addActor(table);
+//        stage.addActor(exitBtn);
 
         // set dialog box
         dialogBox = new Image(ServiceLocator.getResourceService().getAsset(
@@ -80,8 +80,8 @@ public class NpcInteraction_Display extends UIComponent {
         chapterNum = 1;
         setDialog();
 
-        npcEvictionMenuWindow = new NpcEvictionMenuDisplayNew(
-                logger, ServiceLocator.getResourceService(), stage.getWidth(), stage.getHeight()).creatEvictionMenu();
+//        npcEvictionMenuWindow = new NpcEvictionMenuDisplayNew(
+//                logger, ServiceLocator.getResourceService(), stage.getWidth(), stage.getHeight()).creatEvictionMenu();
     }
 
     @Override
@@ -100,7 +100,6 @@ public class NpcInteraction_Display extends UIComponent {
 
     @Override
     public void dispose() {
-        table.clear();
         super.dispose();
     }
 
@@ -147,7 +146,7 @@ public class NpcInteraction_Display extends UIComponent {
             } else {
                 switch (chapterNum) {
                     case 2 -> {
-                        chapter2Opening();
+//                        chapter2Opening();
                         root = DialogWithSelection.getChapter2Dialog();
                         clickListener = new ClickListener() {
                             @Override
@@ -275,28 +274,28 @@ public class NpcInteraction_Display extends UIComponent {
     }
 
     private void chapter1Listener(Iterator<String> it) {
-        Image darkLab = new Image(ServiceLocator.getResourceService().getAsset(
-                "images/map/LAB/whole lab dark.png", Texture.class));
-        darkLab.setPosition(0, 0);
-        darkLab.setSize(stage.getWidth(), stage.getHeight());
-
-        Image bloodLab = new Image(ServiceLocator.getResourceService().getAsset(
-                "images/map/LAB/whole lab blood.png", Texture.class));
-        bloodLab.setPosition(0, 0);
-        bloodLab.setSize(stage.getWidth(), stage.getHeight());
+//        Image darkLab = new Image(ServiceLocator.getResourceService().getAsset(
+//                "images/map/LAB/whole lab dark.png", Texture.class));
+//        darkLab.setPosition(0, 0);
+//        darkLab.setSize(stage.getWidth(), stage.getHeight());
+//
+//        Image bloodLab = new Image(ServiceLocator.getResourceService().getAsset(
+//                "images/map/LAB/whole lab blood.png", Texture.class));
+//        bloodLab.setPosition(0, 0);
+//        bloodLab.setSize(stage.getWidth(), stage.getHeight());
 
         if (step != 6 || SwitchFactory.isWorking) {
             if (it.hasNext()) {
                 dialog.setText(it.next());
-                if (step == 0) {
-                    table.addActor(darkLab); // show the lab
-                } else if (step == 6) {
-                    table.removeActor(darkLab);
-                    table.addActor(bloodLab); // show the blooding lab
-                }
+//                if (step == 0) {
+//                    table.addActor(darkLab); // show the lab
+//                } else if (step == 6) {
+//                    table.removeActor(darkLab);
+//                    table.addActor(bloodLab); // show the blooding lab
+//                }
                 step++;
             } else {// chapter 1 ends
-                bloodLab.remove();
+//                bloodLab.remove();
                 dialog.remove();
                 dialogBox.removeListener(clickListener);
                 chapterNum = 2;

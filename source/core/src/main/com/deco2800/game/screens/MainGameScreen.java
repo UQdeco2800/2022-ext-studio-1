@@ -8,6 +8,7 @@ import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.countDownClock.countdownDisplay;
 import com.deco2800.game.components.maingame.MainGameActions;
+import com.deco2800.game.components.map.NpcInteraction_Display;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -192,7 +193,8 @@ public class MainGameScreen extends ScreenAdapter {
             .addComponent(new countdownDisplay(this.game))
         .addComponent(new Terminal())
         .addComponent(inputComponent)
-        .addComponent(new TerminalDisplay());
+        .addComponent(new TerminalDisplay())
+            .addComponent(new NpcInteraction_Display(this.game));
 
     ServiceLocator.getEntityService().register(ui);
   }
