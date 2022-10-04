@@ -43,6 +43,8 @@ public class LoadGameDisplay extends UIComponent {
                                 .getAsset("images/menu/LoadGameTitle.png", Texture.class));
         title.setPosition((Gdx.graphics.getWidth()-title.getWidth())/2f,Gdx.graphics.getHeight()-title.getHeight()-15);
 
+        table.add(title);
+        stage.addActor(table);
 
     }
 

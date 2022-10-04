@@ -89,8 +89,6 @@ public class GdxGame extends Game {
         return theGameScreen;
       case LOAD_GAME:
         return new LoadSaveScreen(this);
-      case MAIN_GAME_Test:
-        return new MainGameScreenTest(this);
       case ACHIEVEMENTS:
         return new AchievementsScreen(this);
       case SETTINGS:
@@ -113,7 +111,7 @@ public class GdxGame extends Game {
   public enum ScreenType {
 
     MAIN_MENU, MAIN_GAME, LOAD_GAME, ACHIEVEMENTS, STORYLINE, TUTORIAL, SETTINGS, MAP, COUNTDOWN_SCREEN, LAB_1, LAB_2,
-    LAB_3, LAB_4, LAB_5, LAB_HOUSE, MAIN_GAME_Test, ENDING
+    LAB_3, LAB_4, LAB_5, LAB_HOUSE, MAIN_GAME_Test, ENDING,
 
   }
 
