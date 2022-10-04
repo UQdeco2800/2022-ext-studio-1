@@ -20,8 +20,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class NpcInteraction_Display extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(NpcInteraction_Display.class);
+public class NpcInteractionDisplay extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(NpcInteractionDisplay.class);
     private static final float Z_INDEX = 2f;
     private Table table;
     private final ForestGameArea gameArea;
@@ -34,7 +34,7 @@ public class NpcInteraction_Display extends UIComponent {
     private DialogWithSelection root;
     private Window npcEvictionMenuWindow;
 
-    public NpcInteraction_Display(ForestGameArea gameArea, GdxGame game) {
+    public NpcInteractionDisplay(ForestGameArea gameArea, GdxGame game) {
         super();
         this.gameArea = gameArea;
         this.game = game;

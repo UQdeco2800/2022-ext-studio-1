@@ -9,7 +9,7 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.countDownClock.countdownDisplay;
 import com.deco2800.game.components.maingame.MainGameActions;
-import com.deco2800.game.components.npc.NpcInteraction_Display;
+import com.deco2800.game.components.npc.NpcInteractionDisplay;
 import com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplayNew;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.entities.Entity;
@@ -24,7 +24,6 @@ import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
-import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.AchievementService;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ResourceService;
@@ -219,7 +218,7 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay())
-            .addComponent(new NpcInteraction_Display(this.forestGameArea, this.game));
+            .addComponent(new NpcInteractionDisplay(this.forestGameArea, this.game));
 
     ServiceLocator.getEntityService().register(ui);
   }
