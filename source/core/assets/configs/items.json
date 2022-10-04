@@ -17,9 +17,44 @@
     {
       "class": "com.deco2800.game.components.player.entity.BatteryItem",
       "id": 3,
-      "name": "Battery Item",
+      "name": "Battery Item1",
       "description": "Battery Item - This item can be used to fix broken switch!",
       "textureLocation": "images/switch/Battery.png"
+    },
+    {
+      "class": "com.deco2800.game.components.player.entity.ClueItem",
+      "id": 4,
+      "name": "Coral Item2",
+      "description": "Mermaid Scale - This item can be used to get clue!",
+      "textureLocation": "images/coral/scales1.png"
+    },
+    {
+      "class": "com.deco2800.game.components.player.entity.ClueItem",
+      "id": 5,
+      "name": "Coral Item3",
+      "description": "Mermaid Scale - This item can be used to get clue!",
+      "textureLocation": "images/coral/scales2.png"
+    },
+    {
+      "class": "com.deco2800.game.components.player.entity.ClueItem",
+      "id": 6,
+      "name": "Coral Item4",
+      "description": "Mermaid Scale - This item can be used to get clue!",
+      "textureLocation": "images/coral/scales3.png"
+    },
+    {
+      "class": "com.deco2800.game.components.player.entity.ClueItem",
+      "id": 7,
+      "name": "Coral Item5",
+      "description": "Mermaid Scale - This item can be used to get clue!",
+      "textureLocation": "images/coral/scales4.png"
+    },
+    {
+      "class": "com.deco2800.game.components.player.entity.ClueItem",
+      "id": 8,
+      "name": "Coral Item6",
+      "description": "Mermaid Scale - This item can be used to get clue!",
+      "textureLocation": "images/coral/scales5.png"
     }
   ]
 }

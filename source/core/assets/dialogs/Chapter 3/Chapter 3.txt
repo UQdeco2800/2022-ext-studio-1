@@ -1,4 +1,4 @@
-Chapter 3 Script
+You: "Time to decide whether to go back to find Metis or move on in the village."
 SELECTION 1: Back to find Metis. / SELECTION 2: Move on in the village.
 SELECTION 1:
 Metis: "Do you need my help, Doctor?"

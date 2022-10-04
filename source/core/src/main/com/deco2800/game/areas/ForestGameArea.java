@@ -59,16 +59,21 @@ public class ForestGameArea extends GameArea {
     "images/switch/Tools.png",
     "images/switch/Battery.png",
     "images/switch/Electric Switch Broken.png",
-    "images/KEY.png"
+    "images/KEY.png",
+    "images/coral/scales1.png",
+    "images/coral/scales2.png",
+    "images/coral/scales3.png",
+    "images/coral/scales4.png",
+    "images/coral/scales5.png",
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas","images/player.atlas","images/orpheus.atlas",
     "images/Ares.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/VillageBGM_2.mp3";
-  private static final String movementMusic = "sounds/Movement_sound.mp3";
-  private static final String[] forestMusic = {backgroundMusic};
+  private static final String backgroundMusic = "sounds/new.mp3";
+  private static final String movementMusic = "sounds/Movement_sound.wav";
+  private static final String[] forestMusic = {backgroundMusic, movementMusic};
 
   private final TerrainFactory terrainFactory;
 
@@ -96,7 +101,7 @@ public class ForestGameArea extends GameArea {
     spawnClueItem();
     spawnSwitchItems();
     playMusic();
-
+    spawnCoralItems();
   }
 
   private void displayUI() {
@@ -168,6 +173,16 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(item2, new GridPoint2(15, 5), true, true);
   }
 
+  private void spawnCoralItems() {
+    GridPoint2 minPos = new GridPoint2(5, 5);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 15);
+
+    spawnEntityAt(ItemFactory.createItem(4), RandomUtils.random(minPos, maxPos), true, false);
+    spawnEntityAt(ItemFactory.createItem(5), RandomUtils.random(minPos, maxPos), true, false);
+    spawnEntityAt(ItemFactory.createItem(6), RandomUtils.random(minPos, maxPos), true, false);
+    spawnEntityAt(ItemFactory.createItem(7), RandomUtils.random(minPos, maxPos), true, false);
+    spawnEntityAt(ItemFactory.createItem(8), RandomUtils.random(minPos, maxPos), true, false);
+  }
 
   private void spawnSwitchItems() {
     Entity switchItem = SwitchFactory.createSwitch();

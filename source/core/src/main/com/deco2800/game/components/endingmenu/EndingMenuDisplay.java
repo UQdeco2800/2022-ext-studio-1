@@ -39,6 +39,7 @@ public class EndingMenuDisplay extends UIComponent {
         table = new Table();
         table.setFillParent(true);
         Image title = setTitle(judge);
+        title.setFillParent(true);
 
         TextButton restartBtn = new TextButton("Restart the game", skin);
         TextButton menuBtn = new TextButton("Back to menu", skin);
@@ -63,12 +64,12 @@ public class EndingMenuDisplay extends UIComponent {
                 });
 
         table.add(title);
-        table.row();
+//        table.row();
         table.add(restartBtn).padTop(30f);
-        table.row();
+//        table.row();
 
         table.add(menuBtn).padTop(30f);
-        table.row();
+//        table.row();
 
         stage.addActor(table);
     }
@@ -77,12 +78,12 @@ public class EndingMenuDisplay extends UIComponent {
         if (judge) {
             Image title = new Image(
                     ServiceLocator.getResourceService()
-                            .getAsset("images/endingMenu/you_win.png", Texture.class));
+                            .getAsset("images/endingMenu/win.png", Texture.class));
             return title;
         } else {
             Image title = new Image(
                     ServiceLocator.getResourceService()
-                            .getAsset("images/endingMenu/you_lose.png", Texture.class));
+                            .getAsset("images/endingMenu/lose.png", Texture.class));
             return title;
         }
     }
