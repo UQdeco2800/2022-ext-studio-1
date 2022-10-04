@@ -721,6 +721,32 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 errorNum++;
                 return NpcResultDialogType.WRONG_BOX2;
             } else if (errorNum == 2){
+                //Insert a row of data into playerStatsInfo.json when the player lose the game
+                //First set data to the instance
+                profileProp.timeRemaining=Math.round(entity.getComponent(countdownDisplay.class).getRemainingTime());
+                profileProp.result =2;
+                profileProp.attempt =errorNum+1;
+                Json json =new Json();
+                json.setOutputType(JsonWriter.OutputType.json);
+                String profileData = json.toJson(profileProp);
+
+                FileHandle file =Gdx.files.local("configs/playerStatsInfo.json");
+                profileInfo.add(profileProp);
+
+
+                PPCInstance.playerStats = profileInfo;
+
+                String profileData3 =json.toJson(PPCInstance);
+
+                String profileData2 = json.toJson(profileInfo);
+
+                file.writeString(profileData3,false );
+
+                System.out.println(file);
+                System.out.print(profileData);
+
+
+
                 // game over
                 errorNum = 0;
                 return NpcResultDialogType.LOSE;

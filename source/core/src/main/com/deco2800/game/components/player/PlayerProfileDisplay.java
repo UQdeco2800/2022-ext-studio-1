@@ -161,7 +161,7 @@ public class PlayerProfileDisplay extends UIComponent {
            if(stat.result==1) {
                sumAttempt += attempt;
            }
-            if(stat.result==0){
+            if(stat.result==2){
                 numberOfLose+=1;
 
             }
