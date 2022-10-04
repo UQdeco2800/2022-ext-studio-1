@@ -20,7 +20,8 @@ import org.slf4j.LoggerFactory;
 public class LoadSaveScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(LoadSaveScreen.class);
 
-    private static final String[] LoadGameTextures = {"images/menu/LoadGameTitle.png"};
+    private static final String[] LoadGameTextures = {"images/menu/LoadGameTitle.png", "images/menu/EmptySaveSlot.png", "images/menu/popupBG.png",
+            "images/menu/confirmBtn.png", "images/menu/cancelBtn.png", "images/menu/deleteBtn.png"};
 
     private final GdxGame game;
     private final Renderer renderer;

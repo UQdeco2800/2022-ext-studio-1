@@ -1,17 +1,17 @@
 package com.deco2800.game.components.mainmenu;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.GdxGame.ScreenType;
-import com.deco2800.game.entities.Entity;
-import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -26,6 +26,8 @@ public class LoadGameDisplay extends UIComponent {
 
     private Table descriptionTable;
     private Table rootTable;
+
+    private Table popupBGTable;
 
 
     public LoadGameDisplay(GdxGame game) {
@@ -57,6 +59,14 @@ public class LoadGameDisplay extends UIComponent {
 
         table.add(makeLoadSlots());
 
+        Table loadTitle = new Table();
+        loadTitle.setFillParent(true);
+        Label loadSubTitle = new Label("Load From Your Saved Games. Hover To See A Save's Description And Image. Click To Load A Save.",skin);
+        loadTitle.bottom();
+        loadTitle.padBottom(50);
+        loadTitle.add(loadSubTitle);
+
+        stage.addActor(loadTitle);
 
         Table exitButton = makeExitBtn();
         stage.addActor(exitButton);
@@ -65,17 +75,18 @@ public class LoadGameDisplay extends UIComponent {
 
 
     private Table makeLoadSlots(){
+
         Table loadSlots = new Table();
         loadSlots.setFillParent(true);
         loadSlots.setWidth(500);
         loadSlots.padTop(30f);
-
         Table slots = new Table();
 
-        TextButton save1Btn = new TextButton("Empty Save", skin);
-        TextButton save2Btn = new TextButton("Empty Save", skin);
-        TextButton save3Btn = new TextButton("Empty Save", skin);
-        TextButton save4Btn = new TextButton("Empty Save", skin);
+
+        TextButton save1Btn = new TextButton("Save Slot 1", skin);
+        TextButton save2Btn = new TextButton("Save Slot 2", skin);
+        TextButton save3Btn = new TextButton("Save Slot 3", skin);
+        TextButton save4Btn = new TextButton("Save Slot 4", skin);
 
         table.row();
         table.add(save1Btn).padTop(30f).left();
@@ -90,13 +101,7 @@ public class LoadGameDisplay extends UIComponent {
         loadSlots.add(slots).width(900);
 
 
-
-
-
-
-
-
-
+    // Listeners for Save Slots
     save1Btn.addListener(
             new InputListener() {
                 //Shows save description when hovering
@@ -112,7 +117,7 @@ public class LoadGameDisplay extends UIComponent {
                 // Loads the selected save
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
+                    confirmLoad();
                     destroySaveDescription();
                     return true;
                 }
@@ -133,7 +138,7 @@ public class LoadGameDisplay extends UIComponent {
                     // Loads the selected save
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
+                        confirmLoad();
                         destroySaveDescription();
                         return true;
                     }
@@ -154,7 +159,7 @@ public class LoadGameDisplay extends UIComponent {
                     // Loads the selected save
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
+                        confirmLoad();
                         destroySaveDescription();
                         return true;
                     }
@@ -175,7 +180,7 @@ public class LoadGameDisplay extends UIComponent {
                     // Loads the selected save
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
+                        confirmLoad();
                         destroySaveDescription();
                         return true;
                     }
@@ -186,13 +191,71 @@ public class LoadGameDisplay extends UIComponent {
     }
 
 
+
+    private void confirmLoad() {
+        Image confirmLoadBG =
+                new Image(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/menu/popupBG.png", Texture.class));
+
+        Texture confirmTexture = new Texture(Gdx.files.internal("images/menu/confirmBtn.png"));
+        Drawable confirmBtnImage = new TextureRegionDrawable(new TextureRegion(confirmTexture));
+
+        Texture cancelTexture = new Texture(Gdx.files.internal("images/menu/cancelBtn.png"));
+        Drawable cancelBtnImage = new TextureRegionDrawable(new TextureRegion(cancelTexture));
+
+        Texture deleteTexture = new Texture(Gdx.files.internal("images/menu/deleteBtn.png"));
+        Drawable deleteBtnImage = new TextureRegionDrawable(new TextureRegion(deleteTexture));
+
+
+        popupBGTable = new Table();
+        popupBGTable.setFillParent(true);
+        popupBGTable.add(confirmLoadBG).height(300)
+                .width(500);
+
+
+
+        Table confirmPopup = new Table();
+        confirmPopup.setFillParent(true);
+
+
+
+        ImageButton confirmBtn = new ImageButton(confirmBtnImage);
+        confirmPopup.add(confirmBtn).padRight(15f);
+
+        ImageButton cancelBtn = new ImageButton(cancelBtnImage);
+        confirmPopup.add(cancelBtn).padRight(15f);
+
+        ImageButton deleteBtn = new ImageButton(deleteBtnImage);
+        confirmPopup.add(deleteBtn);
+
+
+        stage.addActor(popupBGTable);
+        stage.addActor(confirmPopup);
+    }
+
+
+
+    private void loadSavedGame() {
+        //-TODO launches game with saved variables (time remaining, npc characters voted out)
+    }
+
     private Table showSaveDescription() {
+
+        Image emptySlot =
+                new Image(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/menu/EmptySaveSlot.png", Texture.class));
+
         descriptionTable = new Table();
         descriptionTable.setFillParent(true);
 
-        Label description = new Label("Emtpy Save Slot", skin);
+        Label description = new Label(getSaveDescription(), skin);
         description.setFontScale(1f);
+        descriptionTable.add(emptySlot).padRight(20);
+
         descriptionTable.add(description).pad(5);
+
 
 
         stage.addActor(descriptionTable);
@@ -201,7 +264,16 @@ public class LoadGameDisplay extends UIComponent {
 
     }
 
-    public void destroySaveDescription() {
+    private String getSaveDescription() {
+
+        //-TODO return save specific information, Else return:
+
+
+        return "This Save Slot is Empty!";
+    }
+
+
+    private void destroySaveDescription() {
         super.dispose();
         descriptionTable.remove();
     }
