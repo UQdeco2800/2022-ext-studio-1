@@ -219,7 +219,7 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay())
-            .addComponent(new NpcInteraction_Display(this.game));
+            .addComponent(new NpcInteraction_Display(this.forestGameArea, this.game));
 
     ServiceLocator.getEntityService().register(ui);
   }
