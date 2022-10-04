@@ -13,7 +13,7 @@ import com.deco2800.game.music.MusicStuff;
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 walkDirection = Vector2.Zero.cpy();
-  private static final String movementPath = "sounds/Movement_sound.mp3";
+  private static final String movementPath = "sounds/Movement_sound.wav";
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -32,25 +32,25 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         walkDirection.add(Vector2Utils.UP);
         triggerWalkEvent();
         entity.getEvents().trigger("up");
-//        MusicStuff.playMusic(movementPath, false);
+        MusicStuff.playMusic(movementPath, false);
         return true;
       case Keys.A:
         walkDirection.add(Vector2Utils.LEFT);
         triggerWalkEvent();
         entity.getEvents().trigger("left");
-//        MusicStuff.playMusic(movementPath, false);
+        MusicStuff.playMusic(movementPath, false);
         return true;
       case Keys.S:
         walkDirection.add(Vector2Utils.DOWN);
         triggerWalkEvent();
         entity.getEvents().trigger("down");
-//        MusicStuff.playMusic(movementPath, false);
+        MusicStuff.playMusic(movementPath, false);
         return true;
       case Keys.D:
         walkDirection.add(Vector2Utils.RIGHT);
         triggerWalkEvent();
         entity.getEvents().trigger("right");
-//        MusicStuff.playMusic(movementPath, false);
+        MusicStuff.playMusic(movementPath, false);
         return true;
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
