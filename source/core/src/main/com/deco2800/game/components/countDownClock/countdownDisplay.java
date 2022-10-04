@@ -51,8 +51,8 @@ public class countdownDisplay extends UIComponent {
 
             game.theGameScreen.changeStatus();
 
-            logger.info("negative time: {}", String.valueOf(this.getRemainingTime()));
-            logger.info(counterLabel.getText().toString());
+           // logger.info("negative time: {}", String.valueOf(this.getRemainingTime()));
+           // logger.info(counterLabel.getText().toString());
 
         }
         if(timeRemaining>0 && stop==false) {
@@ -82,8 +82,8 @@ public class countdownDisplay extends UIComponent {
                 equSeconds=(int)timeRemaining;
             }
             counterLabel.setText(String.valueOf(equHours+":"+equMins+":"+equSeconds));
-            logger.info("remaining time: {}", String.valueOf(this.getRemainingTime()));
-            logger.info(counterLabel.getText().toString());
+         //   logger.info("remaining time: {}", String.valueOf(this.getRemainingTime()));
+          //  logger.info(counterLabel.getText().toString());
         }
 
 
@@ -184,6 +184,9 @@ public class countdownDisplay extends UIComponent {
 
     public float getRemainingTime() {
         return this.timeRemaining;
+    }
+    public void setTimeRemaining(float time){
+        this.timeRemaining = time;
     }
 
     @Override

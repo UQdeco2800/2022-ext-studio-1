@@ -20,6 +20,8 @@ import org.slf4j.LoggerFactory;
 public class LoadSaveScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(LoadSaveScreen.class);
 
+    private static final String[] LoadGameTextures = {"images/menu/LoadGameTitle.png"};
+
     private final GdxGame game;
     private final Renderer renderer;
 
@@ -35,7 +37,7 @@ public class LoadSaveScreen extends ScreenAdapter {
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(5f, 5f);
-
+        loadAssets();
         createUI();
     }
 
@@ -53,10 +55,24 @@ public class LoadSaveScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         renderer.dispose();
+        unloadAssets();
         ServiceLocator.getRenderService().dispose();
         ServiceLocator.getEntityService().dispose();
 
         ServiceLocator.clear();
+    }
+
+    private void loadAssets() {
+        logger.debug("Loading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadTextures(LoadGameTextures);
+        ServiceLocator.getResourceService().loadAll();
+    }
+
+    private void unloadAssets() {
+        logger.debug("Unloading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.unloadAssets(LoadGameTextures);
     }
 
     private void createUI() {

@@ -23,6 +23,7 @@ public class StorylineScreen extends ScreenAdapter {
 
   private final GdxGame game;
   private final Renderer renderer;
+  private static final String[] storyLineBackGround = {"images/storyline_bg.jpg"};
 
   public StorylineScreen(GdxGame game) {
     this.game = game;
@@ -36,6 +37,10 @@ public class StorylineScreen extends ScreenAdapter {
 
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(5f, 5f);
+
+    ResourceService resourceService = ServiceLocator.getResourceService();
+    resourceService.loadTextures(storyLineBackGround);
+    ServiceLocator.getResourceService().loadAll();
 
     createUI();
   }

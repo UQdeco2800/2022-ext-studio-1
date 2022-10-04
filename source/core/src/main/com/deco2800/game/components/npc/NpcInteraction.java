@@ -64,24 +64,19 @@ public class NpcInteraction {
         return null;
     }
 
-    private ArrayList<String> readNpcFiles(int npcId) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("npc" + npcId + ".txt"));
-        ArrayList<String> everything = new ArrayList<>();
+    public static ArrayList<String> readNpcFiles(int chapterNum) throws IOException {
+        BufferedReader br;
+        ArrayList<String> texts = new ArrayList<>();
         try {
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-
-            while (line != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-                line = br.readLine();
-                everything.add(line);
+            br = new BufferedReader(new FileReader("dialogs/Chapter " + chapterNum + ".txt"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                texts.add(line);
             }
+            br.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } finally {
-            br.close();
         }
-        return everything;
+        return texts;
     }
 }
