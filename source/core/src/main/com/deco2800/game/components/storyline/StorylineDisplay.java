@@ -1,6 +1,7 @@
 package com.deco2800.game.components.storyline;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -35,6 +36,16 @@ public class StorylineDisplay extends UIComponent {
     Table table = makeSettingsTable();
     Label title = new Label("storyline", skin, "title");
     title.setPosition((Gdx.graphics.getWidth()-title.getWidth())/2f,Gdx.graphics.getHeight()-title.getHeight()-15);
+
+
+    Image inventoryBG =
+            new Image(
+                    ServiceLocator.getResourceService()
+                            .getAsset("images/storyline_bg.jpg", Texture.class));
+    inventoryBG.setWidth(Gdx.graphics.getWidth());
+    inventoryBG.setHeight(Gdx.graphics.getHeight());
+
+    stage.addActor(inventoryBG);
     stage.addActor(title);
     stage.addActor(table);
 
@@ -60,6 +71,8 @@ public class StorylineDisplay extends UIComponent {
     TextButton twoBt = new TextButton("storyline..2", skin);
     TextButton threeBt = new TextButton("storyline..3", skin);
     TextButton fourBt = new TextButton("storyline..4", skin);
+    TextButton fiveBt = new TextButton("storyline..5", skin);
+    TextButton sixBt = new TextButton("storyline..6", skin);
 
     table.row();
     table.add(oneBt).padTop(30f).left();
@@ -70,6 +83,10 @@ public class StorylineDisplay extends UIComponent {
     table.add(threeBt).padTop(15f).left();
     table.row();
     table.add(fourBt).padTop(15f).left();
+    table.row();
+    table.add(fiveBt).padTop(15f).left();
+    table.row();
+    table.add(sixBt).padTop(15f).left();
     table.row();
     mainTable.add(table).width(300);
     Label label = new Label("", skin, "title");
@@ -131,6 +148,20 @@ public class StorylineDisplay extends UIComponent {
                         "However,great sorrow and anger kept him from quelling for a long time,he failed in considering other things just refused them directly for the scale if the last reminder of memory on her.In order to collect all scales,they propose cooperation to find the murderer(or traitor)together.Hearing their intensions, he was a little shaken, but didn't want to accept the kindness of these strangers so easily.Remind that Nereus was kind-hearted and treated everyone very well, also not having any grudge against someone.It looked hard to know who the murderer was, but there's a good chance that it's someone close to her.Thus, he delegate a task to search for some information (tips)about Neuers's family to players.\n" +
                         "\n" +
                         "*the task can be some simple reasoning games or else.the tips can be the introduction of her family members.Once finished the task, players need to come back to meet Orpheus again to get the scale.");
+              }
+            });
+    fiveBt.addListener(
+            new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent changeEvent, Actor actor) {
+                label.setText("Player collected information about Nereus' family.Her father was king of Atlantis but stepped down from the throne a few years ago.Her mom was also in charge of the main regime in Atlantis and had high admiration among villagers .She loved Nereus for her talent of leadership. However Ares has strong skills in swordsmanship though, wasn't good enough in decisive aspects especially to be the guardian of Atlantis.Player went back to Orpheus. They combed through together. Orpheus mentioned that he saw Heph shouting at troublemakers on the death of the princess was none of his business on his way to the theatre.But those who love the princess asserted that he was the murderer since he always showed violence to anyone having some small conflicts with him. And Heph didn't agree with the political philosophy of the princess and he thought  Ares was more suitable to guard Atlantis for having superb power and swordsmanship he admired for. Once he was heading for theatre from the palace, he heard Nereus' parents were quarreling and Neures were sobbing softly.He felt very sorrow but pretended not hearing it and walked away. He didn't want to reveal any love for the princess yet considering he was wanting at that time.They decided to go back to the lab to ask for Zoe’s help. Analyzing for a while, he proposed to put together all the scales and look for Metis to read the princess' memory attached to it.They got outside of the lab and fund Metis in the village.Metis touched the assembled scales and said \"I saw him...\"in a tone of fear and disbelief.");
+              }
+            });
+    sixBt.addListener(
+            new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent changeEvent, Actor actor) {
+                label.setText("No one knew why Heph held the knife, so they determined to find Ares to  ask why he did it. A man emerged from the corner.It was Ares. He heard all the conversations. Facing everyone's doubts, his conscience felt bad and finally admitted his crime. As for Heph, he also admitted he bought Heph. Ares heard from his subordinates that because of Heph's bad temper and violence, he accidentally smashed the gem that the nobles sent to him for restoration in a conflict with others. He was very flustered for knowing the damage was beyond repair but he couldn't afford it. If discovered by nobles, the result would be unimaginable.Thus, Ares came to meet Heph and promised to keep it secret and hush people up. The premise is ,help him kill Nereus. Heph was very hesitant, he never wanted to kill people no matter how violent he was. However, if he didn't agree, not only will the nobles demand huge compensation, but people will be afraid to send things to him to be repaired, because they may be permanently broken due to his violent temper anytime and anywhere. Without any other choice, he made this exchange. At the same time, Ares let his subordinates re-engraved an identical gem and return it to the nobles. He was not a professional killer. It hurt him after killing Nereus. He felt sorry for everyone  including  his sister who was growing up together with him and very loved him.He knew what awaited him next. Considering what he had done, he decided to unsink Atlantis to bring light to the whole of Atlantis City. He went back to the lab with everyone and pressed a switch in the corner that was hidden by a painting covered in scales. Finally, Atlantis was rising slowly from the bottom of the sea.The whole village ushered in the dawn of the long-lost past.");
               }
             });
 

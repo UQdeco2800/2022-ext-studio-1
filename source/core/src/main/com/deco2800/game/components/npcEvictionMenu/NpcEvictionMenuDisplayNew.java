@@ -4,25 +4,26 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-
-
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.areas.ForestGameArea;
+import com.deco2800.game.components.CombatStatsComponent;
+
+import com.deco2800.game.components.countDownClock.countdownDisplay;
+
+import com.deco2800.game.components.endingmenu.EndingMenuDisplay;
+
 import com.deco2800.game.components.npc.NPCClueLibrary;
 import com.deco2800.game.services.ResourceService;
-import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
@@ -38,8 +39,8 @@ import java.util.Objects;
  *
  * @author 2022-ext-studio-1-Team7, rebuilt by Yingxin Liu 15/09/2022
  */
-public class NpcEvictionMenuDisplayNew {
-    private Logger logger;
+public class NpcEvictionMenuDisplayNew extends UIComponent {
+    private final Logger logger;
 
     private static final int NUMBER_OF_NPC = 8;
     private static float bgWidth;
@@ -54,12 +55,20 @@ public class NpcEvictionMenuDisplayNew {
     };
     private final ResourceService resourceService;
 
+    private final ForestGameArea gameArea;
+    private final GdxGame game;
+
     private final Window stage;
 
     private static final Skin skin =
             new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
     private final NPCClueLibrary library = NPCClueLibrary.getInstance();
+
     private final NpcEvictionMenuDisplayHelper helper = new NpcEvictionMenuDisplayHelper();
+
+    private Integer errorNum;
+    private Boolean findKey;
+
 
     /**
      * Implement NpcEvictionMenu in to a Window(), use creatEvictionMenu() to get this Window()
@@ -69,17 +78,24 @@ public class NpcEvictionMenuDisplayNew {
      * @param height height of stage of the Screen
      * @author Team7 Yingxin Liu
      */
-    public NpcEvictionMenuDisplayNew(Logger logger, ResourceService resourceService, float width, float height) {
+    public NpcEvictionMenuDisplayNew(Logger logger, ResourceService resourceService,
+                                     float width, float height, ForestGameArea gameArea, GdxGame game) {
         this.logger = logger;
         logger.debug("initialize NpcEvictionMenu Window");
         this.resourceService = resourceService;
+        this.gameArea = gameArea;
+        this.game = game;
+
         bgWidth = width;
         bgHeight = height;
+        errorNum = 0;
+        findKey = false;
+
 
         // creat the Npc eviction menu window with transparent background
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
                 resourceService.getAsset(IMAGES_PATH + "transparentBg.png", Texture.class));
-        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLUE, styleImage);
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
         this.stage = new Window("", windowStyle);
         this.stage.setModal(true);       // The window is always in front
         this.stage.setFillParent(true);  // Fill all space with the stage
@@ -92,9 +108,17 @@ public class NpcEvictionMenuDisplayNew {
      * @author Team7 Yingxin Liu
      */
     public Window creatEvictionMenu (){
+        if (findKey) {handleWin();}
         return this.stage;
     }
-
+    /**
+     * return the errorNum
+     * @return errorNum
+     * @author Team7 WangShaohui
+     */
+    public Integer getErrorNum() {
+        return errorNum;
+    }
 
     /**
      * Add actors of eviction_menu to the stage
@@ -140,7 +164,7 @@ public class NpcEvictionMenuDisplayNew {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
                     logger.debug("button" + index + "clicked");
-                    createConfirmDialog("button" + index);
+                    createConfirmDialog(cardNames[index]);
                 }
             });
             stage.addActor(buttons[i]);
@@ -249,13 +273,24 @@ public class NpcEvictionMenuDisplayNew {
     /**
      * Display a confirm dialog on the stage, the style is based on Team7 prototype <br/>
      * All scales are calculated according to the prototype from team 7 only <br/>
+     * player has 3 choices to find traitor, if all fail, the game will directly over <br/>
+     * if correct, A key will be spawned on the map,
+     * player can pick it up and use it in the warehouse. The game will win <br/>
+     * For using the key, we have written the code in the warehouse component of <b>team 8</b>
+     * @see com.deco2800.game.components.player.InventoryDisplayComponent
      * Button cancel: remove the dialog <br/>
      * Button Ok    : confirm the action from selected button <br/>
-     *
+     * @see EndingMenuDisplay
      * @param button_name The name of the button that calls this function
-     * @author Team7 Yingxin Liu
+     * @author Team7 Yingxin Liu <br/>
+     * When lose the game ,it will go to other screen: EndingMenu
+     * These code is provided from <b>team 3</b> <br/>
+     * When correct, <b>team 5</b> provides code for spawn the key <br/>
+     *
      */
-    private void createConfirmDialog(String button_name) {
+    public void createConfirmDialog(String button_name) {
+//        entity.getEvents().addListener("ending", this::onEnding);
+
         logger.debug("create confirm dialog from name: " + button_name);
         // set the style of dialog include font color of title; background; size; position
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
@@ -286,12 +321,17 @@ public class NpcEvictionMenuDisplayNew {
         Button okButton = createButton(IMAGES_PATH + "confirmBtn_ok.png", IMAGES_PATH + "confirmBtn_ok1.png");
         okButton.setSize((float) (dialog_size_x * 0.377), (float) (dialog_size_y * 0.2317));
         okButton.setPosition((float) (dialog.getWidth() * 0.5239), 0);
+
         okButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("yes_button from " + button_name + " clicked");
-                // No action yet
                 dialog.remove();
+                // different name will lead to different result
+                // traitor is Ares.So here we check it.
+                NpcResultDialogType result = handleLogic(button_name);
+                createResultDialog(button_name, result);
+
             }
         });
         dialog.addActor(cancelButton);
@@ -324,14 +364,16 @@ public class NpcEvictionMenuDisplayNew {
      * The context of this dialog will be provided by Team 9
      *
      * @param card_name The name of the card which calls this function
-     * @author Code: Team7 Yingxin Liu Shaohui Wang   <br/>Context: Team 9
+     * @author Code: Team7 Yingxin Liu <br/>
+     * Put the label with context: Team 7 Shaohui Wang <br/>
+     * Context: Team 9
      */
     private void createCardInfo(String card_name) {
         logger.debug("create card information dialog from name: " + card_name);
         // set the style of dialog include font color of title; background; size; position
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
                 resourceService.getAsset(IMAGES_PATH + "infoWindow.png", Texture.class));
-        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLUE, styleImage);
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
         Window dialog = new Window("", windowStyle);
         dialog.setModal(true);    // The dialog is always at the front
         float dialog_size_x = (float) (bgWidth * (810.0 / 1600));
@@ -348,7 +390,8 @@ public class NpcEvictionMenuDisplayNew {
         });
 
         //  add clues of npc
-        Label message = new Label(helper.creatLabelContext(card_name, library), skin, "large");
+        Label message = new Label(helper.createClueContext(card_name, library),skin);
+        message.setFontScale(dialog_size_y/800);
         message.setWrap(true);
         message.setAlignment(Align.left);
         Table table = new Table();
@@ -358,11 +401,276 @@ public class NpcEvictionMenuDisplayNew {
         stage.addActor(dialog);
     }
 
+    @Override
+    protected void draw(SpriteBatch batch) {
+
+    }
+
+    /**
+     * Types of result dialog box
+     */
+    protected enum NpcResultDialogType {
+        RIGHT_BOX, WRONG_BOX1, WRONG_BOX2, LOSE, WIN
+    }
+    /**
+     * Display a result dialog and traitor message on the stage, the style is based on Team7 prototype <br/>
+     * All scales are calculated according to the prototype from team 7 only <br/>
+     * Button Ok    : confirm the action from selected button <br/>
+     *
+     * @param button_name The name of the button that calls this function
+     * @param type The type of dialog will be created
+     * @author Team7 Yingxin Liu <br/>
+     * Put the label with context: Team 7 Shaohui Wang
+     */
+    private void createResultDialog(String button_name, NpcResultDialogType type) {
+        logger.debug("create Result dialog from name: " + button_name + " type:" + type);
+        // if Lose, it will jump to ending screen, no need to create dialog
+        if (type == NpcResultDialogType.LOSE) {
+            EndingMenuDisplay.setLose();
+            entity.getEvents().trigger("ending");
+            return;}
+        if (type == NpcResultDialogType.WIN) {handleWin();return;}
+
+        // set the style of dialog include font color of title; background; size; position
+        float dialog_size_x,dialog_size_y;
+        String backgroundPath, buttonPathDefault, buttonPathHover;
+
+        if (type == NpcResultDialogType.RIGHT_BOX) {
+            backgroundPath = IMAGES_PATH + "rightBox.png";
+            buttonPathDefault = IMAGES_PATH + "rightBtn.png";
+            buttonPathHover = IMAGES_PATH + "rightBtn_H.png";
+        } else if (type == NpcResultDialogType.WRONG_BOX1) {
+            backgroundPath = IMAGES_PATH + "wrongBox1.png";
+            buttonPathDefault = IMAGES_PATH + "chanceBtn.png";
+            buttonPathHover = IMAGES_PATH + "chanceBtn_H.png";
+        } else {
+            backgroundPath = IMAGES_PATH + "wrongBox2.png";
+            buttonPathDefault = IMAGES_PATH + "chanceBtn2.png";
+            buttonPathHover = IMAGES_PATH + "chanceBtn2_H.png";
+        }
+        TextureRegionDrawable styleImage = new TextureRegionDrawable(
+                resourceService.getAsset(backgroundPath, Texture.class));
+
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
+        Window dialog = new Window("", windowStyle);
+        dialog.setModal(true);    // The dialog is always at the front
+        Button okButton = createButton(buttonPathDefault, buttonPathHover);
+
+        if (type == NpcResultDialogType.RIGHT_BOX) {
+            dialog_size_x = (float) (bgWidth * (683.67 / 1600));
+            dialog_size_y = (float) (bgHeight * (416.24 / 900));
+            dialog.setSize(dialog_size_x, dialog_size_y);
+            dialog.setPosition((float) (bgWidth * (433.33 / 1600)), (float) (bgHeight * (1 - 663.33 / 900)));
+
+            okButton.setSize((float) (dialog_size_x * (116.67/683.67)), (float) (dialog_size_y * (53.33/416.24)));
+            okButton.setPosition((float) (dialog.getWidth() * ((764.04-433.33)/683.67)),
+                    (float) (dialog.getHeight() * ((663.33 - 635.65) / 416.24)));
+            Label message_interjection =new Label(helper.createTraitorMessageInterjection(type),skin);
+            message_interjection.setFontScale(dialog_size_y/400);
+            message_interjection.setAlignment(Align.center);
+            Label message = new Label(helper.createTraitorMessageForSaveAtlantis(button_name,type), skin);
+            message.setFontScale(dialog_size_y/400);
+            message.setWrap(true);
+            message.setAlignment(Align.left);
+            Table table = new Table();
+            table.add(message_interjection).width(dialog_size_x * 3 / 5);
+            table.row();
+            table.add(message).width(dialog_size_x * 3 / 5);
+            table.padLeft(dialog_size_x/6).padTop(dialog_size_y/6);
+            dialog.add(table);
+        } else {
+            dialog_size_x = (float) (bgWidth * (678.67 / 1600));
+            dialog_size_y = (float) (bgHeight * (382.38 / 900));
+            dialog.setSize(dialog_size_x, dialog_size_y);
+            dialog.setPosition((float) (bgWidth * (438.33 / 1600)), (float) (bgHeight * (1 - 663.33 / 900)));
+
+            okButton.setSize((float) (dialog_size_x * (116.67/678.67)), (float) (dialog_size_y * (53.33/382.38)));
+            okButton.setPosition((float) (dialog.getWidth() * ((748.04-438.33)/678.67)),
+                    (float) (dialog.getHeight() * ((663.33 - 635.65) / 382.38)));
+            Label message_interjection =new Label(helper.createTraitorMessageInterjection(type),skin);
+            message_interjection.setFontScale(dialog_size_y/400);
+            message_interjection.setAlignment(Align.center);
+            Label message = new Label(helper.createTraitorMessageForSaveAtlantis(button_name,type), skin);
+            message.setFontScale(dialog_size_y/400);
+            message.setWrap(true);
+            message.setAlignment(Align.left);
+            Table table = new Table();
+            table.add(message_interjection).prefWidth((float) (dialog_size_x * (400/678.67)));
+            table.row();
+            table.add(message).prefWidth((float) (dialog_size_x * (400/678.67)));
+            table.padLeft((float) (dialog_size_x * (55/678.67)));
+            dialog.add(table);
+
+        }
+        okButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.info("yes_button from " + button_name + " clicked");
+                 //when you select ok button
+                dialog.remove();
+                if (type == NpcResultDialogType.RIGHT_BOX)
+                    handleWin();
+            }
+        });
+        dialog.addActor(okButton);
+
+
+        stage.addActor(dialog);
+    }
 
 
     private void exitMenu() {
         stage.remove();
     }
 
+    public void setFindKey(Boolean findKey) {
+        this.findKey = findKey;
+    }
 
+    /**
+     * When player select the correct traitor, after click OK button on right_box,
+     * An win Information page will appear and the key will be spawn on the game area.
+     * @author Team 7 Yingxin Liu <br/>
+     * code of spawn key is from <b>Team 5</b>
+     */
+    private void handleWin() {
+        logger.debug("Function handleWin is called");
+        // set the style of dialog include font color of title; background; size; position
+        TextureRegionDrawable styleImage = new TextureRegionDrawable(
+                resourceService.getAsset(IMAGES_PATH + "saveMessage.png", Texture.class));
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
+        Window dialog = new Window("", windowStyle);
+        dialog.setModal(true);    // The dialog is always at the front
+        dialog.setFillParent(true);
+        dialog.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                logger.debug("win game page clicked");
+                dialog.remove();
+                exitMenu();
+                // here we need call findKey function from team 5.
+                if (!findKey){
+                    gameArea.spawnKey(game);
+                    findKey = true;
+                }
+                return true;
+            }
+        });
+        showWinContext(dialog);
+        stage.addActor(dialog);
+    }
+
+    /**
+     * creat a table include the label with win context and title
+     * and add it to given stage
+     * @param dialog stage that will be added
+     * @author Team 7 Yingxin Liu
+     */
+    private void showWinContext(Window dialog){
+        // create frame for both title and context
+        Table title =  new Table();
+        title.setSize(stage.getWidth()*(1106-636)/1600,
+                stage.getHeight()*(220-160)/900);
+        title.setPosition((float) (stage.getWidth()*(636.67/1600)),
+                (float) (stage.getHeight()*(1-220.0/900)));
+
+        Table context =  new Table();
+        context.setSize((float) (stage.getWidth()*(1150.67-696.67)/1600),
+                stage.getHeight()*(750-290)/900);
+        context.setPosition((float) (stage.getWidth()*(696.67/1600)),
+                (float) (stage.getHeight()*(1-750.0/900)));
+
+        // set title/context srting
+        String titleContent;
+        String contextContent;
+        titleContent = "Message from Ares";
+        if (findKey) {
+            contextContent = """
+                    
+                    You have found the traitor and got the information to save Atlantis.
+                      
+                    Go and find the mysterious key!""";
+
+        } else {
+            contextContent = """
+                    \s
+                    I love my country and people very much, but I have to do it for the throne. However, I regretted it after Atlantis sank, but maybe you can save it:
+                    \s\s
+                    Find the mysterious key, it can help you save Atlantis and help you out of here!""";
+        }
+
+
+        // create and set the label with content
+        Label titleLabel = new Label(titleContent, skin, "title",Color.NAVY);
+        titleLabel.setAlignment(Align.center);
+        titleLabel.setFontScale(stage.getWidth()/1920,stage.getHeight()/980);
+
+        Label contextLabel = new Label(contextContent, skin, "font_large",Color.DARK_GRAY);
+        contextLabel.setSize(context.getWidth(),context.getHeight());
+        contextLabel.setAlignment(Align.top);
+        contextLabel.setFontScale(stage.getWidth()/1920,stage.getHeight()/980);
+        contextLabel.setWrap(true);
+
+        // add to goal position
+        title.add(titleLabel).center();
+        context.addActor(contextLabel);
+        dialog.addActor(title);
+        dialog.addActor(context);
+    }
+
+    /**
+     * Handle the game logic of select the traitor<br/>
+     * player has 3 choices to find traitor<br/>
+     * if wrong, it will decrease the blood and time at the same time
+     *
+     * @param name name of npc selected
+     * @return
+     * NpcResultDialogType.RIGHT_BOX: if player correctly select the traitor <br/>
+     * NpcResultDialogType.WRONG_BOX1: if player fails for the first time<br/>
+     * NpcResultDialogType.WRONG_BOX2: if player fails for the second time <br/>
+     * NpcResultDialogType.LOSE: if player select 3 times and all fail <br/>
+     * NpcResultDialogType.WIN: if player have correctly select in the past<br/>
+     * null: This is not a return result that should occur. If it does,
+     * it indicates that there is a problem with in the code
+     * @author Team7 Yingxin Liu <br/>
+     * decrease blood/decrease remaing time: Shaohui Wang
+     *
+     */
+    protected NpcResultDialogType handleLogic (String name) {
+        if (findKey) { // player have selected correct in the past
+            return NpcResultDialogType.WIN;
+        }
+        if (Objects.equals(name, "Ares")){ // select npc correctly
+            errorNum = 0;
+            return NpcResultDialogType.RIGHT_BOX;
+        } else {
+            if (errorNum == 0){
+                //decrease blood 10%
+                int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+                entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.9));
+
+                //at the same time decrease remaing time 10%
+                float remainingTime =entity.getComponent(countdownDisplay.class).getRemainingTime();
+                entity.getComponent(countdownDisplay.class).setTimeRemaining((float) remainingTime*0.9f);
+
+                errorNum++;
+                return NpcResultDialogType.WRONG_BOX1;
+            } else if (errorNum == 1) {
+                //decrease blood 20%
+                int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+                entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.8));
+
+                //at the same time decrease remaing time 20%
+                float remainingTime =entity.getComponent(countdownDisplay.class).getRemainingTime();
+                entity.getComponent(countdownDisplay.class).setTimeRemaining((float) remainingTime*0.8f);
+                errorNum++;
+                return NpcResultDialogType.WRONG_BOX2;
+            } else if (errorNum == 2){
+                // game over
+                errorNum = 0;
+                return NpcResultDialogType.LOSE;
+            }
+        }
+        return null; // if return null, it means some error in code, please check
+    }
 }

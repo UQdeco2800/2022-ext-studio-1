@@ -8,32 +8,53 @@
       "textureLocation": "images/inventory/time_item.png"
     },
     {
+      "class": "com.deco2800.game.components.player.entity.ToolItem",
+      "id": 2,
+      "name": "Tool Item",
+      "description": "Tool Item - This item can be used to fix broken switch!",
+      "textureLocation": "images/switch/Tools.png"
+    },
+    {
+      "class": "com.deco2800.game.components.player.entity.BatteryItem",
+      "id": 3,
+      "name": "Battery Item1",
+      "description": "Battery Item - This item can be used to fix broken switch!",
+      "textureLocation": "images/switch/Battery.png"
+    },
+    {
       "class": "com.deco2800.game.components.player.entity.ClueItem",
       "id": 4,
-      "name": "Mermaid Scales1",
-      "description": "",
-      "textureLocation": "images/inventory/scales1.png"
+      "name": "Coral Item2",
+      "description": "Mermaid Scale - This item can be used to get clue!",
+      "textureLocation": "images/coral/scales1.png"
     },
     {
       "class": "com.deco2800.game.components.player.entity.ClueItem",
       "id": 5,
-      "name": "Mermaid Scales2",
-      "description": "",
-      "textureLocation": "images/inventory/scales2.png"
+      "name": "Coral Item3",
+      "description": "Mermaid Scale - This item can be used to get clue!",
+      "textureLocation": "images/coral/scales2.png"
     },
     {
       "class": "com.deco2800.game.components.player.entity.ClueItem",
       "id": 6,
-      "name": "Mermaid Scales3",
-      "description": "",
-      "textureLocation": "images/inventory/scales3.png"
+      "name": "Coral Item4",
+      "description": "Mermaid Scale - This item can be used to get clue!",
+      "textureLocation": "images/coral/scales3.png"
     },
     {
       "class": "com.deco2800.game.components.player.entity.ClueItem",
       "id": 7,
-      "name": "Mermaid Scales4",
-      "description": "",
-      "textureLocation": "images/inventory/scales4.png"
+      "name": "Coral Item5",
+      "description": "Mermaid Scale - This item can be used to get clue!",
+      "textureLocation": "images/coral/scales4.png"
+    },
+    {
+      "class": "com.deco2800.game.components.player.entity.ClueItem",
+      "id": 8,
+      "name": "Coral Item6",
+      "description": "Mermaid Scale - This item can be used to get clue!",
+      "textureLocation": "images/coral/scales5.png"
     }
   ]
 }

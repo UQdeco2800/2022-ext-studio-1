@@ -11,6 +11,7 @@ import com.deco2800.game.input.InputDecorator;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
+import com.deco2800.game.services.AchievementService;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -44,11 +45,13 @@ public class NpcInteractionScreen extends ScreenAdapter {
     public NpcInteractionScreen(GdxGame game) {
         this.game = game;
 
-        logger.debug("Initialising map screen services");
+        logger.debug("Initialising ending menu screen services");
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
+        ServiceLocator.registerAchievementService(new AchievementService());
+
         renderer = RenderFactory.createRenderer();
 
         loadAssets();
@@ -64,10 +67,23 @@ public class NpcInteractionScreen extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
         renderer.resize(width, height);
+        logger.trace("Resized renderer: ({} x {})", width, height);
+    }
+
+    @Override
+    public void pause() {
+        logger.info("Game paused");
+    }
+
+    @Override
+    public void resume() {
+        logger.info("Game resumed");
     }
 
     @Override
     public void dispose() {
+        logger.debug("Disposing ending menu screen");
+
         renderer.dispose();
         unloadAssets();
         ServiceLocator.getRenderService().dispose();
@@ -90,10 +106,9 @@ public class NpcInteractionScreen extends ScreenAdapter {
     }
 
     /**
-     * Creates the first lab's ui including components for rendering ui elements to the screen and
+     * Creates the main menu's ui including components for rendering ui elements to the screen and
      * capturing and handling ui input.
      */
-
     private void createUI() {
         logger.debug("Creating ui");
         Stage stage = ServiceLocator.getRenderService().getStage();

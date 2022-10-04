@@ -76,6 +76,13 @@ public class Backpack implements Inventory {
             }
         } else if (item.getType() == Item.Type.EQUIPMENT_ITEM) {
             spliceEquipmentIfPossible(id);
+        } else if (item.getType() == Item.Type.TOOL_ITEM) {
+            if (checkExist(id)) {
+                return false;
+            } else {
+                idNumMap.put(id, 1);
+                inStockItemIds.add(id);
+            }
         }
         return true;
     }
