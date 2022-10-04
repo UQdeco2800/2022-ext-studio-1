@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.areas.ForestGameArea;
+import com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplayNew;
 import com.deco2800.game.entities.factories.SwitchFactory;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -22,6 +24,7 @@ public class NpcInteraction_Display extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(NpcInteraction_Display.class);
     private static final float Z_INDEX = 2f;
     private Table table;
+    private final ForestGameArea gameArea;
     private final GdxGame game;
     private int step;
     private Image dialogBox;
@@ -31,8 +34,9 @@ public class NpcInteraction_Display extends UIComponent {
     private DialogWithSelection root;
     private Window npcEvictionMenuWindow;
 
-    public NpcInteraction_Display(GdxGame game) {
+    public NpcInteraction_Display(ForestGameArea gameArea, GdxGame game) {
         super();
+        this.gameArea = gameArea;
         this.game = game;
     }
 
@@ -72,11 +76,13 @@ public class NpcInteraction_Display extends UIComponent {
         dialogBox.setSize((float) (stage.getWidth() * 0.9), (float) (stage.getHeight() * 0.2));
         stage.addActor(dialogBox);
 
+        // set npc eviction menu window for the game ending
+        npcEvictionMenuWindow = new NpcEvictionMenuDisplayNew(
+                logger, ServiceLocator.getResourceService(), stage.getWidth(), stage.getHeight(),
+                this.gameArea, this.game).creatEvictionMenu();
+
         chapterNum = 1;
         setDialog();
-
-//        npcEvictionMenuWindow = new NpcEvictionMenuDisplayNew(
-//                logger, ServiceLocator.getResourceService(), stage.getWidth(), stage.getHeight()).creatEvictionMenu();
     }
 
     @Override
@@ -363,9 +369,10 @@ public class NpcInteraction_Display extends UIComponent {
             setSelection();
         } else if (DialogWithSelection.getChapter5Ending().equals(root)) {// select the murderer
             dialogBox.removeListener(clickListener);
+            dialogBox.remove();
+            dialog.remove();
             // show murderer selection page
             stage.addActor(this.npcEvictionMenuWindow);
-            System.out.println(1);
         } else {
             dialogBox.remove();
             dialog.remove();
