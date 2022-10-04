@@ -25,7 +25,20 @@ public class NpcInteractionScreen extends ScreenAdapter {
             "images/black.jpg", "images/map/LAB/whole lab blood.png", "images/black.jpg",
             "images/map/LAB/whole lab dark.png","images/eviction_menu/exitButton.png",
             "images/eviction_menu/exitButton_selected.png", "images/npc_interaction/dialog_box.png",
-            "images/map/LAB/whole lab.png"
+            "images/map/LAB/whole lab.png",
+            "images/eviction_menu/transparentBg.png", "images/eviction_menu/evictionMenu_background.png",
+            "images/eviction_menu/evictionCard_single.png", "images/eviction_menu/evictionCard_hover.png",
+            "images/eviction_menu/selectButton_single.png", "images/eviction_menu/selectButton_selected.png",
+            "images/eviction_menu/npcNereus.png", "images/eviction_menu/npcNereus_hover.png",
+            "images/eviction_menu/npcHeph.png", "images/eviction_menu/npcHeph_hover.png",
+            "images/eviction_menu/npcAres.png", "images/eviction_menu/npcAres_hover.png",
+            "images/eviction_menu/npcDoris.png", "images/eviction_menu/npcDoris_hover.png",
+            "images/eviction_menu/npcMetis.png", "images/eviction_menu/npcMetis_hover.png",
+            "images/eviction_menu/npcOrpheus.png", "images/eviction_menu/npcOrpheus_hover.png",
+            "images/eviction_menu/npcZoe.png", "images/eviction_menu/npcZoe_hover.png",
+            "images/eviction_menu/confirmBox.png", "images/eviction_menu/confirmBtn_cancel.png",
+            "images/eviction_menu/confirmBtn_cancel1.png", "images/eviction_menu/confirmBtn_ok.png",
+            "images/eviction_menu/confirmBtn_ok1.png", "images/eviction_menu/infoWindow.png"
     };
 
     public NpcInteractionScreen(GdxGame game) {

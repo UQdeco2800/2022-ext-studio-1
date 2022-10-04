@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplayNew;
 import com.deco2800.game.entities.factories.SwitchFactory;
 import com.deco2800.game.components.npc.DialogWithSelection;
 import com.deco2800.game.components.npc.NpcInteraction;
@@ -17,6 +18,7 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -32,6 +34,7 @@ public class NpcInteraction_Display extends UIComponent {
     private int chapterNum;
     private ClickListener clickListener;
     private DialogWithSelection root;
+    private Window npcEvictionMenuWindow;
 
     public NpcInteraction_Display(GdxGame game) {
         super();
@@ -76,6 +79,9 @@ public class NpcInteraction_Display extends UIComponent {
 
         chapterNum = 1;
         setDialog();
+
+        npcEvictionMenuWindow = new NpcEvictionMenuDisplayNew(
+                logger, ServiceLocator.getResourceService(), stage.getWidth(), stage.getHeight()).creatEvictionMenu();
     }
 
     @Override
@@ -123,19 +129,19 @@ public class NpcInteraction_Display extends UIComponent {
                 Iterator<String> it = texts.iterator();
                 switch (chapterNum) {
                     case 1 -> clickListener = new ClickListener() {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    super.clicked(event, x, y);
-                                    chapter1Listener(it);
-                                }
-                            };
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            super.clicked(event, x, y);
+                            chapter1Listener(it);
+                        }
+                    };
                     case 4 -> clickListener = new ClickListener() {
-                                @Override
-                                public void clicked(InputEvent event, float x, float y) {
-                                    super.clicked(event, x, y);
-                                    chapter4Listener(it);
-                                }
-                            };
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            super.clicked(event, x, y);
+                            chapter4Listener(it);
+                        }
+                    };
                 }
 
             } else {
@@ -279,21 +285,23 @@ public class NpcInteraction_Display extends UIComponent {
         bloodLab.setPosition(0, 0);
         bloodLab.setSize(stage.getWidth(), stage.getHeight());
 
-        if (it.hasNext()) {
-            dialog.setText(it.next());
-            if (step == 0) {
-                table.addActor(darkLab); // show the lab
-            } else if (step == 5) {
-                table.removeActor(darkLab);
-                table.addActor(bloodLab); // show the blooding lab
+        if (step != 6 || SwitchFactory.isWorking) {
+            if (it.hasNext()) {
+                dialog.setText(it.next());
+                if (step == 0) {
+                    table.addActor(darkLab); // show the lab
+                } else if (step == 6) {
+                    table.removeActor(darkLab);
+                    table.addActor(bloodLab); // show the blooding lab
+                }
+                step++;
+            } else {// chapter 1 ends
+                bloodLab.remove();
+                dialog.remove();
+                dialogBox.removeListener(clickListener);
+                chapterNum = 2;
+                setDialog();
             }
-            step++;
-        } else {// chapter 1 ends
-            bloodLab.remove();
-            dialog.remove();
-            dialogBox.removeListener(clickListener);
-            chapterNum = 2;
-            setDialog();
         }
     }
 
@@ -362,10 +370,13 @@ public class NpcInteraction_Display extends UIComponent {
         } else if (DialogWithSelection.getChapter5Ending().equals(root)) {// select the murderer
             dialogBox.removeListener(clickListener);
             // show murderer selection page
-        }else {
+            stage.addActor(this.npcEvictionMenuWindow);
+            System.out.println(1);
+        } else {
             dialogBox.remove();
             dialog.remove();
             dialogBox.removeListener(clickListener);
+
         }
     }
 }
