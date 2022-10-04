@@ -32,7 +32,7 @@ public class MainMenuDisplay extends UIComponent {
     Image title =
         new Image(
             ServiceLocator.getResourceService()
-                .getAsset("images/box_boy_title.png", Texture.class));
+                .getAsset("images/game logo.png", Texture.class));
 
     TextButton startBtn = new TextButton("start", skin);
     TextButton storyline = new TextButton("storyline", skin);
@@ -41,6 +41,17 @@ public class MainMenuDisplay extends UIComponent {
     TextButton achievementsBtn = new TextButton("achievements", skin);
     TextButton settingsBtn = new TextButton("settings", skin);
     TextButton exitBtn = new TextButton("exit", skin);
+//    TextButton endingBtn = new TextButton("Ending", skin);
+
+//    endingBtn.addListener(
+//        new ChangeListener() {
+//          @Override
+//          public void changed(ChangeEvent changeEvent, Actor actor) {
+//              logger.debug("Ending button clicked");
+//              entity.getEvents().trigger("ending");
+//          }
+//        }
+//    );
 
     // Triggers an event when the button is pressed
     startBtn.addListener(
@@ -124,6 +135,8 @@ public class MainMenuDisplay extends UIComponent {
     table.add(settingsBtn).padTop(15f);
     table.row();
     table.add(exitBtn).padTop(15f);
+//    table.row();
+//    table.add(endingBtn).padTop(15f);
 
     stage.addActor(table);
   }

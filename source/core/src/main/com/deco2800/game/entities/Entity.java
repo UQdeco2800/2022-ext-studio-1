@@ -3,6 +3,7 @@ package com.deco2800.game.entities;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
+import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.ComponentType;
 import com.deco2800.game.events.EventHandler;
@@ -28,6 +29,14 @@ public class Entity {
   private static final Logger logger = LoggerFactory.getLogger(Entity.class);
   private static int nextId = 0;
   private static final String EVT_NAME_POS = "setPosition";
+  /**
+   * type: This parameter is used to identify the type of the entity
+   * example: "key" "ClueItem" ...
+   * Everyone can use this if needed
+   * author: Team 7 Yingxin Liu
+   */
+  public String type = null;
+  public GdxGame game = null;
 
   private final int id;
   private final IntMap<Component> components;

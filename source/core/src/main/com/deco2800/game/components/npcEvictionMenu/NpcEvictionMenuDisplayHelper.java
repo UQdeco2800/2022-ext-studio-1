@@ -22,7 +22,7 @@ class NpcEvictionMenuDisplayHelper {
      *
      * @author Team7 Yingxin Liu Shaohui Wang
      */
-    public  String creatLabelContext(String name, NPCClueLibrary library) {
+    public  String createClueContext(String name, NPCClueLibrary library) {
         String[] clues = {};
         try {
             clues = library.getUnlockClues(name);
@@ -41,5 +41,55 @@ class NpcEvictionMenuDisplayHelper {
             }
         }
         return message.toString();
+    }
+    public String createTraitorMessageForSaveAtlantis(String name, NpcEvictionMenuDisplayNew.NpcResultDialogType type){
+        StringBuilder message = new StringBuilder();
+        if (type == NpcEvictionMenuDisplayNew.NpcResultDialogType.RIGHT_BOX) {
+            message.append("You found the traitor "+name+" who destroyed Atlantis.");
+            message.append("\n");
+            message.append("Maybe "+name+" can give you some useful information:).");
+            message.append("\n");
+            message.append("Go and expel him and try to save Atlantis!");
+            message.append("\n");
+        } else if (type == NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX1) {
+            message.append(name+" does not seem to be the traitor :(");
+            message.append("\n");
+            message.append("Don't worry, you still have two chances to try.");
+            message.append("\n");
+            message.append("Combine the clues and try again!");
+
+        } else {
+            message.append(name+" does not seem to be a traitor either :(");
+            message.append("\n");
+            message.append("Be careful, you only have one chance left to try.");
+            message.append("\n");
+            message.append("Go and see whether there are any missing clues!");
+
+        }
+
+        return  message.toString();
+    }
+
+    public String createTraitorMessageInterjection(NpcEvictionMenuDisplayNew.NpcResultDialogType type){
+        StringBuilder message = new StringBuilder();
+        if (type == NpcEvictionMenuDisplayNew.NpcResultDialogType.RIGHT_BOX) {
+            message.append("That's great!!!");
+            message.append("\n");
+        } else if (type == NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX1) {
+            message.append("Unfortunately");
+            message.append("\n");
+        } else {
+            message.append("Oops");
+            message.append("\n");
+        }
+
+        return  message.toString();
+    }
+
+    public String createInformationFromTraitor(String name){
+        StringBuilder message = new StringBuilder();
+        message.append(name+" said ....");
+
+        return  message.toString();
     }
 }

@@ -3,6 +3,7 @@ package com.deco2800.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.entities.Entity;
@@ -20,6 +21,7 @@ public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
+  private static final int NUM_BATTERIES = 3;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
@@ -53,7 +55,11 @@ public class ForestGameArea extends GameArea {
     "images/inventory/scales1.png",
     "images/inventory/confirm.png",
     "images/inventory/emtpyInventorySlot.png",
-    "images/inventory/inventoryBG.png"
+    "images/inventory/inventoryBG.png",
+    "images/switch/Tools.png",
+    "images/switch/Battery.png",
+    "images/switch/Electric Switch Broken.png",
+    "images/KEY.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas","images/player.atlas","images/orpheus.atlas",
@@ -67,6 +73,8 @@ public class ForestGameArea extends GameArea {
   private final TerrainFactory terrainFactory;
 
   private Entity player;
+
+  public Entity key;
 
   public ForestGameArea(TerrainFactory terrainFactory) {
     super();
@@ -86,7 +94,9 @@ public class ForestGameArea extends GameArea {
     spawnOrpheus();
     spawnTimeConsumeableItem();
     spawnClueItem();
+    spawnSwitchItems();
     playMusic();
+
   }
 
   private void displayUI() {
@@ -142,15 +152,46 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
   public void spawnTimeConsumeableItem() {
-    Entity item = ConsumableItemFactory.createItem(player, "images/inventory/time_item.png");
-
+//    Entity item = ConsumableItemFactory.createItem(player, "images/inventory/time_item.png");
+    Entity item = ItemFactory.createItem(1);
     spawnEntityAt(item, new GridPoint2(5, 10), true, true);
   }
 
   private void spawnClueItem() {
-    Entity item = ClueItemFactory.createItem(player, "images/inventory/scales1.png");
+    Entity item = ItemFactory.createItem(1);
+    Entity item1 = ItemFactory.createItem(1);
+    Entity item2 = ItemFactory.createItem(1);
+
 
     spawnEntityAt(item, new GridPoint2(5, 5), true, true);
+    spawnEntityAt(item1, new GridPoint2(10, 5), true, true);
+    spawnEntityAt(item2, new GridPoint2(15, 5), true, true);
+  }
+
+
+  private void spawnSwitchItems() {
+    Entity switchItem = SwitchFactory.createSwitch();
+    spawnEntityAt(switchItem, new GridPoint2(20, 10), true, true);
+
+    Entity tool = SwitchFactory.createTool();
+    spawnEntityAt(tool, new GridPoint2(25, 10), true, true);
+
+    GridPoint2 minPos = new GridPoint2(5, 5);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 15);
+
+    for (int i = 0; i < NUM_BATTERIES; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+//      Entity battery = SwitchFactory.createBattery();
+      Entity battery = ItemFactory.createItem(3);
+      spawnEntityAt(battery, randomPos, true, false);
+    }
+  }
+
+  public void spawnKey(GdxGame game) {
+    this.key = ClueItemFactory.createItem(player, "images/KEY.png");
+    key.type = "key";
+    key.game = game;
+    spawnEntityAt(key, new GridPoint2(6, 6), true, true);
   }
 
   private void spawnGhosts() {
@@ -199,7 +240,7 @@ public class ForestGameArea extends GameArea {
 
     while (!resourceService.loadForMillis(10)) {
       // This could be upgraded to a loading screen
-      logger.info("Loading... {}%", resourceService.getProgress());
+      //logger.info("Loading... {}%", resourceService.getProgress());
     }
   }
 

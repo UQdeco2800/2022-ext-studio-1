@@ -6,11 +6,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
+import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.countDownClock.countdownDisplay;
 import com.deco2800.game.components.maingame.MainGameActions;
+import com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplayNew;
+import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
+import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.entities.factories.RenderFactory;
+import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.input.InputDecorator;
 import com.deco2800.game.input.InputService;
@@ -18,6 +23,7 @@ import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.AchievementService;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ResourceService;
@@ -36,6 +42,9 @@ import org.slf4j.LoggerFactory;
  */
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
+  //for player health control.
+  private static final PlayerConfig stats =
+          FileLoader.readClass(PlayerConfig.class, "configs/player.json");
   private static final String[] mainGameTextures = {
           "images/heart.png","images/eviction_menu/menuIcon_black.png",
           "images/eviction_menu/menuIcon_white.png"};
@@ -55,16 +64,24 @@ public class MainGameScreen extends ScreenAdapter {
           IMAGES_PATH + "npcDoris.png", IMAGES_PATH + "npcDoris_hover.png",
           IMAGES_PATH + "npcZoe.png", IMAGES_PATH + "npcZoe_hover.png",
           IMAGES_PATH + "npcAres.png", IMAGES_PATH + "npcAres_hover.png",
-          IMAGES_PATH + "npcOrpheus.png", IMAGES_PATH + "npcOrpheus_hover.png"};
+          IMAGES_PATH + "npcOrpheus.png", IMAGES_PATH + "npcOrpheus_hover.png",
+          IMAGES_PATH + "rightBox.png",
+          IMAGES_PATH + "rightBtn.png", IMAGES_PATH + "rightBtn_H.png",
+          IMAGES_PATH + "wrongBox1.png", IMAGES_PATH + "wrongBox2.png",
+          IMAGES_PATH + "chanceBtn.png", IMAGES_PATH + "chanceBtn_H.png",
+          IMAGES_PATH + "chanceBtn2.png", IMAGES_PATH + "chanceBtn2_H.png",
+          IMAGES_PATH + "saveMessage.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
+  private ForestGameArea forestGameArea;
+
   private long timeSinceStart;
 
-  private  boolean stopGame;
+  private boolean stopGame;
 
   public MainGameScreen(GdxGame game, boolean stop) {
     this.game = game;
@@ -89,12 +106,13 @@ public class MainGameScreen extends ScreenAdapter {
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
     loadAssets();
-    createUI();
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
+    this.forestGameArea = new ForestGameArea(terrainFactory);
     forestGameArea.create();
+
+    createUI();
   }
 
   @Override
@@ -185,11 +203,18 @@ public class MainGameScreen extends ScreenAdapter {
     logger.info("time passed since game started: {}", this.timeSinceStart);
 
     Entity ui = new Entity();
+
     ui.addComponent(new InputDecorator(stage, 10))
         .addComponent(new PerformanceDisplay())
         .addComponent(new MainGameActions(this.game))
         .addComponent(new MainGameExitDisplay())
             .addComponent(new countdownDisplay(this.game))
+            //for control health add combatstatscomponent
+            //for display health add PlayerStatsDisplay()
+            .addComponent(new CombatStatsComponent(stats.health,stats.baseAttack))
+            .addComponent(new PlayerStatsDisplay())
+            .addComponent(new NpcEvictionMenuDisplayNew(logger,ServiceLocator.getResourceService(),
+                    stage.getWidth(),stage.getHeight(), this.forestGameArea, this.game))
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay());
