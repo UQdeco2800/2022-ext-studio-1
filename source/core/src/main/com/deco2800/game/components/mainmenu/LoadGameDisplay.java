@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.deco2800.game.GdxGame;
@@ -15,6 +16,7 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 public class LoadGameDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(LoadGameDisplay.class);
@@ -85,7 +87,7 @@ public class LoadGameDisplay extends UIComponent {
         table.add(save4Btn).padTop(30f).left();
         table.row();
 
-        loadSlots.add(slots).width(300);
+        loadSlots.add(slots).width(900);
 
 
 
@@ -96,17 +98,88 @@ public class LoadGameDisplay extends UIComponent {
 
 
     save1Btn.addListener(
-            new ChangeListener() {
+            new InputListener() {
+                //Shows save description when hovering
                 @Override
-                public void changed(ChangeEvent changeEvent, Actor actor) {
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                     showSaveDescription();
+                }
+                //Removes save description when not hovering
+                @Override
+                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                    destroySaveDescription();
+                }
+                // Loads the selected save
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+                    destroySaveDescription();
+                    return true;
                 }
             });
 
+        save2Btn.addListener(
+                new InputListener() {
+                    //Shows save description when hovering
+                    @Override
+                    public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                        showSaveDescription();
+                    }
+                    //Removes save description when not hovering
+                    @Override
+                    public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                        destroySaveDescription();
+                    }
+                    // Loads the selected save
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
+                        destroySaveDescription();
+                        return true;
+                    }
+                });
 
+        save3Btn.addListener(
+                new InputListener() {
+                    //Shows save description when hovering
+                    @Override
+                    public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                        showSaveDescription();
+                    }
+                    //Removes save description when not hovering
+                    @Override
+                    public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                        destroySaveDescription();
+                    }
+                    // Loads the selected save
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
+                        destroySaveDescription();
+                        return true;
+                    }
+                });
 
+        save4Btn.addListener(
+                new InputListener() {
+                    //Shows save description when hovering
+                    @Override
+                    public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                        showSaveDescription();
+                    }
+                    //Removes save description when not hovering
+                    @Override
+                    public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                        destroySaveDescription();
+                    }
+                    // Loads the selected save
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+                        destroySaveDescription();
+                        return true;
+                    }
+                });
 
 
         return loadSlots;
@@ -126,6 +199,11 @@ public class LoadGameDisplay extends UIComponent {
 
         return descriptionTable;
 
+    }
+
+    public void destroySaveDescription() {
+        super.dispose();
+        descriptionTable.remove();
     }
 
     private void exit() {
