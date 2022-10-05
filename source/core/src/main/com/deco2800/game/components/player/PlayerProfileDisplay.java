@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import com.deco2800.game.entities.configs.PlayerProfileConfig;
 import com.deco2800.game.entities.configs.PlayerProfileProperties;
 import com.deco2800.game.services.ServiceLocator;
@@ -37,6 +39,8 @@ public class PlayerProfileDisplay extends UIComponent {
 
     // Reading from json file created to store player's profile (performance stats).
     Json json = new Json();
+
+//    JsonValue jsonValue = new JsonReader().parse(Gdx.files.internal("configs/playerStatsInfo.json"));
     PlayerProfileConfig playerProfileConfigs = json.fromJson(PlayerProfileConfig.class, Gdx.files.internal("configs/playerStatsInfo.json"));
 
     // initialising ui elements.
