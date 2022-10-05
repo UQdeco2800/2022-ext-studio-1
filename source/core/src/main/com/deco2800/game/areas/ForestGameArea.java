@@ -60,7 +60,7 @@ public class ForestGameArea extends GameArea {
     "images/Piranha.png",
     "images/robot.png",
     "images/slime.png",
-    "images/bobo.png"
+    "images/bobo.png",
     "images/switch/Tools.png",
     "images/switch/Battery.png",
     "images/switch/Electric Switch Broken.png",
