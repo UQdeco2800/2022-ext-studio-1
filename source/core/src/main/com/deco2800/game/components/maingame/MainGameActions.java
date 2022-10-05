@@ -70,7 +70,7 @@ public class MainGameActions extends Component {
 //        i.getComponent(countdownDisplay.class).increaseTime((float) 30.33);
 //      }
     }
-    playerInventory = new InventoryDisplayComponent(player.getComponent(InventoryComponent.class));
+    playerInventory = new InventoryDisplayComponent(player.getComponent(InventoryComponent.class), game);
 
   }
 

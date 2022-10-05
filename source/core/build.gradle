@@ -28,3 +28,7 @@ javadoc {
         links 'https://javadoc.io/doc/com.badlogicgames.gdx/gdx/latest/com/badlogic/gdx/package-summary.html'
     }
 }
+
+dependencies {
+    testImplementation 'junit:junit:4.13.1'
+}

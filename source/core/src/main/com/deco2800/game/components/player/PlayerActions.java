@@ -27,11 +27,17 @@ public class PlayerActions extends Component {
 
   private boolean inventoryOpen = false;
 
+  private boolean saveDisplayOpen = false;
+
   private GdxGame game;
 
   private InventoryDisplayComponent playerInventory;
 
+  private SaveGameDisplay saveGameDisplay;
 
+  public PlayerActions(GdxGame game) {
+    this.game = game;
+  }
 
   @Override
   public void create() {
@@ -40,6 +46,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("walkStop", this::stopWalking);
     entity.getEvents().addListener("attack", this::attack);
     entity.getEvents().addListener("openInventory", this::openInventory);
+    entity.getEvents().addListener("openSaveDisplay", this::openSaveDisplay);
   }
 
   @Override
@@ -106,8 +113,18 @@ public class PlayerActions extends Component {
           player = i;
         }
       }
-      playerInventory = new InventoryDisplayComponent(player.getComponent(InventoryComponent.class));
+      playerInventory = new InventoryDisplayComponent(player.getComponent(InventoryComponent.class), game);
     }
   }
+
+  void openSaveDisplay() {
+    if (saveDisplayOpen == true) {
+      saveDisplayOpen = false;
+    } else {
+      saveDisplayOpen = true;
+      saveGameDisplay = new SaveGameDisplay();
+    }
+  }
+
   }
 

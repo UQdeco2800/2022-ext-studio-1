@@ -34,9 +34,9 @@ import java.util.Objects;
 
 
 public class InventoryDisplayComponent extends UIComponent {
-    private static final int topSlotPadding = 70;
-    private static final int bottomSlotPadding = 30;
-    private static final int backgroundHeightSpace = 350 ;
+    private static final int topSlotPadding = 60;
+    private static final int bottomSlotPadding = 40;
+    private static final int backgroundHeightSpace = 320 ;
     private static final int backgroundWidthSpace = 150;
     private static final Logger logger = LoggerFactory.getLogger(InventoryDisplayComponent.class);
     private static final int slotHeight = 250;
@@ -54,6 +54,8 @@ public class InventoryDisplayComponent extends UIComponent {
     //TODO - Stand in for integrated guilt values for seperate npcs
     public int guiltLevel;
 
+    private GdxGame game;
+
     @Deprecated
     public InventoryDisplayComponent(HashMap<Integer, Integer> inventory) {
         super();
@@ -62,8 +64,9 @@ public class InventoryDisplayComponent extends UIComponent {
 
     }
 
-    public InventoryDisplayComponent(InventoryComponent inventoryComponent) {
+    public InventoryDisplayComponent(InventoryComponent inventoryComponent, GdxGame game) {
         this.inventoryComponent = inventoryComponent;
+        this.game = game;
         create();
     }
 
@@ -592,12 +595,18 @@ public class InventoryDisplayComponent extends UIComponent {
     public void useItem(int id) {
         if (id == 1) {
             consumeTimeItem(id);
-        }
-
-        if (id == SwitchFactory.TOOL_ID) {
+        } else if (id == SwitchFactory.TOOL_ID) {
             consumeToolItem(id);
+        } else if (id == 9) {
+            useMagicKey();
         }
 
+    }
+
+    private void useMagicKey() {
+        inventoryComponent.remove(9);
+        EndingMenuDisplay.setWin();
+        game.setScreen(GdxGame.ScreenType.ENDING);
     }
 
     private void consumeTimeItem(int id) {
