@@ -1,0 +1,47 @@
+You: "Time to decide whether to go back to find Metis or move on in the village."
+SELECTION 1: Back to find Metis. / SELECTION 2: Move on in the village.
+SELECTION 1:
+Metis: "Do you need my help, Doctor?"
+You: "Yes, could you please help me read this scale's memory?"
+Metis: "I'm sorry, but I can't read this scale's memory. It's badly damaged. Maybe you can go to ask Heph to help fix it. He is stubborn but honest. You should be able to find him in the village ahead."
+You continue to go to the village.
+The people arguing on the street caught player's attention. As they walked through the crowd, they saw one man screaming at another person, with eyes blazing with fury.
+You: "Hey guys, what's going on here now?"
+Bystander: "Heph's weird temper, who knows what will happen."
+"Maybe that person is not satisfied with what he repaired, Heph's repair skills are still good. Just a bad temper."
+SELECTION 2:
+The people arguing on the street caught player's attention. As they walked through the crowd, they saw one man screaming at another person, with eyes blazing with fury.
+You: "Hey guys, what's going on here now?"
+Bystander: "Heph's weird temper, who knows what will happen."
+"Maybe that person is not satisfied with what he repaired, Heph's repair skills are still good. Just a bad temper."
+
+SELECTION 1: Observe from the sidelines. / SELECTION 2: Stop their quarrel.
+SELECTION 1:
+(Closes the dialog unless the player selects the second option.)
+SELECTION 2:
+The player manages to stop the brawl, dragging Heph aside. Told him part of the story and asked about the restoration.
+Heph: "How can this scale be in your hands? why is it destroyed like this? what have you done?!"
+
+SELECTION 1: Tell him the truth of Nereus' death. / SELECTION 2: Conceal the situation. 
+SELECTION 1:
+You: "I am very sorry for the death of Princess Nereus, but we are looking for the murderer. If you can help us fix this scale, we might get more clues."
+Heph: "Why is this happening, and who did it? I can't fix it now. You go find me a seaweed, a fluorescent coral and a jellyfish."
+(Player collects 1 seaweed, 1 fluorescent coral and 1 jellyfish as instructed and then hand it to Heph.)
+Heph: "It's a fair exchange, take it."
+(Player get repaired scales * 1)
+SELECTION 2:
+Heph: "No, you are lying, what happened to Princess Nereus? What did you do to her?"
+You: "Sorry we can't tell you about Nereus, but repairing the scales is really important for us. We implore your help. The truth will be told to you afterwards."
+Heph: "Collect 5 seaweeds, 5 fluorescent corals and 5 jellyfish for me because of your careful thought. It's a fair exchange. Why are you still standing here? Go away."
+(Player collects 5 seaweed, 5 fluorescent coral and 5 jellyfish as instructed and then hand it to Heph.)
+Heph: "All right."
+(Player get repaired scales * 1)
+Orpheus hurried to him last week, begging him to save his irises, whose pedals were like being ripped off by someone. The poor musical actor was about to give the irises to the princess but somehow the plant was dead before he sent his feelings to her. 
+Orpheus: "Heph, please help me. my scales! My scales are broken! My poor princess, can I no longer send flowers to her? What have I done?!"
+
+SELECTION 1: Ignore this person. / SELECTION 2: Find a way to follow Orpheus back to the theater.
+SELECTION 1:
+You stayed in the village and lost clues.
+SELECTION 2:
+You decided to go to the theater to meet the person.
+(CHAPTER THREE ENDS)

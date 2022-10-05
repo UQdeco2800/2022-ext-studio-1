@@ -9,6 +9,7 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.countDownClock.countdownDisplay;
 import com.deco2800.game.components.maingame.MainGameActions;
+import com.deco2800.game.components.npc.NpcInteractionDisplay;
 import com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplayNew;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.entities.Entity;
@@ -23,7 +24,6 @@ import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
-import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.AchievementService;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ResourceService;
@@ -47,7 +47,7 @@ public class MainGameScreen extends ScreenAdapter {
           FileLoader.readClass(PlayerConfig.class, "configs/player.json");
   private static final String[] mainGameTextures = {
           "images/heart.png","images/eviction_menu/menuIcon_black.png",
-          "images/eviction_menu/menuIcon_white.png"};
+          "images/eviction_menu/menuIcon_white.png", "images/npc_interaction/dialog_box.png"};
   private static final String IMAGES_PATH = "images/eviction_menu/";  //path of team7 images
   private static final String[] npcEvictionMenuTextures = { //path of team7 images
           IMAGES_PATH + "evictionMenu_background.png",IMAGES_PATH + "transparentBg.png",
@@ -109,7 +109,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    this.forestGameArea = new ForestGameArea(terrainFactory);
+    this.forestGameArea = new ForestGameArea(terrainFactory, game);
     forestGameArea.create();
 
     createUI();
@@ -217,7 +217,8 @@ public class MainGameScreen extends ScreenAdapter {
                     stage.getWidth(),stage.getHeight(), this.forestGameArea, this.game))
         .addComponent(new Terminal())
         .addComponent(inputComponent)
-        .addComponent(new TerminalDisplay());
+        .addComponent(new TerminalDisplay())
+            .addComponent(new NpcInteractionDisplay(this.forestGameArea, this.game));
 
     ServiceLocator.getEntityService().register(ui);
   }

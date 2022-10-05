@@ -2,6 +2,7 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.achievements.AchievementStatsComponent;
 import com.deco2800.game.components.achievements.pojo.AchievementStatus;
@@ -39,7 +40,7 @@ public class PlayerFactory {
    * Create a player entity.
    * @return entity
    */
-  public static Entity createPlayer() {
+  public static Entity createPlayer(GdxGame game) {
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
@@ -67,8 +68,8 @@ public class PlayerFactory {
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-            .addComponent(new PlayerActions())
-            .addComponent(new InventoryComponent(stats.gold))
+            .addComponent(new PlayerActions(game))
+            .addComponent(new InventoryComponent())
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())

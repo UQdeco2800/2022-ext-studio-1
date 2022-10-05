@@ -21,6 +21,7 @@ public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
+  private static final int NUM_BATTERIES = 3;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
@@ -60,15 +61,24 @@ public class ForestGameArea extends GameArea {
     "images/robot.png",
     "images/slime.png",
     "images/bobo.png"
+    "images/switch/Tools.png",
+    "images/switch/Battery.png",
+    "images/switch/Electric Switch Broken.png",
+    "images/KEY.png",
+    "images/coral/scales1.png",
+    "images/coral/scales2.png",
+    "images/coral/scales3.png",
+    "images/coral/scales4.png",
+    "images/coral/scales5.png",
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas","images/player.atlas","images/orpheus.atlas",
     "images/Ares.atlas","images/knight.atlas","images/Piranha.atlas","images/robot.atlas","images/slime.atlas","images/bobo.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-  private static final String backgroundMusic = "sounds/VillageBGM_2.mp3";
-  private static final String movementMusic = "sounds/Movement_sound.mp3";
-  private static final String[] forestMusic = {backgroundMusic};
+  private static final String backgroundMusic = "sounds/new.mp3";
+  private static final String movementMusic = "sounds/Movement_sound.wav";
+  private static final String[] forestMusic = {backgroundMusic, movementMusic};
 
   private final TerrainFactory terrainFactory;
 
@@ -76,9 +86,11 @@ public class ForestGameArea extends GameArea {
 
   public Entity key;
 
-  public ForestGameArea(TerrainFactory terrainFactory) {
+  private GdxGame game;
+  public ForestGameArea(TerrainFactory terrainFactory, GdxGame game) {
     super();
     this.terrainFactory = terrainFactory;
+    this.game = game;
   }
 
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -96,8 +108,9 @@ public class ForestGameArea extends GameArea {
     spawnBobo();
     spawnTimeConsumeableItem();
     spawnClueItem();
+    spawnSwitchItems();
     playMusic();
-
+    spawnCoralItems();
   }
 
   private void displayUI() {
@@ -148,29 +161,61 @@ public class ForestGameArea extends GameArea {
   }
 
   private Entity spawnPlayer() {
-    Entity newPlayer = PlayerFactory.createPlayer();
+    Entity newPlayer = PlayerFactory.createPlayer(game);
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }
   public void spawnTimeConsumeableItem() {
-    Entity item = ConsumableItemFactory.createItem(player, "images/inventory/time_item.png");
-
+//    Entity item = ConsumableItemFactory.createItem(player, "images/inventory/time_item.png");
+    Entity item = ItemFactory.createItem(1);
     spawnEntityAt(item, new GridPoint2(5, 10), true, true);
   }
 
   private void spawnClueItem() {
-    Entity item = ClueItemFactory.createItem(player, "images/inventory/scales1.png");
+    Entity item = ItemFactory.createItem(1);
+    Entity item1 = ItemFactory.createItem(1);
+    Entity item2 = ItemFactory.createItem(1);
 
 
-    spawnEntityAt(item, new GridPoint2(5, 5), true, true);
+    spawnEntityAt(item, new GridPoint2(5, 25), true, true);
+    spawnEntityAt(item1, new GridPoint2(10, 24), true, true);
+    spawnEntityAt(item2, new GridPoint2(15, 23), true, true);
   }
 
+  private void spawnCoralItems() {
+    GridPoint2 minPos = new GridPoint2(5, 5);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 15);
+
+    spawnEntityAt(ItemFactory.createItem(4), RandomUtils.random(minPos, maxPos), true, false);
+    spawnEntityAt(ItemFactory.createItem(5), RandomUtils.random(minPos, maxPos), true, false);
+    spawnEntityAt(ItemFactory.createItem(6), RandomUtils.random(minPos, maxPos), true, false);
+    spawnEntityAt(ItemFactory.createItem(7), RandomUtils.random(minPos, maxPos), true, false);
+    spawnEntityAt(ItemFactory.createItem(8), RandomUtils.random(minPos, maxPos), true, false);
+  }
+
+  private void spawnSwitchItems() {
+    Entity switchItem = SwitchFactory.createSwitch();
+    spawnEntityAt(switchItem, new GridPoint2(20, 10), true, true);
+
+    Entity tool = SwitchFactory.createTool();
+    spawnEntityAt(tool, new GridPoint2(25, 10), true, true);
+
+    GridPoint2 minPos = new GridPoint2(5, 5);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 15);
+
+    for (int i = 0; i < NUM_BATTERIES; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+//      Entity battery = SwitchFactory.createBattery();
+      Entity battery = ItemFactory.createItem(3);
+      spawnEntityAt(battery, randomPos, true, false);
+    }
+  }
 
   public void spawnKey(GdxGame game) {
-    this.key = ClueItemFactory.createItem(player, "images/KEY.png");
+    this.key = ItemFactory.createItem(9);
     key.type = "key";
     key.game = game;
-    spawnEntityAt(key, new GridPoint2(6, 6), true, true);
+    spawnEntityAt(key, new GridPoint2(6, 20), true, true);
   }
 
   private void spawnGhosts() {

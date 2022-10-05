@@ -23,6 +23,7 @@ import com.deco2800.game.rendering.TextureRenderComponent;
  * "ItemConfigs".
  *
 */
+@Deprecated
 public class ConsumableItemFactory extends ItemFactory {
     private static int consumeableTimeIncrease = 30;
     ConsumableItemFactory() {

@@ -1,8 +1,14 @@
 package com.deco2800.game.components.player;
 
+import com.deco2800.game.components.player.entity.ClueItem;
+import com.deco2800.game.components.player.entity.Item;
+import com.deco2800.game.entities.configs.ItemConfigs;
 import com.deco2800.game.extensions.GameExtension;
+import com.deco2800.game.files.FileLoader;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -84,4 +90,37 @@ class InventoryComponentTest {
     addToInventoryComponent.addToInventory(inventory.inventoryHashMap.size(), inventory, null);
     assertEquals(10, inventory.inventoryHashMap.size());
   }
+
+  @Test
+  void ShouldReadItemConfigs() {
+    ItemConfigs itemConfigs = FileLoader.readClass(ItemConfigs.class, "configs/items.json");
+    List<Item> itemList = itemConfigs.itemList;
+    assertTrue(itemList.size() > 0);
+  }
+
+  @Test
+  void shouldAddItem() {
+    InventoryComponent inventoryComponent = new InventoryComponent();
+    inventoryComponent.add(1);
+    assertTrue(inventoryComponent.contains(1));
+    assertEquals(1, inventoryComponent.count(1));
+  }
+
+  @Test
+  void shouldRemoveItem() {
+    InventoryComponent inventoryComponent = new InventoryComponent();
+    inventoryComponent.add(1);
+    assertEquals(1, inventoryComponent.count(1));
+    inventoryComponent.remove(1);
+    assertEquals(0, inventoryComponent.count(1));
+  }
+
+  @Test
+  void shouldLimitNumOfClueItem() {
+    InventoryComponent inventoryComponent = new InventoryComponent();
+    inventoryComponent.add(4);
+    assertFalse(inventoryComponent.add(4));
+  }
+
+
 }
