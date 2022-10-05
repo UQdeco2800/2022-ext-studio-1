@@ -1,27 +1,27 @@
 
-bobo.png
-size: 1548, 1548
+Bobo.png
+size: 608, 214
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 down
   rotate: false
-  xy: 2, 671
-  size: 771, 875
-  orig: 771, 875
+  xy: 2, 2
+  size: 200, 210
+  orig: 200, 210
   offset: 0, 0
-  index: 1
+  index: 0
 down
   rotate: false
-  xy: 775, 775
-  size: 771, 771
-  orig: 771, 771
+  xy: 204, 2
+  size: 200, 210
+  orig: 200, 210
   offset: 0, 0
   index: 2
 down
   rotate: false
-  xy: 775, 2
-  size: 750, 771
-  orig: 750, 771
+  xy: 406, 2
+  size: 200, 210
+  orig: 200, 210
   offset: 0, 0
-  index: 0
+  index: 1

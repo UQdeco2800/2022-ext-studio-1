@@ -58,7 +58,7 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new MonsterAnimationController());
 
-    knight.setScale(1f,1f);
+    knight.setScale(1.2f,1.2f);
     logger.debug("Create a Knight");
     return knight;
   }
@@ -77,7 +77,7 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new MonsterAnimationController());
 
-    robot.setScale(1f,1f);
+    robot.setScale(1.2f,1.2f);
     logger.debug("Create a Robot");
     return robot;
   }
@@ -96,7 +96,7 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new MonsterAnimationController());
 
-    slime.setScale(1f,1f);
+    slime.setScale(1.2f,1.2f);
     logger.debug("Create a Slime");
     return slime;
   }
@@ -115,7 +115,7 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new MonsterAnimationController());
 
-    bobo.setScale(1f,1f);
+    bobo.setScale(1.2f,1.2f);
     logger.debug("Create a Bobo");
     return bobo;
   }
@@ -135,7 +135,7 @@ public class NPCFactory {
             .addComponent(animator)
             .addComponent(new MonsterAnimationController());
 
-    piranha.setScale(1f,1f);
+    piranha.setScale(1.2f,1.2f);
     logger.debug("Create a Piranha");
     return piranha;
   }

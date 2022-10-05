@@ -89,9 +89,11 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
-    spawnGhosts();
     spawnKnight();
-    spawnGhostKing();
+    spawnSlime();
+    spawnRobot();
+    spawnPiranha();
+    spawnBobo();
     spawnTimeConsumeableItem();
     spawnClueItem();
     playMusic();
@@ -188,6 +190,42 @@ public class ForestGameArea extends GameArea {
 
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
     Entity knight = NPCFactory.createKnight(player);
+    spawnEntityAt(knight, randomPos, true, true);
+  }
+
+  private void spawnSlime() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+    Entity knight = NPCFactory.createSlime(player);
+    spawnEntityAt(knight, randomPos, true, true);
+  }
+
+  private void spawnBobo() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+    Entity knight = NPCFactory.createBobo(player);
+    spawnEntityAt(knight, randomPos, true, true);
+  }
+
+  private void spawnPiranha() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+    Entity knight = NPCFactory.createPiranha(player);
+    spawnEntityAt(knight, randomPos, true, true);
+  }
+
+  private void spawnRobot() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+    Entity knight = NPCFactory.createRobot(player);
     spawnEntityAt(knight, randomPos, true, true);
   }
 

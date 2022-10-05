@@ -1,6 +1,6 @@
 
 slime.png
-size: 608, 214
+size: 1820, 214
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
@@ -10,17 +10,59 @@ down
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
-  index: 0
+  index: 6
 down
   rotate: false
   xy: 204, 2
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
-  index: 2
+  index: 3
 down
   rotate: false
   xy: 406, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 8
+down
+  rotate: false
+  xy: 608, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+down
+  rotate: false
+  xy: 810, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 5
+down
+  rotate: false
+  xy: 1012, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 2
+down
+  rotate: false
+  xy: 1214, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 7
+down
+  rotate: false
+  xy: 1416, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 4
+down
+  rotate: false
+  xy: 1618, 2
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
