@@ -1,0 +1,328 @@
+{
+  "propertyList": {
+    "class": "java.util.LinkedHashMap",
+    "distance": {
+      "operation": "<=",
+      "defaultValue": 0
+    },
+    "firstAids": {
+      "operation": "==",
+      "defaultValue": 0
+    },
+    "gold": {
+      "operation": "==",
+      "defaultValue": 0
+    },
+    "health": {
+      "operation": "<=",
+      "defaultValue": 100
+    },
+    "itemCount": {
+      "operation": "==",
+      "defaultValue": 0
+    },
+    "score": {
+      "operation": "<=",
+      "defaultValue": 0
+    },
+    "spaceshipAvoidSuccess": {
+      "operation": "==",
+      "defaultValue": 0
+    },
+    "time": {
+      "operation": "<=",
+      "defaultValue": 0
+    }
+  },
+  "achievements": [
+    {
+      "name": "Veteran",
+      "type": "BRONZE",
+      "iconPath": "images/achievements/veteranBronze.png",
+      "message": "Survived for 1 minute!",
+      "bonus": 10,
+      "condition": {
+        "time": 1
+      }
+    },
+    {
+      "name": "Veteran",
+      "type": "SILVER",
+      "iconPath": "images/achievements/veteranSilver.png",
+      "message": "Survived for 3 minutes!",
+      "bonus": 15,
+      "condition": {
+        "time": 3
+      }
+    },
+    {
+      "name": "Veteran",
+      "type": "GOLD",
+      "iconPath": "images/achievements/veteranGold.png",
+      "message": "Survived for 9 minutes!",
+      "bonus": 20,
+      "condition": {
+        "time": 9
+      }
+    },
+    {
+      "name": "Game Breaker",
+      "type": "BRONZE",
+      "iconPath": "images/achievements/gameBreakerBronze.png",
+      "message": "You've survived for 5 minutes with full health!",
+      "bonus": 15,
+      "condition": {
+        "time": 5,
+        "health": 100
+      }
+    },
+    {
+      "name": "Game Breaker",
+      "type": "SILVER",
+      "iconPath": "images/achievements/gameBreakerSilver.png",
+      "message": "You've survived for 8 minutes with full health!",
+      "bonus": 20,
+      "condition": {
+        "time": 8,
+        "health": 100
+      }
+    },
+    {
+      "name": "Game Breaker",
+      "type": "GOLD",
+      "iconPath": "images/achievements/gameBreakerGold.png",
+      "message": "You've survived for 10 minutes with full health!",
+      "bonus": 25,
+      "condition": {
+        "time": 10,
+        "health": 100
+      }
+    },
+    {
+      "name": "Tool Master",
+      "type": "BRONZE",
+      "iconPath": "images/achievements/toolMasterBronze.png",
+      "message": "You have successfully picked up 10 items!",
+      "bonus": 10,
+      "condition": {
+        "itemCount": 10
+      }
+    },
+    {
+      "name": "Tool Master",
+      "type": "SILVER",
+      "iconPath": "images/achievements/toolMasterSilver.png",
+      "message": "You have successfully picked up 25 items!",
+      "bonus": 15,
+      "condition": {
+        "itemCount": 25
+      }
+    },
+    {
+      "name": "Tool Master",
+      "type": "GOLD",
+      "iconPath": "images/achievements/toolMasterGold.png",
+      "message": "You have successfully picked up 35 items!",
+      "bonus": 20,
+      "condition": {
+        "itemCount": 35
+      }
+    },
+    {
+      "name": "Healer",
+      "type": "BRONZE",
+      "iconPath": "images/achievements/healerBronze.png",
+      "message": "You have successfully picked up 9 first aids!",
+      "bonus": 10,
+      "condition": {
+        "firstAids": 9
+      }
+    },
+    {
+      "name": "Healer",
+      "type": "SILVER",
+      "iconPath": "images/achievements/healerSilver.png",
+      "message": "You have successfully picked up 18 first aids!",
+      "bonus": 15,
+      "condition": {
+        "firstAids": 18
+      }
+    },
+    {
+      "name": "Healer",
+      "type": "GOLD",
+      "iconPath": "images/achievements/healerGold.png",
+      "message": "You have successfully picked up 30 first aids!",
+      "bonus": 20,
+      "condition": {
+        "firstAids": 30
+      }
+    },
+    {
+      "name": "Stranger",
+      "type": "BRONZE",
+      "iconPath": "images/achievements/strangerBronze.png",
+      "message": "Wow! You managed not to pick up any items for first 4 minutes!",
+      "bonus": 10,
+      "condition": {
+        "itemCount": 0,
+        "time": 4
+      }
+    },
+    {
+      "name": "Stranger",
+      "type": "SILVER",
+      "iconPath": "images/achievements/strangerSilver.png",
+      "message": "Wow! You managed not to pick up any items for first 7 minutes!",
+      "bonus": 15,
+      "condition": {
+        "itemCount": 0,
+        "time": 7
+      }
+    },
+    {
+      "name": "Stranger",
+      "type": "GOLD",
+      "iconPath": "images/achievements/strangerGold.png",
+      "message": "Wow! You managed not to pick up any items for first 11 minutes!",
+      "bonus": 20,
+      "condition": {
+        "itemCount": 0,
+        "time": 11
+      }
+    },
+    {
+      "name": "Master",
+      "type": "BRONZE",
+      "iconPath": "images/achievements/masterBronze.png",
+      "message": "Wow! You have crossed the score of 100!",
+      "bonus": 10,
+      "condition": {
+        "score": 100
+      }
+    },
+    {
+      "name": "Master",
+      "type": "SILVER",
+      "iconPath": "images/achievements/masterSilver.png",
+      "message": "Wow! You have crossed the score of 200!",
+      "bonus": 15,
+      "condition": {
+        "score": 200
+      }
+    },
+    {
+      "name": "Master",
+      "type": "GOLD",
+      "iconPath": "images/achievements/masterGold.png",
+      "message": "Wow! You have crossed the score of 350!",
+      "bonus": 20,
+      "condition": {
+        "score": 350
+      }
+    },
+    {
+      "name": "Game Fanatic",
+      "type": "BRONZE",
+      "iconPath": "images/achievements/gameFanaticBronze.png",
+      "message": "Picked up 10 First Aids with full health, You don't need em!",
+      "bonus": 15,
+      "condition": {
+        "health": 100,
+        "firstAids": 10
+      }
+    },
+    {
+      "name": "Game Fanatic",
+      "type": "SILVER",
+      "iconPath": "images/achievements/gameFanaticSilver.png",
+      "message": "Picked up 25 First Aids with full health, You don't need em!",
+      "bonus": 25,
+      "condition": {
+        "health": 100,
+        "firstAids": 25
+      }
+    },
+    {
+      "name": "Game Fanatic",
+      "type": "GOLD",
+      "iconPath": "images/achievements/gameFanaticGold.png",
+      "message": "Picked up 35 First Aids with full health, You don't need em!",
+      "bonus": 40,
+      "condition": {
+        "health": 100,
+        "firstAids": 35
+      }
+    },
+    {
+      "name": "Collector",
+      "type": "BRONZE",
+      "iconPath": "images/achievements/collectorBronze.png",
+      "message": "GG! you've collected 20 coins",
+      "bonus": 10,
+      "condition": {
+        "gold": 20
+      }
+    },
+    {
+      "name": "Collector",
+      "type": "SILVER",
+      "iconPath": "images/achievements/collectorSilver.png",
+      "message": "GG! you've collected 35 coins",
+      "bonus": 15,
+      "condition": {
+        "gold": 35
+      }
+    },
+    {
+      "name": "Collector",
+      "type": "GOLD",
+      "iconPath": "images/achievements/collectorGold.png",
+      "message": "GG! you've collected 50 coins",
+      "bonus": 20,
+      "condition": {
+        "gold": 50
+      }
+    },
+    {
+      "name": "Survival Expert",
+      "type": "BRONZE",
+      "iconPath": "images/achievements/survivalExpertBronze.png",
+      "message": "Survived for 20m, RUN for your life!!!",
+      "bonus": 20,
+      "condition": {
+        "distance": 20
+      }
+    },
+    {
+      "name": "Survival Expert",
+      "type": "SILVER",
+      "iconPath": "images/achievements/survivalExpertSilver.png",
+      "message": "Survived for 40m, RUN for your life!!!",
+      "bonus": 30,
+      "condition": {
+        "distance": 40
+      }
+    },
+    {
+      "name": "Survival Expert",
+      "type": "GOLD",
+      "iconPath": "images/achievements/survivalExpertGold.png",
+      "message": "Survived for 60m, RUN for your life!!!",
+      "bonus": 40,
+      "condition": {
+        "distance": 60
+      }
+    },
+    {
+      "name": "Alphamineron",
+      "type": "GOLD",
+      "iconPath": "images/achievements/alphamineronGold.png",
+      "message": "Survived alien spaceship, the world is on your side!!!",
+      "bonus": 50,
+      "condition": {
+        "spaceshipAvoidSuccess": 1
+      }
+    }
+  ]
+}
