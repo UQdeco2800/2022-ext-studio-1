@@ -223,7 +223,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         card.addListener(new InputListener() {
             @Override  // mouse hovering
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                MusicStuff.playMusic(buttonPath, false);
+//                MusicStuff.playMusic(buttonPath, false);
                 setButton(card, index, "cardHovering");
                 cardImage.setDrawable(imageHover);
                 setImage(cardImage, card, "imageHovering");
@@ -231,7 +231,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
 
             @Override  // default
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                MusicStuff.playMusic(buttonPath, false);
+//                MusicStuff.playMusic(buttonPath, false);
                 setButton(card, index, "cardDefault");
                 cardImage.setDrawable(imageDefault);
                 setImage(cardImage, card, "imageDefault");
@@ -247,7 +247,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             // Restored the characteristics of the basic button which implemented by using buttonStyle
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 if (card.isOver()) {
-                    MusicStuff.playMusic(buttonPath, false);
+//                    MusicStuff.playMusic(buttonPath, false);
                     logger.debug("card" + index + "clicked up");
                     createCardInfo(cardNames[index]);
                 }
