@@ -10,6 +10,7 @@ import com.deco2800.game.components.endingmenu.*;
 import com.deco2800.game.components.player.PlayerProfileDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.music.MusicStuff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +23,8 @@ public class MainGameActions extends Component {
   private GdxGame game;
 
   private InventoryDisplayComponent playerInventory;
+
+  private static final String buttonPath = "sounds/button.mp3";
 
   public MainGameActions(GdxGame game) {
     this.game = game;
@@ -48,11 +51,13 @@ public class MainGameActions extends Component {
    * Swaps to the Main Menu screen.
    */
   private void onExit() {
+    MusicStuff.playMusic(buttonPath, false);
     logger.info("Exiting main game screen");
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
 
   private void onInventoryScreen() {
+    MusicStuff.playMusic(buttonPath, false);
     logger.info("Opening Inventory");
 
     // logic to locate the player and get inventory
@@ -75,6 +80,7 @@ public class MainGameActions extends Component {
   }
 
   private void onPlayerProfile() {
+    MusicStuff.playMusic(buttonPath, false);
     logger.info("Opening player profile");
     new PlayerProfileDisplay().create();
   }

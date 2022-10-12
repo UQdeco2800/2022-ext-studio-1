@@ -16,6 +16,7 @@ import com.deco2800.game.GdxGame.ScreenType;
 import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.endingmenu.*;
+import com.deco2800.game.music.MusicStuff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,9 @@ public class countdownDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(countdownDisplay.class);
     private final GdxGame game;
     private float timeRemaining;
+
+    private static final String buttonPath = "sounds/button.mp3";
+
 
     private boolean stop=false;
     private float timeCount;
@@ -127,6 +131,7 @@ public class countdownDisplay extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
+                        MusicStuff.playMusic(buttonPath, false);
                         logger.debug("Exit button clicked");
                         exitScreen();
                     }
@@ -146,6 +151,7 @@ public class countdownDisplay extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
+                        MusicStuff.playMusic(buttonPath, false);
                         logger.debug("pause button clicked");
                         stop = true;
                         //  MainGameScreen.stopGame = true;
@@ -171,6 +177,7 @@ public class countdownDisplay extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
+                        MusicStuff.playMusic(buttonPath, false);
                         logger.debug("resume button clicked");
                         stop = false;
                         game.theGameScreen.changeStatus2();
