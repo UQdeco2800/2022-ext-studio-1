@@ -344,7 +344,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         cancelButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                MusicStuff.playMusic(buttonPath, false);
+//                MusicStuff.playMusic(buttonPath, false);
                 logger.debug("cancel_button from " + button_name + " clicked");
                 dialog.remove();
             }
@@ -357,7 +357,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         okButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                MusicStuff.playMusic(buttonPath, false);
+//                MusicStuff.playMusic(buttonPath, false);
                 logger.debug("yes_button from " + button_name + " clicked");
                 dialog.remove();
                 // different name will lead to different result
