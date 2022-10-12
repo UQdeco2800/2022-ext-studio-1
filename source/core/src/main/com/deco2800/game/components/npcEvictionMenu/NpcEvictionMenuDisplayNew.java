@@ -27,6 +27,7 @@ import com.deco2800.game.entities.configs.PlayerProfileConfig;
 import com.deco2800.game.entities.configs.PlayerProfileProperties;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.ui.UIComponent;
+import com.deco2800.game.music.MusicStuff;
 import org.slf4j.Logger;
 
 import java.util.List;
@@ -56,6 +57,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
     private static float bgHeight;
 
     private static final String IMAGES_PATH = "images/eviction_menu/";  //path of team7 images
+    private static final String buttonPath = "sounds/button.mp3";
 
     //with these names you can call clues as well as calling image path of each npc.
     private static final String[] cardNames = {
@@ -167,6 +169,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
+                        MusicStuff.playMusic(buttonPath, false);
                         logger.debug("Exit button clicked");
                         logger.info("exit to previous menu");
                         exitMenu();
@@ -187,6 +190,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             buttons[i].addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
+                    MusicStuff.playMusic(buttonPath, false);
                     logger.debug("button" + index + "clicked");
                     createConfirmDialog(cardNames[index]);
                 }
@@ -219,6 +223,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         card.addListener(new InputListener() {
             @Override  // mouse hovering
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                MusicStuff.playMusic(buttonPath, false);
                 setButton(card, index, "cardHovering");
                 cardImage.setDrawable(imageHover);
                 setImage(cardImage, card, "imageHovering");
@@ -226,6 +231,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
 
             @Override  // default
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                MusicStuff.playMusic(buttonPath, false);
                 setButton(card, index, "cardDefault");
                 cardImage.setDrawable(imageDefault);
                 setImage(cardImage, card, "imageDefault");
@@ -241,6 +247,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             // Restored the characteristics of the basic button which implemented by using buttonStyle
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 if (card.isOver()) {
+                    MusicStuff.playMusic(buttonPath, false);
                     logger.debug("card" + index + "clicked up");
                     createCardInfo(cardNames[index]);
                 }
@@ -337,6 +344,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         cancelButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
+                MusicStuff.playMusic(buttonPath, false);
                 logger.debug("cancel_button from " + button_name + " clicked");
                 dialog.remove();
             }
@@ -349,6 +357,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         okButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
+                MusicStuff.playMusic(buttonPath, false);
                 logger.debug("yes_button from " + button_name + " clicked");
                 dialog.remove();
                 // different name will lead to different result
