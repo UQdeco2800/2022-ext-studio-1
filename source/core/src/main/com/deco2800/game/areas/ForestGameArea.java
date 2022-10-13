@@ -94,6 +94,11 @@ public class ForestGameArea extends GameArea {
             "images/coral/scales3.png",
             "images/coral/scales4.png",
             "images/coral/scales5.png",
+            "images/characters/Zoe.png",
+            "images/characters/Metis.png",
+            "images/characters/Doris.png",
+            "images/characters/Heph.png",
+            "images/characters/Orpheus.png",
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/player.atlas", "images/orpheus.atlas",
@@ -139,6 +144,11 @@ public class ForestGameArea extends GameArea {
         spawnSwitchItems();
         playMusic();
         spawnCoralItems();
+        spawnZoe();
+        spawnMetis();
+        spawnDoris();
+        spawnHeph();
+        spawnOrpheus();
     }
 
     private void loadLevel(String name){
@@ -441,6 +451,51 @@ public class ForestGameArea extends GameArea {
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
         Entity ghostKing = NPCFactory.createGhostKing(player);
         spawnEntityAt(ghostKing, randomPos, true, true);
+    }
+
+    private void spawnZoe() {
+        GridPoint2 minPos = new GridPoint2(0, 0);
+        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+        GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+        Entity zoe = NPCFactory.createZoe();
+        spawnEntityAt(zoe, randomPos, true, true);
+    }
+
+    private void spawnMetis() {
+        GridPoint2 minPos = new GridPoint2(0, 0);
+        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+        GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+        Entity metis = NPCFactory.createMetis();
+        spawnEntityAt(metis, randomPos, true, true);
+    }
+
+    private void spawnDoris() {
+        GridPoint2 minPos = new GridPoint2(0, 0);
+        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+        GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+        Entity doris = NPCFactory.createDoris();
+        spawnEntityAt(doris, randomPos, true, true);
+    }
+
+    private void spawnHeph() {
+        GridPoint2 minPos = new GridPoint2(0, 0);
+        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+        GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+        Entity heph = NPCFactory.createHeph();
+        spawnEntityAt(heph, randomPos, true, true);
+    }
+
+    private void spawnOrpheus() {
+        GridPoint2 minPos = new GridPoint2(0, 0);
+        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+        GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+        Entity orpheus = NPCFactory.createOrpheus();
+        spawnEntityAt(orpheus, randomPos, true, true);
     }
 
     private void playMusic() {
