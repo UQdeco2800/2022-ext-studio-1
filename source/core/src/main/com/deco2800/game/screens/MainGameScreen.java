@@ -217,8 +217,7 @@ public class MainGameScreen extends ScreenAdapter {
                     stage.getWidth(),stage.getHeight(), this.forestGameArea, this.game))
         .addComponent(new Terminal())
         .addComponent(inputComponent)
-        .addComponent(new TerminalDisplay())
-            .addComponent(new NpcInteractionDisplay(this.forestGameArea, this.game));
+        .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);
   }

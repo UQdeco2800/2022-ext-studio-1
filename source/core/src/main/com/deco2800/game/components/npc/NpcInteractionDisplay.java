@@ -6,9 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplayNew;
+import com.deco2800.game.components.player.InventoryComponent;
+import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.SwitchFactory;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -16,6 +19,8 @@ import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,7 +29,6 @@ public class NpcInteractionDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(NpcInteractionDisplay.class);
     private static final float Z_INDEX = 2f;
     private Table table;
-    private final ForestGameArea gameArea;
     private final GdxGame game;
     private int step;
     private Image dialogBox;
@@ -34,16 +38,17 @@ public class NpcInteractionDisplay extends UIComponent {
     private DialogWithSelection root;
     private Window npcEvictionMenuWindow;
 
-    public NpcInteractionDisplay(ForestGameArea gameArea, GdxGame game) {
+    public NpcInteractionDisplay(GdxGame game) {
         super();
-        this.gameArea = gameArea;
         this.game = game;
+        this.step = 0;
     }
 
     @Override
     public void create() {
         super.create();
         addActors();
+        entity.getEvents().addListener("interact", this::interact);
     }
 
     private void addActors() {
@@ -77,9 +82,9 @@ public class NpcInteractionDisplay extends UIComponent {
         stage.addActor(dialogBox);
 
         // set npc eviction menu window for the game ending
-        npcEvictionMenuWindow = new NpcEvictionMenuDisplayNew(
-                logger, ServiceLocator.getResourceService(), stage.getWidth(), stage.getHeight(),
-                this.gameArea, this.game).creatEvictionMenu();
+//        npcEvictionMenuWindow = new NpcEvictionMenuDisplayNew(
+//                logger, ServiceLocator.getResourceService(), stage.getWidth(), stage.getHeight(),
+//                this.gameArea, this.game).creatEvictionMenu();
 
         chapterNum = 1;
         setDialog();
@@ -102,21 +107,28 @@ public class NpcInteractionDisplay extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
+        dialog.remove();
+        dialogBox.remove();
+        dialogBox.removeListener(clickListener);
     }
 
-    private Button createButton(String Up, String Down) {
-        logger.debug("createButton with path:" + Up + Down);
-        ResourceService resService = ServiceLocator.getResourceService();
-        TextureRegionDrawable up = new TextureRegionDrawable(resService.getAsset(Up, Texture.class));
-        TextureRegionDrawable down = new TextureRegionDrawable(resService.getAsset(Down, Texture.class));
-        Button.ButtonStyle style = new Button.ButtonStyle();
-        style.up = up;
-        style.over = down;
-        return new Button(style);
+    private ArrayList<String> getLinearDialog(int chapterNum) throws IOException {
+        BufferedReader br;
+        ArrayList<String> texts = new ArrayList<>();
+        try {
+            br = new BufferedReader(new FileReader("dialogs/Chapter " + chapterNum + ".txt"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                texts.add(line);
+            }
+            br.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return texts;
     }
 
     private void setDialog() {
-        step = 0;
         dialog = new Label("Chapter " + chapterNum, skin);
         dialog.setPosition((float) (stage.getWidth() * 0.1), (float) (stage.getHeight() * 0.1));
         dialog.setWrap(true);
@@ -125,7 +137,7 @@ public class NpcInteractionDisplay extends UIComponent {
 
         try {
             if (chapterNum == 1 || chapterNum == 4) {// chapter without selections
-                ArrayList<String> texts = NpcInteraction.readNpcFiles(chapterNum);
+                ArrayList<String> texts = getLinearDialog(chapterNum);
                 Iterator<String> it = texts.iterator();
                 switch (chapterNum) {
                     case 1 -> clickListener = new ClickListener() {
@@ -275,34 +287,18 @@ public class NpcInteractionDisplay extends UIComponent {
     }
 
     private void chapter1Listener(Iterator<String> it) {
-//        Image darkLab = new Image(ServiceLocator.getResourceService().getAsset(
-//                "images/map/LAB/whole lab dark.png", Texture.class));
-//        darkLab.setPosition(0, 0);
-//        darkLab.setSize(stage.getWidth(), stage.getHeight());
-//
-//        Image bloodLab = new Image(ServiceLocator.getResourceService().getAsset(
-//                "images/map/LAB/whole lab blood.png", Texture.class));
-//        bloodLab.setPosition(0, 0);
-//        bloodLab.setSize(stage.getWidth(), stage.getHeight());
-
-        if (step != 6 || SwitchFactory.isWorking) {
-            if (it.hasNext()) {
-                dialog.setText(it.next());
-//                if (step == 0) {
-//                    table.addActor(darkLab); // show the lab
-//                } else if (step == 6) {
-//                    table.removeActor(darkLab);
-//                    table.addActor(bloodLab); // show the blooding lab
-//                }
-                step++;
-            } else {// chapter 1 ends
-//                bloodLab.remove();
-                dialog.remove();
-                dialogBox.removeListener(clickListener);
-                chapterNum = 2;
-                setDialog();
+//        if (step != 6 || SwitchFactory.isWorking) {
+        if (it.hasNext()) {
+            dialog.setText(it.next());
+            if (step == 6) {
+                dispose();
             }
+        } else {// chapter 1 ends
+            dispose();
         }
+//        }
+        step++;
+        logger.info(String.valueOf(step));
     }
 
     private void chapter2Opening() {
@@ -319,15 +315,13 @@ public class NpcInteractionDisplay extends UIComponent {
             root = root.getNext();
         } else if (root.isSelectionPoint()) {
             setSelection();
-        } else if (DialogWithSelection.getChapter2Endings().contains(root)) {
+        } else if (DialogWithSelection.getChapter2Endings().contains(root)) {// chapter 2 ends
             dialogBox.removeListener(clickListener);
             dialog.remove();
             chapterNum = 3;
             setDialog();
         } else {
-            dialogBox.remove();
-            dialog.remove();
-            dialogBox.removeListener(clickListener);
+            dispose();
         }
     }
 
@@ -337,15 +331,13 @@ public class NpcInteractionDisplay extends UIComponent {
             root = root.getNext();
         } else if (root.isSelectionPoint()) {
             setSelection();
-        } else if (DialogWithSelection.getChapter3Endings().contains(root)) {
+        } else if (DialogWithSelection.getChapter3Endings().contains(root)) {// chapter 3 ends
             dialogBox.removeListener(clickListener);
             dialog.remove();
             chapterNum = 4;
             setDialog();
         } else {
-            dialogBox.remove();
-            dialog.remove();
-            dialogBox.removeListener(clickListener);
+            dispose();
         }
     }
 
@@ -368,16 +360,51 @@ public class NpcInteractionDisplay extends UIComponent {
         } else if (root.isSelectionPoint()) {
             setSelection();
         } else if (DialogWithSelection.getChapter5Ending().equals(root)) {// select the murderer
-            dialogBox.removeListener(clickListener);
-            dialogBox.remove();
-            dialog.remove();
+            dispose();
             // show murderer selection page
             stage.addActor(this.npcEvictionMenuWindow);
         } else {
-            dialogBox.remove();
-            dialog.remove();
-            dialogBox.removeListener(clickListener);
+            dispose();
+        }
+    }
 
+    private ArrayList<String> continueToDialog(int chapterNum, int step) throws IOException {
+        ArrayList<String> texts = getLinearDialog(chapterNum);
+        return new ArrayList<>(texts.subList(step, texts.size() - 1));
+    }
+
+    void interact() throws IOException {
+        if (dialogBox.getStage() == null) {// if conversation ended
+            switch (step) {
+                // in chapter 1
+                case 7 -> {
+                    try {
+                        ArrayList<String> texts = continueToDialog(chapterNum, step);
+                        Iterator<String> it = texts.iterator();
+                        clickListener = new ClickListener() {
+                            @Override
+                            public void clicked(InputEvent event, float x, float y) {
+                                super.clicked(event, x, y);
+                                chapter1Listener(it);
+                            }
+                        };
+                        stage.addActor(dialogBox);
+                        stage.addActor(dialog);
+                        dialogBox.addListener(clickListener);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                // in chapter 2
+                case 15 -> {
+                    chapterNum = 2;
+                    stage.addActor(dialogBox);
+                    setDialog();
+                }
+            }
+            logger.info("interact successfully");
+        } else {// if conversation in progress
+            logger.info("interact failed");
         }
     }
 }

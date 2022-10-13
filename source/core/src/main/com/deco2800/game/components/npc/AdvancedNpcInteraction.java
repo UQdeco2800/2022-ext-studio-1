@@ -18,12 +18,12 @@ public class AdvancedNpcInteraction extends NpcInteraction {
         playerClues = new ArrayList<>();
     }
 
-    public void meetNpcWithClue(int npcId, int choice) {
-        String meet = super.meetNpc(npcId, choice);
-        if (meet != null) {
-            playerClues.add("needed to be confirmed");
-        }
-    }
+//    public void meetNpcWithClue(int npcId, int choice) {
+//        String meet = super.meetNpc(npcId, choice);
+//        if (meet != null) {
+//            playerClues.add("needed to be confirmed");
+//        }
+//    }
 
     public ArrayList<String> getPlayerClues() {
         return playerClues;

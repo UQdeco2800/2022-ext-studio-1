@@ -5,6 +5,7 @@ import com.deco2800.game.events.listeners.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -82,7 +83,13 @@ public class EventHandler {
    */
   public void trigger(String eventName) {
     logTrigger(eventName);
-    forEachListener(eventName, (EventListener listener) -> ((EventListener0) listener).handle());
+    forEachListener(eventName, (EventListener listener) -> {
+      try {
+        ((EventListener0) listener).handle();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    });
   }
 
   /**
