@@ -189,7 +189,6 @@ public class countdownDisplay extends UIComponent {
         Button resumeButton = new ImageButton(resumeBtnDrawable);
 
 //        pauseResumeBtn = pauseButton;
-//        pauseButton.setSize(10,10);
 
 
         pauseButton.addListener(
@@ -247,14 +246,6 @@ public class countdownDisplay extends UIComponent {
     }
     public void setTimeRemaining(float time){
         this.timeRemaining = time;
-    }
-
-    public boolean getStatus() {
-        return stop;
-    }
-
-    public void setStatus(boolean paused) {
-        stop = paused;
     }
 
     @Override
