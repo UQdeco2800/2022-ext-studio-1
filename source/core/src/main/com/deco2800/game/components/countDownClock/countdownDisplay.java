@@ -41,6 +41,8 @@ public class countdownDisplay extends UIComponent {
 
     Button pauseResumeBtn;
 
+    private PausedWindow pausedWindow;
+
     public countdownDisplay(GdxGame game) {
         super();
         this.game = game;
@@ -72,7 +74,7 @@ public class countdownDisplay extends UIComponent {
 //            entity.getEvents().trigger("ending");
 //
         }
-        if(timeRemaining>0 && stop==false) {
+        if(timeRemaining>0 && game.theGameScreen.getStatus() == false) {
             int equHours;
             int equMins;
             int equSeconds;
@@ -172,30 +174,6 @@ public class countdownDisplay extends UIComponent {
 
     }
 
-    public void pauseGame() {
-        this.paused = true;
-    }
-
-    private void exitScreen() {
-        game.setScreen(ScreenType.MAIN_GAME);
-    }
-    private Table makeExitBtn() {
-        TextButton exitBtn = new TextButton("EXIT", skin);
-
-        exitBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        MusicStuff.playMusic(buttonPath, false);
-                        logger.debug("Exit button clicked");
-                        exitScreen();
-                    }
-                });
-
-        Table table = new Table();
-        table.add(exitBtn).expandX().left().pad(0f, 100f, 100f, 0f);
-        return table;
-    }
 
     //Make the pause button, and change stop  to true when clicked
     private Table pauseButton(){
@@ -210,45 +188,30 @@ public class countdownDisplay extends UIComponent {
         Button pauseButton = new ImageButton(pauseBtnDrawable);
         Button resumeButton = new ImageButton(resumeBtnDrawable);
 
-        pauseResumeBtn = pauseButton;
+//        pauseResumeBtn = pauseButton;
 //        pauseButton.setSize(10,10);
 
 
-        pauseResumeBtn.addListener(
+        pauseButton.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-//                        pauseResumeBtn = resumeButton;
-//                        MusicStuff.playMusic(buttonPath, false);
-//                        logger.debug("pause button clicked");
-//                        stop = true;
-//                        //  MainGameScreen.stopGame = true;
-//                        //  MainGameScreen.render.stopGame = true;
-//                        // game.stopGame = true;
-//                        game.theGameScreen.changeStatus();
-
-                        if (!stop) {
-                            pauseResumeBtn = resumeButton;
-                            MusicStuff.playMusic(buttonPath, false);
-                            logger.debug("pause button clicked");
-                            stop = true;
-                            game.theGameScreen.changeStatus();
-                        } else {
-                            pauseResumeBtn = pauseButton;
-                            MusicStuff.playMusic(buttonPath, false);
-                            logger.debug("resume button clicked");
-                            stop = false;
-                            game.theGameScreen.changeStatus2();
-                        }
+                        MusicStuff.playMusic(buttonPath, false);
+                        logger.debug("pause button clicked");
+                        stop = true;
+                        //  MainGameScreen.stopGame = true;
+                        //  MainGameScreen.render.stopGame = true;
+                        // game.stopGame = true;
+                        pausedWindow = new PausedWindow(game);
+                        pausedWindow.create();
+                        game.theGameScreen.changeStatus();
                     }
                 });
 
+
         Table table =new Table();
-//        table.add(pauseButton);
-        table.add(pauseResumeBtn).
-                size(75, 75);
-//                        .right()
-//                                .pad(0f, 2400f, 400f, 0f);
+        table.add(pauseButton).size(75, 75);
+
         return table;
 
 
@@ -284,6 +247,14 @@ public class countdownDisplay extends UIComponent {
     }
     public void setTimeRemaining(float time){
         this.timeRemaining = time;
+    }
+
+    public boolean getStatus() {
+        return stop;
+    }
+
+    public void setStatus(boolean paused) {
+        stop = paused;
     }
 
     @Override
