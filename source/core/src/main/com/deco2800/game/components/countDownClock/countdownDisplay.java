@@ -6,9 +6,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.ui.UIComponent;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.deco2800.game.GdxGame.ScreenType;
@@ -32,6 +34,10 @@ public class countdownDisplay extends UIComponent {
     private boolean stop=false;
     private float timeCount;
     public boolean paused = false;
+
+    Table widgetBackground;
+    Table timerText;
+
     public countdownDisplay(GdxGame game) {
         super();
         this.game = game;
@@ -67,6 +73,11 @@ public class countdownDisplay extends UIComponent {
             int equHours;
             int equMins;
             int equSeconds;
+
+            String hoursString;
+            String minsString;
+            String secondsString;
+
             this.timeRemaining -= timeCount;
             if (timeRemaining>=60){
                 float mins = timeRemaining/60;
@@ -89,7 +100,27 @@ public class countdownDisplay extends UIComponent {
                 equMins=0;
                 equSeconds=(int)timeRemaining;
             }
-            counterLabel.setText(String.valueOf(equHours+":"+equMins+":"+equSeconds));
+
+            if (equMins < 10) {
+                minsString = "0"+String.valueOf(equMins);
+            } else {
+                minsString = String.valueOf(equMins);
+            }
+
+            if (equHours < 10) {
+                hoursString = "0" + String.valueOf(equHours);
+            } else {
+                hoursString = String.valueOf(equHours);
+            }
+
+            if (equSeconds < 10) {
+                secondsString = "0" + String.valueOf(equSeconds);
+             } else {
+                secondsString = String.valueOf(equSeconds);
+            }
+
+//            counterLabel.setText(String.valueOf(equHours+":"+equMins+":"+equSeconds));
+            counterLabel.setText(hoursString + ":" + minsString + ":" + secondsString);
          //   logger.info("remaining time: {}", String.valueOf(this.getRemainingTime()));
           //  logger.info(counterLabel.getText().toString());
         }
@@ -99,14 +130,31 @@ public class countdownDisplay extends UIComponent {
 
     private void addActors() {
 
+        Texture widgetTexture = new Texture(Gdx.files.internal("images/countdown_clock/timerWidget.png"));
+        TextureRegionDrawable widgetDrawable = new TextureRegionDrawable(widgetTexture);
+        Image widget = new Image(widgetDrawable);
+
         counterLabel = new Label(String.valueOf(timeRemaining), skin);
         counterLabel.setPosition((float) (stage.getWidth() * 0.85), (float) (stage.getHeight() * 0.3));
 
-        counterLabel.setFontScale(2);
+        counterLabel.setFontScale(1.25F);
 
-        stage.addActor(counterLabel);
+        widgetBackground = new Table();
+        widgetBackground.add(widget);
+        timerText = new Table();
+        timerText.add(counterLabel);
 
+        widgetBackground.setSize((float) (timerText.getWidth() * 1.5), (float) (timerText.getHeight() * 1.5));
 
+        Stack stack = new Stack();
+
+        stack.add(widgetBackground);
+        stack.add(timerText);
+
+        stack.setPosition((float) (stage.getWidth() * 0.85), (float) (stage.getHeight() * 0.3));
+
+//        stage.addActor(counterLabel);
+        stage.addActor(stack);
 
         Table pauseBtn = pauseButton();
         Table resumeBtn = resumeButton();
@@ -144,7 +192,13 @@ public class countdownDisplay extends UIComponent {
 
     //Make the pause button, and change stop  to true when clicked
     private Table pauseButton(){
-        TextButton pauseButton = new TextButton("PAUSE", skin);
+//        TextButton pauseButton = new TextButton("PAUSE", skin);
+
+        Texture pauseBtnTexture = new Texture(Gdx.files.internal("images/countdown_clock/pause.png"));
+        TextureRegionDrawable pauseBtnDrawable = new TextureRegionDrawable(pauseBtnTexture);
+
+        Button pauseButton = new ImageButton(pauseBtnDrawable);
+//        pauseButton.setSize(10,10);
 
 
         pauseButton.addListener(
@@ -162,7 +216,11 @@ public class countdownDisplay extends UIComponent {
                 });
 
         Table table =new Table();
-        table.add(pauseButton).expandX().right().pad(0f, 2400f, 400f, 0f);
+//        table.add(pauseButton);
+        table.add(pauseButton).
+                size(75, 75)
+                        .right()
+                                .pad(0f, 2400f, 400f, 0f);
         return table;
 
 
