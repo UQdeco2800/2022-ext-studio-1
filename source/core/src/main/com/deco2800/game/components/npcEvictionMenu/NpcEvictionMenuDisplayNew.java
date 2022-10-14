@@ -154,7 +154,6 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * @author Team7: Shaohui Wang Yingxin Liu
      */
     private void addActors() {
-        // Adding background
         Image backgroundNpcMenu =
                 new Image(resourceService.getAsset(IMAGES_PATH + "evictionMenu_background.png", Texture.class));
         backgroundNpcMenu.setSize((float) (bgWidth * 0.89), (float) (bgHeight * 0.9851));
@@ -169,7 +168,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-                        MusicStuff.playMusic(buttonPath, false);
+                        MusicStuff.playMusic("sounds/CloseEvictionMenu.wav", false);
                         logger.debug("Exit button clicked");
                         logger.info("exit to previous menu");
                         exitMenu();
@@ -190,7 +189,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             buttons[i].addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
-                    MusicStuff.playMusic(buttonPath, false);
+                    MusicStuff.playMusic(buttonPath,false);
                     logger.debug("button" + index + "clicked");
                     createConfirmDialog(cardNames[index]);
                 }
@@ -247,7 +246,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             // Restored the characteristics of the basic button which implemented by using buttonStyle
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 if (card.isOver()) {
-//                    MusicStuff.playMusic(buttonPath, false);
+                    MusicStuff.playMusic("sounds/OpenClueWindow.wav",false);
                     logger.debug("card" + index + "clicked up");
                     createCardInfo(cardNames[index]);
                 }
@@ -344,7 +343,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         cancelButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-//                MusicStuff.playMusic(buttonPath, false);
+                MusicStuff.playMusic(buttonPath, false);
                 logger.debug("cancel_button from " + button_name + " clicked");
                 dialog.remove();
             }
@@ -357,7 +356,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         okButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-//                MusicStuff.playMusic(buttonPath, false);
+                MusicStuff.playMusic(buttonPath, false);
                 logger.debug("yes_button from " + button_name + " clicked");
                 dialog.remove();
                 // different name will lead to different result
@@ -416,6 +415,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         dialog.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                MusicStuff.playMusic("sounds/CloseClueWindow.wav",false);
                 logger.debug(card_name + " clicked");
                 dialog.remove();
                 return true;
@@ -469,14 +469,17 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         String backgroundPath, buttonPathDefault, buttonPathHover;
 
         if (type == NpcResultDialogType.RIGHT_BOX) {
+            MusicStuff.playMusic("sounds/RightPromptBox1.wav",false);
             backgroundPath = IMAGES_PATH + "rightBox.png";
             buttonPathDefault = IMAGES_PATH + "rightBtn.png";
             buttonPathHover = IMAGES_PATH + "rightBtn_H.png";
         } else if (type == NpcResultDialogType.WRONG_BOX1) {
+            MusicStuff.playMusic("sounds/WrongPromptBox1.wav",false);
             backgroundPath = IMAGES_PATH + "wrongBox1.png";
             buttonPathDefault = IMAGES_PATH + "chanceBtn.png";
             buttonPathHover = IMAGES_PATH + "chanceBtn_H.png";
         } else {
+            MusicStuff.playMusic("sounds/WrongPromptBox2.wav",false);
             backgroundPath = IMAGES_PATH + "wrongBox2.png";
             buttonPathDefault = IMAGES_PATH + "chanceBtn2.png";
             buttonPathHover = IMAGES_PATH + "chanceBtn2_H.png";
@@ -540,6 +543,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.info("yes_button from " + button_name + " clicked");
                  //when you select ok button
+                MusicStuff.playMusic(buttonPath,false);
                 dialog.remove();
                 if (type == NpcResultDialogType.RIGHT_BOX)
                     handleWin();
