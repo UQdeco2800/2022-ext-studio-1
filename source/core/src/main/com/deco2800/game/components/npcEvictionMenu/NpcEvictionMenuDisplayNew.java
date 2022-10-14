@@ -189,7 +189,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             buttons[i].addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
-                    MusicStuff.playMusic("sounds/OpenEvictionMenu.wav", false);
+                    MusicStuff.playMusic(buttonPath,false);
                     logger.debug("button" + index + "clicked");
                     createConfirmDialog(cardNames[index]);
                 }
@@ -543,6 +543,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.info("yes_button from " + button_name + " clicked");
                  //when you select ok button
+                MusicStuff.playMusic(buttonPath,false);
                 dialog.remove();
                 if (type == NpcResultDialogType.RIGHT_BOX)
                     handleWin();
