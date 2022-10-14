@@ -42,17 +42,16 @@ public class MainMenuDisplay extends UIComponent {
     TextButton achievementsBtn = new TextButton("achievements", skin);
     TextButton settingsBtn = new TextButton("settings", skin);
     TextButton exitBtn = new TextButton("exit", skin);
-//    TextButton endingBtn = new TextButton("Ending", skin);
+    TextButton endingBtn = new TextButton("test particle", skin);
 
-//    endingBtn.addListener(
-//        new ChangeListener() {
-//          @Override
-//          public void changed(ChangeEvent changeEvent, Actor actor) {
-//              logger.debug("Ending button clicked");
-//              entity.getEvents().trigger("ending");
-//          }
-//        }
-//    );
+    endingBtn.addListener(
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent changeEvent, Actor actor) {
+              entity.getEvents().trigger("particle");
+          }
+        }
+    );
 
     // Triggers an event when the button is pressed
     startBtn.addListener(
@@ -149,8 +148,8 @@ public class MainMenuDisplay extends UIComponent {
     table.add(settingsBtn).padTop(15f);
     table.row();
     table.add(exitBtn).padTop(15f);
-//    table.row();
-//    table.add(endingBtn).padTop(15f);
+    table.row();
+    table.add(endingBtn).padTop(15f);
 
     stage.addActor(table);
   }

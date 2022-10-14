@@ -57,7 +57,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
     private static float bgHeight;
 
     private static final String IMAGES_PATH = "images/eviction_menu/";  //path of team7 images
-    private static final String buttonPath = "sounds/button.mp3";
+    private static final String buttonPath = "sounds/close_cluewindow.mp3";
 
     //with these names you can call clues as well as calling image path of each npc.
     private static final String[] cardNames = {
@@ -154,7 +154,6 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * @author Team7: Shaohui Wang Yingxin Liu
      */
     private void addActors() {
-        // Adding background
         Image backgroundNpcMenu =
                 new Image(resourceService.getAsset(IMAGES_PATH + "evictionMenu_background.png", Texture.class));
         backgroundNpcMenu.setSize((float) (bgWidth * 0.89), (float) (bgHeight * 0.9851));
@@ -416,6 +415,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         dialog.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                MusicStuff.playMusic("sounds/close_cluewindow.mp3",false);
                 logger.debug(card_name + " clicked");
                 dialog.remove();
                 return true;
