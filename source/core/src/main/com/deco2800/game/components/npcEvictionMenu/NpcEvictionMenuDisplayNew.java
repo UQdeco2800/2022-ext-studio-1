@@ -57,7 +57,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
     private static float bgHeight;
 
     private static final String IMAGES_PATH = "images/eviction_menu/";  //path of team7 images
-    private static final String buttonPath = "sounds/close_cluewindow.mp3";
+    private static final String buttonPath = "sounds/button.mp3";
 
     //with these names you can call clues as well as calling image path of each npc.
     private static final String[] cardNames = {
@@ -168,7 +168,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-                        MusicStuff.playMusic(buttonPath, false);
+                        MusicStuff.playMusic("sounds/CloseEvictionMenu.wav", false);
                         logger.debug("Exit button clicked");
                         logger.info("exit to previous menu");
                         exitMenu();
@@ -189,7 +189,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             buttons[i].addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
-                    MusicStuff.playMusic(buttonPath, false);
+                    MusicStuff.playMusic("sounds/OpenEvictionMenu.wav", false);
                     logger.debug("button" + index + "clicked");
                     createConfirmDialog(cardNames[index]);
                 }
@@ -246,7 +246,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             // Restored the characteristics of the basic button which implemented by using buttonStyle
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 if (card.isOver()) {
-//                    MusicStuff.playMusic(buttonPath, false);
+                    MusicStuff.playMusic("sounds/OpenClueWindow.wav",false);
                     logger.debug("card" + index + "clicked up");
                     createCardInfo(cardNames[index]);
                 }
@@ -415,7 +415,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         dialog.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                MusicStuff.playMusic("sounds/close_cluewindow.mp3",false);
+                MusicStuff.playMusic("sounds/CloseClueWindow.wav",false);
                 logger.debug(card_name + " clicked");
                 dialog.remove();
                 return true;
