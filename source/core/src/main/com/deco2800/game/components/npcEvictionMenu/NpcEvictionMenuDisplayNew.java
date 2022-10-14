@@ -343,7 +343,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         cancelButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-//                MusicStuff.playMusic(buttonPath, false);
+                MusicStuff.playMusic(buttonPath, false);
                 logger.debug("cancel_button from " + button_name + " clicked");
                 dialog.remove();
             }
@@ -356,7 +356,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         okButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-//                MusicStuff.playMusic(buttonPath, false);
+                MusicStuff.playMusic(buttonPath, false);
                 logger.debug("yes_button from " + button_name + " clicked");
                 dialog.remove();
                 // different name will lead to different result
@@ -469,14 +469,17 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         String backgroundPath, buttonPathDefault, buttonPathHover;
 
         if (type == NpcResultDialogType.RIGHT_BOX) {
+            MusicStuff.playMusic("sounds/RightPromptBox1.wav",false);
             backgroundPath = IMAGES_PATH + "rightBox.png";
             buttonPathDefault = IMAGES_PATH + "rightBtn.png";
             buttonPathHover = IMAGES_PATH + "rightBtn_H.png";
         } else if (type == NpcResultDialogType.WRONG_BOX1) {
+            MusicStuff.playMusic("sounds/WrongPromptBox1.wav",false);
             backgroundPath = IMAGES_PATH + "wrongBox1.png";
             buttonPathDefault = IMAGES_PATH + "chanceBtn.png";
             buttonPathHover = IMAGES_PATH + "chanceBtn_H.png";
         } else {
+            MusicStuff.playMusic("sounds/WrongPromptBox2.wav",false);
             backgroundPath = IMAGES_PATH + "wrongBox2.png";
             buttonPathDefault = IMAGES_PATH + "chanceBtn2.png";
             buttonPathHover = IMAGES_PATH + "chanceBtn2_H.png";
