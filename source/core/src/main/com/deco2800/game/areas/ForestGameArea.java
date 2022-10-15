@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
+import com.deco2800.game.components.npc.NpcInteractionDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -458,7 +459,7 @@ public class ForestGameArea extends GameArea {
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-        Entity zoe = NPCFactory.createZoe();
+        Entity zoe = NPCFactory.createZoe(player.getComponent(NpcInteractionDisplay.class));
         spawnEntityAt(zoe, randomPos, true, true);
     }
 
@@ -467,7 +468,7 @@ public class ForestGameArea extends GameArea {
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-        Entity metis = NPCFactory.createMetis();
+        Entity metis = NPCFactory.createMetis(player.getComponent(NpcInteractionDisplay.class));
         spawnEntityAt(metis, randomPos, true, true);
     }
 
@@ -476,7 +477,7 @@ public class ForestGameArea extends GameArea {
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-        Entity doris = NPCFactory.createDoris();
+        Entity doris = NPCFactory.createDoris(player.getComponent(NpcInteractionDisplay.class));
         spawnEntityAt(doris, randomPos, true, true);
     }
 
@@ -485,7 +486,7 @@ public class ForestGameArea extends GameArea {
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-        Entity heph = NPCFactory.createHeph();
+        Entity heph = NPCFactory.createHeph(player.getComponent(NpcInteractionDisplay.class));
         spawnEntityAt(heph, randomPos, true, true);
     }
 
@@ -494,7 +495,7 @@ public class ForestGameArea extends GameArea {
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-        Entity orpheus = NPCFactory.createOrpheus();
+        Entity orpheus = NPCFactory.createOrpheus(player.getComponent(NpcInteractionDisplay.class));
         spawnEntityAt(orpheus, randomPos, true, true);
     }
 

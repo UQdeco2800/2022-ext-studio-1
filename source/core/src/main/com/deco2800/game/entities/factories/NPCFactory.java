@@ -9,6 +9,8 @@ import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.npc.MonsterAnimationController;
+import com.deco2800.game.components.npc.NpcInteractionDisplay;
+import com.deco2800.game.components.npc.TriggerDialogComponent;
 import com.deco2800.game.components.tasks.ChaseTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
@@ -191,35 +193,56 @@ public class NPCFactory {
     return ghostKing;
   }
 
-  public static Entity createZoe() {
+  public static Entity createZoe(NpcInteractionDisplay npcInteractionDisplay) {
     Entity zoe = createCommunicativeNPC();
-    zoe.addComponent(new TextureRenderComponent("images/characters/Zoe.png"));
+    zoe.addComponent(new TriggerDialogComponent((PhysicsLayer.PLAYER)
+                                                , npcInteractionDisplay
+                                                , CommunicativeNpcName.Zoe))
+            .addComponent(new TextureRenderComponent("images/characters/Zoe.png"));
     return zoe;
   }
 
-  public static Entity createMetis() {
+  public static Entity createMetis(NpcInteractionDisplay npcInteractionDisplay) {
     Entity metis = createCommunicativeNPC();
-    metis.addComponent(new TextureRenderComponent("images/characters/Metis.png"));
+    metis.addComponent(new TriggerDialogComponent((PhysicsLayer.PLAYER)
+                                                  , npcInteractionDisplay
+                                                  ,CommunicativeNpcName.Metis))
+            .addComponent(new TextureRenderComponent("images/characters/Metis.png"));
     return metis;
   }
 
-  public static Entity createDoris() {
+  public static Entity createDoris(NpcInteractionDisplay npcInteractionDisplay) {
     Entity doris = createCommunicativeNPC();
-    doris.addComponent(new TextureRenderComponent("images/characters/Doris.png"));
+    doris.addComponent(new TriggerDialogComponent((PhysicsLayer.PLAYER)
+                                                  , npcInteractionDisplay
+                                                  , CommunicativeNpcName.Doris))
+            .addComponent(new TextureRenderComponent("images/characters/Doris.png"));
     return doris;
   }
 
-  public static Entity createHeph() {
+  public static Entity createHeph(NpcInteractionDisplay npcInteractionDisplay) {
     Entity heph = createCommunicativeNPC();
-    heph.addComponent(new TextureRenderComponent("images/characters/Heph.png"));
+    heph.addComponent(new TriggerDialogComponent((PhysicsLayer.PLAYER)
+                                                , npcInteractionDisplay
+                                                , CommunicativeNpcName.Heph))
+            .addComponent(new TextureRenderComponent("images/characters/Heph.png"));
     return heph;
   }
 
-  public static Entity createOrpheus() {
+  public static Entity createOrpheus(NpcInteractionDisplay npcInteractionDisplay) {
     Entity orpheus = createCommunicativeNPC();
-    orpheus.addComponent(new TextureRenderComponent("images/characters/Orpheus.png"));
+    orpheus.addComponent(new TriggerDialogComponent((PhysicsLayer.PLAYER)
+                                                    , npcInteractionDisplay
+                                                    , CommunicativeNpcName.Orpheus))
+            .addComponent(new TextureRenderComponent("images/characters/Orpheus.png"));
     return orpheus;
   }
+
+  public enum CommunicativeNpcName {
+    Zoe, Metis, Doris, Heph, Orpheus
+  }
+
+
 
   public static Entity createNeutralLives(Entity target) {
     Entity NeutralLives = new Entity();
