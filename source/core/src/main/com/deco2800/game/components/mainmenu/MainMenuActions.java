@@ -27,14 +27,9 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("achievements", this::onAchievements);
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("exit", this::onExit);
-    entity.getEvents().addListener("particle",this::onParticle);
-
     entity.getEvents().addListener("ending", this::onEnding);
   }
 
-  private void onParticle() {
-    game.setScreen(GdxGame.ScreenType.PARTICLE);
-  }
 
   /**
    * Swaps to the Main Game screen.
