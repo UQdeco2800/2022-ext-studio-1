@@ -92,7 +92,7 @@ loadScripts(document, 'script');</script>
  In order to match the game, this class is rebuilt passing Window() rather than UIComponent <br/>
  How to use: <br/>
  NpcEvictionMenuDisplayNew var = new NpcEvictionMenuDisplayNew(...);<br/>
- stage.addActor(var.creatEvictionMenu()); <br/></div>
+ window.addActor(var.creatEvictionMenu()); <br/></div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -126,6 +126,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-com.deco2800.game.ui.UIComponent">Fields inherited from class&nbsp;com.deco2800.game.ui.<a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui">UIComponent</a></h3>
+<code><a href="../../ui/UIComponent.html#stage">stage</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.deco2800.game.components.Component">Fields inherited from class&nbsp;com.deco2800.game.components.<a href="../Component.html" title="class in com.deco2800.game.components">Component</a></h3>
 <code><a href="../Component.html#enabled">enabled</a>, <a href="../Component.html#entity">entity</a></code></div>
@@ -165,7 +168,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createConfirmDialog(java.lang.String)" class="member-name-link">createConfirmDialog</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;button_name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Display a confirm dialog on the stage, the style is based on Team7 prototype <br/>
+<div class="block">Display a confirm dialog on the window, the style is based on Team7 prototype <br/>
  All scales are calculated according to the prototype from team 7 only <br/>
  player has 3 choices to find traitor, if all fail, the game will directly over <br/>
  if correct, A key will be spawned on the map,
@@ -174,7 +177,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.Window</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#creatEvictionMenu()" class="member-name-link">creatEvictionMenu</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">return the window of Eviction Menu, use stage.addActor() to add onto stage</div>
+<div class="block">return the window of Eviction Menu, use window.addActor() to add onto window</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</code></div>
@@ -242,8 +245,8 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>logger</code> - logger from Screen</dd>
 <dd><code>resourceService</code> - resourceService where load/unload the textures</dd>
-<dd><code>width</code> - width of stage of the Screen</dd>
-<dd><code>height</code> - height of stage of the Screen</dd>
+<dd><code>width</code> - width of window of the Screen</dd>
+<dd><code>height</code> - height of window of the Screen</dd>
 </dl>
 </section>
 </li>
@@ -259,7 +262,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="creatEvictionMenu()">
 <h3>creatEvictionMenu</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Window</span>&nbsp;<span class="element-name">creatEvictionMenu</span>()</div>
-<div class="block">return the window of Eviction Menu, use stage.addActor() to add onto stage</div>
+<div class="block">return the window of Eviction Menu, use window.addActor() to add onto window</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the window of Eviction Menu</dd>
@@ -281,7 +284,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="createConfirmDialog(java.lang.String)">
 <h3>createConfirmDialog</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createConfirmDialog</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;button_name)</span></div>
-<div class="block">Display a confirm dialog on the stage, the style is based on Team7 prototype <br/>
+<div class="block">Display a confirm dialog on the window, the style is based on Team7 prototype <br/>
  All scales are calculated according to the prototype from team 7 only <br/>
  player has 3 choices to find traitor, if all fail, the game will directly over <br/>
  if correct, A key will be spawned on the map,
