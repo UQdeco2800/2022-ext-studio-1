@@ -91,7 +91,7 @@ public class MainGameExitDisplay extends UIComponent {
             new ChangeListener() {
               @Override
               public void changed(ChangeEvent changeEvent, Actor actor) {
-                  MusicStuff.playMusic(buttonPath, false);
+                  MusicStuff.playMusic("sounds/OpenEvictionMenu.wav", false);
              //in this component we call NpcEvictionMenuDisplayNew component by using its mother entity(i.e MainGameScrenn ui entity).
                   stage.addActor(entity.getComponent(NpcEvictionMenuDisplayNew.class).creatEvictionMenu());
               //NpcEvictionMenuDisplayNew npc = new NpcEvictionMenuDisplayNew(logger,ServiceLocator.getResourceService(),stage.getWidth(),stage.getHeight()

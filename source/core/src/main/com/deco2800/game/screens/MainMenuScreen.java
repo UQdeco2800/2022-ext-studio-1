@@ -36,7 +36,6 @@ public class MainMenuScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
     ServiceLocator.registerAchievementService(new AchievementService());
-
     renderer = RenderFactory.createRenderer();
 
     loadAssets();
@@ -47,6 +46,7 @@ public class MainMenuScreen extends ScreenAdapter {
   public void render(float delta) {
     ServiceLocator.getEntityService().update();
     renderer.render();
+
   }
 
   @Override
