@@ -2,16 +2,16 @@ Untitled
 - Delay -
 active: false
 - Duration - 
-lowMin: 40.0
-lowMax: 40.0
+lowMin: 1.0
+lowMax: 1.0
 - Count - 
 min: 0
 max: 50
 - Emission - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 3.0
-highMax: 3.0
+highMin: 2.0
+highMax: 2.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -20,8 +20,8 @@ timeline0: 0.0
 - Life - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 2500.0
-highMax: 2500.0
+highMin: 3000.0
+highMax: 3000.0
 relative: false
 scalingCount: 2
 scaling0: 1.0
@@ -89,8 +89,8 @@ timeline0: 0.0
 - X Scale - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 600.0
-highMax: 600.0
+highMin: 700.0
+highMax: 700.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -123,7 +123,16 @@ scaling0: 1.0
 timelineCount: 1
 timeline0: 0.0
 - Rotation - 
-active: false
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
 - Wind - 
 active: true
 lowMin: 0.0
@@ -139,9 +148,9 @@ timeline0: 0.0
 active: false
 - Tint - 
 colorsCount: 3
-colors0: 0.17254902
-colors1: 0.078431375
-colors2: 0.3137255
+colors0: 0.50980395
+colors1: 0.38431373
+colors2: 0.0
 timelineCount: 1
 timeline0: 0.0
 - Transparency - 
@@ -150,20 +159,21 @@ lowMax: 0.0
 highMin: 1.0
 highMax: 1.0
 relative: false
-scalingCount: 2
-scaling0: 1.0
-scaling1: 1.0
-timelineCount: 2
+scalingCount: 1
+scaling0: 0.15789473
+timelineCount: 1
 timeline0: 0.0
-timeline1: 0.5205479
 - Options - 
 attached: false
 continuous: true
 aligned: false
-additive: true
+additive: false
 behind: false
-premultipliedAlpha: false
+premultipliedAlpha: true
 spriteMode: single
 - Image Paths -
-rrr.jpg
+GRE.png
+blue_smoke.png
+smoke.png
+particle.png
 

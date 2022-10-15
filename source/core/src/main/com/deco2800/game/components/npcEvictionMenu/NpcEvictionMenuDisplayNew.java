@@ -493,9 +493,9 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             backgroundPath = IMAGES_PATH + "wrongBox1.png";
             buttonPathDefault = IMAGES_PATH + "chanceBtn.png";
             buttonPathHover = IMAGES_PATH + "chanceBtn_H.png";
-            particleWrongActor1.setPosition((float) (bgWidth * (1200.33 / 1600)), (float) (bgHeight * 640.33 / 900));
+            particleWrongActor1.setPosition((float) (bgWidth * (1200.33 / 1600)), (float) (bgHeight * 440.33 / 900));
             particleWrongActor1.start();
-            particleWrongActor2.setPosition((float) (bgWidth * (400.33 / 1600)), (float) (bgHeight * 640.33 / 900));
+            particleWrongActor2.setPosition((float) (bgWidth * (400.33 / 1600)), (float) (bgHeight * 440.33 / 900));
             particleWrongActor2.start();
             window.addActor(particleWrongActor1);
             window.addActor(particleWrongActor2);
@@ -504,9 +504,9 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             backgroundPath = IMAGES_PATH + "wrongBox2.png";
             buttonPathDefault = IMAGES_PATH + "chanceBtn2.png";
             buttonPathHover = IMAGES_PATH + "chanceBtn2_H.png";
-            particleSecondWrongActor1.setPosition((float) (bgWidth * (1200.33 / 1600)), (float) (bgHeight * 640.33 / 900));
+            particleSecondWrongActor1.setPosition((float) (bgWidth * (1200.33 / 1600)), (float) (bgHeight * 440.33 / 900));
             particleSecondWrongActor1.start();
-            particleSecondWrongActor2.setPosition((float) (bgWidth * (400.33 / 1600)), (float) (bgHeight * 640.33 / 900));
+            particleSecondWrongActor2.setPosition((float) (bgWidth * (400.33 / 1600)), (float) (bgHeight * 440.33 / 900));
             particleSecondWrongActor2.start();
             window.addActor(particleSecondWrongActor1);
             window.addActor(particleSecondWrongActor2);
