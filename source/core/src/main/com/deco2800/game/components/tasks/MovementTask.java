@@ -20,15 +20,21 @@ public class MovementTask extends DefaultTask {
   private float stopDistance = 0.01f;
   private long lastTimeMoved;
   private Vector2 lastPos;
+  private float x;
+  private float y;
   private PhysicsMovementComponent movementComponent;
 
   public MovementTask(Vector2 target) {
     this.target = target;
+    this.x = target.x;
+    this.y = target.y;
     this.gameTime = ServiceLocator.getTimeSource();
   }
 
   public MovementTask(Vector2 target, float stopDistance) {
     this(target);
+    this.x = target.x;
+    this.y = target.y;
     this.stopDistance = stopDistance;
   }
 
@@ -43,6 +49,13 @@ public class MovementTask extends DefaultTask {
     lastPos = owner.getEntity().getPosition();
   }
 
+  public float returnX(){
+    return this.x;
+  }
+
+  public float returnY(){
+    return this.y;
+  }
   @Override
   public void update() {
     if (isAtTarget()) {
@@ -56,6 +69,8 @@ public class MovementTask extends DefaultTask {
 
   public void setTarget(Vector2 target) {
     this.target = target;
+    this.x = target.x;
+    this.y = target.y;
     movementComponent.setTarget(target);
   }
 

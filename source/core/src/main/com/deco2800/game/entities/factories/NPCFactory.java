@@ -10,6 +10,7 @@ import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.npc.MonsterAnimationController;
 import com.deco2800.game.components.tasks.ChaseTask;
+import com.deco2800.game.components.tasks.MovingTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
@@ -45,19 +46,34 @@ public class NPCFactory {
   private static final Logger logger = LoggerFactory.getLogger(NPCFactory.class);
 
   public static Entity createKnight(Entity target) {
-    Entity knight = createBaseNPC(target);
-    BaseEntityConfig config = configs.ghost;
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new MovingTask(new Vector2(2f, 2f), 2f))
+                    .addTask(new ChaseTask(target, 10, 3f, 4f));
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/knight.atlas", TextureAtlas.class));
     animator.addAnimation("down", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("up", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
 
-    knight
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-            .addComponent(animator)
-            .addComponent(new MonsterAnimationController());
+    BaseEntityConfig config = configs.ghost;
 
+    Entity knight =
+            new Entity()
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new ColliderComponent())
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                    .addComponent(aiComponent)
+                    .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                    .addComponent(animator)
+                    .addComponent(new MonsterAnimationController());
+
+    PhysicsUtils.setScaledCollider(knight, 0.4f, 0.4f);
     knight.setScale(1.2f,1.2f);
     logger.debug("Create a Knight");
     return knight;
