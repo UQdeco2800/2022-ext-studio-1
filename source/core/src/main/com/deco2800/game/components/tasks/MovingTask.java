@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MovingTask extends DefaultTask implements PriorityTask {
     private static final Logger logger = LoggerFactory.getLogger(MovingTask.class);
-
     private final Vector2 wanderRange;
     private final float waitTime;
     private Vector2 startPos;
