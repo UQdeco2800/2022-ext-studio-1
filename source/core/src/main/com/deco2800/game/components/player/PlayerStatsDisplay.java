@@ -25,7 +25,7 @@ public class PlayerStatsDisplay extends UIComponent {
     super.create();
     addActors();
 
-    entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
+    entity.getEvents().addListener("updateHealthUI", this::updatePlayerHealthUI);
   }
 
   /**

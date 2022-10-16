@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
+import com.deco2800.game.components.gameoverScreen.GameOverDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -321,10 +322,18 @@ public class ForestGameArea extends GameArea {
 
     private Entity spawnPlayer() {
         Entity newPlayer = PlayerFactory.createPlayer(game);
+        newPlayer.getEvents().addListener("updateHealth", this::updatePlayerHealth);
         spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
         return newPlayer;
     }
-
+    public void updatePlayerHealth(int health) {
+        if (health <= 0)
+        {
+            logger.debug("Game Over: Lost Health");
+            game.theGameScreen.changeStatus();
+            new GameOverDisplay(this.game).create();
+        }
+    }
     public void spawnTimeConsumeableItem() {
 //    Entity item = ConsumableItemFactory.createItem(player, "images/inventory/time_item.png");
         Entity item = ItemFactory.createItem(1);
