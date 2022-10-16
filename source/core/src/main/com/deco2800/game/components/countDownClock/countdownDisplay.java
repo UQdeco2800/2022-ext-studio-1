@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.components.gameoverScreen.GameOverDisplay;
+import com.deco2800.game.components.player.PlayerProfileDisplay;
 import com.deco2800.game.ui.UIComponent;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -35,7 +37,7 @@ public class countdownDisplay extends UIComponent {
     public countdownDisplay(GdxGame game) {
         super();
         this.game = game;
-        this.timeRemaining = 7260; //- (ServiceLocator.getTimeSource().getTime() / 1000);
+        this.timeRemaining = 10; //- (ServiceLocator.getTimeSource().getTime() / 1000);
         timeCount = 0;
     }
     public Label counterLabel;
@@ -53,15 +55,12 @@ public class countdownDisplay extends UIComponent {
 
         if (this.timeRemaining <= 0) {
             counterLabel.setText("GAME OVER!");
-
+            pauseGame();
+            MusicStuff.playMusic(buttonPath, false);
+            logger.debug("pause button clicked");
+            stop = true;
             game.theGameScreen.changeStatus();
-
-           // logger.info("negative time: {}", String.valueOf(this.getRemainingTime()));
-           // logger.info(counterLabel.getText().toString());
-//            EndingMenuDisplay.setLose();
-//            System.out.println("111");
-//            entity.getEvents().trigger("ending");
-//
+            new GameOverDisplay(this.game).create();
         }
         if(timeRemaining>0 && stop==false) {
             int equHours;
@@ -90,11 +89,7 @@ public class countdownDisplay extends UIComponent {
                 equSeconds=(int)timeRemaining;
             }
             counterLabel.setText(String.valueOf(equHours+":"+equMins+":"+equSeconds));
-         //   logger.info("remaining time: {}", String.valueOf(this.getRemainingTime()));
-          //  logger.info(counterLabel.getText().toString());
         }
-
-
     }
 
     private void addActors() {
