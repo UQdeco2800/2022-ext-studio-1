@@ -37,7 +37,7 @@ public class countdownDisplay extends UIComponent {
     public countdownDisplay(GdxGame game) {
         super();
         this.game = game;
-        this.timeRemaining = 1000; //- (ServiceLocator.getTimeSource().getTime() / 1000);
+        this.timeRemaining = 10000; //- (ServiceLocator.getTimeSource().getTime() / 1000);
         timeCount = 0;
     }
     public Label counterLabel;
@@ -55,12 +55,7 @@ public class countdownDisplay extends UIComponent {
 
         if (this.timeRemaining <= 0) {
             counterLabel.setText("GAME OVER!");
-            pauseGame();
-            MusicStuff.playMusic(buttonPath, false);
-            logger.debug("Game Over: Ran out of time");
-            stop = true;
-            game.theGameScreen.changeStatus();
-            new GameOverDisplay(this.game).create();
+            setGameOver();
         }
         if(timeRemaining>0 && stop==false) {
             int equHours;
@@ -112,6 +107,17 @@ public class countdownDisplay extends UIComponent {
 
     }
 
+    public void stopCountDownAssets()
+    {
+        pauseGame();
+        logger.debug("Game Over: Ran out of time");
+        stop = true;
+    }
+    public void setGameOver(){
+        stopCountDownAssets();
+        game.theGameScreen.changeStatus();
+        new GameOverDisplay(this.game).create();
+    }
     public void pauseGame() {
         this.paused = true;
     }
