@@ -54,4 +54,13 @@ public class CountdownComponentTest {
 
         assertEquals(increasedTime, countdown.getRemainingTime());
     }
+    @Test
+    public void shouldGameOver() {
+        // Assert that the game being over stops the game
+        float initialTime = countdown.getRemainingTime();
+        logger.info(String.valueOf(initialTime));
+        countdown.timeRemaining = 0;
+        countdown.update();
+        assertEquals(true, game.stopGame);
+    }
 }

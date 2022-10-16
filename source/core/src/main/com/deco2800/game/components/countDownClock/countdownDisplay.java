@@ -26,7 +26,7 @@ public class countdownDisplay extends UIComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(countdownDisplay.class);
     private final GdxGame game;
-    private float timeRemaining;
+    public float timeRemaining;
 
     private static final String buttonPath = "sounds/button.mp3";
 
