@@ -39,7 +39,7 @@ public class NPCClueLibraryTest {
         String[] clue7 = npcClueLibrary.getUnlockClues("Nereus");
         assertEquals("The biggest wound is on her waist, and it looks like someone hurt her.", clue7[0]);
         assertEquals("Bloodstains are from outside, Nereus seemed to hobble here with all her strength.", clue7[1]);
-        assertEquals("Nereus's scale is shattered.", clue7[2]);
+        assertEquals("Nereus’ scale is shattered.", clue7[2]);
         assertEquals("Nereus was kind-hearted and treated everyone very well, also not having any grudge against someone.", clue7[3]);
     }
 }

@@ -62,7 +62,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
     //with these names you can call clues as well as calling image path of each npc.
     private static final String[] cardNames = {
             "Nereus", "Heph", "Metis", "Doris",
-            "Zoe", "Ares", "Orpheus", "Zeus"
+            "Zoe", "Ares", "Orpheus", "Nereus"
     };
     private final ResourceService resourceService;
 
@@ -404,7 +404,6 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * @param card_name The name of the card which calls this function
      * @author Code: Team7 Yingxin Liu <br/>
      * Put the label with context: Team 7 Shaohui Wang <br/>
-     * Update the label with context: Team 7 Yingxin Liu
      * Context: Team 9
      */
     private void createCardInfo(String card_name) {
@@ -430,28 +429,13 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         });
 
         //  add clues of npc
-        Color contextColor = Color.NAVY;
-        if (Objects.equals(card_name, "Nereus")
-                || Objects.equals(card_name, "Metis")
-                || Objects.equals(card_name, "Doris")
-                || Objects.equals(card_name, "Zoe")) { contextColor = Color.TAN;}
-        Table context =  new Table();
-        context.setSize((float) (window.getWidth()*(1057.33- 560.57)/1600),
-                (float) (window.getHeight()*(660.33 - 280.33)/900));
-        context.setPosition((float) (dialog_size_x*((570.67 - 407.34)/810)),
-                (float) ( dialog_size_y * ((800.33- 660.33)/653.33)));
-
-        // set context string
-        String contextContent = helper.createClueContext(card_name, library);
-
-        // create and set the label with content
-        Label contextLabel = new Label(contextContent, skin, "font", contextColor);
-        contextLabel.setSize(context.getWidth(),context.getHeight());
-        contextLabel.setFontScale(window.getWidth()/1920,window.getHeight()/980);
-        contextLabel.setAlignment(Align.left);
-        contextLabel.setWrap(true);
-        context.addActor(contextLabel);
-        dialog.addActor(context);
+        Label message = new Label(helper.createClueContext(card_name, library),skin);
+        message.setFontScale(dialog_size_y/800);
+        message.setWrap(true);
+        message.setAlignment(Align.left);
+        Table table = new Table();
+        table.add(message).width(dialog_size_x * 3 / 5);
+        dialog.add(table);
 
         window.addActor(dialog);
     }
@@ -476,8 +460,6 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * @param type The type of dialog will be created
      * @author Team7 Yingxin Liu <br/>
      * Put the label with context: Team 7 Shaohui Wang
-     * update label with context: Team 7 Yingxin Liu
-     * add particle effect: Team 7 Shaohui Wang
      */
     private void createResultDialog(String button_name, NpcResultDialogType type) {
 
@@ -539,6 +521,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         Button okButton = createButton(buttonPathDefault, buttonPathHover);
 
         if (type == NpcResultDialogType.RIGHT_BOX) {
+
             dialog_size_x = (float) (bgWidth * (683.67 / 1600));
             dialog_size_y = (float) (bgHeight * (416.24 / 900));
             dialog.setSize(dialog_size_x, dialog_size_y);
@@ -547,6 +530,22 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             okButton.setSize((float) (dialog_size_x * (116.67/683.67)), (float) (dialog_size_y * (53.33/416.24)));
             okButton.setPosition((float) (dialog.getWidth() * ((764.04-433.33)/683.67)),
                     (float) (dialog.getHeight() * ((663.33 - 635.65) / 416.24)));
+            Label message_interjection =new Label(helper.createTraitorMessageInterjection(type),skin);
+            message_interjection.setFontScale(dialog_size_y/400);
+            message_interjection.setAlignment(Align.center);
+            Label message = new Label(helper.createTraitorMessageForSaveAtlantis(button_name,type), skin);
+            message.setFontScale(dialog_size_y/400);
+            message.setWrap(true);
+            message.setAlignment(Align.left);
+            Table table = new Table();
+            table.add(message_interjection).width(dialog_size_x * 3 / 5);
+            table.row();
+            table.add(message).width(dialog_size_x * 3 / 5);
+            table.padLeft(dialog_size_x/6).padTop(dialog_size_y/6);
+            dialog.add(table);
+
+
+
         } else {
             dialog_size_x = (float) (bgWidth * (678.67 / 1600));
             dialog_size_y = (float) (bgHeight * (382.38 / 900));
@@ -556,6 +555,20 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             okButton.setSize((float) (dialog_size_x * (116.67/678.67)), (float) (dialog_size_y * (53.33/382.38)));
             okButton.setPosition((float) (dialog.getWidth() * ((748.04-438.33)/678.67)),
                     (float) (dialog.getHeight() * ((663.33 - 635.65) / 382.38)));
+            Label message_interjection =new Label(helper.createTraitorMessageInterjection(type),skin);
+            message_interjection.setFontScale(dialog_size_y/400);
+            message_interjection.setAlignment(Align.center);
+            Label message = new Label(helper.createTraitorMessageForSaveAtlantis(button_name,type), skin);
+            message.setFontScale(dialog_size_y/400);
+            message.setWrap(true);
+            message.setAlignment(Align.left);
+            Table table = new Table();
+            table.add(message_interjection).prefWidth((float) (dialog_size_x * (400/678.67)));
+            table.row();
+            table.add(message).prefWidth((float) (dialog_size_x * (400/678.67)));
+            table.padLeft((float) (dialog_size_x * (55/678.67)));
+            dialog.add(table);
+
         }
         okButton.addListener(new ChangeListener() {
             @Override
@@ -575,9 +588,13 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             }
         });
 
-        showWinLoseContext(dialog, type, button_name, dialog_size_x, dialog_size_y);
         dialog.addActor(okButton);
+
+
         window.addActor(dialog);
+
+
+
     }
 
 
@@ -623,61 +640,6 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
     }
 
     /**
-     * creat a table include the label with win/lose context and title for result dialog
-     * and add it to given window
-     * @param dialog window that will be added
-     * @author Team 7 Yingxin Liu
-     */
-    private void showWinLoseContext(Window dialog, NpcResultDialogType type, String name, float dx, float dy){
-        // create frame for both title and context
-        Table title =  new Table();
-        Table context =  new Table();
-        Color titleColor = Color.BROWN;
-        if (type == NpcResultDialogType.RIGHT_BOX) {
-            title.setSize((window.getWidth()*(993-623)/1600),
-                    (float) (window.getHeight()*(416.67 - 373.33)/900));
-            title.setPosition((float) (dx*((835-433.33)/683.67)),
-                    (float) ( dy * ((663.33 - 376.67)/416.24)), Align.top);
-            context.setSize((window.getWidth()*(993-613)/1600),
-                    (float) (window.getHeight()*(566.67 - 423.33)/900));
-            context.setPosition((float) (dx*((835-443.33)/683.67)),
-                    (float) ( dy * ((663.33 - 433.33)/416.24)), Align.top);
-            titleColor = Color.FOREST;
-        } else {
-            title.setSize((window.getWidth()*(993-623)/1600),
-                    (float) (window.getHeight()*(416.67 - 373.33)/900));
-            title.setPosition((float) (dx*((803-438.33)/678.67)),
-                    (float) ( dy * ((663.33 - 373.33)/382.38)), Align.top);
-            context.setSize((window.getWidth()*(993-623)/1600),
-                    (float) (window.getHeight()*(560 - 416.67)/900));
-            context.setPosition((float) (dx*((803-438.33)/678.67)),
-                    (float) ( dy * ((663.33 - 426.67)/382.38)), Align.top);
-            if (type == NpcResultDialogType.WRONG_BOX2){titleColor = Color.DARK_GRAY;};
-        }
-        // set title/context string
-        String titleContent = helper.createTraitorMessageInterjection(type);
-        String contextContent = helper.createTraitorMessageForSaveAtlantis(name, type);
-
-        // create and set the label with content
-        Label titleLabel = new Label(titleContent, skin, "title",titleColor);
-        titleLabel.setAlignment(Align.center);
-        titleLabel.setFontScale(window.getWidth()/1920,window.getHeight()/980);
-
-        Label contextLabel = new Label(contextContent, skin, "font",Color.BLACK);
-        contextLabel.setSize(context.getWidth(),context.getHeight());
-        contextLabel.setAlignment(Align.top);
-        contextLabel.setFontScale(window.getWidth()/1920,window.getHeight()/980);
-        contextLabel.setWrap(true);
-
-        // add to goal position
-        title.add(titleLabel).center();
-        context.addActor(contextLabel);
-        dialog.addActor(title);
-        dialog.addActor(context);
-
-    }
-
-    /**
      * creat a table include the label with win context and title
      * and add it to given window
      * @param dialog window that will be added
@@ -715,6 +677,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                     \s\s
                     Find the mysterious key, it can help you save Atlantis and help you out of here!""";
         }
+
 
         // create and set the label with content
         Label titleLabel = new Label(titleContent, skin, "title",Color.NAVY);

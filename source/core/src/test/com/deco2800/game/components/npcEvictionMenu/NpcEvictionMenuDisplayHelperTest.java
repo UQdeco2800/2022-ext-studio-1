@@ -14,18 +14,18 @@ class NpcEvictionMenuDisplayHelperTest {
         //when npc card has no clues it will display : This npc card xxx has no clue yet.
         assertEquals("This npc card xxx has no clue yet.",helper.createClueContext("xxx",library));
         //when npc name is "Metis"
-        assertEquals("\nA man who was close to her.\n" +
-                "\nHas deep voice.\n" +
-                "\nA tall, thin person.\n" +
-                "\nMetis can read the memory from the scale.",helper.createClueContext("Metis",library));
+        assertEquals("A man who was close to her.\n" +
+                "Has deep voice.\n" +
+                "A tall, thin person.\n" +
+                "Metis can read the memory from the scale.",helper.createClueContext("Metis",library));
 
     }
     @Test
     void testCreateInterjection(){
         NpcEvictionMenuDisplayHelper helper = new NpcEvictionMenuDisplayHelper();
-        assertEquals("That's great!!!",helper.createTraitorMessageInterjection(NpcEvictionMenuDisplayNew.NpcResultDialogType.RIGHT_BOX));
-        assertEquals("Unfortunately",helper.createTraitorMessageInterjection(NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX1));
-        assertEquals("Oops",helper.createTraitorMessageInterjection(NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX2));
+        assertEquals("That's great!!!\n",helper.createTraitorMessageInterjection(NpcEvictionMenuDisplayNew.NpcResultDialogType.RIGHT_BOX));
+        assertEquals("Unfortunately\n",helper.createTraitorMessageInterjection(NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX1));
+        assertEquals("Oops\n",helper.createTraitorMessageInterjection(NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX2));
     }
     @Test
     void testCreateTraitorMessage(){
