@@ -43,7 +43,7 @@ import com.badlogic.gdx.utils.Json;
  * In order to match the game, this class is rebuilt passing Window() rather than UIComponent <br/>
  * How to use: <br/>
  * NpcEvictionMenuDisplayNew var = new NpcEvictionMenuDisplayNew(...);<br/>
- * stage.addActor(var.creatEvictionMenu()); <br/>
+ * window.addActor(var.creatEvictionMenu()); <br/>
  * @see NpcEvictionMenuDisplay for the old version of code and more information
  * @see com.deco2800.game.screens.MainGameScreen all textures will load from here
  *
@@ -62,20 +62,26 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
     //with these names you can call clues as well as calling image path of each npc.
     private static final String[] cardNames = {
             "Nereus", "Heph", "Metis", "Doris",
-            "Zoe", "Ares", "Orpheus", "Nereus"
+            "Zoe", "Ares", "Orpheus", "Zeus"
     };
     private final ResourceService resourceService;
 
     private final ForestGameArea gameArea;
     private final GdxGame game;
 
-    private final Window stage;
+    private final Window window;
 
     private static final Skin skin =
             new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
     private final NPCClueLibrary library = NPCClueLibrary.getInstance();
 
     private final NpcEvictionMenuDisplayHelper helper = new NpcEvictionMenuDisplayHelper();
+    private final ParticleActor particleWrongActor1 = new ParticleActor("data/wrongone.p");
+    private final ParticleActor particleWrongActor2 = new ParticleActor("data/wrongone.p");
+    private final ParticleActor particleSecondWrongActor1 = new ParticleActor("data/wrongtwo.p");
+    private final ParticleActor particleSecondWrongActor2 = new ParticleActor("data/wrongtwo.p");
+    private final ParticleActor particleRightActor = new ParticleActor("data/rightone.p");
+    private final ParticleActor particleRightActorTwo = new ParticleActor("data/righttwo.p");
 
     private Integer errorNum;
     private Boolean findKey;
@@ -100,8 +106,8 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * Implement NpcEvictionMenu in to a Window(), use creatEvictionMenu() to get this Window()
      * @param logger logger from Screen
      * @param resourceService resourceService where load/unload the textures
-     * @param width  width of stage of the Screen
-     * @param height height of stage of the Screen
+     * @param width  width of window of the Screen
+     * @param height height of window of the Screen
      * @author Team7 Yingxin Liu
      */
     public NpcEvictionMenuDisplayNew(Logger logger, ResourceService resourceService,
@@ -122,20 +128,20 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
                 resourceService.getAsset(IMAGES_PATH + "transparentBg.png", Texture.class));
         Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
-        this.stage = new Window("", windowStyle);
-        this.stage.setModal(true);       // The window is always in front
-        this.stage.setFillParent(true);  // Fill all space with the stage
+        this.window = new Window("", windowStyle);
+        this.window.setModal(true);       // The window is always in front
+        this.window.setFillParent(true);  // Fill all space with the window
         addActors();
     }
 
     /**
-     * return the window of Eviction Menu, use stage.addActor() to add onto stage
+     * return the window of Eviction Menu, use window.addActor() to add onto window
      * @return the window of Eviction Menu
      * @author Team7 Yingxin Liu
      */
     public Window creatEvictionMenu (){
         if (findKey) {handleWin();}
-        return this.stage;
+        return this.window;
     }
     /**
      * return the errorNum
@@ -147,19 +153,18 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
     }
 
     /**
-     * Add actors of eviction_menu to the stage
+     * Add actors of eviction_menu to the window
      * All functions below are Moved from:
      * @see NpcEvictionMenuDisplay
      *
      * @author Team7: Shaohui Wang Yingxin Liu
      */
     private void addActors() {
-        // Adding background
         Image backgroundNpcMenu =
                 new Image(resourceService.getAsset(IMAGES_PATH + "evictionMenu_background.png", Texture.class));
         backgroundNpcMenu.setSize((float) (bgWidth * 0.89), (float) (bgHeight * 0.9851));
         backgroundNpcMenu.setPosition(bgWidth / 2, 0, Align.bottom);
-        stage.addActor(backgroundNpcMenu);
+        window.addActor(backgroundNpcMenu);
 
         // Button for exit the select page, will go back to previous page
         Button exitBtn = createButton(IMAGES_PATH + "exitButton.png", IMAGES_PATH + "exitButton_selected.png");
@@ -169,13 +174,13 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-                        MusicStuff.playMusic(buttonPath, false);
+                        MusicStuff.playMusic("sounds/CloseEvictionMenu.wav", false);
                         logger.debug("Exit button clicked");
                         logger.info("exit to previous menu");
                         exitMenu();
                     }
                 });
-        stage.addActor(exitBtn);
+        window.addActor(exitBtn);
 
         // Creating cards and corresponding selected buttons
         Button[] buttons = new Button[NUMBER_OF_NPC];
@@ -183,19 +188,19 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         for (int i = 0; i < NUMBER_OF_NPC; i++) {
             int index = i;
             setCard(cards, index);
-            stage.addActor(cards[i]);
+            window.addActor(cards[i]);
 
             buttons[i] = createButton(IMAGES_PATH + "selectButton_single.png", IMAGES_PATH + "selectButton_selected.png");
             setButton(buttons[i], i, "selectButton");
             buttons[i].addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
-                    MusicStuff.playMusic(buttonPath, false);
+                    MusicStuff.playMusic(buttonPath,false);
                     logger.debug("button" + index + "clicked");
                     createConfirmDialog(cardNames[index]);
                 }
             });
-            stage.addActor(buttons[i]);
+            window.addActor(buttons[i]);
         }
     }
 
@@ -247,7 +252,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             // Restored the characteristics of the basic button which implemented by using buttonStyle
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 if (card.isOver()) {
-//                    MusicStuff.playMusic(buttonPath, false);
+                    MusicStuff.playMusic("sounds/OpenClueWindow.wav",false);
                     logger.debug("card" + index + "clicked up");
                     createCardInfo(cardNames[index]);
                 }
@@ -302,7 +307,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
     }
 
     /**
-     * Display a confirm dialog on the stage, the style is based on Team7 prototype <br/>
+     * Display a confirm dialog on the window, the style is based on Team7 prototype <br/>
      * All scales are calculated according to the prototype from team 7 only <br/>
      * player has 3 choices to find traitor, if all fail, the game will directly over <br/>
      * if correct, A key will be spawned on the map,
@@ -344,7 +349,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         cancelButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-//                MusicStuff.playMusic(buttonPath, false);
+                MusicStuff.playMusic(buttonPath, false);
                 logger.debug("cancel_button from " + button_name + " clicked");
                 dialog.remove();
             }
@@ -357,7 +362,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         okButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-//                MusicStuff.playMusic(buttonPath, false);
+                MusicStuff.playMusic(buttonPath, false);
                 logger.debug("yes_button from " + button_name + " clicked");
                 dialog.remove();
                 // different name will lead to different result
@@ -369,7 +374,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         });
         dialog.addActor(cancelButton);
         dialog.addActor(okButton);
-        stage.addActor(dialog);
+        window.addActor(dialog);
     }
 
     /**
@@ -392,13 +397,14 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
 
 
     /**
-     * Display a Card information dialog on the stage, the style is based on Team7 prototype <br/>
+     * Display a Card information dialog on the window, the style is based on Team7 prototype <br/>
      * All scales are calculated according to the prototype from team 7 only <br/>
      * The context of this dialog will be provided by Team 9
      *
      * @param card_name The name of the card which calls this function
      * @author Code: Team7 Yingxin Liu <br/>
      * Put the label with context: Team 7 Shaohui Wang <br/>
+     * Update the label with context: Team 7 Yingxin Liu <br/>
      * Context: Team 9
      */
     private void createCardInfo(String card_name) {
@@ -416,6 +422,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         dialog.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                MusicStuff.playMusic("sounds/CloseClueWindow.wav",false);
                 logger.debug(card_name + " clicked");
                 dialog.remove();
                 return true;
@@ -423,15 +430,30 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         });
 
         //  add clues of npc
-        Label message = new Label(helper.createClueContext(card_name, library),skin);
-        message.setFontScale(dialog_size_y/800);
-        message.setWrap(true);
-        message.setAlignment(Align.left);
-        Table table = new Table();
-        table.add(message).width(dialog_size_x * 3 / 5);
-        dialog.add(table);
+        Color contextColor = Color.NAVY;
+        if (Objects.equals(card_name, "Nereus")
+                || Objects.equals(card_name, "Metis")
+                || Objects.equals(card_name, "Doris")
+                || Objects.equals(card_name, "Zoe")) { contextColor = Color.TAN;}
+        Table context =  new Table();
+        context.setSize((float) (window.getWidth()*(1057.33- 560.57)/1600),
+                (float) (window.getHeight()*(660.33 - 280.33)/900));
+        context.setPosition((float) (dialog_size_x*((570.67 - 407.34)/810)),
+                (float) ( dialog_size_y * ((800.33- 660.33)/653.33)));
 
-        stage.addActor(dialog);
+        // set context string
+        String contextContent = helper.createClueContext(card_name, library);
+
+        // create and set the label with content
+        Label contextLabel = new Label(contextContent, skin, "font", contextColor);
+        contextLabel.setSize(context.getWidth(),context.getHeight());
+        contextLabel.setFontScale(window.getWidth()/1920,window.getHeight()/980);
+        contextLabel.setAlignment(Align.left);
+        contextLabel.setWrap(true);
+        context.addActor(contextLabel);
+        dialog.addActor(context);
+
+        window.addActor(dialog);
     }
 
     @Override
@@ -446,16 +468,20 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         RIGHT_BOX, WRONG_BOX1, WRONG_BOX2, LOSE, WIN
     }
     /**
-     * Display a result dialog and traitor message on the stage, the style is based on Team7 prototype <br/>
+     * Display a result dialog and traitor message on the window, the style is based on Team7 prototype <br/>
      * All scales are calculated according to the prototype from team 7 only <br/>
      * Button Ok    : confirm the action from selected button <br/>
      *
      * @param button_name The name of the button that calls this function
      * @param type The type of dialog will be created
      * @author Team7 Yingxin Liu <br/>
-     * Put the label with context: Team 7 Shaohui Wang
+     * Put the label with context: Team 7 Shaohui Wang <br/>
+     * update label with context: Team 7 Yingxin Liu   <br/>
+     * add particle effect: Team 7 Shaohui Wang        <br/>
      */
     private void createResultDialog(String button_name, NpcResultDialogType type) {
+
+
         logger.debug("create Result dialog from name: " + button_name + " type:" + type);
         // if Lose, it will jump to ending screen, no need to create dialog
         if (type == NpcResultDialogType.LOSE) {
@@ -469,17 +495,40 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         String backgroundPath, buttonPathDefault, buttonPathHover;
 
         if (type == NpcResultDialogType.RIGHT_BOX) {
+
+            MusicStuff.playMusic("sounds/RightPromptBox1.wav",false);
             backgroundPath = IMAGES_PATH + "rightBox.png";
             buttonPathDefault = IMAGES_PATH + "rightBtn.png";
             buttonPathHover = IMAGES_PATH + "rightBtn_H.png";
+            particleRightActor.setPosition((float) (bgWidth * (1200.33 / 1600)), (float) (bgHeight * 640.33 / 900));
+            particleRightActor.start();
+            window.addActor(particleRightActor);
+            particleRightActorTwo.setPosition((float) (bgWidth * (400.33 / 1600)), (float) (bgHeight * 640.33 / 900));
+            particleRightActorTwo.start();
+            window.addActor(particleRightActorTwo);
         } else if (type == NpcResultDialogType.WRONG_BOX1) {
+            MusicStuff.playMusic("sounds/WrongPromptBox1.wav",false);
             backgroundPath = IMAGES_PATH + "wrongBox1.png";
             buttonPathDefault = IMAGES_PATH + "chanceBtn.png";
             buttonPathHover = IMAGES_PATH + "chanceBtn_H.png";
+            particleWrongActor1.setPosition((float) (bgWidth * (1200.33 / 1600)), (float) (bgHeight * 440.33 / 900));
+            particleWrongActor1.start();
+            particleWrongActor2.setPosition((float) (bgWidth * (400.33 / 1600)), (float) (bgHeight * 440.33 / 900));
+            particleWrongActor2.start();
+            window.addActor(particleWrongActor1);
+            window.addActor(particleWrongActor2);
         } else {
+            MusicStuff.playMusic("sounds/WrongPromptBox2.wav",false);
             backgroundPath = IMAGES_PATH + "wrongBox2.png";
             buttonPathDefault = IMAGES_PATH + "chanceBtn2.png";
             buttonPathHover = IMAGES_PATH + "chanceBtn2_H.png";
+            particleSecondWrongActor1.setPosition((float) (bgWidth * (1200.33 / 1600)), (float) (bgHeight * 440.33 / 900));
+            particleSecondWrongActor1.start();
+            particleSecondWrongActor2.setPosition((float) (bgWidth * (400.33 / 1600)), (float) (bgHeight * 440.33 / 900));
+            particleSecondWrongActor2.start();
+            window.addActor(particleSecondWrongActor1);
+            window.addActor(particleSecondWrongActor2);
+
         }
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
                 resourceService.getAsset(backgroundPath, Texture.class));
@@ -498,19 +547,6 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             okButton.setSize((float) (dialog_size_x * (116.67/683.67)), (float) (dialog_size_y * (53.33/416.24)));
             okButton.setPosition((float) (dialog.getWidth() * ((764.04-433.33)/683.67)),
                     (float) (dialog.getHeight() * ((663.33 - 635.65) / 416.24)));
-            Label message_interjection =new Label(helper.createTraitorMessageInterjection(type),skin);
-            message_interjection.setFontScale(dialog_size_y/400);
-            message_interjection.setAlignment(Align.center);
-            Label message = new Label(helper.createTraitorMessageForSaveAtlantis(button_name,type), skin);
-            message.setFontScale(dialog_size_y/400);
-            message.setWrap(true);
-            message.setAlignment(Align.left);
-            Table table = new Table();
-            table.add(message_interjection).width(dialog_size_x * 3 / 5);
-            table.row();
-            table.add(message).width(dialog_size_x * 3 / 5);
-            table.padLeft(dialog_size_x/6).padTop(dialog_size_y/6);
-            dialog.add(table);
         } else {
             dialog_size_x = (float) (bgWidth * (678.67 / 1600));
             dialog_size_y = (float) (bgHeight * (382.38 / 900));
@@ -520,44 +556,90 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             okButton.setSize((float) (dialog_size_x * (116.67/678.67)), (float) (dialog_size_y * (53.33/382.38)));
             okButton.setPosition((float) (dialog.getWidth() * ((748.04-438.33)/678.67)),
                     (float) (dialog.getHeight() * ((663.33 - 635.65) / 382.38)));
-            Label message_interjection =new Label(helper.createTraitorMessageInterjection(type),skin);
-            message_interjection.setFontScale(dialog_size_y/400);
-            message_interjection.setAlignment(Align.center);
-            Label message = new Label(helper.createTraitorMessageForSaveAtlantis(button_name,type), skin);
-            message.setFontScale(dialog_size_y/400);
-            message.setWrap(true);
-            message.setAlignment(Align.left);
-            Table table = new Table();
-            table.add(message_interjection).prefWidth((float) (dialog_size_x * (400/678.67)));
-            table.row();
-            table.add(message).prefWidth((float) (dialog_size_x * (400/678.67)));
-            table.padLeft((float) (dialog_size_x * (55/678.67)));
-            dialog.add(table);
-
         }
         okButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.info("yes_button from " + button_name + " clicked");
                  //when you select ok button
+                MusicStuff.playMusic(buttonPath,false);
                 dialog.remove();
+                particleWrongActor1.remove();
+                particleRightActor.remove();
+                particleRightActorTwo.remove();
+                particleWrongActor2.remove();
+                particleSecondWrongActor1.remove();
+                particleSecondWrongActor2.remove();
                 if (type == NpcResultDialogType.RIGHT_BOX)
                     handleWin();
             }
         });
+
+        showWinLoseContext(dialog, type, button_name, dialog_size_x, dialog_size_y);
         dialog.addActor(okButton);
-
-
-        stage.addActor(dialog);
+        window.addActor(dialog);
     }
 
-
     private void exitMenu() {
-        stage.remove();
+        window.remove();
     }
 
     public void setFindKey(Boolean findKey) {
         this.findKey = findKey;
+    }
+
+    /**
+     * creat a table include the label with win/lose context and title for result dialog
+     * and add it to given window
+     * @param dialog window that will be added
+     * @author Team 7 Yingxin Liu
+     */
+    private void showWinLoseContext(Window dialog, NpcResultDialogType type, String name, float dx, float dy){
+        // create frame for both title and context
+        Table title =  new Table();
+        Table context =  new Table();
+        Color titleColor = Color.BROWN;
+        if (type == NpcResultDialogType.RIGHT_BOX) {
+            title.setSize((window.getWidth()*(993-623)/1600),
+                    (float) (window.getHeight()*(416.67 - 373.33)/900));
+            title.setPosition((float) (dx*((835-433.33)/683.67)),
+                    (float) ( dy * ((663.33 - 376.67)/416.24)), Align.top);
+            context.setSize((window.getWidth()*(993-613)/1600),
+                    (float) (window.getHeight()*(566.67 - 423.33)/900));
+            context.setPosition((float) (dx*((835-443.33)/683.67)),
+                    (float) ( dy * ((663.33 - 433.33)/416.24)), Align.top);
+            titleColor = Color.FOREST;
+        } else {
+            title.setSize((window.getWidth()*(993-623)/1600),
+                    (float) (window.getHeight()*(416.67 - 373.33)/900));
+            title.setPosition((float) (dx*((803-438.33)/678.67)),
+                    (float) ( dy * ((663.33 - 373.33)/382.38)), Align.top);
+            context.setSize((window.getWidth()*(993-623)/1600),
+                    (float) (window.getHeight()*(560 - 416.67)/900));
+            context.setPosition((float) (dx*((803-438.33)/678.67)),
+                    (float) ( dy * ((663.33 - 426.67)/382.38)), Align.top);
+            if (type == NpcResultDialogType.WRONG_BOX2){titleColor = Color.DARK_GRAY;};
+        }
+        // set title/context string
+        String titleContent = helper.createTraitorMessageInterjection(type);
+        String contextContent = helper.createTraitorMessageForSaveAtlantis(name, type);
+
+        // create and set the label with content
+        Label titleLabel = new Label(titleContent, skin, "title",titleColor);
+        titleLabel.setAlignment(Align.center);
+        titleLabel.setFontScale(window.getWidth()/1920,window.getHeight()/980);
+
+        Label contextLabel = new Label(contextContent, skin, "font",Color.BLACK);
+        contextLabel.setSize(context.getWidth(),context.getHeight());
+        contextLabel.setAlignment(Align.top);
+        contextLabel.setFontScale(window.getWidth()/1920,window.getHeight()/980);
+        contextLabel.setWrap(true);
+
+        // add to goal position
+        title.add(titleLabel).center();
+        context.addActor(contextLabel);
+        dialog.addActor(title);
+        dialog.addActor(context);
     }
 
     /**
@@ -590,28 +672,28 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             }
         });
         showWinContext(dialog);
-        stage.addActor(dialog);
+        window.addActor(dialog);
     }
 
     /**
      * creat a table include the label with win context and title
-     * and add it to given stage
-     * @param dialog stage that will be added
+     * and add it to given window
+     * @param dialog window that will be added
      * @author Team 7 Yingxin Liu
      */
     private void showWinContext(Window dialog){
         // create frame for both title and context
         Table title =  new Table();
-        title.setSize(stage.getWidth()*(1106-636)/1600,
-                stage.getHeight()*(220-160)/900);
-        title.setPosition((float) (stage.getWidth()*(636.67/1600)),
-                (float) (stage.getHeight()*(1-220.0/900)));
+        title.setSize(window.getWidth()*(1106-636)/1600,
+                window.getHeight()*(220-160)/900);
+        title.setPosition((float) (window.getWidth()*(636.67/1600)),
+                (float) (window.getHeight()*(1-220.0/900)));
 
         Table context =  new Table();
-        context.setSize((float) (stage.getWidth()*(1150.67-696.67)/1600),
-                stage.getHeight()*(750-290)/900);
-        context.setPosition((float) (stage.getWidth()*(696.67/1600)),
-                (float) (stage.getHeight()*(1-750.0/900)));
+        context.setSize((float) (window.getWidth()*(1150.67-696.67)/1600),
+                window.getHeight()*(750-290)/900);
+        context.setPosition((float) (window.getWidth()*(696.67/1600)),
+                (float) (window.getHeight()*(1-750.0/900)));
 
         // set title/context srting
         String titleContent;
@@ -632,16 +714,15 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                     Find the mysterious key, it can help you save Atlantis and help you out of here!""";
         }
 
-
         // create and set the label with content
         Label titleLabel = new Label(titleContent, skin, "title",Color.NAVY);
         titleLabel.setAlignment(Align.center);
-        titleLabel.setFontScale(stage.getWidth()/1920,stage.getHeight()/980);
+        titleLabel.setFontScale(window.getWidth()/1920,window.getHeight()/980);
 
         Label contextLabel = new Label(contextContent, skin, "font_large",Color.DARK_GRAY);
         contextLabel.setSize(context.getWidth(),context.getHeight());
         contextLabel.setAlignment(Align.top);
-        contextLabel.setFontScale(stage.getWidth()/1920,stage.getHeight()/980);
+        contextLabel.setFontScale(window.getWidth()/1920,window.getHeight()/980);
         contextLabel.setWrap(true);
 
         // add to goal position
@@ -678,8 +759,8 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
 
             //Set the data of the object
             profileProp.timeRemaining=Math.round(entity.getComponent(countdownDisplay.class).getRemainingTime());
-            profileProp.result =1;
-            profileProp.attempt =errorNum+1;
+            profileProp.result = 1;
+            profileProp.attempt = errorNum + 1;
             Json json = new Json();
             json.setOutputType(JsonWriter.OutputType.json);
           //  json.setElementType(PlayerProfileConfig.class,"playerStats", PlayerProfileProperties.class);

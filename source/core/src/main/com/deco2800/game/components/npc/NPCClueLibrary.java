@@ -57,7 +57,7 @@ public class NPCClueLibrary {
                         "but the flowers died before he sent them."});
         clues.put("Nereus", new String[]{"The biggest wound is on her waist, and it looks like someone hurt her.",
                 "Bloodstains are from outside, Nereus seemed to hobble here with all her strength.",
-                "Nereus’ scale is shattered.",
+                "Nereus's scale is shattered.",
                 "Nereus was kind-hearted and treated everyone very well, also not having any grudge against someone."});
 
         // put more clues here later on.
