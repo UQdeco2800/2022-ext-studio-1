@@ -23,7 +23,7 @@ public class GdxGame extends Game {
 
   public MainGameScreen theGameScreen;
 
-  public float gameTimeVar =7260;
+  //public float gameTimeVar =7260;
 
   @Override
   public void create() {
@@ -86,7 +86,7 @@ public class GdxGame extends Game {
       case MAIN_MENU:
         return new MainMenuScreen(this);
       case MAIN_GAME:
-        theGameScreen = new MainGameScreen(this, stopGame,gameTimeVar);
+        theGameScreen = new MainGameScreen(this, stopGame);
         return theGameScreen;
       case LOAD_GAME:
         return new LoadSaveScreen(this);
@@ -123,8 +123,8 @@ public class GdxGame extends Game {
     app.exit();
   }
 //This method allows you to set the game time, it is a setter 
-  public void setGameTime(float theTime) {
-    this.gameTimeVar = theTime;
-  }
+  //public void setGameTime(float theTime) {
+   // this.gameTimeVar = theTime;
+  //}
 
 }
