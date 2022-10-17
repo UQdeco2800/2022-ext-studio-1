@@ -6,12 +6,18 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class TriggerDialogComponent extends Component {
 
@@ -44,6 +50,7 @@ public class TriggerDialogComponent extends Component {
             // Doesn't match our target layer, ignore
             return;
         }
+        npcInteractionDisplay.hideInteractionPrompt();
         Stage stage = ServiceLocator.getRenderService().getStage();
         if (listener != null) {
             stage.removeListener(listener);
@@ -56,14 +63,21 @@ public class TriggerDialogComponent extends Component {
             // Doesn't match our target layer, ignore
             return;
         }
+        npcInteractionDisplay.showInteractionPrompt();
         Stage stage = ServiceLocator.getRenderService().getStage();
         listener = new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == Input.Keys.B) {
+                if (keycode == Input.Keys.F) {
                     // TODO add trigger dialog
                     switch (name) {
-                        
+                        case Zoe -> {
+                            try {
+                                npcInteractionDisplay.interact();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
                     }
                     logger.info("trigger dialog");
                 }

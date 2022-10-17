@@ -7,5 +7,5 @@ import java.io.IOException;
  */
 @FunctionalInterface
 public interface EventListener0 extends EventListener {
-  void handle() throws IOException;
+  void handle();
 }

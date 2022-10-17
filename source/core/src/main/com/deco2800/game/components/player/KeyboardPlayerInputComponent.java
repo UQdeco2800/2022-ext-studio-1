@@ -61,9 +61,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.K:
         entity.getEvents().trigger("pickUp");
         return true;
-      case Keys.F:
-        entity.getEvents().trigger("interact");
-        return true;
       default:
         return false;
     }

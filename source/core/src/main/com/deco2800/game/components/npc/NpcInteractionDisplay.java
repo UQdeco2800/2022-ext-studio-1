@@ -33,6 +33,8 @@ public class NpcInteractionDisplay extends UIComponent {
     private int step;
     private Image dialogBox;
     private Label dialog;
+    private final Label prompt;
+    private final Image promptBox;
     private int chapterNum;
     private ClickListener clickListener;
     private DialogWithSelection root;
@@ -42,13 +44,16 @@ public class NpcInteractionDisplay extends UIComponent {
         super();
         this.game = game;
         this.step = 0;
+        prompt = new Label("Press F to interact", skin);
+        prompt.setWidth(10f);
+        promptBox = new Image(ServiceLocator.getResourceService().getAsset(
+                "images/npc_interaction/dialog_box.png", Texture.class));
     }
 
     @Override
     public void create() {
         super.create();
         addActors();
-        entity.getEvents().addListener("interact", this::interact);
     }
 
     private void addActors() {
@@ -373,8 +378,12 @@ public class NpcInteractionDisplay extends UIComponent {
         return new ArrayList<>(texts.subList(step, texts.size() - 1));
     }
 
-    void interact() throws IOException {
-        if (dialogBox.getStage() == null) {// if conversation ended
+    private boolean dialogBoxNotShowing() {
+        return dialogBox.getStage() == null;
+    }
+
+    public void interact() throws IOException {
+        if (dialogBoxNotShowing()) {// if conversation ended
             switch (step) {
                 // in chapter 1
                 case 7 -> {
@@ -406,5 +415,20 @@ public class NpcInteractionDisplay extends UIComponent {
         } else {// if conversation in progress
             logger.info("interact failed");
         }
+    }
+
+    public void showInteractionPrompt() {
+        prompt.setPosition((float) (stage.getWidth() * 0.42), (float) (stage.getHeight() * 0.08));
+        promptBox.setSize((float) (stage.getWidth() * 0.26), (float) (stage.getHeight() * 0.1));
+        promptBox.setPosition((float) (stage.getWidth() * 0.38), (float) (stage.getHeight() * 0.05));
+        if (dialogBoxNotShowing()) {
+            stage.addActor(promptBox);
+            stage.addActor(prompt);
+        }
+    }
+
+    public void hideInteractionPrompt() {
+        promptBox.remove();
+        prompt.remove();
     }
 }

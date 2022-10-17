@@ -9,8 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -24,7 +22,7 @@ class EventHandlerTest {
   }
 
   @Test
-  void shouldTriggerEvent() throws IOException {
+  void shouldTriggerEvent() {
     EventListener0 listener = mock(EventListener0.class);
     handler.addListener("event", listener);
     handler.trigger("event");
@@ -32,7 +30,7 @@ class EventHandlerTest {
   }
 
   @Test
-  void shouldTriggerMultiple() throws IOException {
+  void shouldTriggerMultiple() {
     EventListener0 listener = mock(EventListener0.class);
     EventListener0 listener2 = mock(EventListener0.class);
     handler.addListener("event", listener);
@@ -43,7 +41,7 @@ class EventHandlerTest {
   }
 
   @Test
-  void shouldTriggerCorrectEvent() throws IOException {
+  void shouldTriggerCorrectEvent() {
     EventListener0 listener = mock(EventListener0.class);
     EventListener0 listener2 = mock(EventListener0.class);
     handler.addListener("event", listener);

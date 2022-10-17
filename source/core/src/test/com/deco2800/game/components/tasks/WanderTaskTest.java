@@ -17,8 +17,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.IOException;
-
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
 class WanderTaskTest {
@@ -31,7 +29,7 @@ class WanderTaskTest {
   }
 
   @Test
-  void shouldTriggerEvent() throws IOException {
+  void shouldTriggerEvent() {
     WanderTask wanderTask = new WanderTask(Vector2Utils.ONE, 1f);
 
     AITaskComponent aiTaskComponent = new AITaskComponent().addTask(wanderTask);

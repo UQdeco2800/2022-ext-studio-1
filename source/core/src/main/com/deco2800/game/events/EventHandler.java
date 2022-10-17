@@ -83,13 +83,7 @@ public class EventHandler {
    */
   public void trigger(String eventName) {
     logTrigger(eventName);
-    forEachListener(eventName, (EventListener listener) -> {
-      try {
-        ((EventListener0) listener).handle();
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
-    });
+    forEachListener(eventName, (EventListener listener) -> ((EventListener0) listener).handle());
   }
 
   /**
