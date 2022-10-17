@@ -1,6 +1,7 @@
 package com.deco2800.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
@@ -35,6 +36,7 @@ import com.deco2800.game.components.maingame.MainGameExitDisplay;
 import com.deco2800.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.audio.Music;
 
 /**
  * The game screen containing the main game.
@@ -84,6 +86,8 @@ public class MainGameScreen extends ScreenAdapter {
 
   private boolean stopGame;
 
+  private static final String backgroundMusic = "sounds/new.mp3";
+
   public MainGameScreen(GdxGame game, boolean stop) {
     this.game = game;
     this.stopGame = stop;
@@ -124,6 +128,8 @@ public class MainGameScreen extends ScreenAdapter {
     if (stopGame==true){
       renderer.render();
       ServiceLocator.getEntityService().update();
+
+
 
 
 
@@ -226,11 +232,15 @@ public class MainGameScreen extends ScreenAdapter {
   public void changeStatus() {
 
     stopGame=true;
+    //ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+
 
 
   }
   public void changeStatus2(){
     stopGame=false;
+    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).play();
 
   }
 
