@@ -6,14 +6,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.particles.ParallelArray;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
-import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -496,7 +495,12 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 MusicStuff.playMusic("sounds/CloseClueWindow.wav",false);
                 logger.debug(card_name + " clicked");
-                dialog.remove();
+                SequenceAction overallSequence = new SequenceAction();
+                overallSequence.addAction(Actions.fadeOut(0.5f));
+                RunnableAction exit = new RunnableAction();
+                exit.setRunnable(dialog::remove);
+                overallSequence.addAction(exit);
+                dialog.addAction(overallSequence);
                 return true;
             }
         });
@@ -524,7 +528,10 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         contextLabel.setWrap(true);
         context.addActor(contextLabel);
         dialog.addActor(context);
-
+        SequenceAction overallSequence = new SequenceAction();
+        overallSequence.addAction(Actions.alpha(0));
+        overallSequence.addAction(Actions.fadeIn(0.7f));
+        dialog.addAction(overallSequence);
         window.addActor(dialog);
     }
 
@@ -867,13 +874,6 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 resourceService.getAsset(IMAGES_PATH + "transparentBg.png", Texture.class));
         Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
         Window dialog = new Window("", windowStyle); dialog.setModal(true); dialog.setFillParent(true);
-        dialog.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                dialog.remove();
-                return true;
-            }
-        });
 
         Image background = new Image(
                 resourceService.getAsset(IMAGES_PATH + "transBg.png", Texture.class));
@@ -938,7 +938,10 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             dialog.addActor(step3);
             SequenceAction actions = new SequenceAction();
             actions.addAction(Actions.delay(0.8f));
-            actions.addAction(Actions.moveTo((float) (bgWidth * (972.5/ 1600)), (float) (bgHeight * (1 - 891.5/ 900)), 3));
+            ParallelAction move = new ParallelAction();
+            move.addAction(Actions.moveTo((float) (bgWidth * (754.82/ 1600)), (float) (bgHeight * (1 - 898.88/ 900)), 3));
+            move.addAction(Actions.scaleTo(1.37f,1.37f,3));
+            actions.addAction(move);
             actions.addAction(Actions.fadeOut(1));
             step3.addAction(actions);
 
