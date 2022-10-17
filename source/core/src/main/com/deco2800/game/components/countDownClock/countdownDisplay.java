@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class countdownDisplay extends UIComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(countdownDisplay.class);
-    private final GdxGame game;
+    private  GdxGame game;
     private float timeRemaining;
 
     private static final String buttonPath = "sounds/button.mp3";
@@ -42,6 +42,8 @@ public class countdownDisplay extends UIComponent {
     Button pauseResumeBtn;
 
     private PausedWindow pausedWindow;
+
+    //private float theTime = game.gameTimeVar;
 
     public countdownDisplay(GdxGame game) {
         super();
