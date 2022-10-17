@@ -148,7 +148,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     }
     if(game.gameTimeVar==0){
-      //System.out.println("Testing:Game is over");
+      System.out.println("Testing:Game is over");
 
     }
   }
