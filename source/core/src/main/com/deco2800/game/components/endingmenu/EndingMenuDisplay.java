@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
+import com.deco2800.game.music.MusicStuff;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,8 @@ public class EndingMenuDisplay extends UIComponent {
     private static final float Z_INDEX = 2f;
     private Table table;
     private static boolean judge = true;
+    private static final String winMusic = "sounds/win.mp3";
+    private static final String loseMusic = "sounds/lose.mp3";
 
     @Override
     public void create() {
@@ -102,5 +106,9 @@ public class EndingMenuDisplay extends UIComponent {
     public void dispose() {
         table.clear();
         super.dispose();
+    }
+
+    public static boolean isJudge() {
+        return judge;
     }
 }
