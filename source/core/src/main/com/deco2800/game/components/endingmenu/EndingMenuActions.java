@@ -20,23 +20,28 @@ public class EndingMenuActions extends Component {
         this.game = game;
     }
 
-    private static final String failMusic = "sounds/VillageBGM_1.mp3";
+    private static final String failMusic = "sounds/lose.mp3";
 
-    private static final String successMusic = "sounds/VillageBGM_2.mp3";
+    private static final String successMusic = "sounds/win.mp3";
 
     private static final String[] endingMusic = {successMusic, failMusic};
 
     @Override
     public void create() {
         loadAssets();
-        //playFailMusic();
+        playMusic();
         entity.getEvents().addListener("start", this::onStart);
         entity.getEvents().addListener("menu", this::onExit);
     }
 
-    private void playFailMusic() {
-        Music music = ServiceLocator.getResourceService().getAsset(failMusic, Music.class);
-        music.setLooping(true);
+    private void playMusic() {
+        Music music;
+        if (EndingMenuDisplay.isJudge()){
+            music = ServiceLocator.getResourceService().getAsset(successMusic, Music.class);
+        } else {
+            music = ServiceLocator.getResourceService().getAsset(failMusic, Music.class);
+        }
+        music.setLooping(false);
         music.setVolume(0.3f);
         music.play();
     }
