@@ -86,11 +86,14 @@ public class MainGameScreen extends ScreenAdapter {
 
   private boolean stopGame;
 
+  private  float gameDuration;
+
   private static final String backgroundMusic = "sounds/new.mp3";
 
-  public MainGameScreen(GdxGame game, boolean stop) {
+  public MainGameScreen(GdxGame game, boolean stop,float gameTime) {
     this.game = game;
     this.stopGame = stop;
+    this.gameDuration =gameTime;
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
@@ -142,6 +145,10 @@ public class MainGameScreen extends ScreenAdapter {
 
 
 
+
+    }
+    if(game.gameTimeVar==0){
+      System.out.println("Testing:Game is over");
 
     }
   }
