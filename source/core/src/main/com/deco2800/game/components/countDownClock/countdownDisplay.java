@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class countdownDisplay extends UIComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(countdownDisplay.class);
-    private  GdxGame game;
+    private  final GdxGame game;
     private float timeRemaining;
 
     private static final String buttonPath = "sounds/button.mp3";
@@ -68,7 +68,7 @@ public class countdownDisplay extends UIComponent {
             counterLabel.setText("GAME OVER!");
 
             game.theGameScreen.changeStatus();
-            game.gameTimeVar=0;
+            //game.gameTimeVar=0;
 
            // logger.info("negative time: {}", String.valueOf(this.getRemainingTime()));
            // logger.info(counterLabel.getText().toString());
