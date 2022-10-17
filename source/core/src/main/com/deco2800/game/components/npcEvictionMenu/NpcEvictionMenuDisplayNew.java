@@ -877,7 +877,6 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
 
         Image background = new Image(
                 resourceService.getAsset(IMAGES_PATH + "transBg.png", Texture.class));
-
         Image step1 = new Image(resourceService.getAsset(
                 IMAGES_PATH + button_name.toLowerCase() + "Trans1.png", Texture.class));
         Image step2 = new Image(resourceService.getAsset(
@@ -885,12 +884,27 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         Image step3 = new Image(resourceService.getAsset(
                 IMAGES_PATH + button_name.toLowerCase() + "Trans3.png", Texture.class));
         String resultImg = IMAGES_PATH + "wrongTrans.png";
-        if (Objects.equals(button_name, "Ares")) {
+        if (result == NpcResultDialogType.RIGHT_BOX) {
             resultImg = IMAGES_PATH + "correctTrans.png";
         }
         Image step4 = new Image(
                 resourceService.getAsset(resultImg, Texture.class));
 
+        float stepSizeX = (float) (bgWidth * ((601.63-174.82) / 1600));
+        float stepSizeY = (float) (bgHeight * ((452.5-3.59) / 900));
+        float stepPosX = (float) (bgWidth * (174.82/ 1600));
+        float stepPosY = (float) (bgHeight * (1 - 452.5/ 900));
+        step1.setSize(stepSizeX, stepSizeY); step1.setPosition(stepPosX, stepPosY);
+        step2.setSize(stepSizeX, stepSizeY); step2.setPosition(stepPosX, stepPosY);
+        step3.setSize((float) (bgWidth * ((602.5 -174.5) / 1600)), (float) (bgHeight * ((439.5-3.87) / 900)));
+        step3.setPosition((float) (bgWidth * (174.5/ 1600)), (float) (bgHeight * (1 - 439.5/ 900)));
+        if (result == NpcResultDialogType.RIGHT_BOX) {
+            step4.setSize((float) (bgWidth * ((910-690.00) / 1600)), (float) (bgHeight * ((678.34-221.66) / 900)));
+            step4.setPosition((float) (bgWidth * (690.00/ 1600)), (float) (bgHeight * (1 - 678.34/ 900)));
+        } else {
+            step4.setSize((float) (bgWidth * ((1008.34 -591.66) / 1600)), (float) (bgHeight * ((658.34-241.66) / 900)));
+            step4.setPosition((float) (bgWidth * (591.66/ 1600)), (float) (bgHeight * (1 - 658.34/ 900)));
+        }
 
 
         background.setFillParent(true);
@@ -903,67 +917,55 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         overallSequence.addAction(Actions.alpha(0));
         overallSequence.addAction(Actions.fadeIn(1));
         //All animations
-        RunnableAction show1 = new RunnableAction();  // Characters appear
+        RunnableAction show1 = new RunnableAction();  //Frame1: Characters appear
         show1.setRunnable(() -> {
             step1.addAction(Actions.fadeIn(1));
         });
         overallSequence.addAction(show1);
         overallSequence.addAction(Actions.delay(1));
 
-        RunnableAction show2 = new RunnableAction(); // Tied up npc
+        RunnableAction show2 = new RunnableAction(); //Frame2: Tied up npc
         show2.setRunnable(() -> {
             step1.remove();
             dialog.addActor(step2);
         });
         overallSequence.addAction(show2);
-        overallSequence.addAction(Actions.delay(1));
+        overallSequence.addAction(Actions.delay(0.7f));
 
-        RunnableAction show3 = new RunnableAction(); // Put down npc and Dragged it out
+        RunnableAction show3 = new RunnableAction(); //Frame3: Put down npc and Dragged it out
         show3.setRunnable(() -> {
             step2.remove();
             dialog.addActor(step3);
             SequenceAction actions = new SequenceAction();
-            actions.addAction(Actions.delay(1));
-            actions.addAction(Actions.moveTo(1000,10, 3));
+            actions.addAction(Actions.delay(0.8f));
+            actions.addAction(Actions.moveTo((float) (bgWidth * (972.5/ 1600)), (float) (bgHeight * (1 - 891.5/ 900)), 3));
             actions.addAction(Actions.fadeOut(1));
             step3.addAction(actions);
 
         });
         overallSequence.addAction(show3);
-        overallSequence.addAction(Actions.delay(2+3));
+        overallSequence.addAction(Actions.delay(4.8f));
 
-        RunnableAction show4 = new RunnableAction(); // show the result
+        RunnableAction show4 = new RunnableAction(); //Frame4: show the result
         show4.setRunnable(() -> {
             step3.remove();
             dialog.addActor(step4);
             SequenceAction actions = new SequenceAction();
-            actions.addAction(Actions.delay(3));
-            actions.addAction(Actions.fadeOut(2));
+            actions.addAction(Actions.delay(1.2f));
+            actions.addAction(Actions.fadeOut(1));
             step4.addAction(actions);
         });
         overallSequence.addAction(show4);
-        overallSequence.addAction(Actions.delay(3));
-
+        overallSequence.addAction(Actions.delay(1.2f));
 
         // finish
-        overallSequence.addAction(Actions.fadeOut(2));
+        overallSequence.addAction(Actions.fadeOut(1));
         RunnableAction exit = new RunnableAction();
         exit.setRunnable(() -> {
             dialog.remove();
             createResultDialog(button_name, result);
         });
         overallSequence.addAction(exit);
-
         background.addAction(overallSequence);
-
-        //dialog.remove();
-
-
-
-
-
     }
-
-
-
 }
