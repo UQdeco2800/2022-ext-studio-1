@@ -14,11 +14,12 @@ class NpcEvictionMenuDisplayHelperTest {
         //when npc card has no clues it will display : This npc card xxx has no clue yet.
         assertEquals("This npc card xxx has no clue yet.",helper.createClueContext("xxx",library));
         //when npc name is "Metis"
+        assertEquals("This npc card Metis has no clue yet.",helper.createClueContext("Metis",library));
+        library.addMetisClue0();library.addMetisClue1();library.addMetisClue2();library.addMetisClue3();
         assertEquals("\nA man who was close to her.\n" +
                 "\nHas deep voice.\n" +
                 "\nA tall, thin person.\n" +
                 "\nMetis can read the memory from the scale.",helper.createClueContext("Metis",library));
-
     }
     @Test
     void testCreateInterjection(){
