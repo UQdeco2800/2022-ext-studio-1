@@ -60,7 +60,7 @@ public class DialogWithSelection {
         this.option2 = option2;
     }
 
-    public static ArrayList<String> readOptionDialogs(int chapterNum, int selectionNum, int option) throws IOException {
+    private ArrayList<String> readOptionDialogs(int chapterNum, int selectionNum, int option) throws IOException {
         BufferedReader br;
         ArrayList<String> dialogs = new ArrayList<>();
         try {
@@ -77,7 +77,7 @@ public class DialogWithSelection {
         return dialogs;
     }
 
-    public void setSelectionPoint(String option1Text, String option2Text,
+    private void setSelectionPoint(String option1Text, String option2Text,
                                   int chapterNum, int selectionNum) {
         // set selection point for root
         DialogWithSelection selectionPoint = new DialogWithSelection(null);
@@ -159,23 +159,13 @@ public class DialogWithSelection {
         DialogWithSelection end1 = getChapter2Dialog().getNext().getOption2().getLastDialog()
                 .getOption2().getLastDialog()
                 .getOption1().getLastDialog()
-                .getOption1().getLastDialog();
-        DialogWithSelection end2 = getChapter2Dialog().getNext().getOption2().getLastDialog()
-                .getOption2().getLastDialog()
-                .getOption1().getLastDialog()
                 .getOption2().getLastDialog();
-        DialogWithSelection end3 = getChapter2Dialog().getNext().getOption2().getLastDialog()
-                .getOption2().getLastDialog()
-                .getOption2().getLastDialog()
-                .getOption1().getLastDialog();
-        DialogWithSelection end4 = getChapter2Dialog().getNext().getOption2().getLastDialog()
+        DialogWithSelection end2 = getChapter2Dialog().getNext().getOption2().getLastDialog()
                 .getOption2().getLastDialog()
                 .getOption2().getLastDialog()
                 .getOption2().getLastDialog();
         endings.add(end1);
         endings.add(end2);
-        endings.add(end3);
-        endings.add(end4);
         return endings;
     }
 

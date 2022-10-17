@@ -73,13 +73,22 @@ public class TriggerDialogComponent extends Component {
                     switch (name) {
                         case Zoe -> {
                             try {
-                                npcInteractionDisplay.interact();
+                                npcInteractionDisplay.interactWithZoe();
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
                         }
+                        case Metis -> {
+                            try {
+                                npcInteractionDisplay.interactWithMetis();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        case Doris -> {
+                            npcInteractionDisplay.interactWithDoris();
+                        }
                     }
-                    logger.info("trigger dialog");
                 }
                 return false;
             }
