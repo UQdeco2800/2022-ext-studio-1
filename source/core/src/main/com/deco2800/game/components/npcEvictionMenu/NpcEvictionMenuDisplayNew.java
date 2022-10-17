@@ -6,9 +6,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -34,7 +39,6 @@ import java.util.List;
 import java.util.Objects;
 
 import com.deco2800.game.components.player.PlayerProfileDisplay;
-import com.deco2800.game.entities.configs.PlayerProfileProperties;
 import com.badlogic.gdx.utils.Json;
 
 
@@ -94,12 +98,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
     //Create instance of PlayerProfileProperties
     PlayerProfileProperties profileProp = new PlayerProfileProperties();
 
-
     PlayerProfileConfig PPCInstance = new PlayerProfileConfig();
-
-
-
-
 
 
     /**
@@ -134,15 +133,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         addActors();
     }
 
-    /**
-     * return the window of Eviction Menu, use window.addActor() to add onto window
-     * @return the window of Eviction Menu
-     * @author Team7 Yingxin Liu
-     */
-    public Window creatEvictionMenu (){
-        if (findKey) {handleWin();}
-        return this.window;
-    }
+    // GAME LOGIC, SETTER/GETTER
     /**
      * return the errorNum
      * @return errorNum
@@ -150,6 +141,141 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      */
     public Integer getErrorNum() {
         return errorNum;
+    }
+
+    /**
+     * Setting from other class, true if the player has found the key
+     * @param findKey whether player has found the key in this game round
+     */
+    public void setFindKey(Boolean findKey) {
+        this.findKey = findKey;
+    }
+
+    /**
+     * Handle the game logic of select the traitor<br/>
+     * player has 3 choices to find traitor<br/>
+     * if wrong, it will decrease the blood and time at the same time
+     *
+     * @param name name of npc selected
+     * @return
+     * NpcResultDialogType.RIGHT_BOX: if player correctly select the traitor <br/>
+     * NpcResultDialogType.WRONG_BOX1: if player fails for the first time<br/>
+     * NpcResultDialogType.WRONG_BOX2: if player fails for the second time <br/>
+     * NpcResultDialogType.LOSE: if player select 3 times and all fail <br/>
+     * NpcResultDialogType.WIN: if player have correctly select in the past<br/>
+     * null: This is not a return result that should occur. If it does,
+     * it indicates that there is a problem with in the code
+     * @author Team7 Yingxin Liu <br/>
+     * decrease blood/decrease remaing time: Shaohui Wang <br/>
+     * add json to record game data: Team 4
+     *
+     */
+    protected NpcResultDialogType handleLogic (String name) {
+        if (findKey) { // player have selected correct in the past
+            return NpcResultDialogType.WIN;
+        }
+        if (Objects.equals(name, "Ares")){ // select npc correctly
+            //Add code here:Write one row of data to Json (win game record)
+
+            //Set the data of the object
+            profileProp.timeRemaining=Math.round(entity.getComponent(countdownDisplay.class).getRemainingTime());
+            profileProp.result = 1;
+            profileProp.attempt = errorNum + 1;
+            Json json = new Json();
+            json.setOutputType(JsonWriter.OutputType.json);
+            //  json.setElementType(PlayerProfileConfig.class,"playerStats", PlayerProfileProperties.class);
+            String profileData = json.toJson(profileProp);
+
+            //Get the file path, so that can write to json
+            FileHandle file =Gdx.files.local("configs/playerStatsInfo.json");
+            profileInfo.add(profileProp);
+
+            PPCInstance.playerStats = profileInfo;
+            //Make it as string, so it can write to json
+            String profileData3 = json.toJson(PPCInstance);
+
+            String profileData2 = json.toJson(profileInfo);
+
+            //write to json, append is false, so it will overwrite the whole json by new data
+            file.writeString(profileData3,false);
+            // profileInfo.set(profileData);
+
+
+            //Just some code for testing purpose
+            System.out.println(file);
+            System.out.print(profileData);
+            //file[playerStats].writeString(profileData,true);
+
+            errorNum = 0;
+            return NpcResultDialogType.RIGHT_BOX;
+        } else {
+            if (errorNum == 0){
+                //decrease blood 10%
+                int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+                entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.9));
+
+                //at the same time decrease remaing time 10%
+                float remainingTime =entity.getComponent(countdownDisplay.class).getRemainingTime();
+                entity.getComponent(countdownDisplay.class).setTimeRemaining(remainingTime *0.9f);
+
+                errorNum++;
+                return NpcResultDialogType.WRONG_BOX1;
+            } else if (errorNum == 1) {
+                //decrease blood 20%
+                int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+                entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.8));
+
+                //at the same time decrease remaing time 20%
+                float remainingTime =entity.getComponent(countdownDisplay.class).getRemainingTime();
+                entity.getComponent(countdownDisplay.class).setTimeRemaining(remainingTime *0.8f);
+                errorNum++;
+                return NpcResultDialogType.WRONG_BOX2;
+            } else if (errorNum == 2){
+                //Insert a row of data into playerStatsInfo.json when the player lose the game
+                //First set data to the instance
+                profileProp.timeRemaining=Math.round(entity.getComponent(countdownDisplay.class).getRemainingTime());
+                profileProp.result =2;
+                profileProp.attempt =errorNum+1;
+                Json json =new Json();
+                json.setOutputType(JsonWriter.OutputType.json);
+                String profileData = json.toJson(profileProp);
+
+                FileHandle file =Gdx.files.local("configs/playerStatsInfo.json");
+                profileInfo.add(profileProp);
+
+
+                PPCInstance.playerStats = profileInfo;
+
+                String profileData3 =json.toJson(PPCInstance);
+
+                String profileData2 = json.toJson(profileInfo);
+
+                file.writeString(profileData3,false );
+
+                System.out.println(file);
+                System.out.print(profileData);
+
+
+
+                // game over
+                errorNum = 0;
+                return NpcResultDialogType.LOSE;
+            }
+        }
+        return null; // if return null, it means some error in code, please check
+    }
+
+
+    // Basic functions
+    /**
+     * return the window of Eviction Menu, use window.addActor() to add onto window
+     * @return the window of Eviction Menu
+     * @author Team7 Yingxin Liu
+     */
+    public Window creatEvictionMenu (){
+        if (findKey) {
+            creatWinDialog();}
+        return this.window;
     }
 
     /**
@@ -201,6 +327,58 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 }
             });
             window.addActor(buttons[i]);
+        }
+    }
+
+    private void exitMenu() {
+        window.remove();
+    }
+
+    @Override
+    protected void draw(SpriteBatch batch) {}
+
+
+    // Tools for creating/setting the basic actors
+    /**
+     * create a button where include an image and can change state when the mouse hovering
+     *
+     * @param Up   path of image: The style of the button in its normal state
+     * @param Over path of image: The style of the button when mouse hovering
+     * @return a Button with up and down style
+     * @author Team7: Yingxin Liu  Shaohui Wang
+     */
+    private Button createButton(String Up, String Over) {
+        logger.debug("createButton with path:" + Up + Over);
+        TextureRegionDrawable up = new TextureRegionDrawable(resourceService.getAsset(Up, Texture.class));
+        TextureRegionDrawable over = new TextureRegionDrawable(resourceService.getAsset(Over, Texture.class));
+        Button.ButtonStyle style = new Button.ButtonStyle();
+        style.up = up;
+        style.over = over;
+        return new Button(style);
+    }
+
+    /**
+     * set the position and size of the given button <br/>
+     * this is an internal function, do not use it !
+     *
+     * @param button the button to be set
+     * @param i      index of the set buttons
+     * @param type   type of button to be set
+     * @author Team7 Yingxin Liu
+     */
+    private void setButton(Button button, int i, String type) {
+        if (Objects.equals(type, "cardDefault")) {
+            button.setSize((float) (bgWidth * (207.26 / 1600)), (float) (bgHeight * (283.91 / 900)));
+            button.setPosition((float) (bgWidth * ((454.13 + ((i % 4) * 230.32)) / 1600)),
+                    (float) (bgHeight * (1 - (295.055 + (i / 4) * 334.09) / 900)), Align.center);
+        } else if (Objects.equals(type, "cardHovering")) {
+            button.setSize((float) (bgWidth * (235.79 / 1600)), (float) (bgHeight * (323.0 / 900)));
+            button.setPosition((float) (bgWidth * ((452.135 + ((i % 4) * 230.32)) / 1600)),
+                    (float) (bgHeight * (1 - (294.06 + (i / 4) * 334.09) / 900)), Align.center);
+        } else if (Objects.equals(type, "selectButton")) {
+            button.setSize((float) (bgWidth * (112.48 / 1600)), (float) (bgHeight * (47.5 / 900)));
+            button.setPosition((float) (bgWidth * ((420.34 + ((i % 4) * 231.03)) / 1600)),
+                    (float) (bgHeight * (1 - (473.36 + (i / 4) * 335.39) / 900)));
         }
     }
 
@@ -281,120 +459,14 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         }
     }
 
+
+    // Creating dialogs for various situations
     /**
-     * set the position and size of the given button <br/>
-     * this is an internal function, do not use it !
-     *
-     * @param button the button to be set
-     * @param i      index of the set buttons
-     * @param type   type of button to be set
-     * @author Team7 Yingxin Liu
+     * Types of result dialog box
      */
-    private void setButton(Button button, int i, String type) {
-        if (Objects.equals(type, "cardDefault")) {
-            button.setSize((float) (bgWidth * (207.26 / 1600)), (float) (bgHeight * (283.91 / 900)));
-            button.setPosition((float) (bgWidth * ((454.13 + ((i % 4) * 230.32)) / 1600)),
-                    (float) (bgHeight * (1 - (295.055 + (i / 4) * 334.09) / 900)), Align.center);
-        } else if (Objects.equals(type, "cardHovering")) {
-            button.setSize((float) (bgWidth * (235.79 / 1600)), (float) (bgHeight * (323.0 / 900)));
-            button.setPosition((float) (bgWidth * ((452.135 + ((i % 4) * 230.32)) / 1600)),
-                    (float) (bgHeight * (1 - (294.06 + (i / 4) * 334.09) / 900)), Align.center);
-        } else if (Objects.equals(type, "selectButton")) {
-            button.setSize((float) (bgWidth * (112.48 / 1600)), (float) (bgHeight * (47.5 / 900)));
-            button.setPosition((float) (bgWidth * ((420.34 + ((i % 4) * 231.03)) / 1600)),
-                    (float) (bgHeight * (1 - (473.36 + (i / 4) * 335.39) / 900)));
-        }
+    protected enum NpcResultDialogType {
+        RIGHT_BOX, WRONG_BOX1, WRONG_BOX2, LOSE, WIN
     }
-
-    /**
-     * Display a confirm dialog on the window, the style is based on Team7 prototype <br/>
-     * All scales are calculated according to the prototype from team 7 only <br/>
-     * player has 3 choices to find traitor, if all fail, the game will directly over <br/>
-     * if correct, A key will be spawned on the map,
-     * player can pick it up and use it in the warehouse. The game will win <br/>
-     * For using the key, we have written the code in the warehouse component of <b>team 8</b>
-     * @see com.deco2800.game.components.player.InventoryDisplayComponent
-     * Button cancel: remove the dialog <br/>
-     * Button Ok    : confirm the action from selected button <br/>
-     * @see EndingMenuDisplay
-     * @param button_name The name of the button that calls this function
-     * @author Team7 Yingxin Liu <br/>
-     * When lose the game ,it will go to other screen: EndingMenu
-     * These code is provided from <b>team 3</b> <br/>
-     * When correct, <b>team 5</b> provides code for spawn the key <br/>
-     *
-     */
-    public void createConfirmDialog(String button_name) {
-//        entity.getEvents().addListener("ending", this::onEnding);
-
-        logger.debug("create confirm dialog from name: " + button_name);
-        // set the style of dialog include font color of title; background; size; position
-        TextureRegionDrawable styleImage = new TextureRegionDrawable(
-                resourceService.getAsset(IMAGES_PATH + "confirmBox.png", Texture.class));
-
-        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
-        Window dialog = new Window("", windowStyle);
-        dialog.setModal(true);    // The dialog is always at the front
-        float dialog_size_x = (float) (bgWidth * 0.2537);
-        float dialog_size_y = (float) (bgHeight * 0.3037);
-        dialog.setSize(dialog_size_x, dialog_size_y);
-        float dialog_pos_x = (float) (bgWidth * 0.3756);
-        float dialog_pos_y = (float) (bgHeight * (1 - 0.65));
-        dialog.setPosition(dialog_pos_x, dialog_pos_y);
-
-        // Set Cancel and Ok buttons for dialog
-        Button cancelButton = createButton(IMAGES_PATH + "confirmBtn_cancel.png", IMAGES_PATH + "confirmBtn_cancel1.png");
-        cancelButton.setSize((float) (dialog_size_x * 0.361), (float) (dialog_size_y * 0.2317));
-        cancelButton.setPosition((float) (dialog.getWidth() * 0.1067), 0);
-        cancelButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                MusicStuff.playMusic(buttonPath, false);
-                logger.debug("cancel_button from " + button_name + " clicked");
-                dialog.remove();
-            }
-        });
-
-        Button okButton = createButton(IMAGES_PATH + "confirmBtn_ok.png", IMAGES_PATH + "confirmBtn_ok1.png");
-        okButton.setSize((float) (dialog_size_x * 0.377), (float) (dialog_size_y * 0.2317));
-        okButton.setPosition((float) (dialog.getWidth() * 0.5239), 0);
-
-        okButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                MusicStuff.playMusic(buttonPath, false);
-                logger.debug("yes_button from " + button_name + " clicked");
-                dialog.remove();
-                // different name will lead to different result
-                // traitor is Ares.So here we check it.
-                NpcResultDialogType result = handleLogic(button_name);
-                createResultDialog(button_name, result);
-
-            }
-        });
-        dialog.addActor(cancelButton);
-        dialog.addActor(okButton);
-        window.addActor(dialog);
-    }
-
-    /**
-     * create a button where include an image and can change state when the mouse hovering
-     *
-     * @param Up   path of image: The style of the button in its normal state
-     * @param Over path of image: The style of the button when mouse hovering
-     * @return a Button with up and down style
-     * @author Team7: Yingxin Liu  Shaohui Wang
-     */
-    private Button createButton(String Up, String Over) {
-        logger.debug("createButton with path:" + Up + Over);
-        TextureRegionDrawable up = new TextureRegionDrawable(resourceService.getAsset(Up, Texture.class));
-        TextureRegionDrawable over = new TextureRegionDrawable(resourceService.getAsset(Over, Texture.class));
-        Button.ButtonStyle style = new Button.ButtonStyle();
-        style.up = up;
-        style.over = over;
-        return new Button(style);
-    }
-
 
     /**
      * Display a Card information dialog on the window, the style is based on Team7 prototype <br/>
@@ -456,17 +528,76 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         window.addActor(dialog);
     }
 
-    @Override
-    protected void draw(SpriteBatch batch) {
-
-    }
-
     /**
-     * Types of result dialog box
+     * Display a confirm dialog on the window, the style is based on Team7 prototype <br/>
+     * All scales are calculated according to the prototype from team 7 only <br/>
+     * player has 3 choices to find traitor, if all fail, the game will directly over <br/>
+     * if correct, A key will be spawned on the map,
+     * player can pick it up and use it in the warehouse. The game will win <br/>
+     * For using the key, we have written the code in the warehouse component of <b>team 8</b>
+     * @see com.deco2800.game.components.player.InventoryDisplayComponent
+     * Button cancel: remove the dialog <br/>
+     * Button Ok    : confirm the action from selected button <br/>
+     * @see EndingMenuDisplay
+     * @param button_name The name of the button that calls this function
+     * @author Team7 Yingxin Liu <br/>
+     * When lose the game ,it will go to other screen: EndingMenu
+     * These code is provided from <b>team 3</b> <br/>
+     * When correct, <b>team 5</b> provides code for spawn the key <br/>
+     *
      */
-    protected enum NpcResultDialogType {
-        RIGHT_BOX, WRONG_BOX1, WRONG_BOX2, LOSE, WIN
+    public void createConfirmDialog(String button_name) {
+        logger.debug("create confirm dialog from name: " + button_name);
+        // set the style of dialog include font color of title; background; size; position
+        TextureRegionDrawable styleImage = new TextureRegionDrawable(
+                resourceService.getAsset(IMAGES_PATH + "confirmBox.png", Texture.class));
+
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
+        Window dialog = new Window("", windowStyle);
+        dialog.setModal(true);    // The dialog is always at the front
+        float dialog_size_x = (float) (bgWidth * 0.2537);
+        float dialog_size_y = (float) (bgHeight * 0.3037);
+        dialog.setSize(dialog_size_x, dialog_size_y);
+        float dialog_pos_x = (float) (bgWidth * 0.3756);
+        float dialog_pos_y = (float) (bgHeight * (1 - 0.65));
+        dialog.setPosition(dialog_pos_x, dialog_pos_y);
+
+        // Set Cancel and Ok buttons for dialog
+        Button cancelButton = createButton(IMAGES_PATH + "confirmBtn_cancel.png", IMAGES_PATH + "confirmBtn_cancel1.png");
+        cancelButton.setSize((float) (dialog_size_x * 0.361), (float) (dialog_size_y * 0.2317));
+        cancelButton.setPosition((float) (dialog.getWidth() * 0.1067), 0);
+        cancelButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                MusicStuff.playMusic(buttonPath, false);
+                logger.debug("cancel_button from " + button_name + " clicked");
+                dialog.remove();
+            }
+        });
+
+        Button okButton = createButton(IMAGES_PATH + "confirmBtn_ok.png", IMAGES_PATH + "confirmBtn_ok1.png");
+        okButton.setSize((float) (dialog_size_x * 0.377), (float) (dialog_size_y * 0.2317));
+        okButton.setPosition((float) (dialog.getWidth() * 0.5239), 0);
+
+        okButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                MusicStuff.playMusic(buttonPath, false);
+                logger.debug("yes_button from " + button_name + " clicked");
+                dialog.remove();
+                // different name will lead to different result
+                // traitor is Ares.So here we check it.
+                NpcResultDialogType result = handleLogic(button_name);
+                creatTransDialog(button_name, result);
+
+
+            }
+        });
+        dialog.addActor(cancelButton);
+        dialog.addActor(okButton);
+        window.addActor(dialog);
     }
+
     /**
      * Display a result dialog and traitor message on the window, the style is based on Team7 prototype <br/>
      * All scales are calculated according to the prototype from team 7 only <br/>
@@ -488,7 +619,8 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             EndingMenuDisplay.setLose();
             entity.getEvents().trigger("ending");
             return;}
-        if (type == NpcResultDialogType.WIN) {handleWin();return;}
+        if (type == NpcResultDialogType.WIN) {
+            creatWinDialog();return;}
 
         // set the style of dialog include font color of title; background; size; position
         float dialog_size_x,dialog_size_y;
@@ -561,7 +693,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.info("yes_button from " + button_name + " clicked");
-                 //when you select ok button
+                //when you select ok button
                 MusicStuff.playMusic(buttonPath,false);
                 dialog.remove();
                 particleWrongActor1.remove();
@@ -571,21 +703,13 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                 particleSecondWrongActor1.remove();
                 particleSecondWrongActor2.remove();
                 if (type == NpcResultDialogType.RIGHT_BOX)
-                    handleWin();
+                    creatWinDialog();
             }
         });
 
         showWinLoseContext(dialog, type, button_name, dialog_size_x, dialog_size_y);
         dialog.addActor(okButton);
         window.addActor(dialog);
-    }
-
-    private void exitMenu() {
-        window.remove();
-    }
-
-    public void setFindKey(Boolean findKey) {
-        this.findKey = findKey;
     }
 
     /**
@@ -618,7 +742,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                     (float) (window.getHeight()*(560 - 416.67)/900));
             context.setPosition((float) (dx*((803-438.33)/678.67)),
                     (float) ( dy * ((663.33 - 426.67)/382.38)), Align.top);
-            if (type == NpcResultDialogType.WRONG_BOX2){titleColor = Color.DARK_GRAY;};
+            if (type == NpcResultDialogType.WRONG_BOX2){titleColor = Color.DARK_GRAY;}
         }
         // set title/context string
         String titleContent = helper.createTraitorMessageInterjection(type);
@@ -648,7 +772,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * @author Team 7 Yingxin Liu <br/>
      * code of spawn key is from <b>Team 5</b>
      */
-    private void handleWin() {
+    private void creatWinDialog() {
         logger.debug("Function handleWin is called");
         // set the style of dialog include font color of title; background; size; position
         TextureRegionDrawable styleImage = new TextureRegionDrawable(
@@ -695,7 +819,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         context.setPosition((float) (window.getWidth()*(696.67/1600)),
                 (float) (window.getHeight()*(1-750.0/900)));
 
-        // set title/context srting
+        // set title/context string
         String titleContent;
         String contextContent;
         titleContent = "Message from Ares";
@@ -733,115 +857,113 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
     }
 
     /**
-     * Handle the game logic of select the traitor<br/>
-     * player has 3 choices to find traitor<br/>
-     * if wrong, it will decrease the blood and time at the same time
-     *
-     * @param name name of npc selected
-     * @return
-     * NpcResultDialogType.RIGHT_BOX: if player correctly select the traitor <br/>
-     * NpcResultDialogType.WRONG_BOX1: if player fails for the first time<br/>
-     * NpcResultDialogType.WRONG_BOX2: if player fails for the second time <br/>
-     * NpcResultDialogType.LOSE: if player select 3 times and all fail <br/>
-     * NpcResultDialogType.WIN: if player have correctly select in the past<br/>
-     * null: This is not a return result that should occur. If it does,
-     * it indicates that there is a problem with in the code
-     * @author Team7 Yingxin Liu <br/>
-     * decrease blood/decrease remaing time: Shaohui Wang
-     *
+     * create a window to play transition animation According to the npc name and result
+     * @param button_name npc name
+     * @param result whether the npc is traitor
+     * @author Team 7 Yingxin Liu
      */
-    protected NpcResultDialogType handleLogic (String name) {
-        if (findKey) { // player have selected correct in the past
-            return NpcResultDialogType.WIN;
-        }
-        if (Objects.equals(name, "Ares")){ // select npc correctly
-            //Add code here:Write one row of data to Json (win game record)
-
-            //Set the data of the object
-            profileProp.timeRemaining=Math.round(entity.getComponent(countdownDisplay.class).getRemainingTime());
-            profileProp.result = 1;
-            profileProp.attempt = errorNum + 1;
-            Json json = new Json();
-            json.setOutputType(JsonWriter.OutputType.json);
-          //  json.setElementType(PlayerProfileConfig.class,"playerStats", PlayerProfileProperties.class);
-            String profileData = json.toJson(profileProp);
-
-            //Get the file path, so that can write to json
-            FileHandle file =Gdx.files.local("configs/playerStatsInfo.json");
-            profileInfo.add(profileProp);
-
-            PPCInstance.playerStats = profileInfo;
-            //Make it as string, so it can write to json
-            String profileData3 = json.toJson(PPCInstance);
-
-            String profileData2 = json.toJson(profileInfo);
-
-            //write to json, append is false, so it will overwrite the whole json by new data
-            file.writeString(profileData3,false);
-           // profileInfo.set(profileData);
-
-
-            //Just some code for testing purpose 
-            System.out.println(file);
-            System.out.print(profileData);
-            //file[playerStats].writeString(profileData,true);
-
-            errorNum = 0;
-            return NpcResultDialogType.RIGHT_BOX;
-        } else {
-            if (errorNum == 0){
-                //decrease blood 10%
-                int health = entity.getComponent(CombatStatsComponent.class).getHealth();
-                entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.9));
-
-                //at the same time decrease remaing time 10%
-                float remainingTime =entity.getComponent(countdownDisplay.class).getRemainingTime();
-                entity.getComponent(countdownDisplay.class).setTimeRemaining((float) remainingTime*0.9f);
-
-                errorNum++;
-                return NpcResultDialogType.WRONG_BOX1;
-            } else if (errorNum == 1) {
-                //decrease blood 20%
-                int health = entity.getComponent(CombatStatsComponent.class).getHealth();
-                entity.getComponent(CombatStatsComponent.class).setHealth((int) (health*0.8));
-
-                //at the same time decrease remaing time 20%
-                float remainingTime =entity.getComponent(countdownDisplay.class).getRemainingTime();
-                entity.getComponent(countdownDisplay.class).setTimeRemaining((float) remainingTime*0.8f);
-                errorNum++;
-                return NpcResultDialogType.WRONG_BOX2;
-            } else if (errorNum == 2){
-                //Insert a row of data into playerStatsInfo.json when the player lose the game
-                //First set data to the instance
-                profileProp.timeRemaining=Math.round(entity.getComponent(countdownDisplay.class).getRemainingTime());
-                profileProp.result =2;
-                profileProp.attempt =errorNum+1;
-                Json json =new Json();
-                json.setOutputType(JsonWriter.OutputType.json);
-                String profileData = json.toJson(profileProp);
-
-                FileHandle file =Gdx.files.local("configs/playerStatsInfo.json");
-                profileInfo.add(profileProp);
-
-
-                PPCInstance.playerStats = profileInfo;
-
-                String profileData3 =json.toJson(PPCInstance);
-
-                String profileData2 = json.toJson(profileInfo);
-
-                file.writeString(profileData3,false );
-
-                System.out.println(file);
-                System.out.print(profileData);
-
-
-
-                // game over
-                errorNum = 0;
-                return NpcResultDialogType.LOSE;
+    private void creatTransDialog(String button_name, NpcResultDialogType result) {
+        TextureRegionDrawable styleImage = new TextureRegionDrawable(
+                resourceService.getAsset(IMAGES_PATH + "transparentBg.png", Texture.class));
+        Window.WindowStyle windowStyle = new Window.WindowStyle(new BitmapFont(), Color.BLACK, styleImage);
+        Window dialog = new Window("", windowStyle); dialog.setModal(true); dialog.setFillParent(true);
+        dialog.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                dialog.remove();
+                return true;
             }
+        });
+
+        Image background = new Image(
+                resourceService.getAsset(IMAGES_PATH + "transBg.png", Texture.class));
+
+        Image step1 = new Image(resourceService.getAsset(
+                IMAGES_PATH + button_name.toLowerCase() + "Trans1.png", Texture.class));
+        Image step2 = new Image(resourceService.getAsset(
+                IMAGES_PATH + button_name.toLowerCase() + "Trans2.png", Texture.class));
+        Image step3 = new Image(resourceService.getAsset(
+                IMAGES_PATH + button_name.toLowerCase() + "Trans3.png", Texture.class));
+        String resultImg = IMAGES_PATH + "wrongTrans.png";
+        if (Objects.equals(button_name, "Ares")) {
+            resultImg = IMAGES_PATH + "correctTrans.png";
         }
-        return null; // if return null, it means some error in code, please check
+        Image step4 = new Image(
+                resourceService.getAsset(resultImg, Texture.class));
+
+
+
+        background.setFillParent(true);
+        dialog.addActor(background);
+        dialog.addActor(step1);
+        step1.addAction(Actions.alpha(0));
+        window.addActor(dialog);
+
+        SequenceAction overallSequence = new SequenceAction();
+        overallSequence.addAction(Actions.alpha(0));
+        overallSequence.addAction(Actions.fadeIn(1));
+        //All animations
+        RunnableAction show1 = new RunnableAction();  // Characters appear
+        show1.setRunnable(() -> {
+            step1.addAction(Actions.fadeIn(1));
+        });
+        overallSequence.addAction(show1);
+        overallSequence.addAction(Actions.delay(1));
+
+        RunnableAction show2 = new RunnableAction(); // Tied up npc
+        show2.setRunnable(() -> {
+            step1.remove();
+            dialog.addActor(step2);
+        });
+        overallSequence.addAction(show2);
+        overallSequence.addAction(Actions.delay(1));
+
+        RunnableAction show3 = new RunnableAction(); // Put down npc and Dragged it out
+        show3.setRunnable(() -> {
+            step2.remove();
+            dialog.addActor(step3);
+            SequenceAction actions = new SequenceAction();
+            actions.addAction(Actions.delay(1));
+            actions.addAction(Actions.moveTo(1000,10, 3));
+            actions.addAction(Actions.fadeOut(1));
+            step3.addAction(actions);
+
+        });
+        overallSequence.addAction(show3);
+        overallSequence.addAction(Actions.delay(2+3));
+
+        RunnableAction show4 = new RunnableAction(); // show the result
+        show4.setRunnable(() -> {
+            step3.remove();
+            dialog.addActor(step4);
+            SequenceAction actions = new SequenceAction();
+            actions.addAction(Actions.delay(3));
+            actions.addAction(Actions.fadeOut(2));
+            step4.addAction(actions);
+        });
+        overallSequence.addAction(show4);
+        overallSequence.addAction(Actions.delay(3));
+
+
+        // finish
+        overallSequence.addAction(Actions.fadeOut(2));
+        RunnableAction exit = new RunnableAction();
+        exit.setRunnable(() -> {
+            dialog.remove();
+            createResultDialog(button_name, result);
+        });
+        overallSequence.addAction(exit);
+
+        background.addAction(overallSequence);
+
+        //dialog.remove();
+
+
+
+
+
     }
+
+
+
 }
