@@ -238,6 +238,17 @@ public class NPCFactory {
     return orpheus;
   }
 
+  public static Entity createNereus() {
+    Entity nereus = new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC));
+    nereus.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
+    nereus.setScale(1.4f,0.8f);
+    PhysicsUtils.setScaledCollider(nereus, 0.9f, 0.4f);
+    nereus.addComponent(new TextureRenderComponent("images/characters/Nereus_wounded.png"));
+    return nereus;
+  }
+
   public enum CommunicativeNpcName {
     Zoe, Metis, Doris, Heph, Orpheus
   }

@@ -100,6 +100,7 @@ public class ForestGameArea extends GameArea {
             "images/characters/Doris.png",
             "images/characters/Heph.png",
             "images/characters/Orpheus.png",
+            "images/characters/Nereus_wounded.png",
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/player.atlas", "images/orpheus.atlas",
@@ -150,6 +151,7 @@ public class ForestGameArea extends GameArea {
         spawnDoris();
         spawnHeph();
         spawnOrpheus();
+        spawnNereus();
     }
 
     private void loadLevel(String name){
@@ -482,6 +484,12 @@ public class ForestGameArea extends GameArea {
         GridPoint2 pos = new GridPoint2(20, 15);
         Entity orpheus = NPCFactory.createOrpheus(player.getComponent(NpcInteractionDisplay.class));
         spawnEntityAt(orpheus, pos, true, true);
+    }
+
+    private void spawnNereus() {
+        GridPoint2 pos = new GridPoint2(12, 10);
+        Entity nereus = NPCFactory.createNereus();
+        spawnEntityAt(nereus, pos, true, true);
     }
 
     private void playMusic() {
