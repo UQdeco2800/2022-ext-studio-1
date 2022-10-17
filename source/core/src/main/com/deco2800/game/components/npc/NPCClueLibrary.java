@@ -42,8 +42,81 @@ public class NPCClueLibrary {
      * @throws Exception if name not exists
      */
     public String[] getUnlockClues(String name) throws Exception {
-        if (clues.containsKey(name)) {
-            return clues.get(name);
+
+        ArrayList<String> ret = new ArrayList<>();
+
+
+        if (name.equals("Metis")) {
+            for (String s : MetisGot) {
+                ret.add(s);
+            }
+            if (ret.isEmpty()){
+                throw new Exception("There is no clue now");
+            }else {
+                String[] arr = (String[])ret.toArray(new String[0]);
+                return arr;
+            }
+
+        } else if (name.equals("Zoe")){
+            for (String s : ZoeGot) {
+                ret.add(s);
+            }
+            if (ret.isEmpty()){
+                throw new Exception("There is no clue now");
+            }else {
+                String[] arr = (String[])ret.toArray(new String[0]);
+                return arr;
+            }
+        } else if (name.equals("Doris")){
+            for (String s : DorisGot) {
+                ret.add(s);
+            }
+            if (ret.isEmpty()){
+                throw new Exception("There is no clue now");
+            }else {
+                String[] arr = (String[])ret.toArray(new String[0]);
+                return arr;
+            }
+        } else if (name.equals("Heph")){
+            for (String s : HephGot) {
+                ret.add(s);
+            }
+            if (ret.isEmpty()){
+                throw new Exception("There is no clue now");
+            }else {
+                String[] arr = (String[])ret.toArray(new String[0]);
+                return arr;
+            }
+        } else if (name.equals("Ares")){
+            for (String s : AresGot) {
+                ret.add(s);
+            }
+            if (ret.isEmpty()){
+                throw new Exception("There is no clue now");
+            }else {
+                String[] arr = (String[])ret.toArray(new String[0]);
+                return arr;
+            }
+        } else if (name.equals("Orpheus")){
+            for (String s : OrpheusGot) {
+                ret.add(s);
+            }
+            if (ret.isEmpty()){
+                throw new Exception("There is no clue now");
+            }else {
+                String[] arr = (String[])ret.toArray(new String[0]);
+                return arr;
+            }
+        } else if (name.equals("Nereus")){
+            for (String s : NereusGot) {
+                ret.add(s);
+            }
+            if (ret.isEmpty()){
+                throw new Exception("There is no clue now");
+            }else {
+                String[] arr = (String[])ret.toArray(new String[0]);
+                return arr;
+            }
         }
 
         throw new Exception("name not found");
