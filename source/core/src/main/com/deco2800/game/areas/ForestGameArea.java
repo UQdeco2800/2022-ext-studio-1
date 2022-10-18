@@ -30,24 +30,27 @@ public class ForestGameArea extends GameArea {
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final String[] forestTextures = {
-            "images/village/building1.png",
-            "images/village/building2.png",
-            "images/village/building3.png",
-            "images/village/building4.png",
-            "images/village/building5.png",
-            "images/village/building6.png",
-            "images/village/building7.png",
-            "images/village/building8.png",
-            "images/village/building9.png",
-            "images/village/building10.png",
-            "images/village/enclosure.png",
-            "images/village/mine.png",
-            "images/village/stela.png",
-            "images/village/tree1.png",
-            "images/village/tree2.png",
-            "images/village/tree3.png",
-            "images/village/well.png",
-            "images/village/wood.png",
+            "images/lab/material1.png",
+            "images/lab/material2.png",
+            "images/lab/material3.png",
+            "images/lab/material4.png",
+            "images/lab/material5.png",
+            "images/lab/material6.png",
+            "images/lab/material7.png",
+            "images/lab/material8.png",
+            "images/lab/material9.png",
+            "images/lab/material10.png",
+            "images/lab/material11.png",
+            "images/lab/material12.png",
+            "images/lab/material13.png",
+            "images/lab/material14.png",
+            "images/lab/bj.png",
+            "images/village/material1.png",
+            "images/village/material2.png",
+            "images/village/material3.png",
+            "images/village/material4.png",
+            "images/village/material5.png",
+            "images/village/tree.png",
 
             "images/orpheus_front.png",
             "images/Ares_front.png",
@@ -77,7 +80,7 @@ public class ForestGameArea extends GameArea {
             "images/inventory/time_item.png",
             "images/inventory/scales1.png",
             "images/inventory/confirm.png",
-            "images/inventory/emtpyInventorySlot.png",
+//            "images/inventory/emtpyInventorySlot.png",
             "images/inventory/inventoryBG.png",
             "images/KEY.png",
             "images/knight.png",
@@ -103,9 +106,18 @@ public class ForestGameArea extends GameArea {
     private static final String backgroundMusic = "sounds/new.mp3";
     private static final String movementMusic = "sounds/Movement_sound.wav";
     private static final String clickMusic = "sounds/button.mp3";
-    private static final String[] forestMusic = {backgroundMusic, movementMusic, clickMusic};
+
+
+    private static final String[] forestMusic = {backgroundMusic, movementMusic, clickMusic,
+            "sounds/CloseClueWindow.wav","sounds/OpenClueWindow.wav","sounds/CloseEvictionMenu.wav",
+            "sounds/OpenEvictionMenu.wav","sounds/WrongPromptBox1.wav","sounds/WrongPromptBox2.wav",
+            "sounds/RightPromptBox1.wav"};
 
     private final TerrainFactory terrainFactory;
+
+    private final String[] levelName = {"village","lab"};
+
+    private static int levelIndex = 0;
 
     private Entity player;
 
@@ -119,6 +131,11 @@ public class ForestGameArea extends GameArea {
         this.game = game;
     }
 
+    public void nextLevel(){
+        levelIndex = levelIndex+1<levelName.length? levelIndex+1 : 0;
+        System.out.println("++++++++++++"+levelIndex);
+    }
+
     /**
      * Create the game area, including terrain, static entities (trees), dynamic entities (player)
      */
@@ -127,7 +144,7 @@ public class ForestGameArea extends GameArea {
         loadAssets();
         displayUI();
         spawnTerrain();
-        loadLevel("village");
+        loadLevel(levelName[levelIndex]);
         player = spawnPlayer();
         spawnKnight();
         spawnSlime();
@@ -148,10 +165,11 @@ public class ForestGameArea extends GameArea {
                 break;
             case "random":
                 loadRandomLevel();
+            case "lab":
+                loadLib();
         }
 
     }
-
     private void loadRandomLevel(){
         spawnTrees();
     }
@@ -159,65 +177,67 @@ public class ForestGameArea extends GameArea {
     private Entity loadMaterial(Integer type){
         Entity entity = null;
         switch (type){
-            case 10:
-                entity = ObstacleFactory.createTreeByNum(1,2.5f,0.5f,0.2f);
+            case 1:
+                entity = ObstacleFactory.createTree();
                 break;
             case 11:
-                entity = ObstacleFactory.createTreeByNum(2,2.5f,0.5f,0.2f);
+                entity = ObstacleFactory.createVillage(1,2.5f,0.5f,0.2f);
                 break;
             case 12:
-                entity = ObstacleFactory.createTreeByNum(3,2.5f,0.5f,0.2f);
+                entity = ObstacleFactory.createVillage(2,2.5f,0.5f,0.2f);
                 break;
 
-            case 20:
-                entity = ObstacleFactory.createBuilding(1,1.5f,0.5f,0.2f);
+            case 13:
+                entity = ObstacleFactory.createVillage(3,1.5f,0.5f,0.2f);
                 break;
-            case 21:
-                entity = ObstacleFactory.createBuilding(2,1.5f,0.5f,0.2f);
+            case 14:
+                entity = ObstacleFactory.createVillage(4,1.5f,0.5f,0.2f);
                 break;
-            case 22:
-                entity = ObstacleFactory.createBuilding(3,1.5f,0.5f,0.2f);
-                break;
-            case 23:
-                entity = ObstacleFactory.createBuilding(4,1.5f,0.5f,0.2f);
-                break;
-            case 24:
-                entity = ObstacleFactory.createBuilding(5,1.5f,0.5f,0.2f);
-                break;
-            case 25:
-                entity = ObstacleFactory.createBuilding(6,1.5f,0.5f,0.2f);
-                break;
-            case 26:
-                entity = ObstacleFactory.createBuilding(7,1.5f,0.5f,0.2f);
-                break;
-            case 27:
-                entity = ObstacleFactory.createBuilding(8,1.5f,0.5f,0.2f);
-                break;
-            case 28:
-                entity = ObstacleFactory.createBuilding(9,1.5f,0.5f,0.2f);
-                break;
-            case 29:
-                entity = ObstacleFactory.createBuilding(10,2.5f,0.5f,0.2f);
+            case 15:
+                entity = ObstacleFactory.createVillage(5,1.5f,0.5f,0.2f);
                 break;
 
-            case 40:
-                entity = ObstacleFactory.createMine();
+            case 101:
+                entity = ObstacleFactory.createMaterial(1,1.5f,0.5f,0.2f);
                 break;
-
-            case 50:
-                entity = ObstacleFactory.createWell();
+            case 102:
+                entity = ObstacleFactory.createMaterial(2,1.5f,0.5f,0.2f);
                 break;
-
-            case 60:
-                entity = ObstacleFactory.createWood();
+            case 103:
+                entity = ObstacleFactory.createMaterial(3,1.5f,0.5f,0.2f);
                 break;
-
-            case 70:
-                entity = ObstacleFactory.createEnclosure();
+            case 104:
+                entity = ObstacleFactory.createMaterial(4,1.5f,0.5f,0.2f);
                 break;
-
-            case 80:
-                entity = ObstacleFactory.createStela();
+            case 105:
+                entity = ObstacleFactory.createMaterial(5,1.5f,0.5f,0.2f);
+                break;
+            case 106:
+                entity = ObstacleFactory.createMaterial(6,1.5f,0.5f,0.2f);
+                break;
+            case 107:
+                entity = ObstacleFactory.createMaterial(7,1.5f,0.5f,0.2f);
+                break;
+            case 108:
+                entity = ObstacleFactory.createMaterial(8,1.5f,0.5f,0.2f);
+                break;
+            case 109:
+                entity = ObstacleFactory.createMaterial(9,1.5f,0.5f,0.2f);
+                break;
+            case 110:
+                entity = ObstacleFactory.createMaterial(10,1.5f,0.5f,0.2f);
+                break;
+            case 111:
+                entity = ObstacleFactory.createMaterial(11,1.5f,0.5f,0.2f);
+                break;
+            case 112:
+                entity = ObstacleFactory.createMaterial(12,1.5f,0.5f,0.2f);
+                break;
+            case 113:
+                entity = ObstacleFactory.createMaterial(13,1.5f,0.5f,0.2f);
+                break;
+            case 114:
+                entity = ObstacleFactory.createMaterial(14,1.5f,0.5f,0.2f);
                 break;
         }
         return entity;
@@ -226,41 +246,70 @@ public class ForestGameArea extends GameArea {
     private void loadVillage(){
         List<Integer[]> materials = new ArrayList<>();
         //tree
-        materials.add(new Integer[]{10,10,5});
-        materials.add(new Integer[]{10,5,10});
-        materials.add(new Integer[]{10,5,15});
-        materials.add(new Integer[]{10,24,8});
-        materials.add(new Integer[]{11,5,20});
-        materials.add(new Integer[]{11,15,25});
-        materials.add(new Integer[]{11,26,20});
-        materials.add(new Integer[]{12,20,20});
-        materials.add(new Integer[]{12,15,27});
-        materials.add(new Integer[]{12,20,28});
-        materials.add(new Integer[]{12,10,28});
+        materials.add(new Integer[]{1,10,5});
+        materials.add(new Integer[]{1,5,10});
+        materials.add(new Integer[]{1,5,15});
+        materials.add(new Integer[]{1,24,8});
+        materials.add(new Integer[]{1,5,20});
+        materials.add(new Integer[]{1,15,25});
+        materials.add(new Integer[]{1,26,20});
+        materials.add(new Integer[]{1,20,20});
+        materials.add(new Integer[]{1,15,27});
+        materials.add(new Integer[]{1,20,28});
+        materials.add(new Integer[]{1,10,28});
         //Building
-        materials.add(new Integer[]{29,15,15});
-        materials.add(new Integer[]{20,20,5});
-        materials.add(new Integer[]{21,23,5});
-        materials.add(new Integer[]{22,20,18});
-        materials.add(new Integer[]{23,5,25});
-        materials.add(new Integer[]{24,9,21});
-        materials.add(new Integer[]{25,10,10});
+        materials.add(new Integer[]{11,15,15});
+        materials.add(new Integer[]{12,20,5});
+        materials.add(new Integer[]{14,23,5});
+        materials.add(new Integer[]{13,20,18});
+        materials.add(new Integer[]{15,5,25});
+//        materials.add(new Integer[]{24,9,21});
+//        materials.add(new Integer[]{25,10,10});
+//
+//        materials.add(new Integer[]{70,25,15});
+//        materials.add(new Integer[]{70,22,15});
+//        materials.add(new Integer[]{70,28,15});
+//
+//        materials.add(new Integer[]{40,8,16});
+//        materials.add(new Integer[]{40,15,20});
+//        materials.add(new Integer[]{40,11,11});
+//
+//        materials.add(new Integer[]{80,18,11});
+//        materials.add(new Integer[]{80,23,22});
+//
+//        materials.add(new Integer[]{60,13,22});
+//        materials.add(new Integer[]{60,14,22});
+//        materials.add(new Integer[]{60,15,22});
+//        materials.add(new Integer[]{60,22,8});
 
-        materials.add(new Integer[]{70,25,15});
-        materials.add(new Integer[]{70,22,15});
-        materials.add(new Integer[]{70,28,15});
+        GridPoint2 minPos = new GridPoint2(0, 0);
+        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-        materials.add(new Integer[]{40,8,16});
-        materials.add(new Integer[]{40,15,20});
-        materials.add(new Integer[]{40,11,11});
+        for(Integer[] material : materials){
+            GridPoint2 randomPos = new GridPoint2(material[1],material[2]);
+            Entity entity = loadMaterial(material[0]);
+            spawnEntityAt(entity, randomPos, true, false);
+        }
+    }
 
-        materials.add(new Integer[]{80,18,11});
-        materials.add(new Integer[]{80,23,22});
 
-        materials.add(new Integer[]{60,13,22});
-        materials.add(new Integer[]{60,14,22});
-        materials.add(new Integer[]{60,15,22});
-        materials.add(new Integer[]{60,22,8});
+    private void loadLib(){
+        List<Integer[]> materials = new ArrayList<>();
+        //tree
+        materials.add(new Integer[]{101,10,5});
+        materials.add(new Integer[]{102,5,10});
+        materials.add(new Integer[]{103,5,15});
+        materials.add(new Integer[]{104,24,8});
+        materials.add(new Integer[]{105,5,20});
+        materials.add(new Integer[]{106,15,25});
+        materials.add(new Integer[]{107,26,20});
+        materials.add(new Integer[]{108,20,20});
+        materials.add(new Integer[]{109,15,27});
+        materials.add(new Integer[]{110,20,28});
+        materials.add(new Integer[]{111,10,28});
+        materials.add(new Integer[]{112,15,15});
+        materials.add(new Integer[]{113,20,5});
+        materials.add(new Integer[]{114,23,5});
 
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -280,7 +329,12 @@ public class ForestGameArea extends GameArea {
 
     private void spawnTerrain() {
         // Background terrain
-        terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
+        if(levelIndex==0){
+            terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
+        }else if(levelIndex==1){
+            terrain = terrainFactory.createTerrain(TerrainType.FOREST_LAB);
+        }
+
         spawnEntity(new Entity().addComponent(terrain));
 
         // Terrain walls
@@ -346,11 +400,11 @@ public class ForestGameArea extends GameArea {
         GridPoint2 minPos = new GridPoint2(5, 5);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 15);
 
-        spawnEntityAt(ItemFactory.createItem(4), RandomUtils.random(minPos, maxPos), true, false);
-        spawnEntityAt(ItemFactory.createItem(5), RandomUtils.random(minPos, maxPos), true, false);
-        spawnEntityAt(ItemFactory.createItem(6), RandomUtils.random(minPos, maxPos), true, false);
-        spawnEntityAt(ItemFactory.createItem(7), RandomUtils.random(minPos, maxPos), true, false);
-        spawnEntityAt(ItemFactory.createItem(8), RandomUtils.random(minPos, maxPos), true, false);
+//        spawnEntityAt(ItemFactory.createItem(4), RandomUtils.random(minPos, maxPos), true, false);
+//        spawnEntityAt(ItemFactory.createItem(5), RandomUtils.random(minPos, maxPos), true, false);
+//        spawnEntityAt(ItemFactory.createItem(6), RandomUtils.random(minPos, maxPos), true, false);
+//        spawnEntityAt(ItemFactory.createItem(7), RandomUtils.random(minPos, maxPos), true, false);
+//        spawnEntityAt(ItemFactory.createItem(8), RandomUtils.random(minPos, maxPos), true, false);
     }
 
     private void spawnSwitchItems() {

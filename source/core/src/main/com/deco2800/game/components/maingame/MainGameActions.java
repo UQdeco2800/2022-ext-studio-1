@@ -33,6 +33,7 @@ public class MainGameActions extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("exit", this::onExit);
+    entity.getEvents().addListener("level", this::onLevel);
     entity.getEvents().addListener("InventoryScreen", this::onInventoryScreen);
     entity.getEvents().addListener("ending", this::onEnding);
     entity.getEvents().addListener("playerProfile", this::onPlayerProfile);
@@ -52,8 +53,12 @@ public class MainGameActions extends Component {
    */
   private void onExit() {
     MusicStuff.playMusic(buttonPath, false);
-    logger.info("Exiting main game screen");
+
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+  }
+
+  private void onLevel() {
+    game.theGameScreen.switchLevel();
   }
 
   private void onInventoryScreen() {

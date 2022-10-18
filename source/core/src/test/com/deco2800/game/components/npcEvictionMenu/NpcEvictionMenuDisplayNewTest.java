@@ -46,6 +46,7 @@ public class NpcEvictionMenuDisplayNewTest {
             IMAGES_PATH + "npcZoe.png", IMAGES_PATH + "npcZoe_hover.png",
             IMAGES_PATH + "npcAres.png", IMAGES_PATH + "npcAres_hover.png",
             IMAGES_PATH + "npcOrpheus.png", IMAGES_PATH + "npcOrpheus_hover.png",
+            IMAGES_PATH + "npcZeus.png", IMAGES_PATH + "npcZeus_hover.png",
             IMAGES_PATH + "rightBox.png",
             IMAGES_PATH + "rightBtn.png", IMAGES_PATH + "rightBtn_H.png",
             IMAGES_PATH + "wrongBox1.png", IMAGES_PATH + "wrongBox2.png",

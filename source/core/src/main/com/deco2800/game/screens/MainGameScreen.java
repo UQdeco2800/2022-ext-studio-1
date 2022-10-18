@@ -62,18 +62,28 @@ public class MainGameScreen extends ScreenAdapter {
           IMAGES_PATH + "confirmBtn_cancel.png", IMAGES_PATH + "confirmBtn_cancel1.png",
           IMAGES_PATH + "infoWindow.png",
           IMAGES_PATH + "npcNereus.png", IMAGES_PATH + "npcNereus_hover.png",
+          IMAGES_PATH + "nereusTrans1.png", IMAGES_PATH + "nereusTrans2.png", IMAGES_PATH + "nereusTrans3.png",
           IMAGES_PATH + "npcHeph.png", IMAGES_PATH + "npcHeph_hover.png",
+          IMAGES_PATH + "hephTrans1.png", IMAGES_PATH + "hephTrans2.png", IMAGES_PATH + "hephTrans3.png",
           IMAGES_PATH + "npcMetis.png", IMAGES_PATH + "npcMetis_hover.png",
+          IMAGES_PATH + "metisTrans1.png", IMAGES_PATH + "metisTrans2.png", IMAGES_PATH + "metisTrans3.png",
           IMAGES_PATH + "npcDoris.png", IMAGES_PATH + "npcDoris_hover.png",
+          IMAGES_PATH + "dorisTrans1.png", IMAGES_PATH + "dorisTrans2.png", IMAGES_PATH + "dorisTrans3.png",
           IMAGES_PATH + "npcZoe.png", IMAGES_PATH + "npcZoe_hover.png",
+          IMAGES_PATH + "zoeTrans1.png", IMAGES_PATH + "zoeTrans2.png", IMAGES_PATH + "zoeTrans3.png",
           IMAGES_PATH + "npcAres.png", IMAGES_PATH + "npcAres_hover.png",
+          IMAGES_PATH + "aresTrans1.png", IMAGES_PATH + "aresTrans2.png", IMAGES_PATH + "aresTrans3.png",
           IMAGES_PATH + "npcOrpheus.png", IMAGES_PATH + "npcOrpheus_hover.png",
+          IMAGES_PATH + "orpheusTrans1.png", IMAGES_PATH + "orpheusTrans2.png", IMAGES_PATH + "orpheusTrans3.png",
+          IMAGES_PATH + "npcZeus.png", IMAGES_PATH + "npcZeus_hover.png",
+          IMAGES_PATH + "zeusTrans1.png", IMAGES_PATH + "zeusTrans2.png", IMAGES_PATH + "zeusTrans3.png",
+          IMAGES_PATH + "correctTrans.png", IMAGES_PATH + "wrongTrans.png",
           IMAGES_PATH + "rightBox.png",
           IMAGES_PATH + "rightBtn.png", IMAGES_PATH + "rightBtn_H.png",
           IMAGES_PATH + "wrongBox1.png", IMAGES_PATH + "wrongBox2.png",
           IMAGES_PATH + "chanceBtn.png", IMAGES_PATH + "chanceBtn_H.png",
           IMAGES_PATH + "chanceBtn2.png", IMAGES_PATH + "chanceBtn2_H.png",
-          IMAGES_PATH + "saveMessage.png"};
+          IMAGES_PATH + "saveMessage.png", IMAGES_PATH + "transBg.png" };
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
   private final GdxGame game;
@@ -241,6 +251,15 @@ public class MainGameScreen extends ScreenAdapter {
 
     ServiceLocator.getEntityService().register(ui);
   }
+
+  public void switchLevel(){
+    forestGameArea.dispose();
+    TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+    this.forestGameArea = new ForestGameArea(terrainFactory, game);
+    forestGameArea.nextLevel();
+    forestGameArea.create();
+  }
+
   public void changeStatus() {
 
     stopGame=true;
