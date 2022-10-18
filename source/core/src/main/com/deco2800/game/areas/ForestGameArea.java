@@ -7,6 +7,8 @@ import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.npc.NpcInteractionDisplay;
+import com.deco2800.game.components.gameoverScreen.GameOverDisplay;
+import com.deco2800.game.components.player.DamageFlashDisplayComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -25,6 +27,8 @@ import java.util.List;
  */
 public class ForestGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
+
+    private DamageFlashDisplayComponent damageFlash;
     private static final int NUM_TREES = 7;
     private static final int NUM_GHOSTS = 2;
     private static final int NUM_BATTERIES = 3;
@@ -93,6 +97,7 @@ public class ForestGameArea extends GameArea {
             "images/switch/Battery.png",
             "images/switch/Electric Switch Broken.png",
             "images/KEY.png",
+            "images/damageFlash.png",
             "images/coral/scales1.png",
             "images/coral/scales2.png",
             "images/coral/scales3.png",
@@ -104,6 +109,7 @@ public class ForestGameArea extends GameArea {
             "images/characters/Heph.png",
             "images/characters/Orpheus.png",
             "images/characters/Nereus_wounded.png",
+
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/player.atlas", "images/orpheus.atlas",
@@ -125,11 +131,12 @@ public class ForestGameArea extends GameArea {
 
     private final String[] levelName = {"village","lab"};
 
-    private static int levelIndex = 0;
+    private static int levelIndex = 1;
 
     private Entity player;
 
     public Entity key;
+    private boolean damageFlashDisplayed = false;
 
     private GdxGame game;
 
@@ -389,10 +396,28 @@ public class ForestGameArea extends GameArea {
 
     private Entity spawnPlayer() {
         Entity newPlayer = PlayerFactory.createPlayer(game);
+        newPlayer.getEvents().addListener("updateHealth", this::updatePlayerHealth);
         spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
         return newPlayer;
     }
+    public void updatePlayerHealth(int health) {
 
+        if (damageFlashDisplayed == false) {
+            damageFlash = new DamageFlashDisplayComponent();
+            damageFlash.waitTime();
+        } else {
+            damageFlashDisplayed = true;
+        }
+
+
+        if (health <= 0)
+        {
+            logger.debug("Game Over: Lost Health");
+            game.theGameScreen.changeStatus();
+            new GameOverDisplay(this.game).create();
+        }
+
+    }
     public void spawnTimeConsumeableItem() {
 //    Entity item = ConsumableItemFactory.createItem(player, "images/inventory/time_item.png");
         Entity item = ItemFactory.createItem(1);

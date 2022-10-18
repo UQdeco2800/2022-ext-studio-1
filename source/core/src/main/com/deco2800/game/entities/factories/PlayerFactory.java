@@ -73,6 +73,7 @@ public class PlayerFactory {
             .addComponent(new InventoryComponent())
             .addComponent(inputComponent)
             .addComponent(animator)
+            .addComponent(new CombatStatsComponent(100, 10))
             .addComponent(new PlayerAnimationController())
             .addComponent(new AchievementStatsComponent(achievementStatusMap))
             .addComponent(new NpcInteractionDisplay(game));
@@ -82,7 +83,6 @@ public class PlayerFactory {
     player.getComponent(TextureRenderComponent.class).scaleEntity();
     return player;
   }
-
   private PlayerFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

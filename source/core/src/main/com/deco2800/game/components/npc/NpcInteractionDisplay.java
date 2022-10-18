@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.entities.factories.SwitchFactory;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 public class NpcInteractionDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(NpcInteractionDisplay.class);
@@ -38,6 +40,8 @@ public class NpcInteractionDisplay extends UIComponent {
     private Window npcEvictionMenuWindow;
 
     private NPCClueLibrary clueLibrary;
+
+    private boolean waitingCollection = false;
 
     public NpcInteractionDisplay(GdxGame game) {
         super();
@@ -298,8 +302,14 @@ public class NpcInteractionDisplay extends UIComponent {
     private void chapter1Listener(Iterator<String> it) {
 //        if (step != 6 || SwitchFactory.isWorking) {
         if (it.hasNext()) {
+            if (step == 7 && !SwitchFactory.isWorking) {
+                dialog.setText("Collect 3 batteries to fix it.");
+                dispose();
+            return;
+        }
             setTextAndAddClue(it.next());
             if (step == 6) {
+                waitingCollection = true;
                 dispose();
             }
         } else {// chapter 1 ends
@@ -451,6 +461,13 @@ public class NpcInteractionDisplay extends UIComponent {
                                 }
                             };
                             stage.addActor(dialogBox);
+                            if (waitingCollection) {
+                                dialog.setText("Collect 3 batteries to fix it.");
+                            }
+                            if (step == 7 && SwitchFactory.isWorking) {
+                                waitingCollection = false;
+                                dialog.setText("Zoe: No! It's Princess Nereus! She can't be dead! Princess Nereus is the guardian of Atlantis. If she dies, it means that Atlantis is about to sink!");
+                            }
                             stage.addActor(dialog);
                             dialogBox.addListener(clickListener);
                         } catch (IOException e) {
