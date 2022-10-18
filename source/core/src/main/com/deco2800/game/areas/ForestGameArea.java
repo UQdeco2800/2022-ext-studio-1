@@ -7,6 +7,8 @@ import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.npc.NpcInteractionDisplay;
+import com.deco2800.game.components.gameoverScreen.GameOverDisplay;
+import com.deco2800.game.components.player.DamageFlashDisplayComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -25,6 +27,8 @@ import java.util.List;
  */
 public class ForestGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
+
+    private DamageFlashDisplayComponent damageFlash;
     private static final int NUM_TREES = 7;
     private static final int NUM_GHOSTS = 2;
     private static final int NUM_BATTERIES = 3;
@@ -96,11 +100,19 @@ public class ForestGameArea extends GameArea {
             "images/KEY.png",
             "images/desk_top.png",
             "images/lack.png",
+            "images/damageFlash.png",
             "images/coral/scales1.png",
             "images/coral/scales2.png",
             "images/coral/scales3.png",
             "images/coral/scales4.png",
             "images/coral/scales5.png",
+            "images/characters/Zoe.png",
+            "images/characters/Metis.png",
+            "images/characters/Doris.png",
+            "images/characters/Heph.png",
+            "images/characters/Orpheus.png",
+            "images/characters/Nereus_wounded.png",
+
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/player.atlas", "images/orpheus.atlas",
@@ -109,6 +121,7 @@ public class ForestGameArea extends GameArea {
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/new.mp3";
     private static final String movementMusic = "sounds/Movement_sound.wav";
+    // click music reference: https://www.aigei.com/item/button32.html
     private static final String clickMusic = "sounds/button.mp3";
 
 
@@ -121,11 +134,12 @@ public class ForestGameArea extends GameArea {
 
     private final String[] levelName = {"village","lab"};
 
-    private static int levelIndex = 0;
+    private static int levelIndex = 1;
 
     private Entity player;
 
     public Entity key;
+    private boolean damageFlashDisplayed = false;
 
     private GdxGame game;
 
@@ -160,6 +174,12 @@ public class ForestGameArea extends GameArea {
         spawnSwitchItems();
         playMusic();
         spawnCoralItems();
+        spawnZoe();
+        spawnMetis();
+        spawnDoris();
+        spawnHeph();
+        spawnOrpheus();
+        spawnNereus();
     }
 
     private void loadLevel(String name){
@@ -379,10 +399,28 @@ public class ForestGameArea extends GameArea {
 
     private Entity spawnPlayer() {
         Entity newPlayer = PlayerFactory.createPlayer(game);
+        newPlayer.getEvents().addListener("updateHealth", this::updatePlayerHealth);
         spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
         return newPlayer;
     }
+    public void updatePlayerHealth(int health) {
 
+        if (damageFlashDisplayed == false) {
+            damageFlash = new DamageFlashDisplayComponent();
+            damageFlash.waitTime();
+        } else {
+            damageFlashDisplayed = true;
+        }
+
+
+        if (health <= 0)
+        {
+            logger.debug("Game Over: Lost Health");
+            game.theGameScreen.changeStatus();
+            new GameOverDisplay(this.game).create();
+        }
+
+    }
     public void spawnTimeConsumeableItem() {
 //    Entity item = ConsumableItemFactory.createItem(player, "images/inventory/time_item.png");
         Entity item = ItemFactory.createItem(1);
@@ -518,6 +556,42 @@ public class ForestGameArea extends GameArea {
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
         Entity ghostKing = NPCFactory.createGhostKing(player);
         spawnEntityAt(ghostKing, randomPos, true, true);
+    }
+
+    private void spawnZoe() {
+        GridPoint2 pos = new GridPoint2(10, 10);
+        Entity zoe = NPCFactory.createZoe(player.getComponent(NpcInteractionDisplay.class));
+        spawnEntityAt(zoe, pos, true, true);
+    }
+
+    private void spawnMetis() {
+        GridPoint2 pos = new GridPoint2(2, 18);
+        Entity metis = NPCFactory.createMetis(player.getComponent(NpcInteractionDisplay.class));
+        spawnEntityAt(metis, pos, true, true);
+    }
+
+    private void spawnDoris() {
+        GridPoint2 pos = new GridPoint2(16, 6);
+        Entity doris = NPCFactory.createDoris(player.getComponent(NpcInteractionDisplay.class));
+        spawnEntityAt(doris, pos, true, true);
+    }
+
+    private void spawnHeph() {
+        GridPoint2 pos = new GridPoint2(23, 20);
+        Entity heph = NPCFactory.createHeph(player.getComponent(NpcInteractionDisplay.class));
+        spawnEntityAt(heph, pos, true, true);
+    }
+
+    private void spawnOrpheus() {
+        GridPoint2 pos = new GridPoint2(20, 15);
+        Entity orpheus = NPCFactory.createOrpheus(player.getComponent(NpcInteractionDisplay.class));
+        spawnEntityAt(orpheus, pos, true, true);
+    }
+
+    private void spawnNereus() {
+        GridPoint2 pos = new GridPoint2(12, 10);
+        Entity nereus = NPCFactory.createNereus();
+        spawnEntityAt(nereus, pos, true, true);
     }
 
     private void playMusic() {

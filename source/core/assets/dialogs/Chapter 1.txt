@@ -1,16 +1,17 @@
 ???: Doctor! Wake up!
-You: Ugh...What happened...Why the power is off? Zoe, is that you? Are you okay? It's too dark now, I have to restore the power.
-Go to the electric switch.
-You are at the electric switch.
+[Zoe0]You: Ugh...What happened...Why the power is off? Zoe, is that you? Are you okay? It's too dark now, I have to restore the power.
+(Go to the electric switch.)
+(You are at the electric switch.)
 You: This does not look right...but I have to fix it first anyway.
 Collect 3 batteries to fix it.
 You have successfully fixed the electricity switch.
 Zoe: No! It's Princess Nereus! She can't be dead! Princess Nereus is the guardian of Atlantis. If she dies, it means that Atlantis is about to sink!
 You: She hurts so bad! We have to help her!
-(CLUE 1: THE BIGGEST WOUND IS ON HER WAIST, AND IT LOOKS LIKE SOMEONE HURT HER)
-(CLUE 2: BLOODSTAIN ARE FROM OUTSIDE, SHE SEEMED TO HOBBLE HERE WITH ALL HER STRENGTH)
-(CLUE 3: SHATTERED SCALE FROM NEREUS)
+[Nereus0](THE BIGGEST WOUND IS ON HER WAIST, AND IT LOOKS LIKE SOMEONE HURT HER)
+[Nereus1](BLOODSTAIN ARE FROM OUTSIDE, SHE SEEMED TO HOBBLE HERE WITH ALL HER STRENGTH)
+[Nereus2](SHATTERED SCALE FROM NEREUS)
 Zoe: No...we are already too late.
 You: Why someone wants to kill Princess Nereus? What should we do?
 Zoe: Doctor, we have to catch the killer who did this to Nereus. We all know that Nereus's scale will contain her memory for 3 days, so we have to collect more of her scales to find out the truth, and save our home Atlantis before it sinks!
 You: You are right. Let's move now. We have only 3 days.
+ENDING

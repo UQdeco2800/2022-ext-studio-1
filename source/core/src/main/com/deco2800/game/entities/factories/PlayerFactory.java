@@ -6,6 +6,7 @@ import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.achievements.AchievementStatsComponent;
 import com.deco2800.game.components.achievements.pojo.AchievementStatus;
+import com.deco2800.game.components.npc.NpcInteractionDisplay;
 import com.deco2800.game.components.player.InventoryComponent;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.components.player.PlayerAnimationController;
@@ -72,15 +73,16 @@ public class PlayerFactory {
             .addComponent(new InventoryComponent())
             .addComponent(inputComponent)
             .addComponent(animator)
+            .addComponent(new CombatStatsComponent(100, 10))
             .addComponent(new PlayerAnimationController())
-            .addComponent(new AchievementStatsComponent(achievementStatusMap));
+            .addComponent(new AchievementStatsComponent(achievementStatusMap))
+            .addComponent(new NpcInteractionDisplay(game));
 
     PhysicsUtils.setScaledCollider(player, 0.3f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(TextureRenderComponent.class).scaleEntity();
     return player;
   }
-
   private PlayerFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

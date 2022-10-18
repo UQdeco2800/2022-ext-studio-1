@@ -1,5 +1,4 @@
 You: This woman seems know something, maybe she can help me.
-(PLAYER START TO TALK TO METIS)
 You: Who are you? Do you know anything about this scale?
-???: My name is Metis, and yes I can read the message in your scale. I can see that Nereus got injured from a man who was really close to her. It looked like a usual meeting, but that man hurt her when he hugged her. The damage of this scale is too bad, I could not see enough of it.
+[Metis0]???: My name is Metis, and yes I can read the message in your scale. I can see that Nereus got injured from a man who was really close to her. It looked like a usual meeting, but that man hurt her when he hugged her. The damage of this scale is too bad, I could not see enough of it.
 You: No, your help is important for us! We are looking for the murderer who did it to Nereus. You have to help us! What else could you see?
