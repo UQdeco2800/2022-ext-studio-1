@@ -104,6 +104,8 @@ public class GdxGame extends Game {
         return new CountdownScreen(this);
       case ENDING:
         return new EndingMenuScreen(this);
+      case TIME_OVER:
+        return new TimeIsOverScreen(this);
       default:
         return null;
     }
@@ -112,7 +114,7 @@ public class GdxGame extends Game {
   public enum ScreenType {
 
     MAIN_MENU, MAIN_GAME, LOAD_GAME, ACHIEVEMENTS, STORYLINE, TUTORIAL, SETTINGS, MAP, COUNTDOWN_SCREEN, LAB_1, LAB_2,
-    LAB_3, LAB_4, LAB_5, LAB_HOUSE, MAIN_GAME_Test, ENDING,
+    LAB_3, LAB_4, LAB_5, LAB_HOUSE, MAIN_GAME_Test, ENDING,TIME_OVER
 
   }
 
