@@ -134,7 +134,7 @@ public class countdownDisplay extends UIComponent {
         counterLabel = new Label(String.valueOf(timeRemaining), skin);
         counterLabel.setPosition((float) (stage.getWidth() * 0.85), (float) (stage.getHeight() * 0.3));
 
-        counterLabel.setFontScale(1.25F);
+        counterLabel.setFontScale(1.5F);
 
         widgetBackground = new Table();
         widgetBackground.add(widget).width(250).height(200);
@@ -147,6 +147,7 @@ public class countdownDisplay extends UIComponent {
 
         stack.add(widgetBackground);
         stack.add(timerText);
+        timerText.pad(0, 50, 10, 0);
         stack.setPosition((float) (stage.getWidth() * 0.8), (float) (stage.getHeight() * 0.15));
 
         stage.addActor(stack);
