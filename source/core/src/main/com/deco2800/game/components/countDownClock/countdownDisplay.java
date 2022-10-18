@@ -35,7 +35,7 @@ public class countdownDisplay extends UIComponent {
 
     private boolean stop=false;
     private float timeCount;
-
+    public boolean paused = false;
     Table root;
     Table widgetBackground;
     Table timerText;
