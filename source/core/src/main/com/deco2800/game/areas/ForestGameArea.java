@@ -116,6 +116,7 @@ public class ForestGameArea extends GameArea {
     private Entity player;
 
     public Entity key;
+    private boolean damageFlashDisplayed = false;
 
     private GdxGame game;
 
@@ -332,14 +333,22 @@ public class ForestGameArea extends GameArea {
         return newPlayer;
     }
     public void updatePlayerHealth(int health) {
-        damageFlash = new DamageFlashDisplayComponent();
+
+        if (damageFlashDisplayed == false) {
+            damageFlash = new DamageFlashDisplayComponent();
+            damageFlash.waitTime();
+        } else {
+            damageFlashDisplayed = true;
+        }
+
+
         if (health <= 0)
         {
             logger.debug("Game Over: Lost Health");
             game.theGameScreen.changeStatus();
             new GameOverDisplay(this.game).create();
         }
-        damageFlash.waitTime();
+
     }
     public void spawnTimeConsumeableItem() {
 //    Entity item = ConsumableItemFactory.createItem(player, "images/inventory/time_item.png");
