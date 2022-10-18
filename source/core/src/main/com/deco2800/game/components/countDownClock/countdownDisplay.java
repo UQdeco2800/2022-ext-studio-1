@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.components.gameoverScreen.GameOverDisplay;
+import com.deco2800.game.components.player.PlayerProfileDisplay;
 import com.deco2800.game.ui.UIComponent;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,15 +27,15 @@ import org.slf4j.LoggerFactory;
 public class countdownDisplay extends UIComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(countdownDisplay.class);
-    private   final GdxGame game;
-    private float timeRemaining;
+    private final GdxGame game;
+    public float timeRemaining;
 
     private static final String buttonPath = "sounds/button.mp3";
 
 
     private boolean stop=false;
     private float timeCount;
-
+    public boolean paused = false;
     Table root;
     Table widgetBackground;
     Table timerText;
@@ -61,8 +63,7 @@ public class countdownDisplay extends UIComponent {
 
         if (this.timeRemaining <= 0) {
             counterLabel.setText("GAME OVER!");
-
-            game.theGameScreen.changeStatus();
+            setGameOver();
             game.theGameScreen.setterForCountDown();
         }
 
@@ -95,7 +96,6 @@ public class countdownDisplay extends UIComponent {
                 equMins=0;
                 equSeconds=(int)timeRemaining;
             }
-
             if (equMins < 10) {
                 minsString = "0"+String.valueOf(equMins);
             } else {
@@ -116,8 +116,6 @@ public class countdownDisplay extends UIComponent {
 
             counterLabel.setText(hoursString + ":" + minsString + ":" + secondsString);
         }
-
-
     }
 
     private void addActors() {
@@ -149,6 +147,26 @@ public class countdownDisplay extends UIComponent {
         Table pauseBtn = pauseButton();
         pauseBtn.setPosition((float) (stage.getWidth() * 0.965), (float) (stage.getHeight() * 0.24));
         stage.addActor(pauseBtn);
+
+    }
+
+    public void stopCountDownAssets()
+    {
+        pauseGame();
+        logger.debug("Game Over: Ran out of time");
+        stop = true;
+    }
+    public void setGameOver(){
+        stopCountDownAssets();
+        game.theGameScreen.changeStatus();
+        new GameOverDisplay(this.game).create();
+    }
+    public void pauseGame() {
+        this.paused = true;
+    }
+
+    private void exitScreen() {
+        game.setScreen(ScreenType.MAIN_GAME);
     }
 
 
