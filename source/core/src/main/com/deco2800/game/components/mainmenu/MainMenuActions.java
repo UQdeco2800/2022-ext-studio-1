@@ -36,6 +36,7 @@ public class MainMenuActions extends Component {
    */
   private void onStart() {
     logger.info("Start game");
+    //game.setGameTime(7260);
     game.setScreen(GdxGame.ScreenType.MAIN_GAME);
   }
 
