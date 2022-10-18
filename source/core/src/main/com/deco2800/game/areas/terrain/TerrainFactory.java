@@ -19,9 +19,9 @@ import com.deco2800.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
+  private static  GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
   private static final int TUFT_TILE_COUNT = 30;
-  private static final int ROCK_TILE_COUNT = 30;
+  private static int ROCK_TILE_COUNT = 30;
 
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
@@ -56,7 +56,19 @@ public class TerrainFactory {
   public TerrainComponent createTerrain(TerrainType terrainType) {
     ResourceService resourceService = ServiceLocator.getResourceService();
     switch (terrainType) {
+      case FOREST_LAB:
+        MAP_SIZE = new GridPoint2(30, 60);
+        ROCK_TILE_COUNT = 60;
+        TextureRegion labBj =
+                new TextureRegion(resourceService.getAsset("images/lab/bj.png", Texture.class));
+        TextureRegion labTuft =
+                new TextureRegion(resourceService.getAsset("images/lab/bj.png", Texture.class));
+        TextureRegion labRocks =
+                new TextureRegion(resourceService.getAsset("images/lab/bj.png", Texture.class));
+        return createForestDemoTerrain(0.5f, labBj, labTuft, labRocks);
       case FOREST_DEMO:
+        MAP_SIZE = new GridPoint2(30, 30);
+        ROCK_TILE_COUNT = 30;
         TextureRegion orthoGrass =
             new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
         TextureRegion orthoTuft =
@@ -153,6 +165,7 @@ public class TerrainFactory {
    * different orientations.
    */
   public enum TerrainType {
+    FOREST_LAB,
     FOREST_DEMO,
     FOREST_DEMO_ISO,
     FOREST_DEMO_HEX
