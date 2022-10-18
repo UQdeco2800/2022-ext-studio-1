@@ -58,18 +58,21 @@ public class PausedWindow extends UIComponent {
         Texture resumeBtnTexture = new Texture(Gdx.files.internal("images/countdown_clock/resume.png"));
         TextureRegionDrawable resumeBtnDrawable = new TextureRegionDrawable(resumeBtnTexture);
 
-        Button resumeButton = new ImageButton(resumeBtnDrawable);
+        Texture restartBtnTexture = new Texture(Gdx.files.internal("images/countdown_clock/replay1.png"));
+        TextureRegionDrawable restartBtnDrawable = new TextureRegionDrawable(restartBtnTexture);
 
-        TextButton restartBtn = new TextButton("RESTART", skin);
+        Button resumeButton = new ImageButton(resumeBtnDrawable);
+        Button restartButton = new ImageButton(restartBtnDrawable);
 
         Image pausedWindowImage = new Image(pausedWindow);
+        
         background = new Table();
         background.setFillParent(true);
         background.add(pausedWindowImage).width(bgWidth).height(bgHeight);
 
         buttons = new Table();
         buttons.add(resumeButton).expandY().width(100).height(100);
-        buttons.add(restartBtn).expandY();
+        buttons.add(restartButton).expandY().width(100).height(100);
 
         stack = new Stack();
         stack.add(background);
@@ -91,7 +94,7 @@ public class PausedWindow extends UIComponent {
                     }
                 });
 
-        restartBtn.addListener(
+        restartButton.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
