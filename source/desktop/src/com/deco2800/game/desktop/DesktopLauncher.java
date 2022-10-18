@@ -10,6 +10,7 @@ public class DesktopLauncher {
     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
     //Display the window icon
     config.setWindowIcon("images/icon.png");
+    config.setTitle("Atlantis: Reborn Evil Shadow");
     new Lwjgl3Application(new GdxGame(), config);
   }
 }
