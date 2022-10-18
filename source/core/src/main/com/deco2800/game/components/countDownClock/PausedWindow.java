@@ -4,12 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.player.PlayerProfileDisplay;
 import com.deco2800.game.music.MusicStuff;
@@ -55,14 +54,18 @@ public class PausedWindow extends UIComponent {
         Texture pauseWindowTexture = new Texture(Gdx.files.internal("images/countdown_clock/pausedWindow.png"));
         TextureRegionDrawable pausedWindow = new TextureRegionDrawable(pauseWindowTexture);
 
+        Texture resumeBtnTexture = new Texture(Gdx.files.internal("images/countdown_clock/resume.png"));
+        TextureRegionDrawable resumeBtnDrawable = new TextureRegionDrawable(resumeBtnTexture);
+
+        Button resumeButton = new ImageButton(resumeBtnDrawable);
+
         Image pausedWindowImage = new Image(pausedWindow);
         background = new Table();
         background.setFillParent(true);
         background.add(pausedWindowImage).width(bgWidth).height(bgHeight);
 
         buttons = new Table();
-        TextButton resumeBtn = new TextButton("RESUME", skin);
-        buttons.add(resumeBtn);
+        buttons.add(resumeButton).expandY().width(100).height(100);
 
         stack = new Stack();
         stack.add(background);
@@ -72,7 +75,7 @@ public class PausedWindow extends UIComponent {
 
         stage.addActor(stack);
 
-        resumeBtn.addListener(
+        resumeButton.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {

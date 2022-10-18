@@ -63,22 +63,14 @@ public class countdownDisplay extends UIComponent {
     public void update() {
         super.update();
         timeCount = Gdx.graphics.getDeltaTime();
-        //timeRemaining= game.gameTimeVar;
 
         if (this.timeRemaining <= 0) {
             counterLabel.setText("GAME OVER!");
 
             game.theGameScreen.changeStatus();
-            //game.gameTimeVar=0;
             game.theGameScreen.setterForCountDown();
-
-           // logger.info("negative time: {}", String.valueOf(this.getRemainingTime()));
-           // logger.info(counterLabel.getText().toString());
-//            EndingMenuDisplay.setLose();
-//            System.out.println("111");
-//            entity.getEvents().trigger("ending");
-//
         }
+
         if(timeRemaining>0 && game.theGameScreen.getStatus() == false) {
             int equHours;
             int equMins;
@@ -89,7 +81,7 @@ public class countdownDisplay extends UIComponent {
             String secondsString;
 
             this.timeRemaining -= timeCount;
-           // game.gameTimeVar =timeRemaining;
+
             if (timeRemaining>=60){
                 float mins = timeRemaining/60;
                 if (mins>=60){
@@ -97,16 +89,13 @@ public class countdownDisplay extends UIComponent {
                     equHours = hours;
                     equMins =(int) (mins-equHours*60);
                     equSeconds=(int)(timeRemaining-equHours*60*60-equMins*60);
-
-
-                }else{
+                } else{
                     equHours=0;
                     equMins=(int) mins;
                     equSeconds=(int)(timeRemaining-equMins*60);
 
                 }
-
-            }else{
+            } else {
                 equHours=0;
                 equMins=0;
                 equSeconds=(int)timeRemaining;
@@ -130,10 +119,7 @@ public class countdownDisplay extends UIComponent {
                 secondsString = String.valueOf(equSeconds);
             }
 
-//            counterLabel.setText(String.valueOf(equHours+":"+equMins+":"+equSeconds));
             counterLabel.setText(hoursString + ":" + minsString + ":" + secondsString);
-         //   logger.info("remaining time: {}", String.valueOf(this.getRemainingTime()));
-          //  logger.info(counterLabel.getText().toString());
         }
 
 
@@ -141,7 +127,7 @@ public class countdownDisplay extends UIComponent {
 
     private void addActors() {
 
-        Texture widgetTexture = new Texture(Gdx.files.internal("images/countdown_clock/timerWidget.png"));
+        Texture widgetTexture = new Texture(Gdx.files.internal("images/countdown_clock/time.png"));
         TextureRegionDrawable widgetDrawable = new TextureRegionDrawable(widgetTexture);
         Image widget = new Image(widgetDrawable);
 
@@ -151,51 +137,32 @@ public class countdownDisplay extends UIComponent {
         counterLabel.setFontScale(1.25F);
 
         widgetBackground = new Table();
-        widgetBackground.add(widget);
+        widgetBackground.add(widget).width(250).height(200);
         timerText = new Table();
         timerText.add(counterLabel);
-//        root = new Table();
 
-        widgetBackground.setSize((float) (timerText.getWidth() * 1.5), (float) (timerText.getHeight() * 1.5));
+        widgetBackground.setSize((float) (timerText.getWidth() * 1.48), (float) (timerText.getHeight() * 1.5));
 
         Stack stack = new Stack();
 
         stack.add(widgetBackground);
         stack.add(timerText);
+        stack.setPosition((float) (stage.getWidth() * 0.8), (float) (stage.getHeight() * 0.15));
 
-        stack.setPosition((float) (stage.getWidth() * 0.88), (float) (stage.getHeight() * 0.3));
-
-//        stage.addActor(counterLabel);
-//        root.add(stack);
         stage.addActor(stack);
         Table pauseBtn = pauseButton();
-        pauseBtn.setPosition((float) (stage.getWidth() * 0.9325), (float) (stage.getHeight() * 0.29));
-//        root.add(pauseBtn);
-
-//        Table resumeBtn = resumeButton();
+        pauseBtn.setPosition((float) (stage.getWidth() * 0.965), (float) (stage.getHeight() * 0.24));
         stage.addActor(pauseBtn);
-//        stage.addActor(resumeBtn);
-
-
-
     }
 
 
     //Make the pause button, and change stop  to true when clicked
     private Table pauseButton(){
-//        TextButton pauseButton = new TextButton("PAUSE", skin);
 
         Texture pauseBtnTexture = new Texture(Gdx.files.internal("images/countdown_clock/pause.png"));
         TextureRegionDrawable pauseBtnDrawable = new TextureRegionDrawable(pauseBtnTexture);
 
-        Texture resumeBtnTexture = new Texture(Gdx.files.internal("images/countdown_clock/start.png"));
-        TextureRegionDrawable resumeBtnDrawable = new TextureRegionDrawable(resumeBtnTexture);
-
         Button pauseButton = new ImageButton(pauseBtnDrawable);
-        Button resumeButton = new ImageButton(resumeBtnDrawable);
-
-//        pauseResumeBtn = pauseButton;
-
 
         pauseButton.addListener(
                 new ChangeListener() {
@@ -204,9 +171,6 @@ public class countdownDisplay extends UIComponent {
                         MusicStuff.playMusic(buttonPath, false);
                         logger.debug("pause button clicked");
                         stop = true;
-                        //  MainGameScreen.stopGame = true;
-                        //  MainGameScreen.render.stopGame = true;
-                        // game.stopGame = true;
                         pausedWindow = new PausedWindow(game);
                         pausedWindow.create();
                         game.theGameScreen.changeStatus();
@@ -220,27 +184,6 @@ public class countdownDisplay extends UIComponent {
         return table;
 
 
-    }
-
-
-    //Make the resume button, change stop to false when clicked
-    private Table resumeButton(){
-        TextButton resumeButton = new TextButton("RESUME", skin);
-
-        resumeButton.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        MusicStuff.playMusic(buttonPath, false);
-                        logger.debug("resume button clicked");
-                        stop = false;
-                        game.theGameScreen.changeStatus2();
-                    }
-                });
-
-        Table table =new Table();
-        table.add(resumeButton).expandX().right().pad(0f, 2150f, 400f, 0f);
-        return table;
     }
 
     public void increaseRemainingTime(float increment) {
