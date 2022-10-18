@@ -14,6 +14,7 @@ import com.deco2800.game.components.npc.NpcInteractionDisplay;
 import com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplayNew;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.components.countDownClock.PausedWindow;
+import com.deco2800.game.components.endingmenu.EndingMenuDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.configs.PlayerConfig;
@@ -129,32 +130,18 @@ public class MainGameScreen extends ScreenAdapter {
 
   @Override
   public void render(float delta) {
-    //physicsEngine.update();
-    //ServiceLocator.getEntityService().update();
-    //renderer.render();
     if (stopGame==true){
       renderer.render();
       ServiceLocator.getEntityService().update();
-
-
-
-
-
-
-
-    }else {
+    } else {
       renderer.render();
       ServiceLocator.getEntityService().update();
       physicsEngine.update();
-
-
-
-
     }
     if(timeTime==false){
       System.out.println("Testing:Game is over");
-      game.setScreen(GdxGame.ScreenType.TIME_OVER);
-
+      EndingMenuDisplay.setLose();
+      game.setScreen(GdxGame.ScreenType.ENDING);
     }
   }
 
