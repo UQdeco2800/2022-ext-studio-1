@@ -33,22 +33,17 @@ public class countdownDisplay extends UIComponent {
 
     private boolean stop=false;
     private float timeCount;
-    public boolean paused = false;
 
     Table root;
     Table widgetBackground;
     Table timerText;
 
-    Button pauseResumeBtn;
-
     private PausedWindow pausedWindow;
-
-    //private float theTime = game.gameTimeVar;
 
     public countdownDisplay(GdxGame game) {
         super();
         this.game = game;
-        this.timeRemaining = 300; //- (ServiceLocator.getTimeSource().getTime() / 1000);
+        this.timeRemaining = 300;
         timeCount = 0;
     }
     public Label counterLabel;
@@ -170,7 +165,7 @@ public class countdownDisplay extends UIComponent {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         MusicStuff.playMusic(buttonPath, false);
-                        logger.debug("pause button clicked");
+                        logger.info("pause button clicked");
                         stop = true;
                         pausedWindow = new PausedWindow(game);
                         pausedWindow.create();
