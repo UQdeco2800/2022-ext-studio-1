@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.player.PlayerProfileDisplay;
+import com.deco2800.game.entities.Entity;
 import com.deco2800.game.music.MusicStuff;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -59,6 +60,8 @@ public class PausedWindow extends UIComponent {
 
         Button resumeButton = new ImageButton(resumeBtnDrawable);
 
+        TextButton restartBtn = new TextButton("RESTART", skin);
+
         Image pausedWindowImage = new Image(pausedWindow);
         background = new Table();
         background.setFillParent(true);
@@ -66,6 +69,7 @@ public class PausedWindow extends UIComponent {
 
         buttons = new Table();
         buttons.add(resumeButton).expandY().width(100).height(100);
+        buttons.add(restartBtn).expandY();
 
         stack = new Stack();
         stack.add(background);
@@ -86,6 +90,16 @@ public class PausedWindow extends UIComponent {
                         resumeGame();
                     }
                 });
+
+        restartBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("restart button clicked");
+                        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+                    }
+                });
+
     }
 
     public boolean getStatus() {
