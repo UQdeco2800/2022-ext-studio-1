@@ -103,6 +103,8 @@ public class MainGameScreen extends ScreenAdapter {
 
   private boolean timeTime=true;
 
+  private boolean checkGameResult = false;
+
 
 
   public MainGameScreen(GdxGame game, boolean stop,float gameTime) {
@@ -150,8 +152,15 @@ public class MainGameScreen extends ScreenAdapter {
     }
     if(timeTime==false){
       System.out.println("Testing:Game is over");
-      EndingMenuDisplay.setLose();
-      game.setScreen(GdxGame.ScreenType.ENDING);
+      if(checkGameResult==false) {
+        EndingMenuDisplay.setLose();
+        game.setScreen(GdxGame.ScreenType.ENDING);
+      }
+      if(checkGameResult==true){
+        EndingMenuDisplay.setWin();
+        game.setScreen(GdxGame.ScreenType.ENDING);
+
+      }
     }
   }
 
@@ -263,6 +272,11 @@ public class MainGameScreen extends ScreenAdapter {
   }
   public void setterForCountDown(){
     timeTime =false;
+
+  }
+
+  public void setterForGameResult(){
+    checkGameResult=true;
 
   }
 
