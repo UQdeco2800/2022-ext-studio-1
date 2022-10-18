@@ -153,6 +153,7 @@ public class MainGameScreen extends ScreenAdapter {
     }
     if(timeTime==false){
       System.out.println("Testing:Game is over");
+      game.setScreen(GdxGame.ScreenType.TIME_OVER);
 
     }
   }
