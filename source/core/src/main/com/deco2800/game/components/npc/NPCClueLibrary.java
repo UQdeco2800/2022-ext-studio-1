@@ -1,7 +1,11 @@
 package com.deco2800.game.components.npc;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Singleton class for NPC Clue Library
@@ -71,5 +75,14 @@ public class NPCClueLibrary {
             clueLibrary = new NPCClueLibrary();
 
         return clueLibrary;
+    }
+
+    public void addClue(String npcName, int key) {
+        try {
+            Method method = this.getClass().getMethod("add" + npcName + "Clue" + key);
+            Object invoke = method.invoke(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

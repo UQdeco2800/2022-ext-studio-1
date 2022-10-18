@@ -37,6 +37,8 @@ public class NpcInteractionDisplay extends UIComponent {
     private boolean dialogRepeated = false;
     private Window npcEvictionMenuWindow;
 
+    private NPCClueLibrary clueLibrary;
+
     public NpcInteractionDisplay(GdxGame game) {
         super();
         this.game = game;
@@ -45,6 +47,7 @@ public class NpcInteractionDisplay extends UIComponent {
         prompt.setWidth(10f);
         promptBox = new Image(ServiceLocator.getResourceService().getAsset(
                 "images/npc_interaction/dialog_box.png", Texture.class));
+        clueLibrary = NPCClueLibrary.getInstance();
     }
 
     @Override
@@ -286,7 +289,7 @@ public class NpcInteractionDisplay extends UIComponent {
 
     private void addListenerAfterSelection() {
         root = root.getNext();
-        dialog.setText(root.getDialog());
+        setTextAndAddClue(root.getDialog());
         dialog.setPosition((float) (stage.getWidth() * 0.1), (float) (stage.getHeight() * 0.1));
         dialogBox.setPosition((float) (stage.getWidth() * 0.05), 0);
         dialogBox.addListener(clickListener);
@@ -295,7 +298,7 @@ public class NpcInteractionDisplay extends UIComponent {
     private void chapter1Listener(Iterator<String> it) {
 //        if (step != 6 || SwitchFactory.isWorking) {
         if (it.hasNext()) {
-            dialog.setText(it.next());
+            setTextAndAddClue(it.next());
             if (step == 6) {
                 dispose();
             }
@@ -327,7 +330,7 @@ public class NpcInteractionDisplay extends UIComponent {
                     dialogRepeated = false;
                     step = 25;
                 }
-                dialog.setText(root.getDialog());
+                setTextAndAddClue(root.getDialog());
                 root = root.getNext();
             }
         } else if (root.isSelectionPoint()) {
@@ -349,7 +352,7 @@ public class NpcInteractionDisplay extends UIComponent {
 
     private void chapter3Listener() {
         if (root.getNext() != null) {
-            dialog.setText(root.getDialog());
+            setTextAndAddClue(root.getDialog());
             root = root.getNext();
         } else if (root.isSelectionPoint()) {
             setSelection();
@@ -366,7 +369,7 @@ public class NpcInteractionDisplay extends UIComponent {
 
     private void chapter4Listener(Iterator<String> it) {
         if (it.hasNext()) {
-            dialog.setText(it.next());
+            setTextAndAddClue(it.next());
             step++;
         } else {// chapter 4 ends
             dialog.remove();
@@ -379,7 +382,7 @@ public class NpcInteractionDisplay extends UIComponent {
 
     private void chapter5Listener() {
         if (root.getNext() != null) {
-            dialog.setText(root.getDialog());
+            setTextAndAddClue(root.getDialog());
             root = root.getNext();
         } else if (root.isSelectionPoint()) {
             setSelection();
@@ -538,9 +541,20 @@ public class NpcInteractionDisplay extends UIComponent {
     }
 
     private void showSelectionDialog() {
-        dialog.setText(root.getDialog());
+        setTextAndAddClue(root.getDialog());
         stage.addActor(dialogBox);
         stage.addActor(dialog);
         dialogBox.addListener(clickListener);
+    }
+    private void setTextAndAddClue(String next) {
+        String[] split = next.split("]");
+        if (split.length > 1) {
+            String npcName = split[0].substring(1, split[0].length() - 1);
+            int key = Integer.parseInt(split[0].substring(split[0].length() - 1));
+            clueLibrary.addClue(npcName, key);
+            dialog.setText(split[1]);
+        } else {
+            dialog.setText(next);
+        }
     }
 }
