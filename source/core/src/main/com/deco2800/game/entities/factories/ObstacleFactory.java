@@ -22,7 +22,7 @@ public class ObstacleFactory {
   public static Entity createTree() {
     Entity tree =
         new Entity()
-            .addComponent(new TextureRenderComponent("images/tree.png"))
+            .addComponent(new TextureRenderComponent("images/village/tree.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
@@ -33,10 +33,11 @@ public class ObstacleFactory {
     return tree;
   }
 
-  public static Entity createTreeByNum(int num,float height,float scaleX,float scaleY) {
+
+  public static Entity createVillage(int num,float height,float scaleX,float scaleY) {
     Entity tree =
             new Entity()
-                    .addComponent(new TextureRenderComponent("images/village/tree"+num+".png"))
+                    .addComponent(new TextureRenderComponent("images/village/material"+num+".png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
@@ -47,10 +48,10 @@ public class ObstacleFactory {
     return tree;
   }
 
-  public static Entity createBuilding(int num,float height,float scaleX,float scaleY) {
+  public static Entity createMaterial(int num,float height,float scaleX,float scaleY) {
     Entity tree =
             new Entity()
-                    .addComponent(new TextureRenderComponent("images/village/building"+num+".png"))
+                    .addComponent(new TextureRenderComponent("images/lab/material"+num+".png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
@@ -58,76 +59,6 @@ public class ObstacleFactory {
     tree.getComponent(TextureRenderComponent.class).scaleEntity();
     tree.scaleHeight(height);
     PhysicsUtils.setScaledCollider(tree, scaleX, scaleY);
-    return tree;
-  }
-
-  public static Entity createMine() {
-    Entity tree =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/village/mine.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
-    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    tree.getComponent(TextureRenderComponent.class).scaleEntity();
-    tree.scaleHeight(1f);
-    PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
-    return tree;
-  }
-
-  public static Entity createWell() {
-    Entity tree =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/village/well.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
-    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    tree.getComponent(TextureRenderComponent.class).scaleEntity();
-    tree.scaleHeight(1f);
-    PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
-    return tree;
-  }
-
-  public static Entity createWood() {
-    Entity tree =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/village/wood.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
-    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    tree.getComponent(TextureRenderComponent.class).scaleEntity();
-    tree.scaleHeight(1f);
-    PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
-    return tree;
-  }
-
-  public static Entity createEnclosure() {
-    Entity tree =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/village/enclosure.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
-    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    tree.getComponent(TextureRenderComponent.class).scaleEntity();
-    tree.scaleHeight(1f);
-    PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
-    return tree;
-  }
-
-  public static Entity createStela() {
-    Entity tree =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/village/stela.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
-    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    tree.getComponent(TextureRenderComponent.class).scaleEntity();
-    tree.scaleHeight(1f);
-    PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
     return tree;
   }
 

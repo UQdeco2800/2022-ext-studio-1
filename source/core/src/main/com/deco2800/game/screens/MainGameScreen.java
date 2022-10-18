@@ -224,6 +224,15 @@ public class MainGameScreen extends ScreenAdapter {
 
     ServiceLocator.getEntityService().register(ui);
   }
+
+  public void switchLevel(){
+    forestGameArea.dispose();
+    TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+    this.forestGameArea = new ForestGameArea(terrainFactory, game);
+    forestGameArea.nextLevel();
+    forestGameArea.create();
+  }
+
   public void changeStatus() {
 
     stopGame=true;
