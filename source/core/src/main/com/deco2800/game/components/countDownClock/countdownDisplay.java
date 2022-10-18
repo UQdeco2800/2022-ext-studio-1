@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class countdownDisplay extends UIComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(countdownDisplay.class);
-    private   GdxGame game;
+    private   final GdxGame game;
     private float timeRemaining;
 
     private static final String buttonPath = "sounds/button.mp3";
@@ -48,7 +48,7 @@ public class countdownDisplay extends UIComponent {
     public countdownDisplay(GdxGame game) {
         super();
         this.game = game;
-       // this.timeRemaining = 7260; //- (ServiceLocator.getTimeSource().getTime() / 1000);
+        this.timeRemaining = 7260; //- (ServiceLocator.getTimeSource().getTime() / 1000);
         timeCount = 0;
     }
     public Label counterLabel;
@@ -63,13 +63,13 @@ public class countdownDisplay extends UIComponent {
     public void update() {
         super.update();
         timeCount = Gdx.graphics.getDeltaTime();
-        timeRemaining= game.gameTimeVar;
+        //timeRemaining= game.gameTimeVar;
 
         if (this.timeRemaining <= 0) {
             counterLabel.setText("GAME OVER!");
 
             game.theGameScreen.changeStatus();
-            game.gameTimeVar=0;
+            //game.gameTimeVar=0;
 
            // logger.info("negative time: {}", String.valueOf(this.getRemainingTime()));
            // logger.info(counterLabel.getText().toString());
@@ -88,7 +88,7 @@ public class countdownDisplay extends UIComponent {
             String secondsString;
 
             this.timeRemaining -= timeCount;
-            game.gameTimeVar =timeRemaining;
+           // game.gameTimeVar =timeRemaining;
             if (timeRemaining>=60){
                 float mins = timeRemaining/60;
                 if (mins>=60){
@@ -243,14 +243,14 @@ public class countdownDisplay extends UIComponent {
     }
 
     public void increaseRemainingTime(float increment) {
-        game.gameTimeVar += increment;
+        this.timeRemaining += increment;
     }
 
     public float getRemainingTime() {
-        return game.gameTimeVar;
+        return this.timeRemaining;
     }
     public void setTimeRemaining(float time){
-        game.gameTimeVar = time;
+        this.timeRemaining = time;
     }
 
     @Override
