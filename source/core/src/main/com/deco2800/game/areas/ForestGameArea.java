@@ -131,7 +131,7 @@ public class ForestGameArea extends GameArea {
 
     private final String[] levelName = {"village","lab"};
 
-    private static int levelIndex = 0;
+    private static int levelIndex = 1;
 
     private Entity player;
 
