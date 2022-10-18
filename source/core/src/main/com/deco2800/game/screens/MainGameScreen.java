@@ -150,17 +150,19 @@ public class MainGameScreen extends ScreenAdapter {
       ServiceLocator.getEntityService().update();
       physicsEngine.update();
     }
-    if(timeTime==false){
-      System.out.println("Testing:Game is over");
-      if(checkGameResult==false) {
+    if(timeTime==false && checkGameResult==false){
+
+        System.out.println("Testing:Game is over");
         EndingMenuDisplay.setLose();
         game.setScreen(GdxGame.ScreenType.ENDING);
-      }
-      if(checkGameResult==true){
-        EndingMenuDisplay.setWin();
-        game.setScreen(GdxGame.ScreenType.ENDING);
 
-      }
+
+    }
+    if(timeTime==false && checkGameResult==true){
+      System.out.println("Testing:Game is over");
+      EndingMenuDisplay.setWin();
+      game.setScreen(GdxGame.ScreenType.ENDING);
+
     }
   }
 
