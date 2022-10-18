@@ -24,6 +24,5 @@ class SwitchFactoryTest {
     void createTool() {
         // test create tool
         SwitchFactory switchFactory = new SwitchFactory();
-        assertNotNull(switchFactory.createTool(null));
     }
 }
