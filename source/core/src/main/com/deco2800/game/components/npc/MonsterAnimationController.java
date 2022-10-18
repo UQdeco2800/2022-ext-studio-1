@@ -19,7 +19,6 @@ public class MonsterAnimationController extends Component {
     void animateDown() {
         animator.startAnimation("down");
     }
-
     void animateUp() {
         animator.startAnimation("up");
     }

@@ -4,12 +4,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.achievements.AchievementStatsComponent;
 import com.deco2800.game.components.achievements.pojo.AchievementStatus;
-import com.deco2800.game.components.player.InventoryComponent;
-import com.deco2800.game.components.player.PlayerActions;
-import com.deco2800.game.components.player.PlayerAnimationController;
-import com.deco2800.game.components.player.PlayerStatsDisplay;
+import com.deco2800.game.components.player.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.files.FileLoader;
@@ -57,6 +55,15 @@ public class PlayerFactory {
     animator.addAnimation("upAttack",0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("leftAttack",0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("rightAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("gunRightAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("gunLeftAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("gunUpAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("gunDownAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("knifeRightAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("knifeLeftAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("knifeDownAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("knifeUpAttack",0.1f, Animation.PlayMode.LOOP);
+
 
 
     AchievementService achievementService = ServiceLocator.getAchievementService();
@@ -66,16 +73,20 @@ public class PlayerFactory {
         new Entity()
             .addComponent(new TextureRenderComponent("images/player_front.png"))
             .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions(game))
             .addComponent(new InventoryComponent())
+            .addComponent(new CombatStatsComponent(stats.health, stats.health))
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())
-            .addComponent(new AchievementStatsComponent(achievementStatusMap));
+            .addComponent(new AchievementStatsComponent(achievementStatusMap))
+            .addComponent(new FistAttackComponent(6f))
+            .addComponent(new KnifeAttackComponent())
+            .addComponent(new GunAttackComponent(10f));
 
-    PhysicsUtils.setScaledCollider(player, 0.3f, 0.3f);
+    PhysicsUtils.setScaledCollider(player, 0.9f, 0.4f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(TextureRenderComponent.class).scaleEntity();
     return player;

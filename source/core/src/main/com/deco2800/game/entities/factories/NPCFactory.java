@@ -65,13 +65,13 @@ public class NPCFactory {
                     .addComponent(new PhysicsMovementComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 4f))
                     .addComponent(aiComponent)
                     .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
                     .addComponent(animator)
                     .addComponent(new MonsterAnimationController());
 
-    PhysicsUtils.setScaledCollider(knight, 0.4f, 0.4f);
+    PhysicsUtils.setScaledCollider(knight, 0.9f, 0.4f);
     knight.setScale(1.2f,1.2f);
     logger.debug("Create a Knight");
     return knight;
@@ -241,13 +241,14 @@ public class NPCFactory {
         new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
             .addTask(new ChaseTask(target, 10, 3f, 4f));
+
     Entity npc =
         new Entity()
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+            //.addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 4f))
             .addComponent(aiComponent);
 
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
