@@ -48,7 +48,7 @@ public class countdownDisplay extends UIComponent {
     public countdownDisplay(GdxGame game) {
         super();
         this.game = game;
-        this.timeRemaining = 10; //- (ServiceLocator.getTimeSource().getTime() / 1000);
+        this.timeRemaining = 300; //- (ServiceLocator.getTimeSource().getTime() / 1000);
         timeCount = 0;
     }
     public Label counterLabel;
