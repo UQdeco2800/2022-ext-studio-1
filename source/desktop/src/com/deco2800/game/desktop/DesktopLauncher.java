@@ -8,6 +8,8 @@ import com.deco2800.game.GdxGame;
 public class DesktopLauncher {
   public static void main(String[] arg) {
     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+    //Display the window icon
+    config.setWindowIcon("images/icon.png");
     new Lwjgl3Application(new GdxGame(), config);
   }
 }
