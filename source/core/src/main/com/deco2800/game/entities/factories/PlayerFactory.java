@@ -6,6 +6,7 @@ import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.achievements.AchievementStatsComponent;
 import com.deco2800.game.components.achievements.pojo.AchievementStatus;
+import com.deco2800.game.components.npc.NpcInteractionDisplay;
 import com.deco2800.game.components.player.InventoryComponent;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.components.player.PlayerAnimationController;
@@ -73,7 +74,8 @@ public class PlayerFactory {
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())
-            .addComponent(new AchievementStatsComponent(achievementStatusMap));
+            .addComponent(new AchievementStatsComponent(achievementStatusMap))
+            .addComponent(new NpcInteractionDisplay(game));
 
     PhysicsUtils.setScaledCollider(player, 0.3f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
