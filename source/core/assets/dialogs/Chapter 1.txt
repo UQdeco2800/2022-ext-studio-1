@@ -4,6 +4,7 @@ Go to the electric switch.
 You are at the electric switch.
 You: This does not look right...but I have to fix it first anyway.
 Collect 3 batteries to fix it.
+You have successfully fixed the electricity switch.
 Zoe: No! It's Princess Nereus! She can't be dead! Princess Nereus is the guardian of Atlantis. If she dies, it means that Atlantis is about to sink!
 You: She hurts so bad! We have to help her!
 (CLUE 1: THE BIGGEST WOUND IS ON HER WAIST, AND IT LOOKS LIKE SOMEONE HURT HER)

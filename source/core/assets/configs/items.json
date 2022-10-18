@@ -62,6 +62,13 @@
       "name": "Mysterious Key",
       "description": "Mysterious Key - This key can be used to win the game!",
       "textureLocation": "images/KEY.png"
+    },
+    {
+      "class": "com.deco2800.game.components.player.entity.ClueItem",
+      "id": 10,
+      "name": "lack",
+      "description": "lack",
+      "textureLocation": "images/lack.png"
     }
   ]
 }

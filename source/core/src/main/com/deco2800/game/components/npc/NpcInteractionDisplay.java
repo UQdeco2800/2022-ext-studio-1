@@ -29,7 +29,7 @@ public class NpcInteractionDisplay extends UIComponent {
     private int step;
     private Image dialogBox;
     private Label dialog;
-    private int chapterNum;
+    public static int chapterNum;
     private ClickListener clickListener;
     private DialogWithSelection root;
     private Window npcEvictionMenuWindow;

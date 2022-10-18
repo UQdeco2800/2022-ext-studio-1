@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
+import com.deco2800.game.components.npc.NpcInteractionDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -91,7 +92,10 @@ public class ForestGameArea extends GameArea {
             "images/switch/Tools.png",
             "images/switch/Battery.png",
             "images/switch/Electric Switch Broken.png",
+            "images/switch/Electric Switch.png",
             "images/KEY.png",
+            "images/desk_top.png",
+            "images/lack.png",
             "images/coral/scales1.png",
             "images/coral/scales2.png",
             "images/coral/scales3.png",
@@ -400,29 +404,48 @@ public class ForestGameArea extends GameArea {
         GridPoint2 minPos = new GridPoint2(5, 5);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 15);
 
-//        spawnEntityAt(ItemFactory.createItem(4), RandomUtils.random(minPos, maxPos), true, false);
-//        spawnEntityAt(ItemFactory.createItem(5), RandomUtils.random(minPos, maxPos), true, false);
-//        spawnEntityAt(ItemFactory.createItem(6), RandomUtils.random(minPos, maxPos), true, false);
-//        spawnEntityAt(ItemFactory.createItem(7), RandomUtils.random(minPos, maxPos), true, false);
-//        spawnEntityAt(ItemFactory.createItem(8), RandomUtils.random(minPos, maxPos), true, false);
+        if (NpcInteractionDisplay.chapterNum == 2) {
+            spawnEntityAt(ItemFactory.createItem(4), RandomUtils.random(minPos, maxPos), true, false);
+            spawnEntityAt(ItemFactory.createItem(5), RandomUtils.random(minPos, maxPos), true, false);
+            spawnEntityAt(ItemFactory.createItem(6), RandomUtils.random(minPos, maxPos), true, false);
+            spawnEntityAt(ItemFactory.createItem(7), RandomUtils.random(minPos, maxPos), true, false);
+            spawnEntityAt(ItemFactory.createItem(8), RandomUtils.random(minPos, maxPos), true, false);
+        }
+
+        if (NpcInteractionDisplay.chapterNum == 3) {
+            spawnEntityAt(ItemFactory.createItem(4), RandomUtils.random(minPos, maxPos), true, false);
+            spawnEntityAt(ItemFactory.createItem(5), RandomUtils.random(minPos, maxPos), true, false);
+        }
+
     }
 
     private void spawnSwitchItems() {
-        Entity switchItem = SwitchFactory.createSwitch();
-        spawnEntityAt(switchItem, new GridPoint2(20, 10), true, true);
+        if (NpcInteractionDisplay.chapterNum <= 1) {
+            Entity switchItem = SwitchFactory.createSwitch();
+            spawnEntityAt(switchItem, new GridPoint2(20, 10), true, true);
 
-        Entity tool = SwitchFactory.createTool();
-        spawnEntityAt(tool, new GridPoint2(25, 10), true, true);
+            Entity tool = SwitchFactory.createTool();
+            spawnEntityAt(tool, new GridPoint2(25, 10), true, true);
 
-        GridPoint2 minPos = new GridPoint2(5, 5);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 15);
+            GridPoint2 minPos = new GridPoint2(5, 5);
+            GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 15);
 
-        for (int i = 0; i < NUM_BATTERIES; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-//      Entity battery = SwitchFactory.createBattery();
-            Entity battery = ItemFactory.createItem(3);
-            spawnEntityAt(battery, randomPos, true, false);
+            for (int i = 0; i < NUM_BATTERIES; i++) {
+                GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+                Entity battery = ItemFactory.createItem(3);
+                spawnEntityAt(battery, randomPos, true, false);
+            }
         }
+
+//        if (NpcInteractionDisplay.chapterNum == 2) {
+        var en = SwitchFactory.createPodium(player);
+        spawnEntityAt(en, new GridPoint2(20, 12), true, true);
+//        }
+//
+//        if (NpcInteractionDisplay.chapterNum == 3) {
+//            var ch = SwitchFactory.createPodium(player);
+//            spawnEntityAt(ch, new GridPoint2(20, 15), true, true);
+//        }
     }
 
     public void spawnKey(GdxGame game) {

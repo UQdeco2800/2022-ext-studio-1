@@ -22,7 +22,7 @@ public class MainGameActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
   private GdxGame game;
 
-  private InventoryDisplayComponent playerInventory;
+  public InventoryDisplayComponent playerInventory;
 
   private static final String buttonPath = "sounds/button.mp3";
 

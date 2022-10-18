@@ -1,10 +1,16 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.deco2800.game.GdxGame;
+import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.achievements.AchievementsUpdater;
 import com.deco2800.game.components.player.*;
 import com.deco2800.game.components.player.entity.Backpack;
 import com.deco2800.game.components.player.entity.Item;
+import com.deco2800.game.components.tasks.ChaseTask;
+import com.deco2800.game.components.tasks.DistanceTask;
+import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -21,6 +27,8 @@ public class SwitchFactory {
     public static final int TOOL_ID = 2;
     public static final int BATTERY_ID = 3;
     public static boolean isWorking = false;
+    public static boolean isCollected = false;
+    public static boolean isCollected3 = false;
 
     public static Entity createSwitch() {
         Entity switchItem =
@@ -32,10 +40,35 @@ public class SwitchFactory {
 
         switchItem.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         switchItem.getComponent(TextureRenderComponent.class).scaleEntity();
-        switchItem.scaleHeight(1f);
+        switchItem.scaleHeight(0.5f);
         PhysicsUtils.setScaledCollider(switchItem, 0.8f, 0.4f);
 
         return switchItem;
+    }
+
+    public static Entity createPodium(Entity target) {
+        var ai = new DistanceTask(target);
+
+        AITaskComponent aiComponent =
+                new AITaskComponent()
+                        .addTask(ai);
+
+        Entity npc =
+                new Entity()
+                        .addComponent(new TextureRenderComponent("images/desk_top.png"))
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                        .addComponent(new SwitchComponent())
+                        .addComponent(aiComponent);
+
+        ai.setOwner(npc);
+
+        npc.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
+        npc.getComponent(TextureRenderComponent.class).scaleEntity();
+        npc.scaleHeight(0.5f);
+        PhysicsUtils.setScaledCollider(npc, 0.8f, 0.4f);
+
+        return npc;
     }
 
     public static Entity createTool() {
