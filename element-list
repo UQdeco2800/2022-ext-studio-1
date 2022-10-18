@@ -10,6 +10,7 @@ com.deco2800.game.components.clues
 com.deco2800.game.components.countDownClock
 com.deco2800.game.components.endingmenu
 com.deco2800.game.components.gamearea
+com.deco2800.game.components.gameoverScreen
 com.deco2800.game.components.maingame
 com.deco2800.game.components.mainmenu
 com.deco2800.game.components.mainmenu.storyline
