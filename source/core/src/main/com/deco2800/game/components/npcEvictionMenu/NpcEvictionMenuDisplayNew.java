@@ -206,7 +206,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
             //file[playerStats].writeString(profileData,true);
 
             //Use the setter in MainGameScreen.java, so that it can change the checkGameResultVariable,which will help display the right ending menu when ran out of time
-            game.theGameScreen.setterForGameResult();
+            //game.theGameScreen.setterForGameResult();
 
             errorNum = 0;
             return NpcResultDialogType.RIGHT_BOX;
