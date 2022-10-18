@@ -90,6 +90,10 @@ public class MainGameScreen extends ScreenAdapter {
 
   private static final String backgroundMusic = "sounds/new.mp3";
 
+  private boolean timeTime=true;
+
+
+
   public MainGameScreen(GdxGame game, boolean stop,float gameTime) {
     this.game = game;
     this.stopGame = stop;
@@ -147,7 +151,7 @@ public class MainGameScreen extends ScreenAdapter {
 
 
     }
-    if(game.gameTimeVar==0){
+    if(timeTime==false){
       System.out.println("Testing:Game is over");
 
     }
@@ -248,6 +252,10 @@ public class MainGameScreen extends ScreenAdapter {
   public void changeStatus2(){
     stopGame=false;
     ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).play();
+
+  }
+  public void setterForCountDown(){
+    timeTime =false;
 
   }
 
