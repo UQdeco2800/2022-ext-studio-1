@@ -293,4 +293,14 @@ public class NPCClueLibrary {
             e.printStackTrace();
         }
     }
+
+    public void clear() {
+        ZoeGot.clear();
+        MetisGot.clear();
+        AresGot.clear();
+        DorisGot.clear();
+        HephGot.clear();
+        NereusGot.clear();
+        OrpheusGot.clear();
+    }
 }
