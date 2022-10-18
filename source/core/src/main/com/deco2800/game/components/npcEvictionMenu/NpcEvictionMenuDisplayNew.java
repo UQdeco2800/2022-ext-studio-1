@@ -616,6 +616,19 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
      * Put the label with context: Team 7 Shaohui Wang <br/>
      * update label with context: Team 7 Yingxin Liu   <br/>
      * add particle effect: Team 7 Shaohui Wang        <br/>
+     * <reference>
+     * The three sounds in this function are modified and reprocessed based on resource from open sources <br/>
+     * Reference:<br/>
+     * RightPromptBox1.wav:
+     * kyles. (2022, June 9th). Freesound.
+     * <a href="https://freesound.org/people/kyles/sounds/637159/">https://freesound.org/people/kyles/sounds/637159/</a> <br/>
+     * WrongPromptBox1.wav:
+     * meltormen. (2020,August 17th). Freesound.
+     * <a href="https://freesound.org/people/meltormen/sounds/530912/">https://freesound.org/people/meltormen/sounds/530912/</a> <br/>
+     * WrongPromptBox2.wav:
+     * schroedel. (2016, February 22nd). Freesound.
+     * <a href="https://freesound.org/people/schroedel/sounds/337727/">https://freesound.org/people/schroedel/sounds/337727/</a>
+     * </reference>
      */
     private void createResultDialog(String button_name, NpcResultDialogType type) {
 
