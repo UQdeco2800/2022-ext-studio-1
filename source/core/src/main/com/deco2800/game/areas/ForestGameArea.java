@@ -105,6 +105,7 @@ public class ForestGameArea extends GameArea {
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/new.mp3";
     private static final String movementMusic = "sounds/Movement_sound.wav";
+    // click music reference: https://www.aigei.com/item/button32.html
     private static final String clickMusic = "sounds/button.mp3";
 
 
