@@ -58,6 +58,9 @@ public class MainGameExitDisplay extends UIComponent {
 
     TextButton inventoryButton = new TextButton("Inventory", skin);
 
+    TextButton LevelButton = new TextButton("Level", skin);
+
+
     /**
      * Button to display player profile
      */
@@ -87,11 +90,21 @@ public class MainGameExitDisplay extends UIComponent {
           entity.getEvents().trigger("exit");
         }
       });
+
+      LevelButton.addListener(
+              new ChangeListener() {
+                  @Override
+                  public void changed(ChangeEvent changeEvent, Actor actor) {
+                      logger.debug("Exit button clicked");
+                      entity.getEvents().trigger("level");
+                  }
+              });
+
     npcMenuBtn.addListener(
             new ChangeListener() {
               @Override
               public void changed(ChangeEvent changeEvent, Actor actor) {
-                  MusicStuff.playMusic(buttonPath, false);
+                  MusicStuff.playMusic("sounds/OpenEvictionMenu.wav", false);
              //in this component we call NpcEvictionMenuDisplayNew component by using its mother entity(i.e MainGameScrenn ui entity).
                   stage.addActor(entity.getComponent(NpcEvictionMenuDisplayNew.class).creatEvictionMenu());
               //NpcEvictionMenuDisplayNew npc = new NpcEvictionMenuDisplayNew(logger,ServiceLocator.getResourceService(),stage.getWidth(),stage.getHeight()
@@ -119,9 +132,12 @@ public class MainGameExitDisplay extends UIComponent {
     table.row();
     table.row();
     table.add(inventoryButton).padTop(10f).padRight(10f);
+//
     table.row();
     table.add(profileButton).padTop(20f).padRight(10f);
     table.row();
+      table.row();
+      table.add(LevelButton).padTop(10f).padRight(10f);
 
     stage.addActor(table);
   }

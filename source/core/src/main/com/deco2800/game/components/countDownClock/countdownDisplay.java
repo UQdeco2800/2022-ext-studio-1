@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class countdownDisplay extends UIComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(countdownDisplay.class);
-    private final GdxGame game;
+    private   final GdxGame game;
     private float timeRemaining;
 
     private static final String buttonPath = "sounds/button.mp3";
@@ -33,15 +33,17 @@ public class countdownDisplay extends UIComponent {
 
     private boolean stop=false;
     private float timeCount;
-    public boolean paused = false;
 
+    Table root;
     Table widgetBackground;
     Table timerText;
+
+    private PausedWindow pausedWindow;
 
     public countdownDisplay(GdxGame game) {
         super();
         this.game = game;
-        this.timeRemaining = 7260; //- (ServiceLocator.getTimeSource().getTime() / 1000);
+        this.timeRemaining = 300;
         timeCount = 0;
     }
     public Label counterLabel;
@@ -61,15 +63,10 @@ public class countdownDisplay extends UIComponent {
             counterLabel.setText("GAME OVER!");
 
             game.theGameScreen.changeStatus();
-
-           // logger.info("negative time: {}", String.valueOf(this.getRemainingTime()));
-           // logger.info(counterLabel.getText().toString());
-//            EndingMenuDisplay.setLose();
-//            System.out.println("111");
-//            entity.getEvents().trigger("ending");
-//
+            game.theGameScreen.setterForCountDown();
         }
-        if(timeRemaining>0 && stop==false) {
+
+        if(timeRemaining>0 && game.theGameScreen.getStatus() == false) {
             int equHours;
             int equMins;
             int equSeconds;
@@ -79,6 +76,7 @@ public class countdownDisplay extends UIComponent {
             String secondsString;
 
             this.timeRemaining -= timeCount;
+
             if (timeRemaining>=60){
                 float mins = timeRemaining/60;
                 if (mins>=60){
@@ -86,16 +84,13 @@ public class countdownDisplay extends UIComponent {
                     equHours = hours;
                     equMins =(int) (mins-equHours*60);
                     equSeconds=(int)(timeRemaining-equHours*60*60-equMins*60);
-
-
-                }else{
+                } else{
                     equHours=0;
                     equMins=(int) mins;
                     equSeconds=(int)(timeRemaining-equMins*60);
 
                 }
-
-            }else{
+            } else {
                 equHours=0;
                 equMins=0;
                 equSeconds=(int)timeRemaining;
@@ -119,10 +114,7 @@ public class countdownDisplay extends UIComponent {
                 secondsString = String.valueOf(equSeconds);
             }
 
-//            counterLabel.setText(String.valueOf(equHours+":"+equMins+":"+equSeconds));
             counterLabel.setText(hoursString + ":" + minsString + ":" + secondsString);
-         //   logger.info("remaining time: {}", String.valueOf(this.getRemainingTime()));
-          //  logger.info(counterLabel.getText().toString());
         }
 
 
@@ -130,121 +122,64 @@ public class countdownDisplay extends UIComponent {
 
     private void addActors() {
 
-        Texture widgetTexture = new Texture(Gdx.files.internal("images/countdown_clock/timerWidget.png"));
+        Texture widgetTexture = new Texture(Gdx.files.internal("images/countdown_clock/time.png"));
         TextureRegionDrawable widgetDrawable = new TextureRegionDrawable(widgetTexture);
         Image widget = new Image(widgetDrawable);
 
         counterLabel = new Label(String.valueOf(timeRemaining), skin);
         counterLabel.setPosition((float) (stage.getWidth() * 0.85), (float) (stage.getHeight() * 0.3));
 
-        counterLabel.setFontScale(1.25F);
+        counterLabel.setFontScale(1.5F);
 
         widgetBackground = new Table();
-        widgetBackground.add(widget);
+        widgetBackground.add(widget).width(250).height(200);
         timerText = new Table();
         timerText.add(counterLabel);
 
-        widgetBackground.setSize((float) (timerText.getWidth() * 1.5), (float) (timerText.getHeight() * 1.5));
+        widgetBackground.setSize((float) (timerText.getWidth() * 1.48), (float) (timerText.getHeight() * 1.5));
 
         Stack stack = new Stack();
 
         stack.add(widgetBackground);
         stack.add(timerText);
+        timerText.pad(0, 50, 10, 0);
+        stack.setPosition((float) (stage.getWidth() * 0.8), (float) (stage.getHeight() * 0.15));
 
-        stack.setPosition((float) (stage.getWidth() * 0.85), (float) (stage.getHeight() * 0.3));
-
-//        stage.addActor(counterLabel);
         stage.addActor(stack);
-
         Table pauseBtn = pauseButton();
-        Table resumeBtn = resumeButton();
+        pauseBtn.setPosition((float) (stage.getWidth() * 0.965), (float) (stage.getHeight() * 0.24));
         stage.addActor(pauseBtn);
-        stage.addActor(resumeBtn);
-
-
-
     }
 
-    public void pauseGame() {
-        this.paused = true;
-    }
-
-    private void exitScreen() {
-        game.setScreen(ScreenType.MAIN_GAME);
-    }
-    private Table makeExitBtn() {
-        TextButton exitBtn = new TextButton("EXIT", skin);
-
-        exitBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        MusicStuff.playMusic(buttonPath, false);
-                        logger.debug("Exit button clicked");
-                        exitScreen();
-                    }
-                });
-
-        Table table = new Table();
-        table.add(exitBtn).expandX().left().pad(0f, 100f, 100f, 0f);
-        return table;
-    }
 
     //Make the pause button, and change stop  to true when clicked
     private Table pauseButton(){
-//        TextButton pauseButton = new TextButton("PAUSE", skin);
 
         Texture pauseBtnTexture = new Texture(Gdx.files.internal("images/countdown_clock/pause.png"));
         TextureRegionDrawable pauseBtnDrawable = new TextureRegionDrawable(pauseBtnTexture);
 
         Button pauseButton = new ImageButton(pauseBtnDrawable);
-//        pauseButton.setSize(10,10);
-
 
         pauseButton.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         MusicStuff.playMusic(buttonPath, false);
-                        logger.debug("pause button clicked");
+                        logger.info("pause button clicked");
                         stop = true;
-                        //  MainGameScreen.stopGame = true;
-                        //  MainGameScreen.render.stopGame = true;
-                        // game.stopGame = true;
+                        pausedWindow = new PausedWindow(game);
+                        pausedWindow.create();
                         game.theGameScreen.changeStatus();
                     }
                 });
 
+
         Table table =new Table();
-//        table.add(pauseButton);
-        table.add(pauseButton).
-                size(75, 75)
-                        .right()
-                                .pad(0f, 2400f, 400f, 0f);
+        table.add(pauseButton).size(75, 75);
+
         return table;
 
 
-    }
-
-
-    //Make the resume button, change stop to false when clicked
-    private Table resumeButton(){
-        TextButton resumeButton = new TextButton("RESUME", skin);
-
-        resumeButton.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        MusicStuff.playMusic(buttonPath, false);
-                        logger.debug("resume button clicked");
-                        stop = false;
-                        game.theGameScreen.changeStatus2();
-                    }
-                });
-
-        Table table =new Table();
-        table.add(resumeButton).expandX().right().pad(0f, 2150f, 400f, 0f);
-        return table;
     }
 
     public void increaseRemainingTime(float increment) {

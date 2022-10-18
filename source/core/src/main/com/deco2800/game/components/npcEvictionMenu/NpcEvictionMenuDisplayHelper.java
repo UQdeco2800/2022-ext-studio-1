@@ -34,6 +34,7 @@ class NpcEvictionMenuDisplayHelper {
             message = new StringBuilder("This npc card " + name + " has no clue yet.");
         } else {
             for (int i = 0; i < clues.length; i++) {
+                message.append("\n");
                 message.append(clues[i]);
                 if (i != (clues.length - 1)) {
                     message.append("\n");
@@ -74,22 +75,16 @@ class NpcEvictionMenuDisplayHelper {
         StringBuilder message = new StringBuilder();
         if (type == NpcEvictionMenuDisplayNew.NpcResultDialogType.RIGHT_BOX) {
             message.append("That's great!!!");
-            message.append("\n");
         } else if (type == NpcEvictionMenuDisplayNew.NpcResultDialogType.WRONG_BOX1) {
             message.append("Unfortunately");
-            message.append("\n");
         } else {
             message.append("Oops");
-            message.append("\n");
         }
 
         return  message.toString();
     }
 
     public String createInformationFromTraitor(String name){
-        StringBuilder message = new StringBuilder();
-        message.append(name+" said ....");
-
-        return  message.toString();
+        return name + " said ....";
     }
 }
