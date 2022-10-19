@@ -78,6 +78,9 @@ public class NPCFactory {
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/robot.atlas", TextureAtlas.class));
     animator.addAnimation("down", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("up", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
 
     robot
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -97,6 +100,9 @@ public class NPCFactory {
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/slime.atlas", TextureAtlas.class));
     animator.addAnimation("down", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("up", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
 
     slime
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -116,6 +122,9 @@ public class NPCFactory {
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/bobo.atlas", TextureAtlas.class));
     animator.addAnimation("down", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("up", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
 
     bobo
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -136,6 +145,9 @@ public class NPCFactory {
                     ServiceLocator.getResourceService().getAsset("images/Piranha.atlas",
                             TextureAtlas.class));
     animator.addAnimation("down", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("up", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
 
     piranha
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
