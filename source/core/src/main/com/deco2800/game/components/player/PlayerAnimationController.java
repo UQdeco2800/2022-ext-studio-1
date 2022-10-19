@@ -17,6 +17,14 @@ public class PlayerAnimationController extends Component {
     public static final String DOWN_ATTACK = "downAttack";
     public static final String LEFT_ATTACK = "leftAttack";
     public static final String RIGHT_ATTACK = "rightAttack";
+    public static final String UP_GUN_ATTACK = "gunUpAttack";
+    public static final String DOWN_GUN_ATTACK = "gunDownAttack";
+    public static final String LEFT_GUN_ATTACK = "gunLeftAttack";
+    public static final String RIGHT_GUN_ATTACK = "gunRightAttack";
+    public static final String UP_KNIFE_ATTACK = "knifeUpAttack";
+    public static final String DOWN_KNIFE_ATTACK = "knifeDownAttack";
+    public static final String LEFT_KNIFE_ATTACK = "knifeLeftAttack";
+    public static final String RIGHT_KNIFE_ATTACK = "knifeRightAttack";
 
     AnimationRenderComponent animator;
 
@@ -39,6 +47,10 @@ public class PlayerAnimationController extends Component {
         entity.getEvents().addListener("stopPickup", this::animateStand);
         entity.getEvents().addListener("attack", this::animateAttack);
         entity.getEvents().addListener("stopAttack", this::animateStopAttack);
+        entity.getEvents().addListener("gunAttack", this::animateGunAttack);
+        entity.getEvents().addListener("stopGunAttack", this::animateStopGunAttack);
+        entity.getEvents().addListener("knifeAttack", this::animateKnifeAttack);
+        entity.getEvents().addListener("stopKnifeAttack", this::animateStopKnifeAttack);
     }
 
     private void animateUp() {
@@ -66,7 +78,7 @@ public class PlayerAnimationController extends Component {
         animator.startAnimation("pickUp");
     }
 
-    private void animateAttack() {
+    public void animateAttack() {
         animationName = animator.getCurrentAnimation();
         preAnimationCleanUp();
         switch(animationName) {
@@ -100,6 +112,86 @@ public class PlayerAnimationController extends Component {
                 animator.startAnimation("right");
                 break;
             case DOWN_ATTACK:
+            default:
+                animator.startAnimation("down");
+                break;
+        }
+    }
+
+    private void animateGunAttack() {
+        animationName = animator.getCurrentAnimation();
+        preAnimationCleanUp();
+        switch(animationName) {
+            case UP:
+                animator.startAnimation("gunUpAttack");
+                break;
+            case LEFT:
+                animator.startAnimation("gunLeftAttack");
+                break;
+            case RIGHT:
+                animator.startAnimation("gunRightAttack");
+                break;
+            case DOWN:
+            default:
+                animator.startAnimation("gunDownAttack");
+                break;
+        }
+    }
+
+    private void animateStopGunAttack() {
+        animationName = animator.getCurrentAnimation();
+        preAnimationCleanUp();
+        switch (animationName) {
+            case UP_GUN_ATTACK:
+                animator.startAnimation("up");
+                break;
+            case LEFT_GUN_ATTACK:
+                animator.startAnimation("left");
+                break;
+            case RIGHT_GUN_ATTACK:
+                animator.startAnimation("right");
+                break;
+            case DOWN_GUN_ATTACK:
+            default:
+                animator.startAnimation("down");
+                break;
+        }
+    }
+
+    private void animateKnifeAttack() {
+        animationName = animator.getCurrentAnimation();
+        preAnimationCleanUp();
+        switch(animationName) {
+            case UP:
+                animator.startAnimation("knifeUpAttack");
+                break;
+            case LEFT:
+                animator.startAnimation("knifeLeftAttack");
+                break;
+            case RIGHT:
+                animator.startAnimation("knifeRightAttack");
+                break;
+            case DOWN:
+            default:
+                animator.startAnimation("knifeDownAttack");
+                break;
+        }
+    }
+
+    private void animateStopKnifeAttack() {
+        animationName = animator.getCurrentAnimation();
+        preAnimationCleanUp();
+        switch (animationName) {
+            case UP_KNIFE_ATTACK:
+                animator.startAnimation("up");
+                break;
+            case LEFT_KNIFE_ATTACK:
+                animator.startAnimation("left");
+                break;
+            case RIGHT_KNIFE_ATTACK:
+                animator.startAnimation("right");
+                break;
+            case DOWN_KNIFE_ATTACK:
             default:
                 animator.startAnimation("down");
                 break;

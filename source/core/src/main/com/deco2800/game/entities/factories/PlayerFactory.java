@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.achievements.AchievementStatsComponent;
 import com.deco2800.game.components.achievements.pojo.AchievementStatus;
 import com.deco2800.game.components.npc.NpcInteractionDisplay;
@@ -24,6 +25,8 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.AchievementService;
 import com.deco2800.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -37,6 +40,7 @@ public class PlayerFactory {
   private static final PlayerConfig stats =
       FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
+  private static final Logger logger = LoggerFactory.getLogger(PlayerFactory.class);
   /**
    * Create a player entity.
    * @return entity
@@ -58,27 +62,46 @@ public class PlayerFactory {
     animator.addAnimation("upAttack",0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("leftAttack",0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("rightAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("gunRightAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("gunLeftAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("gunUpAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("gunDownAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("knifeRightAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("knifeLeftAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("knifeDownAttack",0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("knifeUpAttack",0.1f, Animation.PlayMode.LOOP);
+
 
 
     AchievementService achievementService = ServiceLocator.getAchievementService();
     Map<String, AchievementStatus> achievementStatusMap = achievementService.getAchievementStatusMap();
 
+    CombatStatsComponent fist = new CombatStatsComponent(stats.health, 10);
+    CombatStatsComponent knife = new CombatStatsComponent(stats.health, 20);
+    CombatStatsComponent gun = new CombatStatsComponent(stats.health, 100);
+
     Entity player =
         new Entity()
             .addComponent(new TextureRenderComponent("images/player_front.png"))
             .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions(game))
             .addComponent(new InventoryComponent())
+            .addComponent(fist)
+            .addComponent(knife)
+            .addComponent(gun)
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new CombatStatsComponent(100, 10))
             .addComponent(new PlayerAnimationController())
             .addComponent(new AchievementStatsComponent(achievementStatusMap))
+            .addComponent(new FistAttackComponent(6f))
+            .addComponent(new KnifeAttackComponent())
+            .addComponent(new GunAttackComponent(10f));
             .addComponent(new NpcInteractionDisplay(game));
 
-    PhysicsUtils.setScaledCollider(player, 0.3f, 0.3f);
+    PhysicsUtils.setScaledCollider(player, 0.9f, 0.4f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(TextureRenderComponent.class).scaleEntity();
     return player;

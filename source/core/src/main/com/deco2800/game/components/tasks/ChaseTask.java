@@ -20,6 +20,9 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   private final DebugRenderer debugRenderer;
   private final RaycastHit hit = new RaycastHit();
   private MovementTask movementTask;
+  private Vector2 startPos;
+  private float x;
+  private float y;
 
   /**
    * @param target The entity to chase.
@@ -39,11 +42,31 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   @Override
   public void start() {
     super.start();
+    startPos = owner.getEntity().getPosition();
+    this.x = startPos.x;
+    this.y = startPos.y;
     movementTask = new MovementTask(target.getPosition());
     movementTask.create(owner);
     movementTask.start();
-    
-    this.owner.getEntity().getEvents().trigger("chaseStart");
+    if (this.x < movementTask.returnX() && this.y < movementTask.returnY()){
+      this.owner.getEntity().getEvents().trigger("up");
+    } else if (this.x < movementTask.returnX() && this.y > movementTask.returnY()) {
+      this.owner.getEntity().getEvents().trigger("right");
+    } else if (this.x < movementTask.returnX() && this.y == movementTask.returnY()) {
+      this.owner.getEntity().getEvents().trigger("right");
+    }else if (this.x == movementTask.returnX() && this.y < movementTask.returnY()) {
+      this.owner.getEntity().getEvents().trigger("up");
+    }else if (this.x == movementTask.returnX() && this.y > movementTask.returnY()){
+      this.owner.getEntity().getEvents().trigger("down");
+    }else if (this.x > movementTask.returnX() && this.y == movementTask.returnY()){
+      this.owner.getEntity().getEvents().trigger("left");
+    }else if (this.x > movementTask.returnX() && this.y < movementTask.returnY()){
+      this.owner.getEntity().getEvents().trigger("up");
+    }else if (this.x > movementTask.returnX() && this.y > movementTask.returnY()){
+      this.owner.getEntity().getEvents().trigger("left");
+    } else {
+      this.owner.getEntity().getEvents().trigger("down");
+    }
   }
 
   @Override
