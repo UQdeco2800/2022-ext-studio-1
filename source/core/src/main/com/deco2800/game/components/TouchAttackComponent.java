@@ -3,11 +3,15 @@ package com.deco2800.game.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * When this entity touches a valid enemy's hitbox, deal damage to them and apply a knockback.
@@ -23,6 +27,7 @@ public class TouchAttackComponent extends Component {
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
 
+  private static final Logger logger = LoggerFactory.getLogger(TouchAttackComponent.class);
   /**
    * Create a component which attacks entities on collision, without knockback.
    * @param targetLayer The physics layer of the target's collider.
@@ -34,11 +39,11 @@ public class TouchAttackComponent extends Component {
   /**
    * Create a component which attacks entities on collision, with knockback.
    * @param targetLayer The physics layer of the target's collider.
-   * @param knockback The magnitude of the knockback applied to the entity.
+   * @param knockbackForce The magnitude of the knockback applied to the entity.
    */
-  public TouchAttackComponent(short targetLayer, float knockback) {
+  public TouchAttackComponent(short targetLayer, float knockbackForce) {
     this.targetLayer = targetLayer;
-    this.knockbackForce = knockback;
+    this.knockbackForce = knockbackForce;
   }
 
   @Override
@@ -65,6 +70,7 @@ public class TouchAttackComponent extends Component {
     if (targetStats != null) {
       targetStats.hit(combatStats);
     }
+
 
     // Apply knockback
     PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);

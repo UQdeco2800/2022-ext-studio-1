@@ -1,33 +1,159 @@
 
 player.png
-size: 1820, 426
+size: 2022, 850
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 down
   rotate: false
-  xy: 810, 2
+  xy: 810, 638
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+down
+  rotate: false
+  xy: 1214, 638
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 2
 down
   rotate: false
-  xy: 1416, 2
+  xy: 1820, 426
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 1
 downAttack
   rotate: false
-  xy: 1416, 214
+  xy: 608, 638
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+downAttack
+  rotate: false
+  xy: 1416, 2
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 1
+gunDownAttack
+  rotate: false
+  xy: 204, 638
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 1
+gunDownAttack
+  rotate: false
+  xy: 608, 214
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+gunLeftAttack
+  rotate: false
+  xy: 608, 426
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 1
+gunLeftAttack
+  rotate: false
+  xy: 1214, 214
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+gunRightAttack
+  rotate: false
+  xy: 2, 426
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+gunRightAttack
+  rotate: false
+  xy: 1214, 426
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 1
+gunUpAttack
+  rotate: false
+  xy: 406, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 1
+gunUpAttack
+  rotate: false
+  xy: 1618, 638
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+knifeDownAttack
+  rotate: false
+  xy: 1012, 638
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 1
+knifeDownAttack
+  rotate: false
+  xy: 1820, 638
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+knifeLeftAttack
+  rotate: false
+  xy: 204, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 1
+knifeLeftAttack
+  rotate: false
+  xy: 1012, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+knifeRightAttack
+  rotate: false
+  xy: 406, 426
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 1
+knifeRightAttack
+  rotate: false
+  xy: 810, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+knifeUpAttack
+  rotate: false
+  xy: 810, 426
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 1
+knifeUpAttack
+  rotate: false
+  xy: 1618, 426
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
 left
   rotate: false
-  xy: 2, 2
+  xy: 2, 214
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
@@ -39,121 +165,107 @@ left
   orig: 200, 210
   offset: 0, 0
   index: 1
-leftAttack
-  rotate: false
-  xy: 406, 214
-  size: 200, 210
-  orig: 200, 210
-  offset: 0, 0
-  index: 1
-leftAttack
-  rotate: false
-  xy: 810, 214
-  size: 200, 210
-  orig: 200, 210
-  offset: 0, 0
-  index: 0
 left
-  rotate: false
-  xy: 810, 214
-  size: 200, 210
-  orig: 200, 210
-  offset: 0, 0
-  index: 0
-pickUp
-  rotate: false
-  xy: 204, 2
-  size: 200, 210
-  orig: 200, 210
-  offset: 0, 0
-  index: 0
-down
-  rotate: false
-  xy: 204, 2
-  size: 200, 210
-  orig: 200, 210
-  offset: 0, 0
-  index: 0
-downAttack
-  rotate: false
-  xy: 204, 2
-  size: 200, 210
-  orig: 200, 210
-  offset: 0, 0
-  index: 0
-pickUp
-  rotate: false
-  xy: 1012, 2
-  size: 200, 210
-  orig: 200, 210
-  offset: 0, 0
-  index: 1
-right
-  rotate: false
-  xy: 406, 2
-  size: 200, 210
-  orig: 200, 210
-  offset: 0, 0
-  index: 1
-right
-  rotate: false
-  xy: 1214, 2
-  size: 200, 210
-  orig: 200, 210
-  offset: 0, 0
-  index: 2
-rightAttack
-  rotate: false
-  xy: 608, 214
-  size: 200, 210
-  orig: 200, 210
-  offset: 0, 0
-  index: 0
-right
-  rotate: false
-  xy: 608, 214
-  size: 200, 210
-  orig: 200, 210
-  offset: 0, 0
-  index: 0
-rightAttack
   rotate: false
   xy: 1618, 214
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
+  index: 0
+leftAttack
+  rotate: false
+  xy: 2, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
   index: 1
-up
+leftAttack
+  rotate: false
+  xy: 1012, 426
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+pickUp
+  rotate: false
+  xy: 204, 426
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+pickUp
+  rotate: false
+  xy: 1416, 426
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 1
+right
   rotate: false
   xy: 204, 214
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 1
+right
+  rotate: false
+  xy: 1012, 214
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+right
+  rotate: false
+  xy: 1416, 214
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 2
+rightAttack
+  rotate: false
+  xy: 406, 214
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+rightAttack
+  rotate: false
+  xy: 1618, 2
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 1
 up
   rotate: false
-  xy: 1214, 214
+  xy: 406, 638
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 1
+up
+  rotate: false
+  xy: 810, 214
+  size: 200, 210
+  orig: 200, 210
+  offset: 0, 0
+  index: 0
+up
+  rotate: false
+  xy: 1214, 2
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 2
 upAttack
   rotate: false
-  xy: 2, 214
-  size: 200, 210
-  orig: 200, 210
-  offset: 0, 0
-  index: 0
-up
-  rotate: false
-  xy: 2, 214
+  xy: 2, 638
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
   index: 0
 upAttack
   rotate: false
-  xy: 1012, 214
+  xy: 1416, 638
   size: 200, 210
   orig: 200, 210
   offset: 0, 0
