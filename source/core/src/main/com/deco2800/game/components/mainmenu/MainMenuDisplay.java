@@ -1,5 +1,6 @@
 package com.deco2800.game.components.mainmenu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -33,6 +34,16 @@ public class MainMenuDisplay extends UIComponent {
         new Image(
             ServiceLocator.getResourceService()
                 .getAsset("images/game logo.png", Texture.class));
+
+      Image background =
+              new Image(
+                      ServiceLocator.getResourceService()
+                              .getAsset("images/main-background/main-background.png", Texture.class));
+
+      background.setWidth(Gdx.graphics.getWidth());
+      background.setHeight(Gdx.graphics.getHeight());
+
+      stage.addActor(background);
 
     TextButton startBtn = new TextButton("start", skin);
     TextButton loadBtn = new TextButton("load", skin);
