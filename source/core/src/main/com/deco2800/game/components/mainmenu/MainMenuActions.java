@@ -27,15 +27,16 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("achievements", this::onAchievements);
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("exit", this::onExit);
-
     entity.getEvents().addListener("ending", this::onEnding);
   }
+
 
   /**
    * Swaps to the Main Game screen.
    */
   private void onStart() {
     logger.info("Start game");
+    //game.setGameTime(7260);
     game.setScreen(GdxGame.ScreenType.MAIN_GAME);
   }
 

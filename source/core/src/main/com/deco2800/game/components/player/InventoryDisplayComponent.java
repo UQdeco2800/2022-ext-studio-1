@@ -16,9 +16,11 @@ import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.countDownClock.countdownDisplay;
 import com.deco2800.game.components.player.entity.Backpack;
+import com.deco2800.game.components.player.entity.ClueItem;
 import com.deco2800.game.components.player.entity.Item;
 import com.deco2800.game.components.endingmenu.EndingMenuDisplay;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.ItemFactory;
 import com.deco2800.game.entities.factories.SwitchFactory;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -582,7 +584,26 @@ public class InventoryDisplayComponent extends UIComponent {
             consumeClueItem(i, key);
         }
     }
+    public boolean consumeTopup() {
+        if (inventoryComponent.contains(ClueItem.MERMAID_SCALE1) &
+                inventoryComponent.contains(ClueItem.MERMAID_SCALE2) &
+                inventoryComponent.contains(ClueItem.MERMAID_SCALE3) &
+                inventoryComponent.contains(ClueItem.MERMAID_SCALE4) &
+                inventoryComponent.contains(ClueItem.MERMAID_SCALE5)){
 
+            inventoryComponent.remove(ClueItem.MERMAID_SCALE1);
+            inventoryComponent.remove(ClueItem.MERMAID_SCALE2);
+            inventoryComponent.remove(ClueItem.MERMAID_SCALE3);
+            inventoryComponent.remove(ClueItem.MERMAID_SCALE4);
+            inventoryComponent.remove(ClueItem.MERMAID_SCALE5);
+
+            inventoryComponent.add(ClueItem.LACK);
+            SwitchFactory.isCollected = true;
+            return true;
+        }
+
+        return false;
+    }
     private void consumeToolItem(Integer key) {
         if (inventoryComponent.contains(SwitchFactory.BATTERY_ID)
                 && inventoryComponent.count(SwitchFactory.BATTERY_ID) == 3){

@@ -8,6 +8,8 @@ import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.npc.MonsterAnimationController;
+import com.deco2800.game.components.npc.NpcInteractionDisplay;
+import com.deco2800.game.components.npc.TriggerDialogComponent;
 import com.deco2800.game.components.tasks.ChaseTask;
 import com.deco2800.game.components.tasks.MovingTask;
 import com.deco2800.game.components.tasks.WanderTask;
@@ -194,6 +196,68 @@ public class NPCFactory {
     return ghostKing;
   }
 
+  public static Entity createZoe(NpcInteractionDisplay npcInteractionDisplay) {
+    Entity zoe = createCommunicativeNPC();
+    zoe.addComponent(new TriggerDialogComponent((PhysicsLayer.PLAYER)
+                                                , npcInteractionDisplay
+                                                , CommunicativeNpcName.Zoe))
+            .addComponent(new TextureRenderComponent("images/characters/Zoe.png"));
+    return zoe;
+  }
+
+  public static Entity createMetis(NpcInteractionDisplay npcInteractionDisplay) {
+    Entity metis = createCommunicativeNPC();
+    metis.addComponent(new TriggerDialogComponent((PhysicsLayer.PLAYER)
+                                                  , npcInteractionDisplay
+                                                  ,CommunicativeNpcName.Metis))
+            .addComponent(new TextureRenderComponent("images/characters/Metis.png"));
+    return metis;
+  }
+
+  public static Entity createDoris(NpcInteractionDisplay npcInteractionDisplay) {
+    Entity doris = createCommunicativeNPC();
+    doris.addComponent(new TriggerDialogComponent((PhysicsLayer.PLAYER)
+                                                  , npcInteractionDisplay
+                                                  , CommunicativeNpcName.Doris))
+            .addComponent(new TextureRenderComponent("images/characters/Doris.png"));
+    return doris;
+  }
+
+  public static Entity createHeph(NpcInteractionDisplay npcInteractionDisplay) {
+    Entity heph = createCommunicativeNPC();
+    heph.addComponent(new TriggerDialogComponent((PhysicsLayer.PLAYER)
+                                                , npcInteractionDisplay
+                                                , CommunicativeNpcName.Heph))
+            .addComponent(new TextureRenderComponent("images/characters/Heph.png"));
+    return heph;
+  }
+
+  public static Entity createOrpheus(NpcInteractionDisplay npcInteractionDisplay) {
+    Entity orpheus = createCommunicativeNPC();
+    orpheus.addComponent(new TriggerDialogComponent((PhysicsLayer.PLAYER)
+                                                    , npcInteractionDisplay
+                                                    , CommunicativeNpcName.Orpheus))
+            .addComponent(new TextureRenderComponent("images/characters/Orpheus.png"));
+    return orpheus;
+  }
+
+  public static Entity createNereus() {
+    Entity nereus = new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC));
+    nereus.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
+    nereus.setScale(1.4f,0.8f);
+    PhysicsUtils.setScaledCollider(nereus, 0.9f, 0.4f);
+    nereus.addComponent(new TextureRenderComponent("images/characters/Nereus_wounded.png"));
+    return nereus;
+  }
+
+  public enum CommunicativeNpcName {
+    Zoe, Metis, Doris, Heph, Orpheus
+  }
+
+
+
   public static Entity createNeutralLives(Entity target) {
     Entity NeutralLives = new Entity();
 
@@ -230,7 +294,7 @@ public class NPCFactory {
         new AITaskComponent()
             .addTask(new MovingTask(new Vector2(2f, 2f), 1f))
             .addTask(new ChaseTask(target, 10, 2f, 2f));
-
+            
     Entity npc =
         new Entity()
             .addComponent(new PhysicsComponent())
@@ -244,7 +308,16 @@ public class NPCFactory {
     return npc;
   }
 
-
+  private static Entity createCommunicativeNPC() {
+    Entity npc =
+            new Entity()
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC));
+    npc.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
+    npc.setScale(1.2f,1.2f);
+    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+    return npc;
+  }
 
 
   private NPCFactory() {

@@ -22,7 +22,7 @@ public class ObstacleFactory {
   public static Entity createTree() {
     Entity tree =
         new Entity()
-            .addComponent(new TextureRenderComponent("images/tree.png"))
+            .addComponent(new TextureRenderComponent("images/village/tree.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
@@ -30,6 +30,35 @@ public class ObstacleFactory {
     tree.getComponent(TextureRenderComponent.class).scaleEntity();
     tree.scaleHeight(2.5f);
     PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
+    return tree;
+  }
+
+
+  public static Entity createVillage(int num,float height,float scaleX,float scaleY) {
+    Entity tree =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/village/material"+num+".png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(height);
+    PhysicsUtils.setScaledCollider(tree, scaleX, scaleY);
+    return tree;
+  }
+
+  public static Entity createMaterial(int num,float height,float scaleX,float scaleY) {
+    Entity tree =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/lab/material"+num+".png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    tree.getComponent(TextureRenderComponent.class).scaleEntity();
+    tree.scaleHeight(height);
+    PhysicsUtils.setScaledCollider(tree, scaleX, scaleY);
     return tree;
   }
 

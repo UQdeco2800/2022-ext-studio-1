@@ -1,5 +1,6 @@
 package com.deco2800.game.components.mainmenu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -34,6 +35,16 @@ public class MainMenuDisplay extends UIComponent {
             ServiceLocator.getResourceService()
                 .getAsset("images/game logo.png", Texture.class));
 
+      Image background =
+              new Image(
+                      ServiceLocator.getResourceService()
+                              .getAsset("images/main-background/main-background.png", Texture.class));
+
+      background.setWidth(Gdx.graphics.getWidth());
+      background.setHeight(Gdx.graphics.getHeight());
+
+      stage.addActor(background);
+
     TextButton startBtn = new TextButton("start", skin);
     TextButton loadBtn = new TextButton("load", skin);
     TextButton storyline = new TextButton("storyline", skin);
@@ -42,17 +53,7 @@ public class MainMenuDisplay extends UIComponent {
     TextButton achievementsBtn = new TextButton("achievements", skin);
     TextButton settingsBtn = new TextButton("settings", skin);
     TextButton exitBtn = new TextButton("exit", skin);
-//    TextButton endingBtn = new TextButton("Ending", skin);
 
-//    endingBtn.addListener(
-//        new ChangeListener() {
-//          @Override
-//          public void changed(ChangeEvent changeEvent, Actor actor) {
-//              logger.debug("Ending button clicked");
-//              entity.getEvents().trigger("ending");
-//          }
-//        }
-//    );
 
     // Triggers an event when the button is pressed
     startBtn.addListener(
@@ -149,9 +150,6 @@ public class MainMenuDisplay extends UIComponent {
     table.add(settingsBtn).padTop(15f);
     table.row();
     table.add(exitBtn).padTop(15f);
-//    table.row();
-//    table.add(endingBtn).padTop(15f);
-
     stage.addActor(table);
   }
 

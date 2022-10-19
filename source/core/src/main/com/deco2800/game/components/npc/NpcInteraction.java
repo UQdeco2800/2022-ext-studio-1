@@ -43,40 +43,24 @@ public class NpcInteraction {
      * @param choice
      * @return null if wrong interaction or the corresponding response.
      */
-    public String meetNpc(int npcId, int choice) {
-        if (this.distance == MIN_DISTANCE) {
-            try {
-                ArrayList<String> content = readNpcFiles(npcId);
-                if (choice == 1) {
-                    return content.get(0);
-                } else if (choice == 2) {
-                    return content.get(1);
-                } else if (choice == 3) {
-                    return content.get(2);
-                } else {
-                    return null;
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        return null;
-    }
-
-    public static ArrayList<String> readNpcFiles(int chapterNum) throws IOException {
-        BufferedReader br;
-        ArrayList<String> texts = new ArrayList<>();
-        try {
-            br = new BufferedReader(new FileReader("dialogs/Chapter " + chapterNum + ".txt"));
-            String line;
-            while ((line = br.readLine()) != null) {
-                texts.add(line);
-            }
-            br.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return texts;
-    }
+//    public String meetNpc(int npcId, int choice) {
+//        if (this.distance == MIN_DISTANCE) {
+//            try {
+//                ArrayList<String> content = readNpcFiles(npcId);
+//                if (choice == 1) {
+//                    return content.get(0);
+//                } else if (choice == 2) {
+//                    return content.get(1);
+//                } else if (choice == 3) {
+//                    return content.get(2);
+//                } else {
+//                    return null;
+//                }
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//
+//        return null;
+//    }
 }

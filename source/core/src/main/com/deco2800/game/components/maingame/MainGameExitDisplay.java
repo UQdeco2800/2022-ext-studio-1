@@ -16,6 +16,7 @@ import com.deco2800.game.components.npcEvictionMenu.NpcEvictionMenuDisplayNew;
 import com.deco2800.game.services.ServiceLocator;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.ui.UIComponent;
+import com.deco2800.game.music.MusicStuff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,7 @@ public class MainGameExitDisplay extends UIComponent {
   private Table table;
   private static final int NPC_MENU_BUTTON_WIDTH = 200;
   private static final int NPC_MENU_BUTTON_HEIGHT = 150;
+  private static final String buttonPath = "sounds/button.mp3";
 
   @Override
   public void create() {
@@ -55,6 +57,9 @@ public class MainGameExitDisplay extends UIComponent {
     TextButton mainMenuBtn = new TextButton("Exit", skin);
 
     TextButton inventoryButton = new TextButton("Inventory", skin);
+
+    TextButton LevelButton = new TextButton("Level", skin);
+
 
     /**
      * Button to display player profile
@@ -85,10 +90,21 @@ public class MainGameExitDisplay extends UIComponent {
           entity.getEvents().trigger("exit");
         }
       });
+
+      LevelButton.addListener(
+              new ChangeListener() {
+                  @Override
+                  public void changed(ChangeEvent changeEvent, Actor actor) {
+                      logger.debug("Exit button clicked");
+                      entity.getEvents().trigger("level");
+                  }
+              });
+
     npcMenuBtn.addListener(
             new ChangeListener() {
               @Override
               public void changed(ChangeEvent changeEvent, Actor actor) {
+                  MusicStuff.playMusic("sounds/OpenEvictionMenu.wav", false);
              //in this component we call NpcEvictionMenuDisplayNew component by using its mother entity(i.e MainGameScrenn ui entity).
                   stage.addActor(entity.getComponent(NpcEvictionMenuDisplayNew.class).creatEvictionMenu());
               //NpcEvictionMenuDisplayNew npc = new NpcEvictionMenuDisplayNew(logger,ServiceLocator.getResourceService(),stage.getWidth(),stage.getHeight()
@@ -116,9 +132,12 @@ public class MainGameExitDisplay extends UIComponent {
     table.row();
     table.row();
     table.add(inventoryButton).padTop(10f).padRight(10f);
+//
     table.row();
     table.add(profileButton).padTop(20f).padRight(10f);
     table.row();
+      table.row();
+      table.add(LevelButton).padTop(10f).padRight(10f);
 
     stage.addActor(table);
   }
