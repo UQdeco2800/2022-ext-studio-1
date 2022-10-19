@@ -21,6 +21,8 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.AchievementService;
 import com.deco2800.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -34,6 +36,7 @@ public class PlayerFactory {
   private static final PlayerConfig stats =
       FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
+  private static final Logger logger = LoggerFactory.getLogger(PlayerFactory.class);
   /**
    * Create a player entity.
    * @return entity
@@ -69,6 +72,10 @@ public class PlayerFactory {
     AchievementService achievementService = ServiceLocator.getAchievementService();
     Map<String, AchievementStatus> achievementStatusMap = achievementService.getAchievementStatusMap();
 
+    CombatStatsComponent fist = new CombatStatsComponent(stats.health, 10);
+    CombatStatsComponent knife = new CombatStatsComponent(stats.health, 20);
+    CombatStatsComponent gun = new CombatStatsComponent(stats.health, 100);
+
     Entity player =
         new Entity()
             .addComponent(new TextureRenderComponent("images/player_front.png"))
@@ -77,7 +84,9 @@ public class PlayerFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions(game))
             .addComponent(new InventoryComponent())
-            .addComponent(new CombatStatsComponent(stats.health, stats.health))
+            .addComponent(fist)
+            .addComponent(knife)
+            .addComponent(gun)
             .addComponent(inputComponent)
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())

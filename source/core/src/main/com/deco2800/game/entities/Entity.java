@@ -46,11 +46,11 @@ public class Entity {
   private Vector2 position = Vector2.Zero.cpy();
   private Vector2 scale = new Vector2(1, 1);
   private Array<Component> createdComponents;
+  private boolean removeCollision;
 
   public Entity() {
     id = nextId;
     nextId++;
-
     components = new IntMap<>(4);
     eventHandler = new EventHandler();
   }

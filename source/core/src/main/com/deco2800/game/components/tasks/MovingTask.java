@@ -54,7 +54,7 @@ public class MovingTask extends DefaultTask implements PriorityTask {
         if (this.x < movementTask.returnX() && this.y < movementTask.returnY()){
             this.owner.getEntity().getEvents().trigger("up");
         } else if (this.x < movementTask.returnX() && this.y > movementTask.returnY()) {
-            this.owner.getEntity().getEvents().trigger("down");
+            this.owner.getEntity().getEvents().trigger("right");
         } else if (this.x < movementTask.returnX() && this.y == movementTask.returnY()) {
             this.owner.getEntity().getEvents().trigger("right");
         }else if (this.x == movementTask.returnX() && this.y < movementTask.returnY()) {
@@ -66,7 +66,7 @@ public class MovingTask extends DefaultTask implements PriorityTask {
         }else if (this.x > movementTask.returnX() && this.y < movementTask.returnY()){
             this.owner.getEntity().getEvents().trigger("up");
         }else if (this.x > movementTask.returnX() && this.y > movementTask.returnY()){
-            this.owner.getEntity().getEvents().trigger("down");
+            this.owner.getEntity().getEvents().trigger("left");
         } else {
             this.owner.getEntity().getEvents().trigger("down");
         }
@@ -105,26 +105,24 @@ public class MovingTask extends DefaultTask implements PriorityTask {
         }
         currentTask = newTask;
         currentTask.start();
-        if (currentTask == movementTask){
-            if (this.x < movementTask.returnX() && this.y < movementTask.returnY()){
-                this.owner.getEntity().getEvents().trigger("up");
-            } else if (this.x < movementTask.returnX() && this.y > movementTask.returnY()) {
-                this.owner.getEntity().getEvents().trigger("down");
-            } else if (this.x < movementTask.returnX() && this.y == movementTask.returnY()) {
-                this.owner.getEntity().getEvents().trigger("right");
-            }else if (this.x == movementTask.returnX() && this.y < movementTask.returnY()) {
-                this.owner.getEntity().getEvents().trigger("up");
-            }else if (this.x == movementTask.returnX() && this.y > movementTask.returnY()){
-                this.owner.getEntity().getEvents().trigger("down");
-            }else if (this.x > movementTask.returnX() && this.y == movementTask.returnY()){
-                this.owner.getEntity().getEvents().trigger("left");
-            }else if (this.x > movementTask.returnX() && this.y < movementTask.returnY()){
-                this.owner.getEntity().getEvents().trigger("up");
-            }else if (this.x > movementTask.returnX() && this.y > movementTask.returnY()){
-                this.owner.getEntity().getEvents().trigger("down");
-            } else {
-                this.owner.getEntity().getEvents().trigger("down");
-            }
+        if (this.x < movementTask.returnX() && this.y < movementTask.returnY()){
+            this.owner.getEntity().getEvents().trigger("up");
+        } else if (this.x < movementTask.returnX() && this.y > movementTask.returnY()) {
+            this.owner.getEntity().getEvents().trigger("right");
+        } else if (this.x < movementTask.returnX() && this.y == movementTask.returnY()) {
+            this.owner.getEntity().getEvents().trigger("right");
+        }else if (this.x == movementTask.returnX() && this.y < movementTask.returnY()) {
+            this.owner.getEntity().getEvents().trigger("up");
+        }else if (this.x == movementTask.returnX() && this.y > movementTask.returnY()){
+            this.owner.getEntity().getEvents().trigger("down");
+        }else if (this.x > movementTask.returnX() && this.y == movementTask.returnY()){
+            this.owner.getEntity().getEvents().trigger("left");
+        }else if (this.x > movementTask.returnX() && this.y < movementTask.returnY()){
+            this.owner.getEntity().getEvents().trigger("up");
+        }else if (this.x > movementTask.returnX() && this.y > movementTask.returnY()){
+            this.owner.getEntity().getEvents().trigger("left");
+        } else {
+            this.owner.getEntity().getEvents().trigger("down");
         }
     }
 

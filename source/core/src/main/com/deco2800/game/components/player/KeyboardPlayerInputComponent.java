@@ -15,6 +15,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 walkDirection = Vector2.Zero.cpy();
   private static final String movementPath = "sounds/Movement_sound.wav";
 
+  private boolean gunFired;
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -57,7 +58,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         entity.getEvents().trigger("attack");
         return true;
       case Keys.J:
-        entity.getEvents().trigger("gunAttack");
+        if (!gunFired){
+          entity.getEvents().trigger("gunAttack");
+          gunFired = true;
+          return true;
+        }
         return true;
       case Keys.H:
         entity.getEvents().trigger("knifeAttack");

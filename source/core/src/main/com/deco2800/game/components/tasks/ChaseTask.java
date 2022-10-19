@@ -51,7 +51,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     if (this.x < movementTask.returnX() && this.y < movementTask.returnY()){
       this.owner.getEntity().getEvents().trigger("up");
     } else if (this.x < movementTask.returnX() && this.y > movementTask.returnY()) {
-      this.owner.getEntity().getEvents().trigger("down");
+      this.owner.getEntity().getEvents().trigger("right");
     } else if (this.x < movementTask.returnX() && this.y == movementTask.returnY()) {
       this.owner.getEntity().getEvents().trigger("right");
     }else if (this.x == movementTask.returnX() && this.y < movementTask.returnY()) {
@@ -63,7 +63,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     }else if (this.x > movementTask.returnX() && this.y < movementTask.returnY()){
       this.owner.getEntity().getEvents().trigger("up");
     }else if (this.x > movementTask.returnX() && this.y > movementTask.returnY()){
-      this.owner.getEntity().getEvents().trigger("down");
+      this.owner.getEntity().getEvents().trigger("left");
     } else {
       this.owner.getEntity().getEvents().trigger("down");
     }

@@ -69,7 +69,6 @@ public class TouchAttackComponent extends Component {
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
     if (targetStats != null) {
       targetStats.hit(combatStats);
-      System.out.println("target touched");
     }
 
 
@@ -80,7 +79,6 @@ public class TouchAttackComponent extends Component {
       Vector2 direction = target.getCenterPosition().sub(entity.getCenterPosition());
       Vector2 impulse = direction.setLength(knockbackForce);
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
-      System.out.println("target back");
     }
   }
 }

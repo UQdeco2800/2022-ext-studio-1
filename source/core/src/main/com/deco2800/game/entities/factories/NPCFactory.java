@@ -44,37 +44,26 @@ public class NPCFactory {
   private static final Logger logger = LoggerFactory.getLogger(NPCFactory.class);
 
   public static Entity createKnight(Entity target) {
-    AITaskComponent aiComponent =
-            new AITaskComponent()
-                    .addTask(new MovingTask(new Vector2(2f, 2f), 2f))
-                    .addTask(new ChaseTask(target, 10, 3f, 2f));
+    Entity piranha = createBaseNPC(target);
+    BaseEntityConfig config = configs.ghost;
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/knight.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset("images/knight.atlas",
+                            TextureAtlas.class));
     animator.addAnimation("down", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("up", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
 
-    BaseEntityConfig config = configs.ghost;
+    piranha
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+            .addComponent(animator)
+            .addComponent(new MonsterAnimationController());
 
-    Entity knight =
-            new Entity()
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new PhysicsMovementComponent())
-                    .addComponent(new ColliderComponent())
-                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 4f))
-                    .addComponent(aiComponent)
-                    .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-                    .addComponent(animator)
-                    .addComponent(new MonsterAnimationController());
-
-    PhysicsUtils.setScaledCollider(knight, 0.9f, 0.4f);
-    knight.setScale(1.2f,1.2f);
-    logger.debug("Create a Knight");
-    return knight;
+    piranha.setScale(1.2f,1.2f);
+    logger.debug("Create a knight");
+    return piranha;
   }
 
   public static Entity createRobot(Entity target) {
@@ -239,8 +228,8 @@ public class NPCFactory {
   private static Entity createBaseNPC(Entity target) {
     AITaskComponent aiComponent =
         new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new ChaseTask(target, 10, 3f, 4f));
+            .addTask(new MovingTask(new Vector2(2f, 2f), 1f))
+            .addTask(new ChaseTask(target, 10, 2f, 2f));
 
     Entity npc =
         new Entity()
@@ -248,7 +237,7 @@ public class NPCFactory {
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-            //.addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 4f))
+            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER))
             .addComponent(aiComponent);
 
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);

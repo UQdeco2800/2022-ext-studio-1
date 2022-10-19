@@ -17,15 +17,19 @@ public class MonsterAnimationController extends Component {
     }
 
     void animateDown() {
+        animator.stopAnimation();
         animator.startAnimation("down");
     }
     void animateUp() {
+        animator.stopAnimation();
         animator.startAnimation("up");
     }
     void animateLeft() {
+        animator.stopAnimation();
         animator.startAnimation("left");
     }
     void animateRight() {
+        animator.stopAnimation();
         animator.startAnimation("right");
     }
 }
