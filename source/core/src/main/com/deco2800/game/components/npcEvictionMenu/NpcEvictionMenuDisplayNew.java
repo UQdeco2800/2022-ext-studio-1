@@ -305,6 +305,10 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
                         exitMenu();
                     }
                 });
+
+
+
+
         window.addActor(exitBtn);
 
         // Creating cards and corresponding selected buttons
@@ -405,7 +409,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         card.addListener(new InputListener() {
             @Override  // mouse hovering
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-//                MusicStuff.playMusic(buttonPath, false);
+                MusicStuff.playMusic("sounds/hover_card.wav", false);
                 setButton(card, index, "cardHovering");
                 cardImage.setDrawable(imageHover);
                 setImage(cardImage, card, "imageHovering");
@@ -645,6 +649,7 @@ public class NpcEvictionMenuDisplayNew extends UIComponent {
         // set the style of dialog include font color of title; background; size; position
         float dialog_size_x,dialog_size_y;
         String backgroundPath, buttonPathDefault, buttonPathHover;
+
 
         if (type == NpcResultDialogType.RIGHT_BOX) {
 
