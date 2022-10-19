@@ -12,6 +12,7 @@ import com.deco2800.game.components.npc.MonsterAnimationController;
 import com.deco2800.game.components.npc.NpcInteractionDisplay;
 import com.deco2800.game.components.npc.TriggerDialogComponent;
 import com.deco2800.game.components.tasks.ChaseTask;
+import com.deco2800.game.components.tasks.MovingTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
@@ -47,22 +48,26 @@ public class NPCFactory {
   private static final Logger logger = LoggerFactory.getLogger(NPCFactory.class);
 
   public static Entity createKnight(Entity target) {
-    Entity knight = createBaseNPC(target);
+    Entity piranha = createBaseNPC(target);
     BaseEntityConfig config = configs.ghost;
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/knight.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset("images/knight.atlas",
+                            TextureAtlas.class));
     animator.addAnimation("down", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("up", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("right", 0.1f, Animation.PlayMode.LOOP);
 
-    knight
+    piranha
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(animator)
             .addComponent(new MonsterAnimationController());
 
-    knight.setScale(1.2f,1.2f);
-    logger.debug("Create a Knight");
-    return knight;
+    piranha.setScale(1.2f,1.2f);
+    logger.debug("Create a knight");
+    return piranha;
   }
 
   public static Entity createRobot(Entity target) {
@@ -289,9 +294,9 @@ public class NPCFactory {
   private static Entity createBaseNPC(Entity target) {
     AITaskComponent aiComponent =
         new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new ChaseTask(target, 10, 3f, 4f));
-
+            .addTask(new MovingTask(new Vector2(2f, 2f), 1f))
+            .addTask(new ChaseTask(target, 10, 2f, 2f));
+            
     Entity npc =
         new Entity()
             .addComponent(new PhysicsComponent())

@@ -15,6 +15,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 walkDirection = Vector2.Zero.cpy();
   private static final String movementPath = "sounds/Movement_sound.wav";
 
+  private boolean gunFired;
+
   public KeyboardPlayerInputComponent() {
     super(5);
   }
@@ -54,6 +56,16 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
+        return true;
+      case Keys.J:
+        if (!gunFired){
+          entity.getEvents().trigger("gunAttack");
+          gunFired = true;
+          return true;
+        }
+        return true;
+      case Keys.H:
+        entity.getEvents().trigger("knifeAttack");
         return true;
       case Keys.I:
         entity.getEvents().trigger("openInventory");
@@ -100,6 +112,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.SPACE:
         entity.getEvents().trigger("stopAttack");
+        return true;
+      case Keys.J:
+        entity.getEvents().trigger("stopGunAttack");
+        return true;
+      case Keys.H:
+        entity.getEvents().trigger("stopKnifeAttack");
         return true;
       default:
         return false;
