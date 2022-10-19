@@ -8,10 +8,7 @@ import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.achievements.AchievementStatsComponent;
 import com.deco2800.game.components.achievements.pojo.AchievementStatus;
 import com.deco2800.game.components.npc.NpcInteractionDisplay;
-import com.deco2800.game.components.player.InventoryComponent;
-import com.deco2800.game.components.player.PlayerActions;
-import com.deco2800.game.components.player.PlayerAnimationController;
-import com.deco2800.game.components.player.PlayerStatsDisplay;
+import com.deco2800.game.components.player.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
 import com.deco2800.game.files.FileLoader;
@@ -98,7 +95,7 @@ public class PlayerFactory {
             .addComponent(new AchievementStatsComponent(achievementStatusMap))
             .addComponent(new FistAttackComponent(6f))
             .addComponent(new KnifeAttackComponent())
-            .addComponent(new GunAttackComponent(10f));
+            .addComponent(new GunAttackComponent(10f))
             .addComponent(new NpcInteractionDisplay(game));
 
     PhysicsUtils.setScaledCollider(player, 0.9f, 0.4f);
