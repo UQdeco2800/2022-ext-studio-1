@@ -171,7 +171,6 @@ public class ForestGameArea extends GameArea {
         spawnBobo();
         spawnTimeConsumeableItem();
         spawnClueItem();
-        spawnSwitchItems();
         playMusic();
         spawnCoralItems();
         spawnZoe();
@@ -180,6 +179,8 @@ public class ForestGameArea extends GameArea {
         spawnHeph();
         spawnOrpheus();
         spawnNereus();
+
+        spawnSwitchItems();
     }
 
     private void loadLevel(String name){
@@ -439,16 +440,16 @@ public class ForestGameArea extends GameArea {
     }
 
     private void spawnCoralItems() {
-        GridPoint2 minPos = new GridPoint2(5, 5);
+        GridPoint2 minPos = new GridPoint2(5, 10);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 15);
 
-        if (NpcInteractionDisplay.chapterNum == 2) {
-            spawnEntityAt(ItemFactory.createItem(4), RandomUtils.random(minPos, maxPos), true, false);
-            spawnEntityAt(ItemFactory.createItem(5), RandomUtils.random(minPos, maxPos), true, false);
-            spawnEntityAt(ItemFactory.createItem(6), RandomUtils.random(minPos, maxPos), true, false);
-            spawnEntityAt(ItemFactory.createItem(7), RandomUtils.random(minPos, maxPos), true, false);
-            spawnEntityAt(ItemFactory.createItem(8), RandomUtils.random(minPos, maxPos), true, false);
-        }
+//        if (NpcInteractionDisplay.chapterNum == 2) {
+            spawnEntityAt(ItemFactory.createItem(4), new GridPoint2(20, 10), true, false);
+            spawnEntityAt(ItemFactory.createItem(5), new GridPoint2(20, 14), true, false);
+            spawnEntityAt(ItemFactory.createItem(6), new GridPoint2(20, 18), true, false);
+            spawnEntityAt(ItemFactory.createItem(7), new GridPoint2(20, 20), true, false);
+            spawnEntityAt(ItemFactory.createItem(8), new GridPoint2(20, 23), true, false);
+//        }
 
         if (NpcInteractionDisplay.chapterNum == 3) {
             spawnEntityAt(ItemFactory.createItem(4), RandomUtils.random(minPos, maxPos), true, false);
@@ -459,25 +460,28 @@ public class ForestGameArea extends GameArea {
 
     private void spawnSwitchItems() {
         if (NpcInteractionDisplay.chapterNum <= 1) {
-            Entity switchItem = SwitchFactory.createSwitch();
+            Entity switchItem = SwitchFactory.createSwitch(player, game);
             spawnEntityAt(switchItem, new GridPoint2(20, 10), true, true);
 
             Entity tool = SwitchFactory.createTool();
             spawnEntityAt(tool, new GridPoint2(25, 10), true, true);
 
-            GridPoint2 minPos = new GridPoint2(5, 5);
-            GridPoint2 maxPos = terrain.getMapBounds(0).sub(15, 15);
+//            GridPoint2 minPos = new GridPoint2(10, 10);
+//            GridPoint2 maxPos = terrain.getMapBounds(0).sub(25, 25);
 
-            for (int i = 0; i < NUM_BATTERIES; i++) {
-                GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-                Entity battery = ItemFactory.createItem(3);
-                spawnEntityAt(battery, randomPos, true, false);
-            }
+//            for (int i = 0; i < NUM_BATTERIES; i++) {
+//                GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+//                Entity battery = ItemFactory.createItem(3);
+//                spawnEntityAt(battery, randomPos, true, false);
+            spawnEntityAt(ItemFactory.createItem(3), new GridPoint2(15, 10), true, false);
+            spawnEntityAt(ItemFactory.createItem(3), new GridPoint2(15, 13), true, false);
+            spawnEntityAt(ItemFactory.createItem(3), new GridPoint2(15, 16), true, false);
+//            }
         }
 
 //        if (NpcInteractionDisplay.chapterNum == 2) {
-        var en = SwitchFactory.createPodium(player);
-        spawnEntityAt(en, new GridPoint2(20, 12), true, true);
+        var en = SwitchFactory.createPodium(player, game);
+        spawnEntityAt(en, new GridPoint2(20, 25), true, true);
 //        }
 //
 //        if (NpcInteractionDisplay.chapterNum == 3) {
@@ -557,10 +561,11 @@ public class ForestGameArea extends GameArea {
         Entity ghostKing = NPCFactory.createGhostKing(player);
         spawnEntityAt(ghostKing, randomPos, true, true);
     }
+    private Entity zoe;
 
     private void spawnZoe() {
         GridPoint2 pos = new GridPoint2(10, 10);
-        Entity zoe = NPCFactory.createZoe(player.getComponent(NpcInteractionDisplay.class));
+        zoe = NPCFactory.createZoe(player.getComponent(NpcInteractionDisplay.class));
         spawnEntityAt(zoe, pos, true, true);
     }
 

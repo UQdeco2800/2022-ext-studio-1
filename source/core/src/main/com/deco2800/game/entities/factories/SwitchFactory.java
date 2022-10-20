@@ -10,6 +10,7 @@ import com.deco2800.game.components.player.entity.Backpack;
 import com.deco2800.game.components.player.entity.Item;
 import com.deco2800.game.components.tasks.ChaseTask;
 import com.deco2800.game.components.tasks.DistanceTask;
+import com.deco2800.game.components.tasks.SwitchTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -27,33 +28,45 @@ public class SwitchFactory {
     public static final int TOOL_ID = 2;
     public static final int BATTERY_ID = 3;
     public static boolean isWorking = false;
+    public static boolean isSwitchProcessing = false;
     public static boolean isCollected = false;
+    public static boolean isMermaidProcessing = false;
     public static boolean isCollected3 = false;
 
-    public static Entity createSwitch() {
-        Entity switchItem =
-                new Entity()
-                        .addComponent(new TextureRenderComponent(SwitchFactory.isWorking ? "images/switch/Electric Switch.png": "images/switch/Electric Switch Broken.png"))
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                        .addComponent(new SwitchComponent());
-
-        switchItem.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-        switchItem.getComponent(TextureRenderComponent.class).scaleEntity();
-        switchItem.scaleHeight(0.5f);
-        PhysicsUtils.setScaledCollider(switchItem, 0.8f, 0.4f);
-
-        return switchItem;
-    }
-
-    public static Entity createPodium(Entity target) {
-        var ai = new DistanceTask(target);
+    public static Entity createSwitch(Entity target, GdxGame game) {
+        var ai = new SwitchTask(target, game);
 
         AITaskComponent aiComponent =
                 new AITaskComponent()
                         .addTask(ai);
 
-        Entity npc =
+        Entity switchItem =
+                new Entity()
+                        .addComponent(new TextureRenderComponent(SwitchFactory.isWorking ? "images/switch/Electric Switch.png": "images/switch/Electric Switch Broken.png"))
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                        .addComponent(new SwitchComponent())
+                        .addComponent(aiComponent);
+
+        ai.setOwner(switchItem);
+
+        switchItem.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
+        switchItem.getComponent(TextureRenderComponent.class).scaleEntity();
+        switchItem.scaleHeight(0.5f);
+
+        PhysicsUtils.setScaledCollider(switchItem, 0.8f, 0.4f);
+
+        return switchItem;
+    }
+
+    public static Entity createPodium(Entity target, GdxGame game) {
+        var ai = new DistanceTask(target, game);
+
+        AITaskComponent aiComponent =
+                new AITaskComponent()
+                        .addTask(ai);
+
+        Entity testNpc =
                 new Entity()
                         .addComponent(new TextureRenderComponent("images/desk_top.png"))
                         .addComponent(new PhysicsComponent())
@@ -61,14 +74,14 @@ public class SwitchFactory {
                         .addComponent(new SwitchComponent())
                         .addComponent(aiComponent);
 
-        ai.setOwner(npc);
+        ai.setOwner(testNpc);
 
-        npc.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-        npc.getComponent(TextureRenderComponent.class).scaleEntity();
-        npc.scaleHeight(0.5f);
-        PhysicsUtils.setScaledCollider(npc, 0.8f, 0.4f);
+        testNpc.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
+        testNpc.getComponent(TextureRenderComponent.class).scaleEntity();
+        testNpc.scaleHeight(0.5f);
+        PhysicsUtils.setScaledCollider(testNpc, 0.8f, 0.4f);
 
-        return npc;
+        return testNpc;
     }
 
     public static Entity createTool() {

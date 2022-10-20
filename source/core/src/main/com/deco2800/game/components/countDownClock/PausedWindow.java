@@ -89,7 +89,7 @@ public class PausedWindow extends UIComponent {
                         MusicStuff.playMusic(buttonPath, false);
                         logger.debug("resume button clicked");
 //                        stop = false;
-                        game.theGameScreen.changeStatus2();
+                        //game.theGameScreen.changeStatus2();
                         resumeGame();
                     }
                 });
