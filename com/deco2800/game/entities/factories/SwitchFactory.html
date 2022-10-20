@@ -100,6 +100,12 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><code><a href="#isCollected3" class="member-name-link">isCollected3</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static boolean</code></div>
+<div class="col-second odd-row-color"><code><a href="#isMermaidProcessing" class="member-name-link">isMermaidProcessing</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static boolean</code></div>
+<div class="col-second even-row-color"><code><a href="#isSwitchProcessing" class="member-name-link">isSwitchProcessing</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static boolean</code></div>
 <div class="col-second odd-row-color"><code><a href="#isWorking" class="member-name-link">isWorking</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final int</code></div>
@@ -133,10 +139,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createPodium(com.deco2800.game.entities.Entity)" class="member-name-link">createPodium</a><wbr>(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createPodium(com.deco2800.game.entities.Entity,com.deco2800.game.GdxGame)" class="member-name-link">createPodium</a><wbr>(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
+ <a href="../../GdxGame.html" title="class in com.deco2800.game">GdxGame</a>&nbsp;game)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createSwitch()" class="member-name-link">createSwitch</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createSwitch(com.deco2800.game.entities.Entity,com.deco2800.game.GdxGame)" class="member-name-link">createSwitch</a><wbr>(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
+ <a href="../../GdxGame.html" title="class in com.deco2800.game">GdxGame</a>&nbsp;game)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createTool()" class="member-name-link">createTool</a>()</code></div>
@@ -193,9 +201,21 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="isSwitchProcessing">
+<h3>isSwitchProcessing</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isSwitchProcessing</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="isCollected">
 <h3>isCollected</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isCollected</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="isMermaidProcessing">
+<h3>isMermaidProcessing</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isMermaidProcessing</span></div>
 </section>
 </li>
 <li>
@@ -227,15 +247,17 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="createSwitch()">
+<section class="detail" id="createSwitch(com.deco2800.game.entities.Entity,com.deco2800.game.GdxGame)">
 <h3>createSwitch</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="element-name">createSwitch</span>()</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="element-name">createSwitch</span><wbr><span class="parameters">(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
+ <a href="../../GdxGame.html" title="class in com.deco2800.game">GdxGame</a>&nbsp;game)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="createPodium(com.deco2800.game.entities.Entity)">
+<section class="detail" id="createPodium(com.deco2800.game.entities.Entity,com.deco2800.game.GdxGame)">
 <h3>createPodium</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="element-name">createPodium</span><wbr><span class="parameters">(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="element-name">createPodium</span><wbr><span class="parameters">(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
+ <a href="../../GdxGame.html" title="class in com.deco2800.game">GdxGame</a>&nbsp;game)</span></div>
 </section>
 </li>
 <li>
